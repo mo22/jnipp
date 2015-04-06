@@ -21,6 +21,12 @@
 #include <jni.h>
 #include <string>
 #include <stdexcept>
+
+#include <tr1/type_traits>
+#define is_base_of std::tr1::is_base_of
+#define enable_if __gnu_cxx::__enable_if
+//#include <type_traits>
+
 #include <assert.h>
 
 namespace jnipp {
@@ -46,6 +52,9 @@ template <class T> class LocalRef;
 template <class T> class GlobalRef;
 template <class T> class WeakRef;
 template <class T> class Ref;
+
+template <typename R, typename... A> class Method;
+
 
 class String;
 class Class;
@@ -145,26 +154,113 @@ public:
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
+ * base object class implementation
+ */
+class Object {
+protected:
+    jobject _value;
+    JNIEnv* env() const {
+        return Env::get();
+    }
+public:
+    Object(jobject value) : _value(value) {
+    }
+    operator jobject() const {
+        return _value;
+    }
+    void __clear() { // @TODO: see if we can get rid of this.
+        _value = nullptr;
+    }
+    LocalRef<String> toString() const;
+    LocalRef<Class> getClass() const;
+    jboolean isInstanceOf(Ref<Class> cls) const;
+    Monitor lock() const;
+};
+
+/**
+ * a java string
+*/
+class String : public Object
+{
+public:
+    using Object::Object;
+
+    static LocalRef<String> create(const char* value);
+    static LocalRef<String> create(std::string value);
+
+    operator jstring() const {
+        return (jstring)(jobject)*this;
+    }
+
+    jsize length() const {
+        return env()->GetStringLength((jstring)*this);
+    }
+
+    const char* c_str() const {
+        return std_str().c_str();
+    }
+
+    std::string std_str() const {
+        const char* data = env()->GetStringUTFChars((jstring)*this, nullptr);
+        std::string res = data;
+        env()->ReleaseStringUTFChars((jstring)*this, data);
+        return res;
+    }
+
+    operator const char*() const {
+        return c_str();
+    }
+    operator const std::string() const {
+        return std_str();
+    }
+};
+
+/**
+ * a java class
+*/
+class Class : public Object
+{
+public:
+    using Object::Object;
+
+    static LocalRef<Class> forName(const char* name);
+
+    operator jclass() const {
+        return (jclass)(jobject)*this;
+    }
+
+    LocalRef<String> getName() const;
+    jboolean isAssignableFrom(Ref<Class> other);
+    LocalRef<Class> getSuperclass() const;
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+/**
  * simple ref base class.
  * does _not_ free the reference on destruction
  * use Ref<X> when passing objects as parameters
  * use LocalRef<X> for returning new objects
  */
 template <typename T>
-class Ref {
-public: //protected:
+class RefBase {
+protected:
     T _impl;
 public:
-    explicit Ref(jobject value) : _impl(value) {
+    explicit RefBase(jobject value) : _impl(value) {
     }
-    Ref(const Ref<T>& value) : _impl((jobject)value) {
+    RefBase(const RefBase<T>& value) : _impl((jobject)value) {
     }
+    // @TODO: how do we access value._impl ?
     template <typename S>
-    Ref(const Ref<S>& value) : _impl( static_cast<S>(value._impl) ) {
+    RefBase(const RefBase<S>& value) : _impl( static_cast<S>(value.__impl()) ) {
     }
     //template <typename S>
     //Ref(const Ref<S>& value) : _impl((jobject)value) {
     //}
+    const T& __impl() const {
+        return _impl;
+    }
 
     const T* operator->() const {
         return &_impl;
@@ -178,19 +274,19 @@ public:
     T& operator*() {
         return _impl;
     }
+/*
+    template <typename enable_if<is_base_of<Array<jbyte>, T>::value, T>::type* = nullptr>
+    jbyte operator[] (jsize index) {
+        LOG("[] for byte array");
+        return (*this)->get(index); // works
+    }
+*/
 
     // disallow use of []
 private:
     void operator[](int idx) const { // !!! use (*ref)[idx]
     }
 public:
-
-    // @TODO: does not work.
-    //template <typename S>
-    //S operator[](jsize idx) const {
-    //    LOG("Ref []");
-    //    return _impl[idx];
-    //}
 
     template <typename S>
     bool operator == (const Ref<S>& other) {
@@ -208,33 +304,41 @@ public:
     }
 };
 
-/*
-// @TODO: try to add implicit conversion from "string" to LocalRef<String>?
-template <>
-class Ref<String> {
-    using T = String;
-protected:
-    T _impl;
+template <typename T>
+class Ref : public RefBase<T> {
 public:
-    explicit Ref(jobject value) : _impl(value) {
+    using RefBase<T>::RefBase;
+};
+
+template <>
+class Ref<String> : public RefBase<String> {
+protected:
+    bool _free = false;
+public:
+    using RefBase<String>::RefBase;
+    Ref(const char* value) : RefBase( Env::get()->NewStringUTF(value) ), _free(true) {
     }
-    template <typename S>
-    Ref(const Ref<S>& value) : _impl((jobject)value) {
+    ~Ref() {
+        if (_free) {
+            Env::get()->DeleteLocalRef( (jobject)*this );
+        }
     }
-    const T* operator->() const {
-        return &_impl;
+    operator const char*() const {
+        return (*this)->std_str().c_str();
     }
-    const T& operator*() const {
-        return _impl;
-    }
-    operator jobject() const {
-        return (jobject)_impl;
-    }
-    operator bool() const {
-        return _impl;
+    const char* c_str() const {
+        return (*this)->std_str().c_str();
     }
 };
-*/
+
+template <typename T>
+class Ref<Array<T>> : public RefBase<Array<T>> {
+public:
+    using RefBase<Array<T>>::RefBase;
+    T operator[] (jsize index) {
+        return (*this)->get(index); // works
+    }
+};
 
 
 /**
@@ -249,7 +353,7 @@ public:
     }
     template <typename S>
     LocalRef(LocalRef<S>&& value) : Ref<T>((jobject)value) {
-        value.clear();
+        value.__clear();
         JNIPP_RLOG("LocalRef::LocalRef(LocalRef&&) this=%p value=<%p> jobject=%p", this, &value, (jobject)*this);
     }
     template <typename S>
@@ -260,11 +364,11 @@ public:
         if (*this) {
             JNIPP_RLOG("LocalRef::~LocalRef() this=%p jobject=%p", this, (jobject)*this);
             Env::get()->DeleteLocalRef((jobject)*this);
-            this->clear();
+            this->__clear();
         }
     }
-    void clear() {
-        this->_impl.clear();
+    void __clear() {
+        this->_impl.__clear();
     }
     static bool is(jobject value) {
         return Env::get()->GetObjectRefType(value) == JNILocalRefType;
@@ -277,6 +381,10 @@ public:
  */
 template <typename T>
 class GlobalRef : public Ref<T> {
+protected:
+    void __clear() {
+        this->_impl.__clear();
+    }
 public:
     GlobalRef() : Ref<T>((jobject)nullptr) {
         JNIPP_RLOG("GlobalRef::GlobalRef() this=%p", this);
@@ -287,7 +395,7 @@ public:
     template <typename S>
     GlobalRef(GlobalRef<S>&& value) : Ref<T>((jobject)value) {
         JNIPP_RLOG("GlobalRef::GlobalRef(GlobalRef&&) this=%p value=<%p> jobject=%p", this, &value, (jobject)*this);
-        value.clear();
+        value.__clear();
     }
     template <typename S>
     GlobalRef(const Ref<S>& value) : Ref<T>(Env::get()->NewGlobalRef((jobject)value)) {
@@ -297,11 +405,8 @@ public:
         if ((jobject)*this) {
             JNIPP_RLOG("GlobalRef::~GlobalRef() this=%p jobject=%p", this, (jobject)*this);
             if (Env::peek()) Env::get()->DeleteGlobalRef((jobject)*this);
-            this->clear();
+            this->__clear();
         }
-    }
-    void clear() {
-        this->_impl.clear();
     }
     template <typename S>
     void set(const Ref<S>& value) {
@@ -365,33 +470,6 @@ public:
     static bool is(jobject value) {
         return Env::get()->GetObjectRefType(value) == JNIWeakGlobalRefType;
     }
-};
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-/**
- * base object class implementation
- */
-class Object {
-protected:
-    jobject _value;
-    JNIEnv* env() const {
-        return Env::get();
-    }
-public:
-    Object(jobject value) : _value(value) {
-    }
-    operator jobject() const {
-        return _value;
-    }
-    void clear() {
-        _value = nullptr;
-    }
-    LocalRef<String> toString() const;
-    LocalRef<Class> getClass() const;
-    jboolean isInstanceOf(Ref<Class> cls) const;
-    Monitor lock() const;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -993,75 +1071,6 @@ JNIPP_M_FOR_ALL_TYPES
 
 ////////////////////////////////////////////////////////////////////////////////
 
-/**
- * a java string
-*/
-class String : public Object
-{
-public:
-    using Object::Object;
-
-    static LocalRef<String> create(const char* value) {
-        return LocalRef<String>( Env::get()->NewStringUTF(value) );
-    }
-
-    static LocalRef<String> create(std::string value) {
-        return LocalRef<String>( Env::get()->NewStringUTF(value.c_str()) );
-    }
-
-    operator jstring() const {
-        return (jstring)(jobject)*this;
-    }
-
-    jsize length() const {
-        return env()->GetStringLength((jstring)*this);
-    }
-
-    const char* c_str() const {
-        return std_str().c_str();
-    }
-
-    std::string std_str() const {
-        const char* data = env()->GetStringUTFChars((jstring)*this, nullptr);
-        std::string res = data;
-        env()->ReleaseStringUTFChars((jstring)*this, data);
-        return res;
-    }
-};
-
-/**
- * a java class
-*/
-class Class : public Object
-{
-public:
-    using Object::Object;
-
-    static LocalRef<Class> forName(const char* name) {
-        return LocalRef<Class>( (jobject)Env::get()->FindClass(name) );
-    }
-
-    operator jclass() const {
-        return (jclass)(jobject)*this;
-    }
-
-    LocalRef<String> getName() const {
-        static Method<String> method("java/lang/Class", "getName", "()Ljava/lang/String;");
-        return method.call(*this);
-    }
-
-    jboolean isAssignableFrom(Ref<Class> other) {
-        return env()->IsAssignableFrom((jclass)*this, (jclass)*other);
-    }
-
-    LocalRef<Class> getSuperclass() const {
-        return LocalRef<Class>( env()->GetSuperclass((jclass)*this) );
-    }
-
-};
-
-////////////////////////////////////////////////////////////////////////////////
-
 inline MethodBase::MethodBase(Ref<Class> cls, const char* name, const char* signature) : _cls((jclass)(jobject)cls), _clsName(nullptr), _name(name), _signature(signature), _methodID(0) {
 }
 
@@ -1116,6 +1125,32 @@ inline jboolean Object::isInstanceOf(Ref<Class> cls) const {
 inline Monitor Object::lock() const {
     return Monitor((jobject)*this);
 }
+
+inline LocalRef<String> String::create(const char* value) {
+    return LocalRef<String>( Env::get()->NewStringUTF(value) );
+}
+
+inline LocalRef<String> String::create(std::string value) {
+    return LocalRef<String>( Env::get()->NewStringUTF(value.c_str()) );
+}
+
+inline LocalRef<Class> Class::forName(const char* name) {
+    return LocalRef<Class>( (jobject)Env::get()->FindClass(name) );
+}
+
+inline LocalRef<String> Class::getName() const {
+    static Method<String> method("java/lang/Class", "getName", "()Ljava/lang/String;");
+    return method.call(*this);
+}
+
+inline jboolean Class::isAssignableFrom(Ref<Class> other) {
+    return env()->IsAssignableFrom((jclass)*this, (jclass)*other);
+}
+
+inline LocalRef<Class> Class::getSuperclass() const {
+    return LocalRef<Class>( env()->GetSuperclass((jclass)*this) );
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
