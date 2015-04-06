@@ -528,6 +528,18 @@ public:
 };
 
 /**
+ * ref specialization for classes
+*/
+template <typename T>
+class Ref<T, void, typename JNIPP_ENABLE_IF_C<JNIPP_IS_BASE_OF<Class, T>::value>::type> : public RefBase<T> {
+public:
+    using RefBase<T>::RefBase;
+    operator jclass() const {
+        return (jclass)(**this);
+    }
+};
+
+/**
  * ref specialization for object arrays
 */
 template <typename T>
