@@ -1,0 +1,16 @@
+#!/bin/sh
+pushd "$( dirname "$0" )" > /dev/null
+CLASSPATH="$( pwd )"
+popd > /dev/null
+CLASSES=()
+while [ -n "$1" ]; do
+    if [ "$1" == "-cp" ]; then
+        CLASSPATH="$CLASSPATH:$2"
+        shift
+    else
+        CLASSES+=("$1")
+    fi
+    shift
+done
+exec java -cp "$CLASSPATH" generate ${CLASSES[*]}
+

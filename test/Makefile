@@ -1,11 +1,8 @@
 DEFAULT: all
 .PHONY: all
 
-_java.h JavaTest.class: JavaTest.java
-	javac ../generate.java
-	javac JavaTest.java
-	java -cp ..:. generate java.lang.String JavaTest
-
+_java.h: JavaTest.class
+	../generate -cp . java.lang.String JavaTest
 
 CPPFLAGS = \
 	-std=c++11 \
