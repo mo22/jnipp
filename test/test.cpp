@@ -18,19 +18,21 @@ namespace jni = jnipp;
 template <typename T> using JLocalRef = jnipp::LocalRef<T>;
 using JString = jnipp::String;
 
+#define EXPORT __attribute__((visibility("default"))) extern "C"
+
 ////////////////////////////////////////////////////////////////////////////////
 
-extern "C" jint JNI_OnLoad(JavaVM* vm, void* reserved)
+EXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved)
 {
     return JNI_VERSION_1_6;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
+JNIEXPORT
+
 #include "_java.h"
-
 void test_string() {
-
     JLocalRef<JavaLangString> str = JString::create("Hello World");
 
     LOG("str=%s", str->toString()->c_str());
@@ -92,10 +94,9 @@ void test_string() {
         auto ex = jni::Env::getException();
         LOG("ex toString: %s", ex->toString()->c_str());
     }
-
 };
 
-extern "C" JNIEXPORT void JNICALL Java_Test_native1(JNIEnv* env, jobject thiz)
+EXPORT JNIEXPORT void JNICALL Java_Test_native1(JNIEnv* env, jobject thiz)
 {
     jni::Env::Scope scope(env);
 

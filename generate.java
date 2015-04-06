@@ -252,6 +252,7 @@ public class generate
 
     private void handleField(Field member) throws Exception
     {
+/*
         Class type = member.getType();
         declaration.append("\n");
         declaration.append("    // " + member + "\n");
@@ -260,6 +261,7 @@ public class generate
         declaration.append("jnipp::Field<" + getNativeClassName(type) + "> " + member.getName() + " = ");
         declaration.append("jnipp::Field<" + getNativeClassName(type) + ">(\"" + cls.getName() + "\", \"" + member.getName() + "\", \"" + getSignature(type) + "\");\n");
         // @TODO...
+*/
     }
 
     private void handleClass(Class cls) throws Exception

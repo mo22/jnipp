@@ -10,12 +10,19 @@ _java.h JavaTest.class: JavaTest.java
 CPPFLAGS = \
 	-std=c++11 \
 	-stdlib=libstdc++ \
+	-O3 \
+	-ffunction-sections -fdata-sections \
+	-gfull -fno-rtti \
+	-fvisibility=hidden -fvisibility-inlines-hidden \
 	-I.. \
 	-I$(JAVA_HOME)/include \
 	-I$(JAVA_HOME)/include/darwin \
 
 LDFLAGS = \
 	-stdlib=libstdc++ -lstdc++ \
+	-O3 \
+	-Wl,-dead_strip \
+	-Wl,-why_live -Wl,__ZNK14JavaLangObject4waitEl \
 	-shared
 
 JAVACFLAGS = -g
@@ -28,8 +35,9 @@ JAVACFLAGS = -g
 
 libTest.dylib: test.o
 	clang -o $@ $(LDFLAGS) $^
+	strip -S -x $@
 
-all: Test.class libTest.dylib
+all: Test.class JavaTest.class libTest.dylib
 	@rm *.log 2>/dev/null || true
 	java Test
 
