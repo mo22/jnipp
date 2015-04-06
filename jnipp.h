@@ -152,22 +152,19 @@ public:
  */
 template <typename T>
 class Ref {
-protected:
+public: //protected:
     T _impl;
 public:
     explicit Ref(jobject value) : _impl(value) {
     }
     Ref(const Ref<T>& value) : _impl((jobject)value) {
     }
-
-    //template <typename S>
-    //explicit Ref(const Ref<S>& value) : _impl((jobject)value) {
-    //}
-    // @TODO: need to make sure this only works on compatible classes?
-
     template <typename S>
-    Ref(const Ref<S>& value) : _impl((jobject)value) {
+    Ref(const Ref<S>& value) : _impl( static_cast<S>(value._impl) ) {
     }
+    //template <typename S>
+    //Ref(const Ref<S>& value) : _impl((jobject)value) {
+    //}
 
     const T* operator->() const {
         return &_impl;
@@ -920,11 +917,10 @@ public:
     using arrayType = typename _Array<T>::arrayType;
     using Object::Object;
     _ElementArray(jobject value) : Object(value), _data(nullptr) {
-        //LOG("Array this=%p _data=%p", this, _data);
     }
-    _ElementArray(const _ElementArray& other) = delete;
+    _ElementArray(const _ElementArray& other) : Object(other), _data(nullptr) {
+    }
     ~_ElementArray() {
-        //LOG("~Array this=%p _data=%p", this, _data);
         unlock();
     }
     operator jobject() const {
