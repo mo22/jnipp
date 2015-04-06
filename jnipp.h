@@ -21,13 +21,16 @@
 #include <jni.h>
 #include <string>
 #include <stdexcept>
-
-#include <tr1/type_traits>
-#define is_base_of std::tr1::is_base_of
-#define enable_if __gnu_cxx::__enable_if
-//#include <type_traits>
-
 #include <assert.h>
+#ifdef __GLIBCXX__
+#include <boost/type_traits.hpp>
+#define JNIPP_ENABLE_IF_C boost::enable_if_c
+#define JNIPP_IS_BASE_OF boost::is_base_of
+#else
+#include <type_traits>
+#define JNIPP_ENABLE_IF_C std::enable_if
+#define JNIPP_IS_BASE_OF std::is_base_of
+#endif
 
 namespace jnipp {
 
@@ -48,10 +51,10 @@ namespace jnipp {
     M(jfloat, Float) \
     M(jdouble, Double)
 
-template <class T> class LocalRef;
-template <class T> class GlobalRef;
-template <class T> class WeakRef;
-template <class T> class Ref;
+template <typename T> class LocalRef;
+template <typename T> class GlobalRef;
+template <typename T> class WeakRef;
+template <typename T, class A = void> class Ref;
 
 template <typename R, typename... A> class Method;
 
@@ -59,7 +62,7 @@ template <typename R, typename... A> class Method;
 class String;
 class Class;
 class Object;
-template <class T> class Array;
+template <typename T> class Array;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -165,9 +168,9 @@ protected:
     void __clear() { // @TODO: see if we can get rid of this.
         _value = nullptr;
     }
-    template<class Any> friend class LocalRef;
-    template<class Any> friend class GlobalRef;
-    template<class Any> friend class Ref;
+    template<typename A> friend class LocalRef;
+    template<typename A> friend class GlobalRef;
+    template<typename A, typename B> friend class Ref;
 public:
     Object(jobject value) : _value(value) {
     }
@@ -307,10 +310,33 @@ public:
     }
 };
 
-template <typename T>
+
+
+template <typename T, typename A>
 class Ref : public RefBase<T> {
 public:
     using RefBase<T>::RefBase;
+};
+
+template <typename T>
+class Ref<T, typename JNIPP_ENABLE_IF_C<JNIPP_IS_BASE_OF<String, T>::value>::type> : public RefBase<T> {
+protected:
+    bool _free = false;
+public:
+    using RefBase<T>::RefBase;
+    Ref(const char* value) : RefBase<T>( Env::get()->NewStringUTF(value) ), _free(true) {
+    }
+    ~Ref() {
+        if (_free) {
+            Env::get()->DeleteLocalRef( (jobject)*this );
+        }
+    }
+    operator const char*() const {
+        return (*this)->std_str().c_str();
+    }
+    const char* c_str() const {
+        return (*this)->std_str().c_str();
+    }
 };
 
 template <>

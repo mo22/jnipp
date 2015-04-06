@@ -6,7 +6,7 @@ _java.h: JavaTest.class
 
 CPPFLAGS = \
 	-std=c++11 \
-	-stdlib=libstdc++ \
+	-stdlib=libc++ \
 	-O3 \
 	-ffunction-sections -fdata-sections \
 	-gfull -fno-rtti \
@@ -14,9 +14,10 @@ CPPFLAGS = \
 	-I.. \
 	-I$(JAVA_HOME)/include \
 	-I$(JAVA_HOME)/include/darwin \
+	-I/opt/local/include/
 
 LDFLAGS = \
-	-stdlib=libstdc++ -lstdc++ \
+	-stdlib=libc++ -lc++ \
 	-O3 \
 	-Wl,-dead_strip \
 	-shared
