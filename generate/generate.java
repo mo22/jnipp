@@ -74,10 +74,6 @@ public class generate
         } else if (cls.isArray()) {
             return "jnipp::Array<"+getNativeClassName(cls.getComponentType())+">";
         } else {
-            if (cls == Object.class) return "jnipp::Object";
-            if (cls == String.class) return "jnipp::String";
-            if (cls == Class.class) return "jnipp::Class";
-            //return "jnipp::Object";
             return convertClassName(cls);
         }
     }
@@ -273,7 +269,11 @@ public class generate
 
         declaration.append("\n");
         declaration.append("// " + cls + "\n");
+
         String parent = (cls.getSuperclass() == null) ? "jnipp::Object" : getNativeClassName(cls.getSuperclass());
+        if (cls.equals(Class.class)) parent = "jnipp::Class";
+        if (cls.equals(String.class)) parent = "jnipp::String";
+
         declaration.append("class " + defClsName + " : public " + parent + "\n");
         declaration.append("{\n");
         declaration.append("public:\n");
