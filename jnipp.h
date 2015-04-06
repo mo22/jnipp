@@ -22,7 +22,7 @@
 #include <string>
 #include <stdexcept>
 #include <assert.h>
-#ifdef __GLIBCXX__
+#ifdef JNIPP_USE_BOOST
 #include <boost/type_traits.hpp>
 #define JNIPP_ENABLE_IF_C boost::enable_if_c
 #define JNIPP_IS_BASE_OF boost::is_base_of
@@ -54,7 +54,7 @@ namespace jnipp {
 template <typename T> class LocalRef;
 template <typename T> class GlobalRef;
 template <typename T> class WeakRef;
-template <typename T, class A = void> class Ref;
+template <typename T, typename A1=void, typename A2=void> class Ref;
 
 template <typename R, typename... A> class Method;
 
@@ -170,7 +170,7 @@ protected:
     }
     template<typename A> friend class LocalRef;
     template<typename A> friend class GlobalRef;
-    template<typename A, typename B> friend class Ref;
+    template<typename A, typename A1, typename A2> friend class Ref;
 public:
     Object(jobject value) : _value(value) {
     }
@@ -240,6 +240,182 @@ public:
     LocalRef<Class> getSuperclass() const;
 };
 
+/**
+ * generic object array
+*/
+template <class T>
+class Array : public Object
+{
+public:
+    using Object::Object;
+
+    operator jarray() const {
+        return (jarray)(jobject)*this;
+    }
+    operator jobjectArray() const {
+        return (jobjectArray)(jobject)*this;
+    }
+
+    jsize length() const {
+        return env()->GetArrayLength((jarray)*this);
+    }
+
+    LocalRef<T> get(jsize index) const {
+        return LocalRef<T>( env()->GetObjectArrayElement((jobjectArray)*this, index) );
+    }
+
+    void set(jsize index, Ref<T> value) {
+        env()->SetObjectArrayElement((jobjectArray)*this, index, value);
+    }
+
+    LocalRef<T> operator[](jsize index) const {
+        return get(index);
+    }
+
+    static LocalRef<Array<T>> construct(jsize length, jclass elementClass) {
+        return LocalRef<Array<T>>( Env::get()->NewObjectArray(length, elementClass, nullptr) );
+    }
+
+    class Iterator
+    {
+    private:
+        const Array<T>* _obj;
+        size_t _idx;
+    public:
+        Iterator(const Array<T>* obj, size_t idx) : _obj(obj), _idx(idx) {
+        }
+        bool operator != (const Iterator& that) {
+            return that._idx != _idx;
+        }
+        const Iterator& operator++() {
+            _idx++;
+            return *this;
+        }
+        LocalRef<T> operator* () const {
+            return (*_obj)[_idx];
+        }
+    };
+    Iterator begin() const {
+        return Iterator(this, 0);
+    }
+    Iterator end() const {
+        return Iterator(this, length());
+    }
+};
+
+/**
+ * typed array
+*/
+template <typename T>
+struct _Array {
+};
+
+#define M(type,tag) \
+template <> struct _Array<type> { \
+    using arrayType = type ## Array; \
+    static jarray construct(jsize length) { return Env::get()->New ## tag ## Array(length); } \
+    static void getRegion(arrayType array, jsize index, jsize length, type* buffer) { return Env::get()->Get ## tag ## ArrayRegion(array, index, length, buffer); } \
+    static type* getElements(arrayType array, jboolean* isCopy) { return Env::get()->Get ## tag ## ArrayElements(array, isCopy); } \
+    static void releaseElements(arrayType array, type* data, jint mode) { Env::get()->Release ## tag ## ArrayElements(array, data, mode); } \
+};
+JNIPP_M_FOR_ALL_TYPES
+#undef M
+
+template<typename T>
+class _ElementArray : public Object {
+private:
+    T* _data;
+    bool _dirty;
+public:
+    using arrayType = typename _Array<T>::arrayType;
+    using Object::Object;
+
+    _ElementArray(jobject value) : Object(value), _data(nullptr) {
+    }
+
+    _ElementArray(const _ElementArray& other) : Object(other), _data(nullptr) {
+    }
+
+    ~_ElementArray() {
+        unlock();
+    }
+
+    operator jobject() const {
+        unlock();
+        return Object::operator jobject();
+    }
+
+    operator jarray() const {
+        return (jarray)_value;
+    }
+    operator arrayType() const {
+        return (arrayType)_value;
+    }
+
+    jsize length() const {
+        return env()->GetArrayLength((jarray)*this);
+    }
+
+    static LocalRef<Array<T>> construct(jsize length) {
+        return LocalRef<Array<T>>( _Array<T>::construct(length) );
+    }
+
+    void lock() const {
+        if (!_data) {
+            const_cast<_ElementArray<T>*>(this)->_data = _Array<T>::getElements((arrayType)*this, nullptr);
+            //LOG("Array::lock this=%p _data=%p", this, _data);
+            const_cast<_ElementArray<T>*>(this)->_dirty = false;
+        }
+    }
+    void unlock() const {
+        if (_data) {
+            T* data = _data;
+            const_cast<_ElementArray<T>*>(this)->_data = nullptr;
+            //LOG("Array::unlock this=%p _data=%p _dirty=%d", this, data, _dirty);
+            _Array<T>::releaseElements((arrayType)*this, data, _dirty ? 0 : JNI_ABORT);
+        }
+    }
+
+    T get(jsize index) const {
+        lock();
+        return _data[index];
+    }
+    T& getRef(jsize index) {
+        lock();
+        _dirty = true;
+        return _data[index];
+    }
+    void set(jsize index, T value) {
+        lock();
+        _dirty = true;
+        _data[index] = value;
+    }
+
+    T operator[](jsize index) const {
+        return get(index);
+    }
+    T& operator[](jsize index) {
+        return getRef(index);
+    }
+    operator const T*() const {
+        lock();
+        return _data;
+    }
+    operator T*() {
+        lock();
+        _dirty = true;
+        return _data;
+    }
+};
+
+#define M(type,tag) \
+template<> class Array<type> : public _ElementArray<type> { \
+public: \
+    using _ElementArray::_ElementArray; \
+};
+JNIPP_M_FOR_ALL_TYPES
+#undef M
+
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -280,13 +456,6 @@ public:
     T& operator*() {
         return _impl;
     }
-/*
-    template <typename enable_if<is_base_of<Array<jbyte>, T>::value, T>::type* = nullptr>
-    jbyte operator[] (jsize index) {
-        LOG("[] for byte array");
-        return (*this)->get(index); // works
-    }
-*/
 
     // disallow use of []
 private:
@@ -310,14 +479,19 @@ public:
     }
 };
 
+/**
+ * Ref specializations for easier access of Strings and Arrays
+*/
 
-
-template <typename T, typename A>
+template <typename T, typename A1, typename A2>
 class Ref : public RefBase<T> {
 public:
     using RefBase<T>::RefBase;
 };
 
+/**
+ * ref specialization for strings
+*/
 template <typename T>
 class Ref<T, typename JNIPP_ENABLE_IF_C<JNIPP_IS_BASE_OF<String, T>::value>::type> : public RefBase<T> {
 protected:
@@ -339,36 +513,32 @@ public:
     }
 };
 
-template <>
-class Ref<String> : public RefBase<String> {
-protected:
-    bool _free = false;
-public:
-    using RefBase<String>::RefBase;
-    Ref(const char* value) : RefBase( Env::get()->NewStringUTF(value) ), _free(true) {
-    }
-    ~Ref() {
-        if (_free) {
-            Env::get()->DeleteLocalRef( (jobject)*this );
-        }
-    }
-    operator const char*() const {
-        return (*this)->std_str().c_str();
-    }
-    const char* c_str() const {
-        return (*this)->std_str().c_str();
-    }
-};
-
+/**
+ * ref specialization for object arrays
+*/
 template <typename T>
 class Ref<Array<T>> : public RefBase<Array<T>> {
 public:
     using RefBase<Array<T>>::RefBase;
-    T operator[] (jsize index) {
-        return (*this)->get(index); // works
+    LocalRef<T> operator[] (jsize index) {
+        return (*this)->get(index);
     }
 };
 
+/**
+ * ref specialization for typed array
+*/
+template <>
+class Ref<Array<jbyte>> : public RefBase<Array<jbyte>> {
+public:
+    using RefBase<Array<jbyte>>::RefBase;
+    jbyte operator[] (jsize index) const {
+        return (*this)->get(index);
+    }
+    jbyte& operator[] (jsize index) {
+        return (*this)->getRef(index);
+    }
+};
 
 /**
  * java local ref
@@ -380,7 +550,7 @@ protected:
     void __clear() {
         this->_impl.__clear();
     }
-    template<class Any> friend class LocalRef;
+    template<typename S> friend class LocalRef;
 public:
     explicit LocalRef(jobject value) : Ref<T>(value) {
         JNIPP_RLOG("LocalRef::LocalRef(jobject) this=%p jobject=%p", this, (jobject)*this);
@@ -929,173 +1099,6 @@ public: \
     void operator=(type value) { \
         set(value); \
     } \
-};
-JNIPP_M_FOR_ALL_TYPES
-#undef M
-
-////////////////////////////////////////////////////////////////////////////////
-
-template <class T>
-class Array : public Object
-{
-public:
-    using Object::Object;
-
-    operator jarray() const {
-        return (jarray)(jobject)*this;
-    }
-    operator jobjectArray() const {
-        return (jobjectArray)(jobject)*this;
-    }
-
-    jsize length() const {
-        return env()->GetArrayLength((jarray)*this);
-    }
-
-    LocalRef<T> get(jsize index) const {
-        return LocalRef<T>( env()->GetObjectArrayElement((jobjectArray)*this, index) );
-    }
-
-    void set(jsize index, Ref<T> value) {
-        env()->SetObjectArrayElement((jobjectArray)*this, index, value);
-    }
-
-
-    LocalRef<T> operator[](jsize index) const {
-        return get(index);
-    }
-    /*
-    void operator[](jsize index, Ref<T> value) {
-        env()->SetObjectArrayElement((jobjectArray)(jobject)*this, index, (jobject)value);
-        // @TODO
-    }
-    */
-
-    static LocalRef<Array<T>> construct(jsize length, jclass elementClass) {
-        return LocalRef<Array<T>>( Env::get()->NewObjectArray(length, elementClass, nullptr) );
-    }
-
-    class Iterator
-    {
-    private:
-        const Array<T>* _obj;
-        size_t _idx;
-    public:
-        Iterator(const Array<T>* obj, size_t idx) : _obj(obj), _idx(idx) {
-        }
-        bool operator != (const Iterator& that) {
-            return that._idx != _idx;
-        }
-        const Iterator& operator++() {
-            _idx++;
-            return *this;
-        }
-        LocalRef<T> operator* () const {
-            return (*_obj)[_idx];
-        }
-    };
-    Iterator begin() const {
-        return Iterator(this, 0);
-    }
-    Iterator end() const {
-        return Iterator(this, length());
-    }
-};
-
-template <class T>
-struct _Array {
-};
-
-#define M(type,tag) \
-template <> struct _Array<type> { \
-    using arrayType = type ## Array; \
-    static jarray construct(jsize length) { return Env::get()->New ## tag ## Array(length); } \
-    static void getRegion(arrayType array, jsize index, jsize length, type* buffer) { return Env::get()->Get ## tag ## ArrayRegion(array, index, length, buffer); } \
-    static type* getElements(arrayType array, jboolean* isCopy) { return Env::get()->Get ## tag ## ArrayElements(array, isCopy); } \
-    static void releaseElements(arrayType array, type* data, jint mode) { Env::get()->Release ## tag ## ArrayElements(array, data, mode); } \
-};
-JNIPP_M_FOR_ALL_TYPES
-#undef M
-
-template<class T>
-class _ElementArray : public Object {
-private:
-    T* _data;
-    bool _dirty;
-public:
-    using arrayType = typename _Array<T>::arrayType;
-    using Object::Object;
-    _ElementArray(jobject value) : Object(value), _data(nullptr) {
-    }
-    _ElementArray(const _ElementArray& other) : Object(other), _data(nullptr) {
-    }
-    ~_ElementArray() {
-        unlock();
-    }
-    operator jobject() const {
-        unlock();
-        return Object::operator jobject();
-    }
-    operator jarray() const {
-        return (jarray)_value;
-    }
-    operator arrayType() const {
-        return (arrayType)_value;
-    }
-    jsize length() const {
-        return env()->GetArrayLength((jarray)*this);
-    }
-    static LocalRef<Array<T>> construct(jsize length) {
-        return LocalRef<Array<T>>( _Array<T>::construct(length) );
-    }
-    void lock() const {
-        if (!_data) {
-            //LOG("Array::lock this=%p", this);
-            const_cast<_ElementArray<T>*>(this)->_data = _Array<T>::getElements((arrayType)*this, nullptr);
-            const_cast<_ElementArray<T>*>(this)->_dirty = false;
-        }
-    }
-    void unlock() const {
-        if (_data) {
-            T* data = _data;
-            const_cast<_ElementArray<T>*>(this)->_data = nullptr;
-            //LOG("Array::unlock this=%p _data=%p env=%p", this, data, Env::peek());
-            _Array<T>::releaseElements((arrayType)*this, data, _dirty ? 0 : JNI_ABORT);
-        }
-    }
-    T get(jsize index) const {
-        lock();
-        return _data[index];
-    }
-    void set(jsize index, T value) {
-        lock();
-        _dirty = true;
-        _data[index] = value;
-    }
-    T operator[](jsize index) const {
-        lock();
-        return _data[index];
-    }
-    T& operator[](jsize index) {
-        lock();
-        _dirty = true;
-        return _data[index];
-    }
-    operator const T*() const {
-        lock();
-        return _data;
-    }
-    operator T*() {
-        lock();
-        _dirty = true;
-        return _data;
-    }
-};
-
-#define M(type,tag) \
-template<> class Array<type> : public _ElementArray<type> { \
-public: \
-    using _ElementArray::_ElementArray; \
 };
 JNIPP_M_FOR_ALL_TYPES
 #undef M

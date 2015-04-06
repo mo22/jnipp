@@ -27,49 +27,38 @@ EXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-JNIEXPORT
-
 #include "_java.h"
+
 void test_string() {
     LocalRef<JavaLangString> str = String::create("Hello World");
 
-    LOG("str=%s", str->toString()->c_str());
-
-    // constructors...??? must be static function...
-    // 
+    LOG("str=%s", (const char*)str);
+    LOG("str=%s", str->c_str());
     LOG("str.length()=%d", str->length());
     LOG("str.charAt(0)=%c", str->charAt(0));
 
     auto bytes = str->getBytes();
     LOG("bytes.length()=%d", bytes->length());
-    LOG("bytes[0]=%d", bytes->operator[](0) );
-    Ref<Array<jbyte>> bytes2 = bytes;
-    LOG("bytes[0]=%d", (*bytes)[0] );
-    // LOG("bytes[0]=%d", bytes[0] ); // fails as expected
+    LOG("bytes[0]=%d", bytes[0] );
 
     auto str2 = str->concat(String::create(" !!"));
     LOG("str2=%s", str2->toString()->c_str());
 
-    //auto str3 = str->concat("sugar string");
-    //LOG("str3=%s", str3->toString()->c_str());
+    auto str3 = str->concat(" with const char*");
+    LOG("str3=%s", str3->c_str());
 
-    auto parts = str->split(String::create(" "));
+    auto parts = str->split(" ");
     LOG("parts.length()=%d", parts->length());
-    LOG("parts[0]=%s", (*parts)[0]->toString()->c_str());
+    LOG("parts[0]=%s", parts[0]->c_str());
 
     LOG("String.valueOf(3.141f)=%s", JavaLangString::valueOf(3.141f)->toString()->c_str());
-
-
-    StaticField<String> CASE_INSENSITIVE_ORDER("java/lang/String", "CASE_INSENSITIVE_ORDER", "Ljava/util/Comparator;");
-    LOG("CASE_INSENSITIVE_ORDER jfieldid %d", (jfieldID)CASE_INSENSITIVE_ORDER);
-    LOG("CASE_INSENSITIVE_ORDER toString %s", CASE_INSENSITIVE_ORDER.get()->toString()->c_str());
 
     LOG("String.CASE_INSENSITIVE_ORDER %s", JavaLangString::CASE_INSENSITIVE_ORDER.get()->toString()->c_str());
     LOG("String.CASE_INSENSITIVE_ORDER %s", JavaLangString::CASE_INSENSITIVE_ORDER->toString()->c_str());
 
     // JavaLangString::CASE_INSENSITIVE_ORDER.set(String::create("test")); // fails with read only
 
-    JavaTest::staticObject.set( String::create("test"));
+    JavaTest::staticObject.set( String::create("test") );
     LOG("JavaTest::staticObject %s", JavaTest::staticObject->toString()->c_str());
     JavaTest::staticObject = (Ref<Object>) String::create("test");
     LOG("JavaTest::staticObject %s", JavaTest::staticObject->toString()->c_str());
@@ -109,12 +98,15 @@ void test_string() {
             byteArray->set(i, i & 0xFF);
         }
         LOG("byteArray[3]=%d", (*byteArray)[3]);
-        (*byteArray)[0] = 0xff;
+        LOG("byteArray[0]=%d", (*byteArray)[0]);
+        LOG("byteArray[0]=%d", byteArray[0]);
+        byteArray[0] = 123;
         LOG("byteArray[0]=%d", (*byteArray)[0]);
     }
 
     {
         // create char array
+        LOG("charArray");
         auto charArray = Array<jchar>::construct(10);
         for (int i=0; i<charArray->length(); i++) (*charArray)[i] = '0' + i;
         auto charString = JavaLangString::construct(charArray);
