@@ -1,21 +1,19 @@
-/*
-
-- functions always take Ref<> as argument, and return LocalRef<>
-
-[ ] some sugar to implicit cast const char* to Ref<String> ?
-[ ] some sugar to use array subscript on Ref<Array<Object>> ?
-
-[ ] generator: add cast operators to superclasses? (operator Ref<Object> etc.)
-
-[ ] safe cast operator
-
-[ ] Fields - how do we implement those in generated classes?
-
-[ ] Arrays get/set for object arrays
-[ ] Arrays create?
-[ ] Array<jbyte> - cast to jbyte*, array access and set, all lock the array before usage. provide unlock/commit method.
-
-*/
+//
+// jnipp
+// Copyright 2015 Moritz Moeller
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 
 #ifndef _JNIPP_H_INCLUDED
 #define _JNIPP_H_INCLUDED
@@ -55,7 +53,7 @@ template <class T> class Array;
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * provide JNIEnv* pointer. at your entry point you need to put a local EnvScope scope();
+ * provide JNIEnv* pointer. at your entry point you need to put a local Env::Scope scope(your_jni_env);
  */
 class Env
 {
@@ -116,6 +114,11 @@ public:
 
 ////////////////////////////////////////////////////////////////////////////////
 
+/**
+ * monitor / lock object
+ * can be passed/returned by rvalue
+ * automatically unlocks on destruction
+ */
 class Monitor {
 protected:
     jobject _object;
@@ -138,7 +141,10 @@ public:
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * simple ref
+ * simple ref base class.
+ * does _not_ free the reference on destruction
+ * use Ref<X> when passing objects as parameters
+ * use LocalRef<X> for returning new objects
  */
 template <typename T>
 class Ref {
@@ -220,7 +226,8 @@ public:
 
 
 /**
- * local ref
+ * java local ref
+ * calls DeleteLocalRef on destruction
 */
 template <typename T>
 class LocalRef : public Ref<T> {
@@ -253,7 +260,8 @@ public:
 };
 
 /**
- * global ref
+ * java global ref
+ * calls DeleteGlobalRef on destruction
  */
 template <typename T>
 class GlobalRef : public Ref<T> {
@@ -294,7 +302,9 @@ public:
 };
 
 /**
- * weak ref
+ * java weak ref
+ * operator bool will return false if the weak reference is gone
+ * cannot be used directly - will be cast to LocalRef instead to make sure the reference is not GCed
  */
 template <typename T>
 class WeakRef {
@@ -348,29 +358,36 @@ public:
 
 ////////////////////////////////////////////////////////////////////////////////
 
+/**
+ * base class for all object implementations
+ */
 class _ObjectBase {
 private:
     jobject _value;
 protected:
-    inline JNIEnv* env() const {
+    JNIEnv* env() const {
         return Env::cur();
     }
 public:
-    inline _ObjectBase(jobject value) : _value(value) {
+    _ObjectBase(jobject value) : _value(value) {
     }
-    inline operator jobject() const {
+    operator jobject() const {
         return _value;
     }
-    inline void clear() {
+    void clear() {
         _value = nullptr;
     }
-    inline LocalRef<String> toString() const;
-    inline LocalRef<Class> getClass() const;
-    inline jboolean isInstanceOf(Ref<Class> cls) const;
-    inline Monitor lock() const;
+    LocalRef<String> toString() const;
+    LocalRef<Class> getClass() const;
+    jboolean isInstanceOf(Ref<Class> cls) const;
+    Monitor lock() const;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * templates for converting function arguments
+*/
 
 #define M(type,tag) \
 inline type _ConvertArg(type value) { \
@@ -883,6 +900,9 @@ public:
 
 ////////////////////////////////////////////////////////////////////////////////
 
+/**
+ * a java string
+*/
 class String : public _ObjectBase
 {
 public:
@@ -922,6 +942,9 @@ public:
     }
 };
 
+/**
+ * a java class
+*/
 class Class : public _ObjectBase
 {
 public:
@@ -950,6 +973,9 @@ public:
 
 };
 
+/**
+ * a generic java object
+*/
 class Object : public _ObjectBase
 {
 public:
