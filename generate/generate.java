@@ -34,7 +34,7 @@ public class generate
             if (cls == float.class) return "F";
             if (cls == double.class) return "D";
             if (cls == char.class) return "C";
-            if (cls == boolean.class) return "B";
+            if (cls == boolean.class) return "Z";
             throw new Exception("cannot convert: " + cls);
         } else if (cls.isArray()) {
             return "[" + getSignature(cls.getComponentType());
