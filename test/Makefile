@@ -19,7 +19,6 @@ LDFLAGS = \
 	-stdlib=libstdc++ -lstdc++ \
 	-O3 \
 	-Wl,-dead_strip \
-	-Wl,-why_live -Wl,__ZNK14JavaLangObject4waitEl \
 	-shared
 
 JAVACFLAGS = -g
