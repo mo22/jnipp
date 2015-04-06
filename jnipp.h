@@ -162,14 +162,17 @@ protected:
     JNIEnv* env() const {
         return Env::get();
     }
+    void __clear() { // @TODO: see if we can get rid of this.
+        _value = nullptr;
+    }
+    template<class Any> friend class LocalRef;
+    template<class Any> friend class GlobalRef;
+    template<class Any> friend class Ref;
 public:
     Object(jobject value) : _value(value) {
     }
     operator jobject() const {
         return _value;
-    }
-    void __clear() { // @TODO: see if we can get rid of this.
-        _value = nullptr;
     }
     LocalRef<String> toString() const;
     LocalRef<Class> getClass() const;
@@ -347,6 +350,11 @@ public:
 */
 template <typename T>
 class LocalRef : public Ref<T> {
+protected:
+    void __clear() {
+        this->_impl.__clear();
+    }
+    template<class Any> friend class LocalRef;
 public:
     explicit LocalRef(jobject value) : Ref<T>(value) {
         JNIPP_RLOG("LocalRef::LocalRef(jobject) this=%p jobject=%p", this, (jobject)*this);
@@ -366,9 +374,6 @@ public:
             Env::get()->DeleteLocalRef((jobject)*this);
             this->__clear();
         }
-    }
-    void __clear() {
-        this->_impl.__clear();
     }
     static bool is(jobject value) {
         return Env::get()->GetObjectRefType(value) == JNILocalRefType;
