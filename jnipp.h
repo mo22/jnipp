@@ -25,8 +25,10 @@
 
 namespace jnipp {
 
-#define JNIPP_RLOG(...)
 //#define JNIPP_RLOG(...) LOG(__VA_ARGS__)
+#ifndef JNIPP_RLOG
+#define JNIPP_RLOG(...)
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -101,6 +103,8 @@ public:
         assert( cur()->EnsureLocalCapacity(capacity) == 0 );
     }
     static void throwException(Ref<Object> exception);
+    static void throwException(Ref<Class> cls, Ref<String> message);
+    static void throwException(const char* cls, const char* message);
     static bool hasException() {
         return cur()->ExceptionCheck();
     }
@@ -155,10 +159,12 @@ public:
     }
     Ref(const Ref<T>& value) : _impl((jobject)value) {
     }
+
     //template <typename S>
     //explicit Ref(const Ref<S>& value) : _impl((jobject)value) {
     //}
     // @TODO: need to make sure this only works on compatible classes?
+
     template <typename S>
     Ref(const Ref<S>& value) : _impl((jobject)value) {
     }
@@ -166,20 +172,29 @@ public:
     const T* operator->() const {
         return &_impl;
     }
+    T* operator->() {
+        return &_impl;
+    }
     const T& operator*() const {
         return _impl;
     }
+    T& operator*() {
+        return _impl;
+    }
+
     // disallow use of []
 private:
     void operator[](int idx) const { // !!! use (*ref)[idx]
     }
 public:
+
     // @TODO: does not work.
     //template <typename S>
     //S operator[](jsize idx) const {
     //    LOG("Ref []");
     //    return _impl[idx];
     //}
+
     template <typename S>
     bool operator == (const Ref<S>& other) {
         return Env::cur()->IsSameObject((jobject)*this, (jobject)*other);
@@ -359,17 +374,16 @@ public:
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * base class for all object implementations
+ * base object class implementation
  */
-class _ObjectBase {
-private:
-    jobject _value;
+class Object {
 protected:
+    jobject _value;
     JNIEnv* env() const {
         return Env::cur();
     }
 public:
-    _ObjectBase(jobject value) : _value(value) {
+    Object(jobject value) : _value(value) {
     }
     operator jobject() const {
         return _value;
@@ -816,20 +830,33 @@ JNIPP_M_FOR_ALL_TYPES
 ////////////////////////////////////////////////////////////////////////////////
 
 template <class T>
-class Array : public _ObjectBase
+class Array : public Object
 {
 public:
-    using _ObjectBase::_ObjectBase;
+    using Object::Object;
 
     operator jarray() const {
         return (jarray)(jobject)*this;
     }
+    operator jobjectArray() const {
+        return (jobjectArray)(jobject)*this;
+    }
+
     jsize length() const {
         return env()->GetArrayLength((jarray)*this);
     }
+
+    LocalRef<T> get(jsize index) const {
+        return LocalRef<T>( env()->GetObjectArrayElement((jobjectArray)*this, index) );
+    }
+
+    void set(jsize index, Ref<T> value) {
+        env()->SetObjectArrayElement((jobjectArray)*this, index, value);
+    }
+
+
     LocalRef<T> operator[](jsize index) const {
-        //LOG("Array[]");
-        return LocalRef<T>( env()->GetObjectArrayElement((jobjectArray)(jobject)*this, index) );
+        return get(index);
     }
     /*
     void operator[](jsize index, Ref<T> value) {
@@ -837,8 +864,8 @@ public:
         // @TODO
     }
     */
-    static LocalRef<Array<T>> newArray(jsize length) {
-        jclass elementClass = nullptr;
+
+    static LocalRef<Array<T>> construct(jsize length, jclass elementClass) {
         return LocalRef<Array<T>>( Env::cur()->NewObjectArray(length, elementClass, nullptr) );
     }
 
@@ -861,7 +888,6 @@ public:
             return (*_obj)[_idx];
         }
     };
-
     Iterator begin() const {
         return Iterator(this, 0);
     }
@@ -870,43 +896,114 @@ public:
     }
 };
 
-template<>
-class Array<jbyte> : public _ObjectBase {
-public:
-    using _ObjectBase::_ObjectBase;
+template <class T>
+struct _Array {
+};
 
+#define M(type,tag) \
+template <> struct _Array<type> { \
+    using arrayType = type ## Array; \
+    static jarray construct(jsize length) { return Env::cur()->New ## tag ## Array(length); } \
+    static void getRegion(arrayType array, jsize index, jsize length, type* buffer) { return Env::cur()->Get ## tag ## ArrayRegion(array, index, length, buffer); } \
+    static type* getElements(arrayType array, jboolean* isCopy) { return Env::cur()->Get ## tag ## ArrayElements(array, isCopy); } \
+    static void releaseElements(arrayType array, type* data, jint mode) { Env::cur()->Release ## tag ## ArrayElements(array, data, mode); } \
+};
+JNIPP_M_FOR_ALL_TYPES
+#undef M
+
+template<class T>
+class _ElementArray : public Object {
+private:
+    T* _data;
+    bool _dirty;
+public:
+    using arrayType = typename _Array<T>::arrayType;
+    using Object::Object;
+    _ElementArray(jobject value) : Object(value), _data(nullptr) {
+        //LOG("Array this=%p _data=%p", this, _data);
+    }
+    _ElementArray(const _ElementArray& other) = delete;
+    ~_ElementArray() {
+        //LOG("~Array this=%p _data=%p", this, _data);
+        unlock();
+    }
+    operator jobject() const {
+        unlock();
+        return Object::operator jobject();
+    }
     operator jarray() const {
-        return (jarray)(jobject)*this;
+        return (jarray)_value;
+    }
+    operator arrayType() const {
+        return (arrayType)_value;
     }
     jsize length() const {
         return env()->GetArrayLength((jarray)*this);
     }
-
-    operator jbyteArray() const {
-        return (jbyteArray)(jarray)*this;
+    static LocalRef<Array<T>> construct(jsize length) {
+        return LocalRef<Array<T>>( _Array<T>::construct(length) );
     }
-
-    // get/set methods?
-    // lock whole range instead?
-    // create new?
-
-    jbyte operator[](jsize index) const {
-        //LOG("Array<jbyte>[]");
-        jbyte buffer;
-        Env::cur()->GetByteArrayRegion((jbyteArray)*this, index, 1, &buffer);
-        return buffer;
+    void lock() const {
+        if (!_data) {
+            //LOG("Array::lock this=%p", this);
+            const_cast<_ElementArray<T>*>(this)->_data = _Array<T>::getElements((arrayType)*this, nullptr);
+            const_cast<_ElementArray<T>*>(this)->_dirty = false;
+        }
+    }
+    void unlock() const {
+        if (_data) {
+            T* data = _data;
+            const_cast<_ElementArray<T>*>(this)->_data = nullptr;
+            //LOG("Array::unlock this=%p _data=%p env=%p", this, data, Env::peek());
+            _Array<T>::releaseElements((arrayType)*this, data, _dirty ? 0 : JNI_ABORT);
+        }
+    }
+    T get(jsize index) const {
+        lock();
+        return _data[index];
+    }
+    void set(jsize index, T value) {
+        lock();
+        _dirty = true;
+        _data[index] = value;
+    }
+    T operator[](jsize index) const {
+        lock();
+        return _data[index];
+    }
+    T& operator[](jsize index) {
+        lock();
+        _dirty = true;
+        return _data[index];
+    }
+    operator const T*() const {
+        lock();
+        return _data;
+    }
+    operator T*() {
+        lock();
+        _dirty = true;
+        return _data;
     }
 };
+
+#define M(type,tag) \
+template<> class Array<type> : public _ElementArray<type> { \
+public: \
+    using _ElementArray::_ElementArray; \
+};
+JNIPP_M_FOR_ALL_TYPES
+#undef M
 
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
  * a java string
 */
-class String : public _ObjectBase
+class String : public Object
 {
 public:
-    using _ObjectBase::_ObjectBase;
+    using Object::Object;
 
     static LocalRef<String> create(const char* value) {
         return LocalRef<String>( Env::cur()->NewStringUTF(value) );
@@ -914,12 +1011,6 @@ public:
 
     static LocalRef<String> create(std::string value) {
         return LocalRef<String>( Env::cur()->NewStringUTF(value.c_str()) );
-    }
-
-    // @TODO: cast to superclass... hhmm?
-    operator Object&() const {
-        return *this;
-
     }
 
     operator jstring() const {
@@ -945,10 +1036,10 @@ public:
 /**
  * a java class
 */
-class Class : public _ObjectBase
+class Class : public Object
 {
 public:
-    using _ObjectBase::_ObjectBase;
+    using Object::Object;
 
     static LocalRef<Class> forName(const char* name) {
         return LocalRef<Class>( (jobject)Env::cur()->FindClass(name) );
@@ -971,15 +1062,6 @@ public:
         return LocalRef<Class>( env()->GetSuperclass((jclass)*this) );
     }
 
-};
-
-/**
- * a generic java object
-*/
-class Object : public _ObjectBase
-{
-public:
-    using _ObjectBase::_ObjectBase;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1012,23 +1094,30 @@ inline void Env::throwException(Ref<Object> exception)
 {
     cur()->Throw((jthrowable)(jobject)*exception);
 }
+inline void Env::throwException(Ref<Class> cls, Ref<String> message) {
+    Constructor<Object,String> method(cls, "(Ljava/lang/String;)V");
+    throwException(method.construct(message));
+}
+inline void Env::throwException(const char* cls, const char* message) {
+    throwException(Class::forName(cls), String::create(message));
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 
-inline LocalRef<String> _ObjectBase::toString() const {
+inline LocalRef<String> Object::toString() const {
     Method<String> method("java/lang/Object", "toString", "()Ljava/lang/String;");
     return method.call(*this);
 }
 
-inline LocalRef<Class> _ObjectBase::getClass() const {
+inline LocalRef<Class> Object::getClass() const {
     return LocalRef<Class>( env()->GetObjectClass((jobject)*this) );
 }
 
-inline jboolean _ObjectBase::isInstanceOf(Ref<Class> cls) const {
+inline jboolean Object::isInstanceOf(Ref<Class> cls) const {
     return env()->IsInstanceOf((jobject)*this, (jclass)*cls);
 }
 
-inline Monitor _ObjectBase::lock() const {
+inline Monitor Object::lock() const {
     return Monitor((jobject)*this);
 }
 

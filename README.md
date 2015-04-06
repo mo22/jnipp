@@ -42,5 +42,3 @@ TODO
 - better tutorial
 - clean up generate tool (own dir, .jar, output file name option etc.)
 - Jni::Env should be a thread_local
-- complete Array support
-
