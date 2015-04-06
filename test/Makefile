@@ -2,7 +2,7 @@ DEFAULT: all
 .PHONY: all
 
 _java.h: JavaTest.class
-	../generate -cp . java.lang.String JavaTest
+	../generate/generate -cp . java.lang.String JavaTest
 
 CPPFLAGS = \
 	-std=c++11 \
