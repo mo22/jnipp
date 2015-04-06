@@ -9,8 +9,6 @@
 
 [ ] safe cast operator
 
-[ ] put on github
-
 [ ] Fields - how do we implement those in generated classes?
 
 [ ] Arrays get/set for object arrays
@@ -29,7 +27,6 @@
 
 namespace jnipp {
 
-void LOG(const char* fmt, ...);
 #define JNIPP_RLOG(...)
 //#define JNIPP_RLOG(...) LOG(__VA_ARGS__)
 
