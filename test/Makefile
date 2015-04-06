@@ -1,34 +1,32 @@
 DEFAULT: all
 .PHONY: all
 
+_java.h JavaTest.class: JavaTest.java
+	javac ../generate.java
+	javac JavaTest.java
+	java -cp ..:. generate java.lang.String JavaTest
+
+
 CPPFLAGS = \
 	-std=c++11 \
 	-stdlib=libstdc++ \
+	-I.. \
 	-I$(JAVA_HOME)/include \
 	-I$(JAVA_HOME)/include/darwin \
-	-I/Users/mmoeller/workspace/devkit/v8android/v8/include \
-	-I/Users/mmoeller/workspace/devkit/v8android/v8
 
 LDFLAGS = \
 	-stdlib=libstdc++ -lstdc++ \
-	-shared \
-	/Users/mmoeller/workspace/devkit/v8android/v8/out/x64.release/libicuuc.a \
-	/Users/mmoeller/workspace/devkit/v8android/v8/out/x64.release/libicui18n.a \
-	/Users/mmoeller/workspace/devkit/v8android/v8/out/x64.release/libicudata.a \
-	/Users/mmoeller/workspace/devkit/v8android/v8/out/x64.release/libv8_libbase.a \
-	/Users/mmoeller/workspace/devkit/v8android/v8/out/x64.release/libv8_libplatform.a \
-	/Users/mmoeller/workspace/devkit/v8android/v8/out/x64.release/libv8_base.a \
-	/Users/mmoeller/workspace/devkit/v8android/v8/out/x64.release/libv8_snapshot.a \
+	-shared
 
 JAVACFLAGS = -g
 
 %.class: %.java
 	javac $(JAVACFLAGS) $<
 
-%.o: %.cpp *.h
+%.o: %.cpp _java.h ../jnipp.h
 	clang -c $(CPPFLAGS) $< -o $@
 
-libTest.dylib: $(OBJS)
+libTest.dylib: test.o
 	clang -o $@ $(LDFLAGS) $^
 
 all: Test.class libTest.dylib
@@ -38,7 +36,4 @@ all: Test.class libTest.dylib
 clean:
 	rm *.class *.dylib *.o
 
-generate:
-	javac generate.java
-	java generate java.lang.String JavaTest
 
