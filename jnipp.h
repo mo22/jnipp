@@ -219,6 +219,13 @@ public:
     operator const std::string() const {
         return std_str();
     }
+
+    bool operator == (const char* str) const {
+        return std_str() == str;
+    }
+    bool operator != (const char* str) const {
+        return std_str() != str;
+    }
 };
 
 /**
@@ -510,6 +517,13 @@ public:
     }
     const char* c_str() const {
         return (*this)->std_str().c_str();
+    }
+
+    bool operator == (const char* str) const {
+        return **this == str;
+    }
+    bool operator != (const char* str) const {
+        return **this != str;
     }
 };
 
