@@ -87,31 +87,31 @@ public:
     static JNIEnv* peek() {
         return *(_cur());
     }
-    static JNIEnv* cur() {
+    static JNIEnv* get() {
         JNIEnv* res = peek();
         if (!res) throw std::logic_error("EnvScope: no environment set");
         assert(res && "EnvScope: no environment set");
         return res;
     }
     static void pushLocalFrame(jint capacity) {
-        assert( cur()->PushLocalFrame(capacity) == 0 );
+        assert( get()->PushLocalFrame(capacity) == 0 );
     }
     static void popLocalFrame() {
-        cur()->PopLocalFrame(nullptr);
+        get()->PopLocalFrame(nullptr);
     }
     static void ensureLocalCapacity(jint capacity) {
-        assert( cur()->EnsureLocalCapacity(capacity) == 0 );
+        assert( get()->EnsureLocalCapacity(capacity) == 0 );
     }
     static void throwException(Ref<Object> exception);
     static void throwException(Ref<Class> cls, Ref<String> message);
     static void throwException(const char* cls, const char* message);
     static bool hasException() {
-        return cur()->ExceptionCheck();
+        return get()->ExceptionCheck();
     }
     static LocalRef<Object> getException();
     static JavaVM* getVM() {
         JavaVM* res = nullptr;
-        assert( cur()->GetJavaVM(&res) == 0 );
+        assert( get()->GetJavaVM(&res) == 0 );
         return res;
     }
 };
@@ -128,7 +128,7 @@ protected:
     jobject _object;
 public:
     Monitor(jobject object) : _object(object) {
-        Env::cur()->MonitorEnter(_object);
+        Env::get()->MonitorEnter(_object);
     }
     Monitor(const Monitor& other) = delete;
     Monitor(const Monitor&& other) : _object(other._object) {
@@ -136,7 +136,7 @@ public:
     }
     ~Monitor() {
         if (_object) {
-            Env::cur()->MonitorExit(_object);
+            Env::get()->MonitorExit(_object);
             _object = nullptr;
         }
     }
@@ -197,17 +197,17 @@ public:
 
     template <typename S>
     bool operator == (const Ref<S>& other) {
-        return Env::cur()->IsSameObject((jobject)*this, (jobject)*other);
+        return Env::get()->IsSameObject((jobject)*this, (jobject)*other);
     }
     template <typename S>
     bool operator != (const Ref<S>& other) {
-        return !Env::cur()->IsSameObject((jobject)*this, (jobject)*other);
+        return !Env::get()->IsSameObject((jobject)*this, (jobject)*other);
     }
     operator jobject() const {
         return (jobject)_impl;
     }
     operator bool() const {
-        return (jobject)*this != nullptr && !Env::cur()->IsSameObject((jobject)*this, NULL);
+        return (jobject)*this != nullptr && !Env::get()->IsSameObject((jobject)*this, NULL);
     }
 };
 
@@ -256,13 +256,13 @@ public:
         JNIPP_RLOG("LocalRef::LocalRef(LocalRef&&) this=%p value=<%p> jobject=%p", this, &value, (jobject)*this);
     }
     template <typename S>
-    LocalRef(const Ref<S>& value) : Ref<T>(Env::cur()->NewLocalRef((jobject)value)) {
+    LocalRef(const Ref<S>& value) : Ref<T>(Env::get()->NewLocalRef((jobject)value)) {
         JNIPP_RLOG("LocalRef::LocalRef(Ref&) this=%p value=<%p> jobject=%p", this, &value, (jobject)*this);
     }
     ~LocalRef() {
         if (*this) {
             JNIPP_RLOG("LocalRef::~LocalRef() this=%p jobject=%p", this, (jobject)*this);
-            Env::cur()->DeleteLocalRef((jobject)*this);
+            Env::get()->DeleteLocalRef((jobject)*this);
             this->clear();
         }
     }
@@ -270,7 +270,7 @@ public:
         this->_impl.clear();
     }
     static bool is(jobject value) {
-        return Env::cur()->GetObjectRefType(value) == JNILocalRefType;
+        return Env::get()->GetObjectRefType(value) == JNILocalRefType;
     }
 };
 
@@ -284,7 +284,7 @@ public:
     GlobalRef() : Ref<T>((jobject)nullptr) {
         JNIPP_RLOG("GlobalRef::GlobalRef() this=%p", this);
     }
-    explicit GlobalRef(jobject value) : Ref<T>(Env::cur()->NewGlobalRef(value)) {
+    explicit GlobalRef(jobject value) : Ref<T>(Env::get()->NewGlobalRef(value)) {
         JNIPP_RLOG("GlobalRef::GlobalRef(jobject) this=%p jobject=%p", this, (jobject)*this);
     }
     template <typename S>
@@ -293,13 +293,13 @@ public:
         value.clear();
     }
     template <typename S>
-    GlobalRef(const Ref<S>& value) : Ref<T>(Env::cur()->NewGlobalRef((jobject)value)) {
+    GlobalRef(const Ref<S>& value) : Ref<T>(Env::get()->NewGlobalRef((jobject)value)) {
         JNIPP_RLOG("GlobalRef::GlobalRef(Ref&) this=%p value=<%p> jobject=%p", this, &value, (jobject)*this);
     }
     ~GlobalRef() {
         if ((jobject)*this) {
             JNIPP_RLOG("GlobalRef::~GlobalRef() this=%p jobject=%p", this, (jobject)*this);
-            if (Env::peek()) Env::cur()->DeleteGlobalRef((jobject)*this);
+            if (Env::peek()) Env::get()->DeleteGlobalRef((jobject)*this);
             this->clear();
         }
     }
@@ -308,11 +308,11 @@ public:
     }
     template <typename S>
     void set(const Ref<S>& value) {
-        if (*this) Env::cur()->DeleteGlobalRef((jobject)*this);
-        this->_impl = T(Env::cur()->NewGlobalRef((jobject)value));
+        if (*this) Env::get()->DeleteGlobalRef((jobject)*this);
+        this->_impl = T(Env::get()->NewGlobalRef((jobject)value));
     }
     static bool is(jobject value) {
-        return Env::cur()->GetObjectRefType(value) == JNIGlobalRefType;
+        return Env::get()->GetObjectRefType(value) == JNIGlobalRefType;
     }
 };
 
@@ -327,7 +327,7 @@ public:
     WeakRef() : Ref<T>((jobject)nullptr) {
         JNIPP_RLOG("WeakRef::WeakRef() this=%p", this);
     }
-    explicit WeakRef(jobject value) : Ref<T>(Env::cur()->NewWeakGlobalRef(value)) {
+    explicit WeakRef(jobject value) : Ref<T>(Env::get()->NewWeakGlobalRef(value)) {
         JNIPP_RLOG("WeakRef::WeakRef(jobject) this=%p jobject=%p", this, (jobject)*this);
     }
     template <typename S>
@@ -336,37 +336,37 @@ public:
         value.clear();
     }
     template <typename S>
-    WeakRef(const Ref<S>& value) : Ref<T>(Env::cur()->NewWeakGlobalRef((jobject)value)) {
+    WeakRef(const Ref<S>& value) : Ref<T>(Env::get()->NewWeakGlobalRef((jobject)value)) {
         JNIPP_RLOG("WeakRef::WeakRef(Ref&) this=%p value=<%p> jobject=%p", this, &value, (jobject)*this);
     }
     ~WeakRef() {
         if (*this) {
             JNIPP_RLOG("WeakRef::~WeakRef() this=%p jobject=%p", this, (jobject)*this);
-            if (Env::peek()) Env::cur()->DeleteWeakGlobalRef((jobject)*this);
+            if (Env::peek()) Env::get()->DeleteWeakGlobalRef((jobject)*this);
             this->clear();
         }
     }
     template <typename S>
     bool operator == (const Ref<S>& other) {
-        return Env::cur()->IsSameObject((jobject)*this, (jobject)*other);
+        return Env::get()->IsSameObject((jobject)*this, (jobject)*other);
     }
     template <typename S>
     bool operator != (const Ref<S>& other) {
-        return !Env::cur()->IsSameObject((jobject)*this, (jobject)*other);
+        return !Env::get()->IsSameObject((jobject)*this, (jobject)*other);
     }
     operator bool() const {
-        return (jobject)*this != nullptr && !Env::cur()->IsSameObject((jobject)*this, NULL);
+        return (jobject)*this != nullptr && !Env::get()->IsSameObject((jobject)*this, NULL);
     }
     void clear() {
         this->_impl.clear();
     }
     template <typename S>
     void set(const Ref<S>& value) {
-        if (*this) Env::cur()->DeleteWeakGlobalRef((jobject)*this);
-        this->_impl = T(Env::cur()->NewGlobalRef((jobject)value));
+        if (*this) Env::get()->DeleteWeakGlobalRef((jobject)*this);
+        this->_impl = T(Env::get()->NewGlobalRef((jobject)value));
     }
     static bool is(jobject value) {
-        return Env::cur()->GetObjectRefType(value) == JNIWeakGlobalRefType;
+        return Env::get()->GetObjectRefType(value) == JNIWeakGlobalRefType;
     }
 };
 
@@ -380,7 +380,7 @@ class Object {
 protected:
     jobject _value;
     JNIEnv* env() const {
-        return Env::cur();
+        return Env::get();
     }
 public:
     Object(jobject value) : _value(value) {
@@ -450,7 +450,7 @@ public:
     MethodBase(Ref<Class> cls, const char* name, const char* signature);
     jmethodID getMethodID() const {
         if (_methodID == 0) {
-            JNIEnv* env = Env::cur();
+            JNIEnv* env = Env::get();
             if (_cls == 0) {
                 const_cast<MethodBase*>(this)->_cls = env->FindClass(_clsName);
                 if (!_cls) throw std::invalid_argument(std::string() + "Method: clsName not found: " + _clsName);
@@ -474,7 +474,7 @@ class Method : public MethodBase
 public:
     using MethodBase::MethodBase;
     LocalRef<R> call(jobject target, typename _AsRef<A>::R... args) {
-        return LocalRef<R>( Env::cur()->CallObjectMethod(target, getMethodID(), _ConvertArg(args)...) );
+        return LocalRef<R>( Env::get()->CallObjectMethod(target, getMethodID(), _ConvertArg(args)...) );
     }
 };
 
@@ -484,7 +484,7 @@ class Method<void, A...> : public MethodBase
 public:
     using MethodBase::MethodBase;
     void call(jobject target, typename _AsRef<A>::R... args) {
-        return Env::cur()->CallVoidMethod(target, getMethodID(), _ConvertArg(args)...);
+        return Env::get()->CallVoidMethod(target, getMethodID(), _ConvertArg(args)...);
     }
 };
 
@@ -495,7 +495,7 @@ class Method<type, A...> : public MethodBase \
 public: \
     using MethodBase::MethodBase; \
     type call(jobject target, typename _AsRef<A>::R... args) { \
-        return Env::cur()->Call ## tag ## Method(target, getMethodID(), _ConvertArg(args)...); \
+        return Env::get()->Call ## tag ## Method(target, getMethodID(), _ConvertArg(args)...); \
     } \
 };
 JNIPP_M_FOR_ALL_TYPES
@@ -516,7 +516,7 @@ public:
     NonvirtualMethodBase(Ref<Class> cls, const char* name, const char* signature);
     jmethodID getMethodID() const {
         if (_methodID == 0) {
-            JNIEnv* env = Env::cur();
+            JNIEnv* env = Env::get();
             if (_cls == 0) {
                 const_cast<NonvirtualMethodBase*>(this)->_cls = env->FindClass(_clsName);
                 if (!_cls) throw std::invalid_argument(std::string() + "NonvirtualMethod: clsName not found: " + _clsName);
@@ -539,7 +539,7 @@ class NonvirtualMethod : public NonvirtualMethodBase
 public:
     using NonvirtualMethodBase::NonvirtualMethodBase;
     LocalRef<R> call(jobject target, typename _AsRef<A>::R... args) {
-        return LocalRef<R>( Env::cur()->CallNonvirtualObjectMethod(target, getMethodID(), _ConvertArg(args)...) );
+        return LocalRef<R>( Env::get()->CallNonvirtualObjectMethod(target, getMethodID(), _ConvertArg(args)...) );
     }
 };
 
@@ -549,7 +549,7 @@ class NonvirtualMethod<void, A...> : public NonvirtualMethodBase
 public:
     using NonvirtualMethodBase::NonvirtualMethodBase;
     void call(jobject target, typename _AsRef<A>::R... args) {
-        return Env::cur()->CallNonvirtualVoidMethod(target, getMethodID(), _ConvertArg(args)...);
+        return Env::get()->CallNonvirtualVoidMethod(target, getMethodID(), _ConvertArg(args)...);
     }
 };
 
@@ -560,7 +560,7 @@ class NonvirtualMethod<type, A...> : public NonvirtualMethodBase \
 public: \
     using NonvirtualMethodBase::NonvirtualMethodBase; \
     type call(jobject target, typename _AsRef<A>::R... args) { \
-        return Env::cur()->CallNonvirtual ## tag ## Method(target, getMethodID(), _ConvertArg(args)...); \
+        return Env::get()->CallNonvirtual ## tag ## Method(target, getMethodID(), _ConvertArg(args)...); \
     } \
 };
 JNIPP_M_FOR_ALL_TYPES
@@ -581,7 +581,7 @@ public:
     StaticMethodBase(Ref<Class> cls, const char* name, const char* signature);
     jmethodID getMethodID() const {
         if (_methodID == 0) {
-            JNIEnv* env = Env::cur();
+            JNIEnv* env = Env::get();
             if (_cls == 0) {
                 const_cast<StaticMethodBase*>(this)->_cls = env->FindClass(_clsName);
                 if (!_cls) throw std::invalid_argument(std::string() + "StaticMethod: clsName not found: " + _clsName);
@@ -611,7 +611,7 @@ class StaticMethod : public StaticMethodBase
 public:
     using StaticMethodBase::StaticMethodBase;
     LocalRef<R> call(typename _AsRef<A>::R... args) {
-        return LocalRef<R>( Env::cur()->CallStaticObjectMethod(getClass(), getMethodID(), _ConvertArg(args)...) );
+        return LocalRef<R>( Env::get()->CallStaticObjectMethod(getClass(), getMethodID(), _ConvertArg(args)...) );
     }
 };
 
@@ -621,7 +621,7 @@ class StaticMethod<void, A...> : public StaticMethodBase
 public:
     using StaticMethodBase::StaticMethodBase;
     void call(typename _AsRef<A>::R... args) {
-        return Env::cur()->CallStaticVoidMethod(getClass(), getMethodID(), _ConvertArg(args)...);
+        return Env::get()->CallStaticVoidMethod(getClass(), getMethodID(), _ConvertArg(args)...);
     }
 };
 
@@ -632,7 +632,7 @@ class StaticMethod<type, A...> : public StaticMethodBase \
 public: \
     using StaticMethodBase::StaticMethodBase; \
     type call(typename _AsRef<A>::R... args) { \
-        return Env::cur()->CallStatic ## tag ## Method(getClass(), getMethodID(), _ConvertArg(args)...); \
+        return Env::get()->CallStatic ## tag ## Method(getClass(), getMethodID(), _ConvertArg(args)...); \
     } \
 };
 JNIPP_M_FOR_ALL_TYPES
@@ -654,7 +654,7 @@ public:
     Constructor(Ref<Class> cls, const char* signature);
     jmethodID getMethodID() const {
         if (_methodID == 0) {
-            JNIEnv* env = Env::cur();
+            JNIEnv* env = Env::get();
             if (_cls == 0) {
                 const_cast<Constructor*>(this)->_cls = env->FindClass(_clsName);
                 if (!_cls) throw std::invalid_argument(std::string() + "Constructor: clsName not found: " + _clsName);
@@ -677,7 +677,7 @@ public:
         return getClass();
     }
     LocalRef<R> construct(typename _AsRef<A>::R... args) const {
-        return LocalRef<R>( Env::cur()->NewObject(getClass(), getMethodID(), _ConvertArg(args)...) );
+        return LocalRef<R>( Env::get()->NewObject(getClass(), getMethodID(), _ConvertArg(args)...) );
     }
 };
 
@@ -696,7 +696,7 @@ public:
     FieldBase(Ref<Class> cls, const char* name, const char* signature);
     jfieldID getFieldID() const {
         if (_fieldID == 0) {
-            JNIEnv* env = Env::cur();
+            JNIEnv* env = Env::get();
             if (_cls == 0) {
                 const_cast<FieldBase*>(this)->_cls = env->FindClass(_clsName);
                 if (!_cls) throw std::invalid_argument(std::string() + "Field: clsName not found: " + _clsName);
@@ -719,10 +719,10 @@ class Field : public FieldBase
 public:
     using FieldBase::FieldBase;
     LocalRef<R> get(jobject target) const {
-        return LocalRef<R>( Env::cur()->GetObjectField(target, getFieldID()) );
+        return LocalRef<R>( Env::get()->GetObjectField(target, getFieldID()) );
     }
     void set(jobject target, Ref<R> value) {
-        Env::cur()->SetObjectField(target, getFieldID(), value);
+        Env::get()->SetObjectField(target, getFieldID(), value);
     }
 };
 
@@ -733,10 +733,10 @@ class Field<type> : public FieldBase \
 public: \
     using FieldBase::FieldBase; \
     type get(jobject target) const { \
-        return Env::cur()->Get ## tag ## Field(target, getFieldID()); \
+        return Env::get()->Get ## tag ## Field(target, getFieldID()); \
     } \
     void set(jobject target, type value) { \
-        Env::cur()->Set ## tag ## Field(target, getFieldID(), value); \
+        Env::get()->Set ## tag ## Field(target, getFieldID(), value); \
     } \
 };
 JNIPP_M_FOR_ALL_TYPES
@@ -759,7 +759,7 @@ public:
     StaticFieldBase(Ref<Class> cls, const char* name, const char* signature);
     jfieldID getFieldID() const {
         if (_fieldID == 0) {
-            JNIEnv* env = Env::cur();
+            JNIEnv* env = Env::get();
             if (_cls == 0) {
                 const_cast<StaticFieldBase*>(this)->_cls = env->FindClass(_clsName);
                 if (!_cls) throw std::invalid_argument(std::string() + "StaticField: clsName not found: " + _clsName);
@@ -789,7 +789,7 @@ class StaticField : public StaticFieldBase
 public:
     using StaticFieldBase::StaticFieldBase;
     LocalRef<R> get() const {
-        return LocalRef<R>( Env::cur()->GetStaticObjectField(getClass(), getFieldID()) );
+        return LocalRef<R>( Env::get()->GetStaticObjectField(getClass(), getFieldID()) );
     }
     operator LocalRef<R>() const {
         return get();
@@ -798,7 +798,7 @@ public:
         return get();
     }
     void set(Ref<R> value) {
-        Env::cur()->SetStaticObjectField(getClass(), getFieldID(), value);
+        Env::get()->SetStaticObjectField(getClass(), getFieldID(), value);
     }
     void operator=(Ref<R> value) {
         set(value);
@@ -812,13 +812,13 @@ class StaticField<type> : public StaticFieldBase \
 public: \
     using StaticFieldBase::StaticFieldBase; \
     type get() const { \
-        return Env::cur()->GetStatic ## tag ## Field(getClass(), getFieldID()); \
+        return Env::get()->GetStatic ## tag ## Field(getClass(), getFieldID()); \
     } \
     operator type() const { \
         return get(); \
     } \
     void set(type value) { \
-        Env::cur()->SetStatic ## tag ## Field(getClass(), getFieldID(), value); \
+        Env::get()->SetStatic ## tag ## Field(getClass(), getFieldID(), value); \
     } \
     void operator=(type value) { \
         set(value); \
@@ -866,7 +866,7 @@ public:
     */
 
     static LocalRef<Array<T>> construct(jsize length, jclass elementClass) {
-        return LocalRef<Array<T>>( Env::cur()->NewObjectArray(length, elementClass, nullptr) );
+        return LocalRef<Array<T>>( Env::get()->NewObjectArray(length, elementClass, nullptr) );
     }
 
     class Iterator
@@ -903,10 +903,10 @@ struct _Array {
 #define M(type,tag) \
 template <> struct _Array<type> { \
     using arrayType = type ## Array; \
-    static jarray construct(jsize length) { return Env::cur()->New ## tag ## Array(length); } \
-    static void getRegion(arrayType array, jsize index, jsize length, type* buffer) { return Env::cur()->Get ## tag ## ArrayRegion(array, index, length, buffer); } \
-    static type* getElements(arrayType array, jboolean* isCopy) { return Env::cur()->Get ## tag ## ArrayElements(array, isCopy); } \
-    static void releaseElements(arrayType array, type* data, jint mode) { Env::cur()->Release ## tag ## ArrayElements(array, data, mode); } \
+    static jarray construct(jsize length) { return Env::get()->New ## tag ## Array(length); } \
+    static void getRegion(arrayType array, jsize index, jsize length, type* buffer) { return Env::get()->Get ## tag ## ArrayRegion(array, index, length, buffer); } \
+    static type* getElements(arrayType array, jboolean* isCopy) { return Env::get()->Get ## tag ## ArrayElements(array, isCopy); } \
+    static void releaseElements(arrayType array, type* data, jint mode) { Env::get()->Release ## tag ## ArrayElements(array, data, mode); } \
 };
 JNIPP_M_FOR_ALL_TYPES
 #undef M
@@ -1006,11 +1006,11 @@ public:
     using Object::Object;
 
     static LocalRef<String> create(const char* value) {
-        return LocalRef<String>( Env::cur()->NewStringUTF(value) );
+        return LocalRef<String>( Env::get()->NewStringUTF(value) );
     }
 
     static LocalRef<String> create(std::string value) {
-        return LocalRef<String>( Env::cur()->NewStringUTF(value.c_str()) );
+        return LocalRef<String>( Env::get()->NewStringUTF(value.c_str()) );
     }
 
     operator jstring() const {
@@ -1042,7 +1042,7 @@ public:
     using Object::Object;
 
     static LocalRef<Class> forName(const char* name) {
-        return LocalRef<Class>( (jobject)Env::cur()->FindClass(name) );
+        return LocalRef<Class>( (jobject)Env::get()->FindClass(name) );
     }
 
     operator jclass() const {
@@ -1085,14 +1085,14 @@ inline Constructor<R, A...>::Constructor(Ref<Class> cls, const char* signature) 
 ////////////////////////////////////////////////////////////////////////////////
 
 inline LocalRef<Object> Env::getException() {
-    LocalRef<Object> res ( cur()->ExceptionOccurred() );
-    cur()->ExceptionClear();
+    LocalRef<Object> res ( get()->ExceptionOccurred() );
+    get()->ExceptionClear();
     return res;
 }
 
 inline void Env::throwException(Ref<Object> exception)
 {
-    cur()->Throw((jthrowable)(jobject)*exception);
+    get()->Throw((jthrowable)(jobject)*exception);
 }
 inline void Env::throwException(Ref<Class> cls, Ref<String> message) {
     Constructor<Object,String> method(cls, "(Ljava/lang/String;)V");
