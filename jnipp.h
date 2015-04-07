@@ -563,22 +563,32 @@ public:
     LocalRef<T> operator[] (jsize index) {
         return (*this)->get(index);
     }
+    typename Array<T>::Iterator begin() const {
+        return (*this)->begin();
+    }
+    typename Array<T>::Iterator end() const {
+        return (*this)->end();
+    }
 };
 
 /**
  * ref specialization for typed array
 */
-template <>
-class Ref<Array<jbyte>> : public RefBase<Array<jbyte>> {
-public:
-    using RefBase<Array<jbyte>>::RefBase;
-    jbyte operator[] (jsize index) const {
-        return (*this)->get(index);
-    }
-    jbyte& operator[] (jsize index) {
-        return (*this)->getRef(index);
-    }
+#define M(type,tag) \
+template <> \
+class Ref<Array<type>> : public RefBase<Array<type>> { \
+public: \
+    using RefBase<Array<type>>::RefBase; \
+    type operator[] (jsize index) const { \
+        return (*this)->get(index); \
+    } \
+    type& operator[] (jsize index) { \
+        return (*this)->getRef(index); \
+    } \
 };
+JNIPP_M_FOR_ALL_TYPES
+#undef M
+
 
 /**
  * java local ref
