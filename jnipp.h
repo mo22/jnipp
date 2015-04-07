@@ -19,17 +19,31 @@
 #define _JNIPP_H_INCLUDED
 
 #include <jni.h>
+
 #include <string>
+
 #include <stdexcept>
+
 #include <assert.h>
+
 #ifdef JNIPP_USE_BOOST
-#include <boost/type_traits.hpp>
-#define JNIPP_ENABLE_IF_C boost::enable_if_c
-#define JNIPP_IS_BASE_OF boost::is_base_of
+    #include <boost/type_traits.hpp>
+    #define JNIPP_ENABLE_IF_C boost::enable_if_c
+    #define JNIPP_IS_BASE_OF boost::is_base_of
 #else
-#include <type_traits>
-#define JNIPP_ENABLE_IF_C std::enable_if
-#define JNIPP_IS_BASE_OF std::is_base_of
+    #include <type_traits>
+    #define JNIPP_ENABLE_IF_C std::enable_if
+    #define JNIPP_IS_BASE_OF std::is_base_of
+#endif
+
+#ifndef JNIPP_THREAD_LOCAL
+    #if defined(__GNUC__)
+        #define JNIPP_THREAD_LOCAL __thread
+    #elif defined(_MSC_VER)
+        #define JNIPP_THREAD_LOCAL __declspec(thread)
+    #else
+        #define JNIPP_THREAD_LOCAL thread_local
+    #endif
 #endif
 
 namespace jnipp {
@@ -73,7 +87,7 @@ class Env
 {
 protected:
     static JNIEnv** _cur() {
-        static /*thread_local*/ JNIEnv* value = nullptr;
+        static JNIPP_THREAD_LOCAL JNIEnv* value = nullptr;
         return &value;
     }
 public:
