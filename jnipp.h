@@ -617,7 +617,7 @@ public:
     ~LocalRef() {
         if (*this) {
             JNIPP_RLOG("LocalRef::~LocalRef() this=%p jobject=%p", this, (jobject)*this);
-            Env::get()->DeleteLocalRef((jobject)*this);
+            if (Env::peek()) Env::get()->DeleteLocalRef((jobject)*this);
             this->__clear();
         }
     }
