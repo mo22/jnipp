@@ -667,6 +667,10 @@ public:
     static bool is(jobject value) {
         return Env::get()->GetObjectRefType(value) == JNIGlobalRefType;
     }
+    template <typename S>
+    void operator= (const Ref<S>& value) {
+        set(value);
+    }
 };
 
 /**
