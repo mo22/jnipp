@@ -492,6 +492,9 @@ public:
     bool operator != (const Ref<S>& other) const {
         return !Env::get()->IsSameObject((jobject)*this, (jobject)*other);
     }
+
+    bool isInstanceOf(const Ref<Class>& cls) const;
+
     operator jobject() const {
         return (jobject)_impl;
     }
@@ -1196,6 +1199,11 @@ inline void Env::throwException(const char* cls, const char* message) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+
+template <typename T>
+bool RefBase<T>::isInstanceOf(const Ref<Class>& cls) const {
+    return Env::get()->IsInstanceOf(*this, cls);
+}
 
 inline LocalRef<String> Object::toString() const {
     Method<String> method("java/lang/Object", "toString", "()Ljava/lang/String;");
