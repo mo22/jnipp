@@ -485,11 +485,11 @@ private:
 public:
 
     template <typename S>
-    bool operator == (const Ref<S>& other) {
+    bool operator == (const Ref<S>& other) const {
         return Env::get()->IsSameObject((jobject)*this, (jobject)*other);
     }
     template <typename S>
-    bool operator != (const Ref<S>& other) {
+    bool operator != (const Ref<S>& other) const {
         return !Env::get()->IsSameObject((jobject)*this, (jobject)*other);
     }
     operator jobject() const {
