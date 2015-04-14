@@ -264,7 +264,7 @@ public:
 /**
  * generic object array
 */
-template <class T>
+template <typename T>
 class Array : public Object
 {
 public:
@@ -606,6 +606,9 @@ protected:
     template<typename S> friend class LocalRef;
 public:
     explicit LocalRef(jobject value) : Ref<T>(value) {
+        if (value) {
+            assert( Env::get()->GetObjectRefType(value) == JNILocalRefType );
+        }
         JNIPP_RLOG("LocalRef::LocalRef(jobject) this=%p jobject=%p", this, (jobject)*this);
     }
     template <typename S>

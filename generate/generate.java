@@ -106,9 +106,9 @@ public class generate
     private void handleGetClass() throws Exception
     {
         declaration.append("\n");
-        declaration.append("    static jnipp::GlobalRef<jnipp::Class>& getClass();\n");
+        declaration.append("    static jnipp::GlobalRef<jnipp::Class>& clazz();\n");
 
-        implementation.append("inline jnipp::GlobalRef<jnipp::Class>& "+defClsName+"::getClass() {\n");
+        implementation.append("inline jnipp::GlobalRef<jnipp::Class>& "+defClsName+"::clazz() {\n");
         implementation.append("    static jnipp::GlobalRef<jnipp::Class> cls;\n");
         implementation.append("    if (!cls) cls.set(jnipp::Class::forName(\"" + cls.getName().replace(".", "/") + "\"));\n");
         implementation.append("    return cls;\n");
@@ -145,7 +145,7 @@ public class generate
             implementation.append(",");
             implementation.append(getNativeClassName(paramTypes[i]));
         }
-        implementation.append("> method(getClass(), \""+member.getName()+"\", \""+getSignature(member)+"\");\n");
+        implementation.append("> method(clazz(), \""+member.getName()+"\", \""+getSignature(member)+"\");\n");
         implementation.append("    ");
         if (retType != void.class) implementation.append("return ");
         implementation.append("method.call(*this");
@@ -183,7 +183,7 @@ public class generate
             implementation.append(",");
             implementation.append(getNativeClassName(paramTypes[i]));
         }
-        implementation.append("> method(getClass(), \""+member.getName()+"\", \""+getSignature(member)+"\");\n");
+        implementation.append("> method(clazz(), \""+member.getName()+"\", \""+getSignature(member)+"\");\n");
         implementation.append("    ");
         if (retType != void.class) implementation.append("return ");
         implementation.append("method.call(");
@@ -220,7 +220,7 @@ public class generate
             implementation.append(",");
             implementation.append(getNativeClassName(paramTypes[i]));
         }
-        implementation.append("> constructor(getClass(), \""+getSignature(member)+"\");\n");
+        implementation.append("> constructor(clazz(), \""+getSignature(member)+"\");\n");
         implementation.append("    return constructor.construct(");
         for (int i=0; i<paramTypes.length; i++) {
             if (i > 0) implementation.append(", ");
