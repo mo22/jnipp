@@ -46,6 +46,14 @@
     #endif
 #endif
 
+#ifdef __EXCEPTIONS
+#define JNIPP_ASSERT(condition, message) if (!(condition)) throw std::logic_error(message "(" #condition ")")
+#else
+#define JNIPP_ASSERT(condition, message) assert(condition && message)
+#endif
+
+
+
 namespace jnipp {
 
 //#define JNIPP_RLOG(...) LOG(__VA_ARGS__)
@@ -115,8 +123,7 @@ public:
     }
     static JNIEnv* get() {
         JNIEnv* res = peek();
-        if (!res) throw std::logic_error("EnvScope: no environment set");
-        assert(res && "EnvScope: no environment set");
+        JNIPP_ASSERT(res, "EnvScope: no environment set");
         return res;
     }
     static void pushLocalFrame(jint capacity) {
@@ -789,12 +796,10 @@ public:
             JNIEnv* env = Env::get();
             if (_cls == 0) {
                 const_cast<MethodBase*>(this)->_cls = env->FindClass(_clsName);
-                if (!_cls) throw std::invalid_argument(std::string() + "Method: clsName not found: " + _clsName);
-                assert(_cls && "Method: clsName not found");
+                JNIPP_ASSERT(_cls, "Method: clsName not found");
             }
             jmethodID res = env->GetMethodID(_cls, _name, _signature);
-            if (!res) throw std::invalid_argument(std::string() + "Method: method not found: " + _clsName + "." + _name + " (" + _signature + ")");
-            assert(res && "Method: method not found");
+            JNIPP_ASSERT(res, "Method: method not found");
             const_cast<MethodBase*>(this)->_methodID = res;
         }
         return _methodID;
@@ -855,11 +860,10 @@ public:
             JNIEnv* env = Env::get();
             if (_cls == 0) {
                 const_cast<NonvirtualMethodBase*>(this)->_cls = env->FindClass(_clsName);
-                if (!_cls) throw std::invalid_argument(std::string() + "NonvirtualMethod: clsName not found: " + _clsName);
-                assert(_cls && "NonvirtualMethod: clsName not found");
+                JNIPP_ASSERT(_cls, "NonvirtualMethod: clsName not found");
             }
             jmethodID res = env->GetMethodID(_cls, _name, _signature);
-            assert(res && "NonvirtualMethod: method not found");
+            JNIPP_ASSERT(res, "NonvirtualMethod: method not found");
             const_cast<NonvirtualMethodBase*>(this)->_methodID = res;
         }
         return _methodID;
@@ -920,11 +924,10 @@ public:
             JNIEnv* env = Env::get();
             if (_cls == 0) {
                 const_cast<StaticMethodBase*>(this)->_cls = env->FindClass(_clsName);
-                if (!_cls) throw std::invalid_argument(std::string() + "StaticMethod: clsName not found: " + _clsName);
-                assert(_cls && "StaticMethod: clsName not found");
+                JNIPP_ASSERT(_cls, "StaticMethod: clsName not found");
             }
             jmethodID res = env->GetStaticMethodID(_cls, _name, _signature);
-            assert(res && "StaticMethod: method not found");
+            JNIPP_ASSERT(res, "StaticMethod: method not found");
             const_cast<StaticMethodBase*>(this)->_methodID = res;
         }
         return _methodID;
@@ -993,11 +996,10 @@ public:
             JNIEnv* env = Env::get();
             if (_cls == 0) {
                 const_cast<Constructor*>(this)->_cls = env->FindClass(_clsName);
-                if (!_cls) throw std::invalid_argument(std::string() + "Constructor: clsName not found: " + _clsName);
-                assert(_cls && "Constructor: clsName not found");
+                JNIPP_ASSERT(_cls, "Constructor: clsName not found");
             }
             jmethodID res = env->GetMethodID(_cls, "<init>", _signature);
-            assert(res && "Constructor: method not found");
+            JNIPP_ASSERT(res, "Constructor: method not found");
             const_cast<Constructor*>(this)->_methodID = res;
         }
         return _methodID;
@@ -1035,11 +1037,10 @@ public:
             JNIEnv* env = Env::get();
             if (_cls == 0) {
                 const_cast<FieldBase*>(this)->_cls = env->FindClass(_clsName);
-                if (!_cls) throw std::invalid_argument(std::string() + "Field: clsName not found: " + _clsName);
-                assert(_cls && "Field: clsName not found");
+                JNIPP_ASSERT(_cls, "Field: clsName not found");
             }
             jfieldID res = env->GetFieldID(_cls, _name, _signature);
-            assert(res && "Field: field not found");
+            JNIPP_ASSERT(res, "Field: field not found");
             const_cast<FieldBase*>(this)->_fieldID = res;
         }
         return _fieldID;
@@ -1098,11 +1099,10 @@ public:
             JNIEnv* env = Env::get();
             if (_cls == 0) {
                 const_cast<StaticFieldBase*>(this)->_cls = env->FindClass(_clsName);
-                if (!_cls) throw std::invalid_argument(std::string() + "StaticField: clsName not found: " + _clsName);
-                assert(_cls && "StaticField: clsName not found");
+                JNIPP_ASSERT(_cls, "StaticField: clsName not found");
             }
             jfieldID res = env->GetStaticFieldID(_cls, _name, _signature);
-            assert(res && "StaticField: field not found");
+            JNIPP_ASSERT(res, "StaticField: field not found");
             const_cast<StaticFieldBase*>(this)->_fieldID = res;
         }
         return _fieldID;
