@@ -339,12 +339,39 @@ public class generate
         return res.toString();
     }
 
+    public String getSingleHeader() throws Exception
+    {
+        StringBuffer res = new StringBuffer();
+        res.append("#ifndef _JNIPP_CLASSES\n");
+        res.append("#define _JNIPP_CLASSES\n");
+        res.append("#include \"jnipp/jnipp.h\"\n");
+        res.append("\n");
+        for (String item : usedClasses.values()) {
+            res.append("class " + item + ";\n");
+        }
+        res.append("\n");
+        res.append(declaration);
+        res.append("\n");
+        res.append("#endif\n");
+        return res.toString();
+    }
+
+    public String getSingleBody() throws Exception
+    {
+        StringBuffer res = new StringBuffer();
+        res.append("#include \"_java.h\"\n");
+        res.append("\n");
+        res.append(implementation);
+        res.append("\n");
+        return res.toString();
+    }
+
     public String getHeader() throws Exception
     {
         StringBuffer res = new StringBuffer();
 
-        res.append("#ifndef _JNI_" + cls.getName().replace('.', '_').toUpperCase() + "\n");
-        res.append("#define _JNI_" + cls.getName().replace('.', '_').toUpperCase() + "\n");
+        res.append("#ifndef _JNIPP_" + cls.getName().replace('.', '_').toUpperCase() + "\n");
+        res.append("#define _JNIPP_" + cls.getName().replace('.', '_').toUpperCase() + "\n");
 
         res.append("\n");
         for (String item : usedClasses.values()) {
@@ -373,7 +400,7 @@ public class generate
     public String getBody() throws Exception
     {
         StringBuffer res = new StringBuffer();
-        res.append("#include \"jnipp.h\"\n");
+        res.append("#include \"jnipp/jnipp.h\"\n");
         res.append("#include \"" + convertClassName(cls) + ".h\"\n");
         res.append("\n");
         res.append(implementation);
@@ -438,8 +465,15 @@ public class generate
             x.handleRecursive(Class.forName(arg));
         }
 
+        //FileWriter writer = new FileWriter("_java.h");
+        //writer.write(x.getSingle());
+        //writer.flush();
+
         FileWriter writer = new FileWriter("_java.h");
-        writer.write(x.getSingle());
+        writer.write(x.getSingleHeader());
+        writer.flush();
+        writer = new FileWriter("_java.cpp");
+        writer.write(x.getSingleBody());
         writer.flush();
 
     }
