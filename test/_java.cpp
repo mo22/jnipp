@@ -2037,6 +2037,11 @@ jboolean SunUtilLocaleLocaleExtensions::isValidUnicodeLocaleKey(const jnipp::Ref
 }
 const jnipp::StaticField<SunUtilLocaleLocaleExtensions> SunUtilLocaleLocaleExtensions::CALENDAR_JAPANESE ("sun/util/locale/LocaleExtensions", "CALENDAR_JAPANESE", "Lsun/util/locale/LocaleExtensions;");
 const jnipp::StaticField<SunUtilLocaleLocaleExtensions> SunUtilLocaleLocaleExtensions::NUMBER_THAI ("sun/util/locale/LocaleExtensions", "NUMBER_THAI", "Lsun/util/locale/LocaleExtensions;");
+inline jnipp::GlobalRef<jnipp::Class>& JavaUtilSortedMap::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/util/SortedMap"));
+    return cls;
+}
 inline jnipp::GlobalRef<jnipp::Class>& JavaNioBuffer::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/nio/Buffer"));
@@ -2400,11 +2405,6 @@ jint JavaNioCharBuffer::read(const jnipp::Ref<JavaNioCharBuffer>& a0) const {
     static jnipp::Method<jint,JavaNioCharBuffer> method(clazz(), "read", "(Ljava/nio/CharBuffer;)I");
     return method.call(*this, a0);
 }
-inline jnipp::GlobalRef<jnipp::Class>& JavaUtilSortedMap::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/util/SortedMap"));
-    return cls;
-}
 inline jnipp::GlobalRef<jnipp::Class>& JavaLangClass::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/lang/Class"));
@@ -2756,41 +2756,6 @@ inline jnipp::GlobalRef<jnipp::Class>& SunUtilLocaleBaseLocale_1::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("sun/util/locale/BaseLocale$1"));
     return cls;
-}
-inline jnipp::GlobalRef<jnipp::Class>& SunUtilLocaleExtension::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("sun/util/locale/Extension"));
-    return cls;
-}
-
-// protected sun.util.locale.Extension(char)
-jnipp::LocalRef<SunUtilLocaleExtension> SunUtilLocaleExtension::construct(jchar a0) {
-    static jnipp::Constructor<SunUtilLocaleExtension,jchar> constructor(clazz(), "(C)V");
-    return constructor.construct(a0);
-}
-
-// sun.util.locale.Extension(char,java.lang.String)
-jnipp::LocalRef<SunUtilLocaleExtension> SunUtilLocaleExtension::construct(jchar a0, const jnipp::Ref<JavaLangString>& a1) {
-    static jnipp::Constructor<SunUtilLocaleExtension,jchar,JavaLangString> constructor(clazz(), "(CLjava/lang/String;)V");
-    return constructor.construct(a0, a1);
-}
-
-// public java.lang.String sun.util.locale.Extension.getValue()
-jnipp::LocalRef<JavaLangString> SunUtilLocaleExtension::getValue() const {
-    static jnipp::Method<JavaLangString> method(clazz(), "getValue", "()Ljava/lang/String;");
-    return method.call(*this);
-}
-
-// public char sun.util.locale.Extension.getKey()
-jchar SunUtilLocaleExtension::getKey() const {
-    static jnipp::Method<jchar> method(clazz(), "getKey", "()C");
-    return method.call(*this);
-}
-
-// public java.lang.String sun.util.locale.Extension.getID()
-jnipp::LocalRef<JavaLangString> SunUtilLocaleExtension::getID() const {
-    static jnipp::Method<JavaLangString> method(clazz(), "getID", "()Ljava/lang/String;");
-    return method.call(*this);
 }
 inline jnipp::GlobalRef<jnipp::Class>& JavaUtilMap::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
@@ -3371,6 +3336,41 @@ const jnipp::StaticField<jint> JavaLangCharacter::MIN_SUPPLEMENTARY_CODE_POINT (
 const jnipp::StaticField<jint> JavaLangCharacter::MIN_CODE_POINT ("java/lang/Character", "MIN_CODE_POINT", "I");
 const jnipp::StaticField<jint> JavaLangCharacter::MAX_CODE_POINT ("java/lang/Character", "MAX_CODE_POINT", "I");
 const jnipp::StaticField<jint> JavaLangCharacter::SIZE ("java/lang/Character", "SIZE", "I");
+inline jnipp::GlobalRef<jnipp::Class>& SunUtilLocaleExtension::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("sun/util/locale/Extension"));
+    return cls;
+}
+
+// protected sun.util.locale.Extension(char)
+jnipp::LocalRef<SunUtilLocaleExtension> SunUtilLocaleExtension::construct(jchar a0) {
+    static jnipp::Constructor<SunUtilLocaleExtension,jchar> constructor(clazz(), "(C)V");
+    return constructor.construct(a0);
+}
+
+// sun.util.locale.Extension(char,java.lang.String)
+jnipp::LocalRef<SunUtilLocaleExtension> SunUtilLocaleExtension::construct(jchar a0, const jnipp::Ref<JavaLangString>& a1) {
+    static jnipp::Constructor<SunUtilLocaleExtension,jchar,JavaLangString> constructor(clazz(), "(CLjava/lang/String;)V");
+    return constructor.construct(a0, a1);
+}
+
+// public java.lang.String sun.util.locale.Extension.getValue()
+jnipp::LocalRef<JavaLangString> SunUtilLocaleExtension::getValue() const {
+    static jnipp::Method<JavaLangString> method(clazz(), "getValue", "()Ljava/lang/String;");
+    return method.call(*this);
+}
+
+// public char sun.util.locale.Extension.getKey()
+jchar SunUtilLocaleExtension::getKey() const {
+    static jnipp::Method<jchar> method(clazz(), "getKey", "()C");
+    return method.call(*this);
+}
+
+// public java.lang.String sun.util.locale.Extension.getID()
+jnipp::LocalRef<JavaLangString> SunUtilLocaleExtension::getID() const {
+    static jnipp::Method<JavaLangString> method(clazz(), "getID", "()Ljava/lang/String;");
+    return method.call(*this);
+}
 inline jnipp::GlobalRef<jnipp::Class>& JavaNioByteOrder::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/nio/ByteOrder"));
@@ -3390,303 +3390,6 @@ jnipp::LocalRef<JavaNioByteOrder> JavaNioByteOrder::nativeOrder() {
 }
 const jnipp::StaticField<JavaNioByteOrder> JavaNioByteOrder::BIG_ENDIAN ("java/nio/ByteOrder", "BIG_ENDIAN", "Ljava/nio/ByteOrder;");
 const jnipp::StaticField<JavaNioByteOrder> JavaNioByteOrder::LITTLE_ENDIAN ("java/nio/ByteOrder", "LITTLE_ENDIAN", "Ljava/nio/ByteOrder;");
-inline jnipp::GlobalRef<jnipp::Class>& JavaLangPackage::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/lang/Package"));
-    return cls;
-}
-
-// private java.lang.Package(java.lang.String,java.util.jar.Manifest,java.net.URL,java.lang.ClassLoader)
-jnipp::LocalRef<JavaLangPackage> JavaLangPackage::construct(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaUtilJarManifest>& a1, const jnipp::Ref<JavaNetURL>& a2, const jnipp::Ref<JavaLangClassLoader>& a3) {
-    static jnipp::Constructor<JavaLangPackage,JavaLangString,JavaUtilJarManifest,JavaNetURL,JavaLangClassLoader> constructor(clazz(), "(Ljava/lang/String;Ljava/util/jar/Manifest;Ljava/net/URL;Ljava/lang/ClassLoader;)V");
-    return constructor.construct(a0, a1, a2, a3);
-}
-
-// java.lang.Package(java.lang.String,java.util.jar.Manifest,java.net.URL,java.lang.ClassLoader,java.lang.Package$1)
-jnipp::LocalRef<JavaLangPackage> JavaLangPackage::construct(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaUtilJarManifest>& a1, const jnipp::Ref<JavaNetURL>& a2, const jnipp::Ref<JavaLangClassLoader>& a3, const jnipp::Ref<JavaLangPackage_1>& a4) {
-    static jnipp::Constructor<JavaLangPackage,JavaLangString,JavaUtilJarManifest,JavaNetURL,JavaLangClassLoader,JavaLangPackage_1> constructor(clazz(), "(Ljava/lang/String;Ljava/util/jar/Manifest;Ljava/net/URL;Ljava/lang/ClassLoader;Ljava/lang/Package$1;)V");
-    return constructor.construct(a0, a1, a2, a3, a4);
-}
-
-// java.lang.Package(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.net.URL,java.lang.ClassLoader)
-jnipp::LocalRef<JavaLangPackage> JavaLangPackage::construct(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1, const jnipp::Ref<JavaLangString>& a2, const jnipp::Ref<JavaLangString>& a3, const jnipp::Ref<JavaLangString>& a4, const jnipp::Ref<JavaLangString>& a5, const jnipp::Ref<JavaLangString>& a6, const jnipp::Ref<JavaNetURL>& a7, const jnipp::Ref<JavaLangClassLoader>& a8) {
-    static jnipp::Constructor<JavaLangPackage,JavaLangString,JavaLangString,JavaLangString,JavaLangString,JavaLangString,JavaLangString,JavaLangString,JavaNetURL,JavaLangClassLoader> constructor(clazz(), "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/net/URL;Ljava/lang/ClassLoader;)V");
-    return constructor.construct(a0, a1, a2, a3, a4, a5, a6, a7, a8);
-}
-
-// public int java.lang.Package.hashCode()
-jint JavaLangPackage::hashCode() const {
-    static jnipp::Method<jint> method(clazz(), "hashCode", "()I");
-    return method.call(*this);
-}
-
-// public java.lang.String java.lang.Package.getName()
-jnipp::LocalRef<JavaLangString> JavaLangPackage::getName() const {
-    static jnipp::Method<JavaLangString> method(clazz(), "getName", "()Ljava/lang/String;");
-    return method.call(*this);
-}
-
-// public static java.lang.Package java.lang.Package.getPackage(java.lang.String)
-jnipp::LocalRef<JavaLangPackage> JavaLangPackage::getPackage(const jnipp::Ref<JavaLangString>& a0) {
-    static jnipp::StaticMethod<JavaLangPackage,JavaLangString> method(clazz(), "getPackage", "(Ljava/lang/String;)Ljava/lang/Package;");
-    return method.call(a0);
-}
-
-// public java.lang.annotation.Annotation java.lang.Package.getAnnotation(java.lang.Class)
-jnipp::LocalRef<JavaLangAnnotationAnnotation> JavaLangPackage::getAnnotation(const jnipp::Ref<JavaLangClass>& a0) const {
-    static jnipp::Method<JavaLangAnnotationAnnotation,JavaLangClass> method(clazz(), "getAnnotation", "(Ljava/lang/Class;)Ljava/lang/annotation/Annotation;");
-    return method.call(*this, a0);
-}
-
-// public boolean java.lang.Package.isAnnotationPresent(java.lang.Class)
-jboolean JavaLangPackage::isAnnotationPresent(const jnipp::Ref<JavaLangClass>& a0) const {
-    static jnipp::Method<jboolean,JavaLangClass> method(clazz(), "isAnnotationPresent", "(Ljava/lang/Class;)Z");
-    return method.call(*this, a0);
-}
-
-// public java.lang.annotation.Annotation[] java.lang.Package.getAnnotations()
-jnipp::LocalRef<jnipp::Array<JavaLangAnnotationAnnotation>> JavaLangPackage::getAnnotations() const {
-    static jnipp::Method<jnipp::Array<JavaLangAnnotationAnnotation>> method(clazz(), "getAnnotations", "()[Ljava/lang/annotation/Annotation;");
-    return method.call(*this);
-}
-
-// public java.lang.annotation.Annotation[] java.lang.Package.getDeclaredAnnotations()
-jnipp::LocalRef<jnipp::Array<JavaLangAnnotationAnnotation>> JavaLangPackage::getDeclaredAnnotations() const {
-    static jnipp::Method<jnipp::Array<JavaLangAnnotationAnnotation>> method(clazz(), "getDeclaredAnnotations", "()[Ljava/lang/annotation/Annotation;");
-    return method.call(*this);
-}
-
-// public static java.lang.Package[] java.lang.Package.getPackages()
-jnipp::LocalRef<jnipp::Array<JavaLangPackage>> JavaLangPackage::getPackages() {
-    static jnipp::StaticMethod<jnipp::Array<JavaLangPackage>> method(clazz(), "getPackages", "()[Ljava/lang/Package;");
-    return method.call();
-}
-
-// public boolean java.lang.Package.isSealed()
-jboolean JavaLangPackage::isSealed() const {
-    static jnipp::Method<jboolean> method(clazz(), "isSealed", "()Z");
-    return method.call(*this);
-}
-
-// public boolean java.lang.Package.isSealed(java.net.URL)
-jboolean JavaLangPackage::isSealed(const jnipp::Ref<JavaNetURL>& a0) const {
-    static jnipp::Method<jboolean,JavaNetURL> method(clazz(), "isSealed", "(Ljava/net/URL;)Z");
-    return method.call(*this, a0);
-}
-
-// public boolean java.lang.Package.isCompatibleWith(java.lang.String) throws java.lang.NumberFormatException
-jboolean JavaLangPackage::isCompatibleWith(const jnipp::Ref<JavaLangString>& a0) const {
-    static jnipp::Method<jboolean,JavaLangString> method(clazz(), "isCompatibleWith", "(Ljava/lang/String;)Z");
-    return method.call(*this, a0);
-}
-
-// public java.lang.String java.lang.Package.getSpecificationTitle()
-jnipp::LocalRef<JavaLangString> JavaLangPackage::getSpecificationTitle() const {
-    static jnipp::Method<JavaLangString> method(clazz(), "getSpecificationTitle", "()Ljava/lang/String;");
-    return method.call(*this);
-}
-
-// public java.lang.String java.lang.Package.getSpecificationVersion()
-jnipp::LocalRef<JavaLangString> JavaLangPackage::getSpecificationVersion() const {
-    static jnipp::Method<JavaLangString> method(clazz(), "getSpecificationVersion", "()Ljava/lang/String;");
-    return method.call(*this);
-}
-
-// public java.lang.String java.lang.Package.getSpecificationVendor()
-jnipp::LocalRef<JavaLangString> JavaLangPackage::getSpecificationVendor() const {
-    static jnipp::Method<JavaLangString> method(clazz(), "getSpecificationVendor", "()Ljava/lang/String;");
-    return method.call(*this);
-}
-
-// public java.lang.String java.lang.Package.getImplementationTitle()
-jnipp::LocalRef<JavaLangString> JavaLangPackage::getImplementationTitle() const {
-    static jnipp::Method<JavaLangString> method(clazz(), "getImplementationTitle", "()Ljava/lang/String;");
-    return method.call(*this);
-}
-
-// public java.lang.String java.lang.Package.getImplementationVersion()
-jnipp::LocalRef<JavaLangString> JavaLangPackage::getImplementationVersion() const {
-    static jnipp::Method<JavaLangString> method(clazz(), "getImplementationVersion", "()Ljava/lang/String;");
-    return method.call(*this);
-}
-
-// public java.lang.String java.lang.Package.getImplementationVendor()
-jnipp::LocalRef<JavaLangString> JavaLangPackage::getImplementationVendor() const {
-    static jnipp::Method<JavaLangString> method(clazz(), "getImplementationVendor", "()Ljava/lang/String;");
-    return method.call(*this);
-}
-inline jnipp::GlobalRef<jnipp::Class>& JavaNetURL::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/net/URL"));
-    return cls;
-}
-
-// public java.net.URL(java.net.URL,java.lang.String,java.net.URLStreamHandler) throws java.net.MalformedURLException
-jnipp::LocalRef<JavaNetURL> JavaNetURL::construct(const jnipp::Ref<JavaNetURL>& a0, const jnipp::Ref<JavaLangString>& a1, const jnipp::Ref<JavaNetURLStreamHandler>& a2) {
-    static jnipp::Constructor<JavaNetURL,JavaNetURL,JavaLangString,JavaNetURLStreamHandler> constructor(clazz(), "(Ljava/net/URL;Ljava/lang/String;Ljava/net/URLStreamHandler;)V");
-    return constructor.construct(a0, a1, a2);
-}
-
-// public java.net.URL(java.net.URL,java.lang.String) throws java.net.MalformedURLException
-jnipp::LocalRef<JavaNetURL> JavaNetURL::construct(const jnipp::Ref<JavaNetURL>& a0, const jnipp::Ref<JavaLangString>& a1) {
-    static jnipp::Constructor<JavaNetURL,JavaNetURL,JavaLangString> constructor(clazz(), "(Ljava/net/URL;Ljava/lang/String;)V");
-    return constructor.construct(a0, a1);
-}
-
-// public java.net.URL(java.lang.String) throws java.net.MalformedURLException
-jnipp::LocalRef<JavaNetURL> JavaNetURL::construct(const jnipp::Ref<JavaLangString>& a0) {
-    static jnipp::Constructor<JavaNetURL,JavaLangString> constructor(clazz(), "(Ljava/lang/String;)V");
-    return constructor.construct(a0);
-}
-
-// public java.net.URL(java.lang.String,java.lang.String,int,java.lang.String) throws java.net.MalformedURLException
-jnipp::LocalRef<JavaNetURL> JavaNetURL::construct(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1, jint a2, const jnipp::Ref<JavaLangString>& a3) {
-    static jnipp::Constructor<JavaNetURL,JavaLangString,JavaLangString,jint,JavaLangString> constructor(clazz(), "(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;)V");
-    return constructor.construct(a0, a1, a2, a3);
-}
-
-// public java.net.URL(java.lang.String,java.lang.String,java.lang.String) throws java.net.MalformedURLException
-jnipp::LocalRef<JavaNetURL> JavaNetURL::construct(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1, const jnipp::Ref<JavaLangString>& a2) {
-    static jnipp::Constructor<JavaNetURL,JavaLangString,JavaLangString,JavaLangString> constructor(clazz(), "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
-    return constructor.construct(a0, a1, a2);
-}
-
-// public java.net.URL(java.lang.String,java.lang.String,int,java.lang.String,java.net.URLStreamHandler) throws java.net.MalformedURLException
-jnipp::LocalRef<JavaNetURL> JavaNetURL::construct(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1, jint a2, const jnipp::Ref<JavaLangString>& a3, const jnipp::Ref<JavaNetURLStreamHandler>& a4) {
-    static jnipp::Constructor<JavaNetURL,JavaLangString,JavaLangString,jint,JavaLangString,JavaNetURLStreamHandler> constructor(clazz(), "(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/net/URLStreamHandler;)V");
-    return constructor.construct(a0, a1, a2, a3, a4);
-}
-
-// public boolean java.net.URL.equals(java.lang.Object)
-jboolean JavaNetURL::equals(const jnipp::Ref<JavaLangObject>& a0) const {
-    static jnipp::Method<jboolean,JavaLangObject> method(clazz(), "equals", "(Ljava/lang/Object;)Z");
-    return method.call(*this, a0);
-}
-
-// public synchronized int java.net.URL.hashCode()
-jint JavaNetURL::hashCode() const {
-    static jnipp::Method<jint> method(clazz(), "hashCode", "()I");
-    return method.call(*this);
-}
-
-// public final java.io.InputStream java.net.URL.openStream() throws java.io.IOException
-jnipp::LocalRef<JavaIoInputStream> JavaNetURL::openStream() const {
-    static jnipp::Method<JavaIoInputStream> method(clazz(), "openStream", "()Ljava/io/InputStream;");
-    return method.call(*this);
-}
-
-// public java.lang.String java.net.URL.getPath()
-jnipp::LocalRef<JavaLangString> JavaNetURL::getPath() const {
-    static jnipp::Method<JavaLangString> method(clazz(), "getPath", "()Ljava/lang/String;");
-    return method.call(*this);
-}
-
-// public java.net.URI java.net.URL.toURI() throws java.net.URISyntaxException
-jnipp::LocalRef<JavaNetURI> JavaNetURL::toURI() const {
-    static jnipp::Method<JavaNetURI> method(clazz(), "toURI", "()Ljava/net/URI;");
-    return method.call(*this);
-}
-
-// public java.lang.String java.net.URL.getAuthority()
-jnipp::LocalRef<JavaLangString> JavaNetURL::getAuthority() const {
-    static jnipp::Method<JavaLangString> method(clazz(), "getAuthority", "()Ljava/lang/String;");
-    return method.call(*this);
-}
-
-// public java.lang.String java.net.URL.getQuery()
-jnipp::LocalRef<JavaLangString> JavaNetURL::getQuery() const {
-    static jnipp::Method<JavaLangString> method(clazz(), "getQuery", "()Ljava/lang/String;");
-    return method.call(*this);
-}
-
-// public java.net.URLConnection java.net.URL.openConnection() throws java.io.IOException
-jnipp::LocalRef<JavaNetURLConnection> JavaNetURL::openConnection() const {
-    static jnipp::Method<JavaNetURLConnection> method(clazz(), "openConnection", "()Ljava/net/URLConnection;");
-    return method.call(*this);
-}
-
-// public java.net.URLConnection java.net.URL.openConnection(java.net.Proxy) throws java.io.IOException
-jnipp::LocalRef<JavaNetURLConnection> JavaNetURL::openConnection(const jnipp::Ref<JavaNetProxy>& a0) const {
-    static jnipp::Method<JavaNetURLConnection,JavaNetProxy> method(clazz(), "openConnection", "(Ljava/net/Proxy;)Ljava/net/URLConnection;");
-    return method.call(*this, a0);
-}
-
-// public java.lang.String java.net.URL.getProtocol()
-jnipp::LocalRef<JavaLangString> JavaNetURL::getProtocol() const {
-    static jnipp::Method<JavaLangString> method(clazz(), "getProtocol", "()Ljava/lang/String;");
-    return method.call(*this);
-}
-
-// public java.lang.String java.net.URL.getFile()
-jnipp::LocalRef<JavaLangString> JavaNetURL::getFile() const {
-    static jnipp::Method<JavaLangString> method(clazz(), "getFile", "()Ljava/lang/String;");
-    return method.call(*this);
-}
-
-// public java.lang.String java.net.URL.getHost()
-jnipp::LocalRef<JavaLangString> JavaNetURL::getHost() const {
-    static jnipp::Method<JavaLangString> method(clazz(), "getHost", "()Ljava/lang/String;");
-    return method.call(*this);
-}
-
-// public java.lang.String java.net.URL.getRef()
-jnipp::LocalRef<JavaLangString> JavaNetURL::getRef() const {
-    static jnipp::Method<JavaLangString> method(clazz(), "getRef", "()Ljava/lang/String;");
-    return method.call(*this);
-}
-
-// public java.lang.String java.net.URL.getUserInfo()
-jnipp::LocalRef<JavaLangString> JavaNetURL::getUserInfo() const {
-    static jnipp::Method<JavaLangString> method(clazz(), "getUserInfo", "()Ljava/lang/String;");
-    return method.call(*this);
-}
-
-// public int java.net.URL.getPort()
-jint JavaNetURL::getPort() const {
-    static jnipp::Method<jint> method(clazz(), "getPort", "()I");
-    return method.call(*this);
-}
-
-// public int java.net.URL.getDefaultPort()
-jint JavaNetURL::getDefaultPort() const {
-    static jnipp::Method<jint> method(clazz(), "getDefaultPort", "()I");
-    return method.call(*this);
-}
-
-// public boolean java.net.URL.sameFile(java.net.URL)
-jboolean JavaNetURL::sameFile(const jnipp::Ref<JavaNetURL>& a0) const {
-    static jnipp::Method<jboolean,JavaNetURL> method(clazz(), "sameFile", "(Ljava/net/URL;)Z");
-    return method.call(*this, a0);
-}
-
-// public java.lang.String java.net.URL.toExternalForm()
-jnipp::LocalRef<JavaLangString> JavaNetURL::toExternalForm() const {
-    static jnipp::Method<JavaLangString> method(clazz(), "toExternalForm", "()Ljava/lang/String;");
-    return method.call(*this);
-}
-
-// public final java.lang.Object java.net.URL.getContent() throws java.io.IOException
-jnipp::LocalRef<JavaLangObject> JavaNetURL::getContent() const {
-    static jnipp::Method<JavaLangObject> method(clazz(), "getContent", "()Ljava/lang/Object;");
-    return method.call(*this);
-}
-
-// public final java.lang.Object java.net.URL.getContent(java.lang.Class[]) throws java.io.IOException
-jnipp::LocalRef<JavaLangObject> JavaNetURL::getContent(const jnipp::Ref<jnipp::Array<JavaLangClass>>& a0) const {
-    static jnipp::Method<JavaLangObject,jnipp::Array<JavaLangClass>> method(clazz(), "getContent", "([Ljava/lang/Class;)Ljava/lang/Object;");
-    return method.call(*this, a0);
-}
-
-// public static void java.net.URL.setURLStreamHandlerFactory(java.net.URLStreamHandlerFactory)
-void JavaNetURL::setURLStreamHandlerFactory(const jnipp::Ref<JavaNetURLStreamHandlerFactory>& a0) {
-    static jnipp::StaticMethod<void,JavaNetURLStreamHandlerFactory> method(clazz(), "setURLStreamHandlerFactory", "(Ljava/net/URLStreamHandlerFactory;)V");
-    method.call(a0);
-}
-inline jnipp::GlobalRef<jnipp::Class>& JavaLangAnnotationAnnotation::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/lang/annotation/Annotation"));
-    return cls;
-}
 inline jnipp::GlobalRef<jnipp::Class>& JavaLangReflectAccessibleObject::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/lang/reflect/AccessibleObject"));
@@ -3851,6 +3554,75 @@ jboolean JavaLangReflectConstructor::isVarArgs() const {
 // public java.lang.annotation.Annotation[][] java.lang.reflect.Constructor.getParameterAnnotations()
 jnipp::LocalRef<jnipp::Array<jnipp::Array<JavaLangAnnotationAnnotation>>> JavaLangReflectConstructor::getParameterAnnotations() const {
     static jnipp::Method<jnipp::Array<jnipp::Array<JavaLangAnnotationAnnotation>>> method(clazz(), "getParameterAnnotations", "()[[Ljava/lang/annotation/Annotation;");
+    return method.call(*this);
+}
+inline jnipp::GlobalRef<jnipp::Class>& JavaLangReflectTypeVariable::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/lang/reflect/TypeVariable"));
+    return cls;
+}
+inline jnipp::GlobalRef<jnipp::Class>& JavaLangAnnotationAnnotation::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/lang/annotation/Annotation"));
+    return cls;
+}
+inline jnipp::GlobalRef<jnipp::Class>& JavaIoInputStream::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/io/InputStream"));
+    return cls;
+}
+
+// public java.io.InputStream()
+jnipp::LocalRef<JavaIoInputStream> JavaIoInputStream::construct() {
+    static jnipp::Constructor<JavaIoInputStream> constructor(clazz(), "()V");
+    return constructor.construct();
+}
+
+// public void java.io.InputStream.close() throws java.io.IOException
+void JavaIoInputStream::close() const {
+    static jnipp::Method<void> method(clazz(), "close", "()V");
+    method.call(*this);
+}
+
+// public synchronized void java.io.InputStream.mark(int)
+void JavaIoInputStream::mark(jint a0) const {
+    static jnipp::Method<void,jint> method(clazz(), "mark", "(I)V");
+    method.call(*this, a0);
+}
+
+// public synchronized void java.io.InputStream.reset() throws java.io.IOException
+void JavaIoInputStream::reset() const {
+    static jnipp::Method<void> method(clazz(), "reset", "()V");
+    method.call(*this);
+}
+
+// public int java.io.InputStream.read(byte[],int,int) throws java.io.IOException
+jint JavaIoInputStream::read(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
+    static jnipp::Method<jint,jnipp::Array<jbyte>,jint,jint> method(clazz(), "read", "([BII)I");
+    return method.call(*this, a0, a1, a2);
+}
+
+// public int java.io.InputStream.read(byte[]) throws java.io.IOException
+jint JavaIoInputStream::read(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
+    static jnipp::Method<jint,jnipp::Array<jbyte>> method(clazz(), "read", "([B)I");
+    return method.call(*this, a0);
+}
+
+// public long java.io.InputStream.skip(long) throws java.io.IOException
+jlong JavaIoInputStream::skip(jlong a0) const {
+    static jnipp::Method<jlong,jlong> method(clazz(), "skip", "(J)J");
+    return method.call(*this, a0);
+}
+
+// public int java.io.InputStream.available() throws java.io.IOException
+jint JavaIoInputStream::available() const {
+    static jnipp::Method<jint> method(clazz(), "available", "()I");
+    return method.call(*this);
+}
+
+// public boolean java.io.InputStream.markSupported()
+jboolean JavaIoInputStream::markSupported() const {
+    static jnipp::Method<jboolean> method(clazz(), "markSupported", "()Z");
     return method.call(*this);
 }
 inline jnipp::GlobalRef<jnipp::Class>& JavaLangReflectType::clazz() {
@@ -4186,64 +3958,219 @@ void JavaLangReflectField::setDouble(const jnipp::Ref<JavaLangObject>& a0, jdoub
     static jnipp::Method<void,JavaLangObject,jdouble> method(clazz(), "setDouble", "(Ljava/lang/Object;D)V");
     method.call(*this, a0, a1);
 }
-inline jnipp::GlobalRef<jnipp::Class>& JavaIoInputStream::clazz() {
+inline jnipp::GlobalRef<jnipp::Class>& JavaNetURL::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/io/InputStream"));
+    if (!cls) cls.set(jnipp::Class::forName("java/net/URL"));
     return cls;
 }
 
-// public java.io.InputStream()
-jnipp::LocalRef<JavaIoInputStream> JavaIoInputStream::construct() {
-    static jnipp::Constructor<JavaIoInputStream> constructor(clazz(), "()V");
-    return constructor.construct();
+// public java.net.URL(java.net.URL,java.lang.String,java.net.URLStreamHandler) throws java.net.MalformedURLException
+jnipp::LocalRef<JavaNetURL> JavaNetURL::construct(const jnipp::Ref<JavaNetURL>& a0, const jnipp::Ref<JavaLangString>& a1, const jnipp::Ref<JavaNetURLStreamHandler>& a2) {
+    static jnipp::Constructor<JavaNetURL,JavaNetURL,JavaLangString,JavaNetURLStreamHandler> constructor(clazz(), "(Ljava/net/URL;Ljava/lang/String;Ljava/net/URLStreamHandler;)V");
+    return constructor.construct(a0, a1, a2);
 }
 
-// public void java.io.InputStream.close() throws java.io.IOException
-void JavaIoInputStream::close() const {
-    static jnipp::Method<void> method(clazz(), "close", "()V");
-    method.call(*this);
+// public java.net.URL(java.net.URL,java.lang.String) throws java.net.MalformedURLException
+jnipp::LocalRef<JavaNetURL> JavaNetURL::construct(const jnipp::Ref<JavaNetURL>& a0, const jnipp::Ref<JavaLangString>& a1) {
+    static jnipp::Constructor<JavaNetURL,JavaNetURL,JavaLangString> constructor(clazz(), "(Ljava/net/URL;Ljava/lang/String;)V");
+    return constructor.construct(a0, a1);
 }
 
-// public synchronized void java.io.InputStream.mark(int)
-void JavaIoInputStream::mark(jint a0) const {
-    static jnipp::Method<void,jint> method(clazz(), "mark", "(I)V");
-    method.call(*this, a0);
+// public java.net.URL(java.lang.String) throws java.net.MalformedURLException
+jnipp::LocalRef<JavaNetURL> JavaNetURL::construct(const jnipp::Ref<JavaLangString>& a0) {
+    static jnipp::Constructor<JavaNetURL,JavaLangString> constructor(clazz(), "(Ljava/lang/String;)V");
+    return constructor.construct(a0);
 }
 
-// public synchronized void java.io.InputStream.reset() throws java.io.IOException
-void JavaIoInputStream::reset() const {
-    static jnipp::Method<void> method(clazz(), "reset", "()V");
-    method.call(*this);
+// public java.net.URL(java.lang.String,java.lang.String,int,java.lang.String) throws java.net.MalformedURLException
+jnipp::LocalRef<JavaNetURL> JavaNetURL::construct(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1, jint a2, const jnipp::Ref<JavaLangString>& a3) {
+    static jnipp::Constructor<JavaNetURL,JavaLangString,JavaLangString,jint,JavaLangString> constructor(clazz(), "(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;)V");
+    return constructor.construct(a0, a1, a2, a3);
 }
 
-// public int java.io.InputStream.read(byte[],int,int) throws java.io.IOException
-jint JavaIoInputStream::read(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
-    static jnipp::Method<jint,jnipp::Array<jbyte>,jint,jint> method(clazz(), "read", "([BII)I");
-    return method.call(*this, a0, a1, a2);
+// public java.net.URL(java.lang.String,java.lang.String,java.lang.String) throws java.net.MalformedURLException
+jnipp::LocalRef<JavaNetURL> JavaNetURL::construct(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1, const jnipp::Ref<JavaLangString>& a2) {
+    static jnipp::Constructor<JavaNetURL,JavaLangString,JavaLangString,JavaLangString> constructor(clazz(), "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
+    return constructor.construct(a0, a1, a2);
 }
 
-// public int java.io.InputStream.read(byte[]) throws java.io.IOException
-jint JavaIoInputStream::read(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
-    static jnipp::Method<jint,jnipp::Array<jbyte>> method(clazz(), "read", "([B)I");
+// public java.net.URL(java.lang.String,java.lang.String,int,java.lang.String,java.net.URLStreamHandler) throws java.net.MalformedURLException
+jnipp::LocalRef<JavaNetURL> JavaNetURL::construct(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1, jint a2, const jnipp::Ref<JavaLangString>& a3, const jnipp::Ref<JavaNetURLStreamHandler>& a4) {
+    static jnipp::Constructor<JavaNetURL,JavaLangString,JavaLangString,jint,JavaLangString,JavaNetURLStreamHandler> constructor(clazz(), "(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/net/URLStreamHandler;)V");
+    return constructor.construct(a0, a1, a2, a3, a4);
+}
+
+// public boolean java.net.URL.equals(java.lang.Object)
+jboolean JavaNetURL::equals(const jnipp::Ref<JavaLangObject>& a0) const {
+    static jnipp::Method<jboolean,JavaLangObject> method(clazz(), "equals", "(Ljava/lang/Object;)Z");
     return method.call(*this, a0);
 }
 
-// public long java.io.InputStream.skip(long) throws java.io.IOException
-jlong JavaIoInputStream::skip(jlong a0) const {
-    static jnipp::Method<jlong,jlong> method(clazz(), "skip", "(J)J");
+// public synchronized int java.net.URL.hashCode()
+jint JavaNetURL::hashCode() const {
+    static jnipp::Method<jint> method(clazz(), "hashCode", "()I");
+    return method.call(*this);
+}
+
+// public final java.io.InputStream java.net.URL.openStream() throws java.io.IOException
+jnipp::LocalRef<JavaIoInputStream> JavaNetURL::openStream() const {
+    static jnipp::Method<JavaIoInputStream> method(clazz(), "openStream", "()Ljava/io/InputStream;");
+    return method.call(*this);
+}
+
+// public java.lang.String java.net.URL.getPath()
+jnipp::LocalRef<JavaLangString> JavaNetURL::getPath() const {
+    static jnipp::Method<JavaLangString> method(clazz(), "getPath", "()Ljava/lang/String;");
+    return method.call(*this);
+}
+
+// public java.net.URI java.net.URL.toURI() throws java.net.URISyntaxException
+jnipp::LocalRef<JavaNetURI> JavaNetURL::toURI() const {
+    static jnipp::Method<JavaNetURI> method(clazz(), "toURI", "()Ljava/net/URI;");
+    return method.call(*this);
+}
+
+// public java.lang.String java.net.URL.getAuthority()
+jnipp::LocalRef<JavaLangString> JavaNetURL::getAuthority() const {
+    static jnipp::Method<JavaLangString> method(clazz(), "getAuthority", "()Ljava/lang/String;");
+    return method.call(*this);
+}
+
+// public java.lang.String java.net.URL.getQuery()
+jnipp::LocalRef<JavaLangString> JavaNetURL::getQuery() const {
+    static jnipp::Method<JavaLangString> method(clazz(), "getQuery", "()Ljava/lang/String;");
+    return method.call(*this);
+}
+
+// public java.net.URLConnection java.net.URL.openConnection() throws java.io.IOException
+jnipp::LocalRef<JavaNetURLConnection> JavaNetURL::openConnection() const {
+    static jnipp::Method<JavaNetURLConnection> method(clazz(), "openConnection", "()Ljava/net/URLConnection;");
+    return method.call(*this);
+}
+
+// public java.net.URLConnection java.net.URL.openConnection(java.net.Proxy) throws java.io.IOException
+jnipp::LocalRef<JavaNetURLConnection> JavaNetURL::openConnection(const jnipp::Ref<JavaNetProxy>& a0) const {
+    static jnipp::Method<JavaNetURLConnection,JavaNetProxy> method(clazz(), "openConnection", "(Ljava/net/Proxy;)Ljava/net/URLConnection;");
     return method.call(*this, a0);
 }
 
-// public int java.io.InputStream.available() throws java.io.IOException
-jint JavaIoInputStream::available() const {
-    static jnipp::Method<jint> method(clazz(), "available", "()I");
+// public java.lang.String java.net.URL.getProtocol()
+jnipp::LocalRef<JavaLangString> JavaNetURL::getProtocol() const {
+    static jnipp::Method<JavaLangString> method(clazz(), "getProtocol", "()Ljava/lang/String;");
     return method.call(*this);
 }
 
-// public boolean java.io.InputStream.markSupported()
-jboolean JavaIoInputStream::markSupported() const {
-    static jnipp::Method<jboolean> method(clazz(), "markSupported", "()Z");
+// public java.lang.String java.net.URL.getFile()
+jnipp::LocalRef<JavaLangString> JavaNetURL::getFile() const {
+    static jnipp::Method<JavaLangString> method(clazz(), "getFile", "()Ljava/lang/String;");
     return method.call(*this);
+}
+
+// public java.lang.String java.net.URL.getHost()
+jnipp::LocalRef<JavaLangString> JavaNetURL::getHost() const {
+    static jnipp::Method<JavaLangString> method(clazz(), "getHost", "()Ljava/lang/String;");
+    return method.call(*this);
+}
+
+// public java.lang.String java.net.URL.getRef()
+jnipp::LocalRef<JavaLangString> JavaNetURL::getRef() const {
+    static jnipp::Method<JavaLangString> method(clazz(), "getRef", "()Ljava/lang/String;");
+    return method.call(*this);
+}
+
+// public java.lang.String java.net.URL.getUserInfo()
+jnipp::LocalRef<JavaLangString> JavaNetURL::getUserInfo() const {
+    static jnipp::Method<JavaLangString> method(clazz(), "getUserInfo", "()Ljava/lang/String;");
+    return method.call(*this);
+}
+
+// public int java.net.URL.getPort()
+jint JavaNetURL::getPort() const {
+    static jnipp::Method<jint> method(clazz(), "getPort", "()I");
+    return method.call(*this);
+}
+
+// public int java.net.URL.getDefaultPort()
+jint JavaNetURL::getDefaultPort() const {
+    static jnipp::Method<jint> method(clazz(), "getDefaultPort", "()I");
+    return method.call(*this);
+}
+
+// public boolean java.net.URL.sameFile(java.net.URL)
+jboolean JavaNetURL::sameFile(const jnipp::Ref<JavaNetURL>& a0) const {
+    static jnipp::Method<jboolean,JavaNetURL> method(clazz(), "sameFile", "(Ljava/net/URL;)Z");
+    return method.call(*this, a0);
+}
+
+// public java.lang.String java.net.URL.toExternalForm()
+jnipp::LocalRef<JavaLangString> JavaNetURL::toExternalForm() const {
+    static jnipp::Method<JavaLangString> method(clazz(), "toExternalForm", "()Ljava/lang/String;");
+    return method.call(*this);
+}
+
+// public final java.lang.Object java.net.URL.getContent() throws java.io.IOException
+jnipp::LocalRef<JavaLangObject> JavaNetURL::getContent() const {
+    static jnipp::Method<JavaLangObject> method(clazz(), "getContent", "()Ljava/lang/Object;");
+    return method.call(*this);
+}
+
+// public final java.lang.Object java.net.URL.getContent(java.lang.Class[]) throws java.io.IOException
+jnipp::LocalRef<JavaLangObject> JavaNetURL::getContent(const jnipp::Ref<jnipp::Array<JavaLangClass>>& a0) const {
+    static jnipp::Method<JavaLangObject,jnipp::Array<JavaLangClass>> method(clazz(), "getContent", "([Ljava/lang/Class;)Ljava/lang/Object;");
+    return method.call(*this, a0);
+}
+
+// public static void java.net.URL.setURLStreamHandlerFactory(java.net.URLStreamHandlerFactory)
+void JavaNetURL::setURLStreamHandlerFactory(const jnipp::Ref<JavaNetURLStreamHandlerFactory>& a0) {
+    static jnipp::StaticMethod<void,JavaNetURLStreamHandlerFactory> method(clazz(), "setURLStreamHandlerFactory", "(Ljava/net/URLStreamHandlerFactory;)V");
+    method.call(a0);
+}
+inline jnipp::GlobalRef<jnipp::Class>& JavaSecurityProtectionDomain::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/security/ProtectionDomain"));
+    return cls;
+}
+
+// public java.security.ProtectionDomain(java.security.CodeSource,java.security.PermissionCollection)
+jnipp::LocalRef<JavaSecurityProtectionDomain> JavaSecurityProtectionDomain::construct(const jnipp::Ref<JavaSecurityCodeSource>& a0, const jnipp::Ref<JavaSecurityPermissionCollection>& a1) {
+    static jnipp::Constructor<JavaSecurityProtectionDomain,JavaSecurityCodeSource,JavaSecurityPermissionCollection> constructor(clazz(), "(Ljava/security/CodeSource;Ljava/security/PermissionCollection;)V");
+    return constructor.construct(a0, a1);
+}
+
+// public java.security.ProtectionDomain(java.security.CodeSource,java.security.PermissionCollection,java.lang.ClassLoader,java.security.Principal[])
+jnipp::LocalRef<JavaSecurityProtectionDomain> JavaSecurityProtectionDomain::construct(const jnipp::Ref<JavaSecurityCodeSource>& a0, const jnipp::Ref<JavaSecurityPermissionCollection>& a1, const jnipp::Ref<JavaLangClassLoader>& a2, const jnipp::Ref<jnipp::Array<JavaSecurityPrincipal>>& a3) {
+    static jnipp::Constructor<JavaSecurityProtectionDomain,JavaSecurityCodeSource,JavaSecurityPermissionCollection,JavaLangClassLoader,jnipp::Array<JavaSecurityPrincipal>> constructor(clazz(), "(Ljava/security/CodeSource;Ljava/security/PermissionCollection;Ljava/lang/ClassLoader;[Ljava/security/Principal;)V");
+    return constructor.construct(a0, a1, a2, a3);
+}
+
+// public final java.lang.ClassLoader java.security.ProtectionDomain.getClassLoader()
+jnipp::LocalRef<JavaLangClassLoader> JavaSecurityProtectionDomain::getClassLoader() const {
+    static jnipp::Method<JavaLangClassLoader> method(clazz(), "getClassLoader", "()Ljava/lang/ClassLoader;");
+    return method.call(*this);
+}
+
+// public final java.security.CodeSource java.security.ProtectionDomain.getCodeSource()
+jnipp::LocalRef<JavaSecurityCodeSource> JavaSecurityProtectionDomain::getCodeSource() const {
+    static jnipp::Method<JavaSecurityCodeSource> method(clazz(), "getCodeSource", "()Ljava/security/CodeSource;");
+    return method.call(*this);
+}
+
+// public final java.security.Principal[] java.security.ProtectionDomain.getPrincipals()
+jnipp::LocalRef<jnipp::Array<JavaSecurityPrincipal>> JavaSecurityProtectionDomain::getPrincipals() const {
+    static jnipp::Method<jnipp::Array<JavaSecurityPrincipal>> method(clazz(), "getPrincipals", "()[Ljava/security/Principal;");
+    return method.call(*this);
+}
+
+// public final java.security.PermissionCollection java.security.ProtectionDomain.getPermissions()
+jnipp::LocalRef<JavaSecurityPermissionCollection> JavaSecurityProtectionDomain::getPermissions() const {
+    static jnipp::Method<JavaSecurityPermissionCollection> method(clazz(), "getPermissions", "()Ljava/security/PermissionCollection;");
+    return method.call(*this);
+}
+
+// public boolean java.security.ProtectionDomain.implies(java.security.Permission)
+jboolean JavaSecurityProtectionDomain::implies(const jnipp::Ref<JavaSecurityPermission>& a0) const {
+    static jnipp::Method<jboolean,JavaSecurityPermission> method(clazz(), "implies", "(Ljava/security/Permission;)Z");
+    return method.call(*this, a0);
 }
 inline jnipp::GlobalRef<jnipp::Class>& JavaLangClassLoader::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
@@ -4346,167 +4273,130 @@ void JavaLangClassLoader::clearAssertionStatus() const {
     static jnipp::Method<void> method(clazz(), "clearAssertionStatus", "()V");
     method.call(*this);
 }
-inline jnipp::GlobalRef<jnipp::Class>& JavaLangReflectTypeVariable::clazz() {
+inline jnipp::GlobalRef<jnipp::Class>& JavaLangPackage::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/lang/reflect/TypeVariable"));
-    return cls;
-}
-inline jnipp::GlobalRef<jnipp::Class>& JavaSecurityProtectionDomain::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/security/ProtectionDomain"));
+    if (!cls) cls.set(jnipp::Class::forName("java/lang/Package"));
     return cls;
 }
 
-// public java.security.ProtectionDomain(java.security.CodeSource,java.security.PermissionCollection)
-jnipp::LocalRef<JavaSecurityProtectionDomain> JavaSecurityProtectionDomain::construct(const jnipp::Ref<JavaSecurityCodeSource>& a0, const jnipp::Ref<JavaSecurityPermissionCollection>& a1) {
-    static jnipp::Constructor<JavaSecurityProtectionDomain,JavaSecurityCodeSource,JavaSecurityPermissionCollection> constructor(clazz(), "(Ljava/security/CodeSource;Ljava/security/PermissionCollection;)V");
-    return constructor.construct(a0, a1);
-}
-
-// public java.security.ProtectionDomain(java.security.CodeSource,java.security.PermissionCollection,java.lang.ClassLoader,java.security.Principal[])
-jnipp::LocalRef<JavaSecurityProtectionDomain> JavaSecurityProtectionDomain::construct(const jnipp::Ref<JavaSecurityCodeSource>& a0, const jnipp::Ref<JavaSecurityPermissionCollection>& a1, const jnipp::Ref<JavaLangClassLoader>& a2, const jnipp::Ref<jnipp::Array<JavaSecurityPrincipal>>& a3) {
-    static jnipp::Constructor<JavaSecurityProtectionDomain,JavaSecurityCodeSource,JavaSecurityPermissionCollection,JavaLangClassLoader,jnipp::Array<JavaSecurityPrincipal>> constructor(clazz(), "(Ljava/security/CodeSource;Ljava/security/PermissionCollection;Ljava/lang/ClassLoader;[Ljava/security/Principal;)V");
+// private java.lang.Package(java.lang.String,java.util.jar.Manifest,java.net.URL,java.lang.ClassLoader)
+jnipp::LocalRef<JavaLangPackage> JavaLangPackage::construct(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaUtilJarManifest>& a1, const jnipp::Ref<JavaNetURL>& a2, const jnipp::Ref<JavaLangClassLoader>& a3) {
+    static jnipp::Constructor<JavaLangPackage,JavaLangString,JavaUtilJarManifest,JavaNetURL,JavaLangClassLoader> constructor(clazz(), "(Ljava/lang/String;Ljava/util/jar/Manifest;Ljava/net/URL;Ljava/lang/ClassLoader;)V");
     return constructor.construct(a0, a1, a2, a3);
 }
 
-// public final java.lang.ClassLoader java.security.ProtectionDomain.getClassLoader()
-jnipp::LocalRef<JavaLangClassLoader> JavaSecurityProtectionDomain::getClassLoader() const {
-    static jnipp::Method<JavaLangClassLoader> method(clazz(), "getClassLoader", "()Ljava/lang/ClassLoader;");
-    return method.call(*this);
+// java.lang.Package(java.lang.String,java.util.jar.Manifest,java.net.URL,java.lang.ClassLoader,java.lang.Package$1)
+jnipp::LocalRef<JavaLangPackage> JavaLangPackage::construct(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaUtilJarManifest>& a1, const jnipp::Ref<JavaNetURL>& a2, const jnipp::Ref<JavaLangClassLoader>& a3, const jnipp::Ref<JavaLangPackage_1>& a4) {
+    static jnipp::Constructor<JavaLangPackage,JavaLangString,JavaUtilJarManifest,JavaNetURL,JavaLangClassLoader,JavaLangPackage_1> constructor(clazz(), "(Ljava/lang/String;Ljava/util/jar/Manifest;Ljava/net/URL;Ljava/lang/ClassLoader;Ljava/lang/Package$1;)V");
+    return constructor.construct(a0, a1, a2, a3, a4);
 }
 
-// public final java.security.CodeSource java.security.ProtectionDomain.getCodeSource()
-jnipp::LocalRef<JavaSecurityCodeSource> JavaSecurityProtectionDomain::getCodeSource() const {
-    static jnipp::Method<JavaSecurityCodeSource> method(clazz(), "getCodeSource", "()Ljava/security/CodeSource;");
-    return method.call(*this);
+// java.lang.Package(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.net.URL,java.lang.ClassLoader)
+jnipp::LocalRef<JavaLangPackage> JavaLangPackage::construct(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1, const jnipp::Ref<JavaLangString>& a2, const jnipp::Ref<JavaLangString>& a3, const jnipp::Ref<JavaLangString>& a4, const jnipp::Ref<JavaLangString>& a5, const jnipp::Ref<JavaLangString>& a6, const jnipp::Ref<JavaNetURL>& a7, const jnipp::Ref<JavaLangClassLoader>& a8) {
+    static jnipp::Constructor<JavaLangPackage,JavaLangString,JavaLangString,JavaLangString,JavaLangString,JavaLangString,JavaLangString,JavaLangString,JavaNetURL,JavaLangClassLoader> constructor(clazz(), "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/net/URL;Ljava/lang/ClassLoader;)V");
+    return constructor.construct(a0, a1, a2, a3, a4, a5, a6, a7, a8);
 }
 
-// public final java.security.Principal[] java.security.ProtectionDomain.getPrincipals()
-jnipp::LocalRef<jnipp::Array<JavaSecurityPrincipal>> JavaSecurityProtectionDomain::getPrincipals() const {
-    static jnipp::Method<jnipp::Array<JavaSecurityPrincipal>> method(clazz(), "getPrincipals", "()[Ljava/security/Principal;");
-    return method.call(*this);
-}
-
-// public final java.security.PermissionCollection java.security.ProtectionDomain.getPermissions()
-jnipp::LocalRef<JavaSecurityPermissionCollection> JavaSecurityProtectionDomain::getPermissions() const {
-    static jnipp::Method<JavaSecurityPermissionCollection> method(clazz(), "getPermissions", "()Ljava/security/PermissionCollection;");
-    return method.call(*this);
-}
-
-// public boolean java.security.ProtectionDomain.implies(java.security.Permission)
-jboolean JavaSecurityProtectionDomain::implies(const jnipp::Ref<JavaSecurityPermission>& a0) const {
-    static jnipp::Method<jboolean,JavaSecurityPermission> method(clazz(), "implies", "(Ljava/security/Permission;)Z");
-    return method.call(*this, a0);
-}
-inline jnipp::GlobalRef<jnipp::Class>& JavaUtilJarManifest::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/util/jar/Manifest"));
-    return cls;
-}
-
-// public java.util.jar.Manifest(java.util.jar.Manifest)
-jnipp::LocalRef<JavaUtilJarManifest> JavaUtilJarManifest::construct(const jnipp::Ref<JavaUtilJarManifest>& a0) {
-    static jnipp::Constructor<JavaUtilJarManifest,JavaUtilJarManifest> constructor(clazz(), "(Ljava/util/jar/Manifest;)V");
-    return constructor.construct(a0);
-}
-
-// public java.util.jar.Manifest(java.io.InputStream) throws java.io.IOException
-jnipp::LocalRef<JavaUtilJarManifest> JavaUtilJarManifest::construct(const jnipp::Ref<JavaIoInputStream>& a0) {
-    static jnipp::Constructor<JavaUtilJarManifest,JavaIoInputStream> constructor(clazz(), "(Ljava/io/InputStream;)V");
-    return constructor.construct(a0);
-}
-
-// public java.util.jar.Manifest()
-jnipp::LocalRef<JavaUtilJarManifest> JavaUtilJarManifest::construct() {
-    static jnipp::Constructor<JavaUtilJarManifest> constructor(clazz(), "()V");
-    return constructor.construct();
-}
-
-// public boolean java.util.jar.Manifest.equals(java.lang.Object)
-jboolean JavaUtilJarManifest::equals(const jnipp::Ref<JavaLangObject>& a0) const {
-    static jnipp::Method<jboolean,JavaLangObject> method(clazz(), "equals", "(Ljava/lang/Object;)Z");
-    return method.call(*this, a0);
-}
-
-// public int java.util.jar.Manifest.hashCode()
-jint JavaUtilJarManifest::hashCode() const {
+// public int java.lang.Package.hashCode()
+jint JavaLangPackage::hashCode() const {
     static jnipp::Method<jint> method(clazz(), "hashCode", "()I");
     return method.call(*this);
 }
 
-// public java.lang.Object java.util.jar.Manifest.clone()
-jnipp::LocalRef<JavaLangObject> JavaUtilJarManifest::clone() const {
-    static jnipp::Method<JavaLangObject> method(clazz(), "clone", "()Ljava/lang/Object;");
+// public java.lang.String java.lang.Package.getName()
+jnipp::LocalRef<JavaLangString> JavaLangPackage::getName() const {
+    static jnipp::Method<JavaLangString> method(clazz(), "getName", "()Ljava/lang/String;");
     return method.call(*this);
 }
 
-// public void java.util.jar.Manifest.clear()
-void JavaUtilJarManifest::clear() const {
-    static jnipp::Method<void> method(clazz(), "clear", "()V");
-    method.call(*this);
+// public static java.lang.Package java.lang.Package.getPackage(java.lang.String)
+jnipp::LocalRef<JavaLangPackage> JavaLangPackage::getPackage(const jnipp::Ref<JavaLangString>& a0) {
+    static jnipp::StaticMethod<JavaLangPackage,JavaLangString> method(clazz(), "getPackage", "(Ljava/lang/String;)Ljava/lang/Package;");
+    return method.call(a0);
 }
 
-// public void java.util.jar.Manifest.write(java.io.OutputStream) throws java.io.IOException
-void JavaUtilJarManifest::write(const jnipp::Ref<JavaIoOutputStream>& a0) const {
-    static jnipp::Method<void,JavaIoOutputStream> method(clazz(), "write", "(Ljava/io/OutputStream;)V");
-    method.call(*this, a0);
-}
-
-// public void java.util.jar.Manifest.read(java.io.InputStream) throws java.io.IOException
-void JavaUtilJarManifest::read(const jnipp::Ref<JavaIoInputStream>& a0) const {
-    static jnipp::Method<void,JavaIoInputStream> method(clazz(), "read", "(Ljava/io/InputStream;)V");
-    method.call(*this, a0);
-}
-
-// public java.util.jar.Attributes java.util.jar.Manifest.getAttributes(java.lang.String)
-jnipp::LocalRef<JavaUtilJarAttributes> JavaUtilJarManifest::getAttributes(const jnipp::Ref<JavaLangString>& a0) const {
-    static jnipp::Method<JavaUtilJarAttributes,JavaLangString> method(clazz(), "getAttributes", "(Ljava/lang/String;)Ljava/util/jar/Attributes;");
+// public java.lang.annotation.Annotation java.lang.Package.getAnnotation(java.lang.Class)
+jnipp::LocalRef<JavaLangAnnotationAnnotation> JavaLangPackage::getAnnotation(const jnipp::Ref<JavaLangClass>& a0) const {
+    static jnipp::Method<JavaLangAnnotationAnnotation,JavaLangClass> method(clazz(), "getAnnotation", "(Ljava/lang/Class;)Ljava/lang/annotation/Annotation;");
     return method.call(*this, a0);
 }
 
-// public java.util.jar.Attributes java.util.jar.Manifest.getMainAttributes()
-jnipp::LocalRef<JavaUtilJarAttributes> JavaUtilJarManifest::getMainAttributes() const {
-    static jnipp::Method<JavaUtilJarAttributes> method(clazz(), "getMainAttributes", "()Ljava/util/jar/Attributes;");
+// public boolean java.lang.Package.isAnnotationPresent(java.lang.Class)
+jboolean JavaLangPackage::isAnnotationPresent(const jnipp::Ref<JavaLangClass>& a0) const {
+    static jnipp::Method<jboolean,JavaLangClass> method(clazz(), "isAnnotationPresent", "(Ljava/lang/Class;)Z");
+    return method.call(*this, a0);
+}
+
+// public java.lang.annotation.Annotation[] java.lang.Package.getAnnotations()
+jnipp::LocalRef<jnipp::Array<JavaLangAnnotationAnnotation>> JavaLangPackage::getAnnotations() const {
+    static jnipp::Method<jnipp::Array<JavaLangAnnotationAnnotation>> method(clazz(), "getAnnotations", "()[Ljava/lang/annotation/Annotation;");
     return method.call(*this);
 }
 
-// public java.util.Map java.util.jar.Manifest.getEntries()
-jnipp::LocalRef<JavaUtilMap> JavaUtilJarManifest::getEntries() const {
-    static jnipp::Method<JavaUtilMap> method(clazz(), "getEntries", "()Ljava/util/Map;");
+// public java.lang.annotation.Annotation[] java.lang.Package.getDeclaredAnnotations()
+jnipp::LocalRef<jnipp::Array<JavaLangAnnotationAnnotation>> JavaLangPackage::getDeclaredAnnotations() const {
+    static jnipp::Method<jnipp::Array<JavaLangAnnotationAnnotation>> method(clazz(), "getDeclaredAnnotations", "()[Ljava/lang/annotation/Annotation;");
     return method.call(*this);
 }
-inline jnipp::GlobalRef<jnipp::Class>& JavaLangPackage_1::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/lang/Package$1"));
-    return cls;
+
+// public static java.lang.Package[] java.lang.Package.getPackages()
+jnipp::LocalRef<jnipp::Array<JavaLangPackage>> JavaLangPackage::getPackages() {
+    static jnipp::StaticMethod<jnipp::Array<JavaLangPackage>> method(clazz(), "getPackages", "()[Ljava/lang/Package;");
+    return method.call();
 }
 
-// java.lang.Package$1(java.lang.String,java.lang.String)
-jnipp::LocalRef<JavaLangPackage_1> JavaLangPackage_1::construct(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1) {
-    static jnipp::Constructor<JavaLangPackage_1,JavaLangString,JavaLangString> constructor(clazz(), "(Ljava/lang/String;Ljava/lang/String;)V");
-    return constructor.construct(a0, a1);
-}
-
-// public java.lang.Package java.lang.Package$1.run()
-jnipp::LocalRef<JavaLangPackage> JavaLangPackage_1::run() const {
-    static jnipp::Method<JavaLangPackage> method(clazz(), "run", "()Ljava/lang/Package;");
+// public boolean java.lang.Package.isSealed()
+jboolean JavaLangPackage::isSealed() const {
+    static jnipp::Method<jboolean> method(clazz(), "isSealed", "()Z");
     return method.call(*this);
 }
-inline jnipp::GlobalRef<jnipp::Class>& JavaNetURLStreamHandler::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/net/URLStreamHandler"));
-    return cls;
+
+// public boolean java.lang.Package.isSealed(java.net.URL)
+jboolean JavaLangPackage::isSealed(const jnipp::Ref<JavaNetURL>& a0) const {
+    static jnipp::Method<jboolean,JavaNetURL> method(clazz(), "isSealed", "(Ljava/net/URL;)Z");
+    return method.call(*this, a0);
 }
 
-// public java.net.URLStreamHandler()
-jnipp::LocalRef<JavaNetURLStreamHandler> JavaNetURLStreamHandler::construct() {
-    static jnipp::Constructor<JavaNetURLStreamHandler> constructor(clazz(), "()V");
-    return constructor.construct();
+// public boolean java.lang.Package.isCompatibleWith(java.lang.String) throws java.lang.NumberFormatException
+jboolean JavaLangPackage::isCompatibleWith(const jnipp::Ref<JavaLangString>& a0) const {
+    static jnipp::Method<jboolean,JavaLangString> method(clazz(), "isCompatibleWith", "(Ljava/lang/String;)Z");
+    return method.call(*this, a0);
 }
-inline jnipp::GlobalRef<jnipp::Class>& JavaNetURLStreamHandlerFactory::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/net/URLStreamHandlerFactory"));
-    return cls;
+
+// public java.lang.String java.lang.Package.getSpecificationTitle()
+jnipp::LocalRef<JavaLangString> JavaLangPackage::getSpecificationTitle() const {
+    static jnipp::Method<JavaLangString> method(clazz(), "getSpecificationTitle", "()Ljava/lang/String;");
+    return method.call(*this);
+}
+
+// public java.lang.String java.lang.Package.getSpecificationVersion()
+jnipp::LocalRef<JavaLangString> JavaLangPackage::getSpecificationVersion() const {
+    static jnipp::Method<JavaLangString> method(clazz(), "getSpecificationVersion", "()Ljava/lang/String;");
+    return method.call(*this);
+}
+
+// public java.lang.String java.lang.Package.getSpecificationVendor()
+jnipp::LocalRef<JavaLangString> JavaLangPackage::getSpecificationVendor() const {
+    static jnipp::Method<JavaLangString> method(clazz(), "getSpecificationVendor", "()Ljava/lang/String;");
+    return method.call(*this);
+}
+
+// public java.lang.String java.lang.Package.getImplementationTitle()
+jnipp::LocalRef<JavaLangString> JavaLangPackage::getImplementationTitle() const {
+    static jnipp::Method<JavaLangString> method(clazz(), "getImplementationTitle", "()Ljava/lang/String;");
+    return method.call(*this);
+}
+
+// public java.lang.String java.lang.Package.getImplementationVersion()
+jnipp::LocalRef<JavaLangString> JavaLangPackage::getImplementationVersion() const {
+    static jnipp::Method<JavaLangString> method(clazz(), "getImplementationVersion", "()Ljava/lang/String;");
+    return method.call(*this);
+}
+
+// public java.lang.String java.lang.Package.getImplementationVendor()
+jnipp::LocalRef<JavaLangString> JavaLangPackage::getImplementationVendor() const {
+    static jnipp::Method<JavaLangString> method(clazz(), "getImplementationVendor", "()Ljava/lang/String;");
+    return method.call(*this);
 }
 inline jnipp::GlobalRef<jnipp::Class>& JavaNetURI::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
@@ -4717,48 +4607,17 @@ jnipp::LocalRef<JavaLangString> JavaNetURI::toASCIIString() const {
     static jnipp::Method<JavaLangString> method(clazz(), "toASCIIString", "()Ljava/lang/String;");
     return method.call(*this);
 }
-inline jnipp::GlobalRef<jnipp::Class>& JavaNetProxy::clazz() {
+inline jnipp::GlobalRef<jnipp::Class>& JavaNetURLStreamHandler::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/net/Proxy"));
+    if (!cls) cls.set(jnipp::Class::forName("java/net/URLStreamHandler"));
     return cls;
 }
 
-// private java.net.Proxy()
-jnipp::LocalRef<JavaNetProxy> JavaNetProxy::construct() {
-    static jnipp::Constructor<JavaNetProxy> constructor(clazz(), "()V");
+// public java.net.URLStreamHandler()
+jnipp::LocalRef<JavaNetURLStreamHandler> JavaNetURLStreamHandler::construct() {
+    static jnipp::Constructor<JavaNetURLStreamHandler> constructor(clazz(), "()V");
     return constructor.construct();
 }
-
-// public java.net.Proxy(java.net.Proxy$Type,java.net.SocketAddress)
-jnipp::LocalRef<JavaNetProxy> JavaNetProxy::construct(const jnipp::Ref<JavaNetProxy_Type>& a0, const jnipp::Ref<JavaNetSocketAddress>& a1) {
-    static jnipp::Constructor<JavaNetProxy,JavaNetProxy_Type,JavaNetSocketAddress> constructor(clazz(), "(Ljava/net/Proxy$Type;Ljava/net/SocketAddress;)V");
-    return constructor.construct(a0, a1);
-}
-
-// public java.net.Proxy$Type java.net.Proxy.type()
-jnipp::LocalRef<JavaNetProxy_Type> JavaNetProxy::type() const {
-    static jnipp::Method<JavaNetProxy_Type> method(clazz(), "type", "()Ljava/net/Proxy$Type;");
-    return method.call(*this);
-}
-
-// public final boolean java.net.Proxy.equals(java.lang.Object)
-jboolean JavaNetProxy::equals(const jnipp::Ref<JavaLangObject>& a0) const {
-    static jnipp::Method<jboolean,JavaLangObject> method(clazz(), "equals", "(Ljava/lang/Object;)Z");
-    return method.call(*this, a0);
-}
-
-// public final int java.net.Proxy.hashCode()
-jint JavaNetProxy::hashCode() const {
-    static jnipp::Method<jint> method(clazz(), "hashCode", "()I");
-    return method.call(*this);
-}
-
-// public java.net.SocketAddress java.net.Proxy.address()
-jnipp::LocalRef<JavaNetSocketAddress> JavaNetProxy::address() const {
-    static jnipp::Method<JavaNetSocketAddress> method(clazz(), "address", "()Ljava/net/SocketAddress;");
-    return method.call(*this);
-}
-const jnipp::StaticField<JavaNetProxy> JavaNetProxy::NO_PROXY ("java/net/Proxy", "NO_PROXY", "Ljava/net/Proxy;");
 inline jnipp::GlobalRef<jnipp::Class>& JavaNetURLConnection::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/net/URLConnection"));
@@ -5064,23 +4923,53 @@ void JavaNetURLConnection::setContentHandlerFactory(const jnipp::Ref<JavaNetCont
     static jnipp::StaticMethod<void,JavaNetContentHandlerFactory> method(clazz(), "setContentHandlerFactory", "(Ljava/net/ContentHandlerFactory;)V");
     method.call(a0);
 }
-inline jnipp::GlobalRef<jnipp::Class>& JavaUtilEnumeration::clazz() {
+inline jnipp::GlobalRef<jnipp::Class>& JavaNetURLStreamHandlerFactory::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/util/Enumeration"));
+    if (!cls) cls.set(jnipp::Class::forName("java/net/URLStreamHandlerFactory"));
     return cls;
 }
-inline jnipp::GlobalRef<jnipp::Class>& JavaLangVoid::clazz() {
+inline jnipp::GlobalRef<jnipp::Class>& JavaNetProxy::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/lang/Void"));
+    if (!cls) cls.set(jnipp::Class::forName("java/net/Proxy"));
     return cls;
 }
 
-// private java.lang.Void()
-jnipp::LocalRef<JavaLangVoid> JavaLangVoid::construct() {
-    static jnipp::Constructor<JavaLangVoid> constructor(clazz(), "()V");
+// private java.net.Proxy()
+jnipp::LocalRef<JavaNetProxy> JavaNetProxy::construct() {
+    static jnipp::Constructor<JavaNetProxy> constructor(clazz(), "()V");
     return constructor.construct();
 }
-const jnipp::StaticField<JavaLangClass> JavaLangVoid::TYPE ("java/lang/Void", "TYPE", "Ljava/lang/Class;");
+
+// public java.net.Proxy(java.net.Proxy$Type,java.net.SocketAddress)
+jnipp::LocalRef<JavaNetProxy> JavaNetProxy::construct(const jnipp::Ref<JavaNetProxy_Type>& a0, const jnipp::Ref<JavaNetSocketAddress>& a1) {
+    static jnipp::Constructor<JavaNetProxy,JavaNetProxy_Type,JavaNetSocketAddress> constructor(clazz(), "(Ljava/net/Proxy$Type;Ljava/net/SocketAddress;)V");
+    return constructor.construct(a0, a1);
+}
+
+// public java.net.Proxy$Type java.net.Proxy.type()
+jnipp::LocalRef<JavaNetProxy_Type> JavaNetProxy::type() const {
+    static jnipp::Method<JavaNetProxy_Type> method(clazz(), "type", "()Ljava/net/Proxy$Type;");
+    return method.call(*this);
+}
+
+// public final boolean java.net.Proxy.equals(java.lang.Object)
+jboolean JavaNetProxy::equals(const jnipp::Ref<JavaLangObject>& a0) const {
+    static jnipp::Method<jboolean,JavaLangObject> method(clazz(), "equals", "(Ljava/lang/Object;)Z");
+    return method.call(*this, a0);
+}
+
+// public final int java.net.Proxy.hashCode()
+jint JavaNetProxy::hashCode() const {
+    static jnipp::Method<jint> method(clazz(), "hashCode", "()I");
+    return method.call(*this);
+}
+
+// public java.net.SocketAddress java.net.Proxy.address()
+jnipp::LocalRef<JavaNetSocketAddress> JavaNetProxy::address() const {
+    static jnipp::Method<JavaNetSocketAddress> method(clazz(), "address", "()Ljava/net/SocketAddress;");
+    return method.call(*this);
+}
+const jnipp::StaticField<JavaNetProxy> JavaNetProxy::NO_PROXY ("java/net/Proxy", "NO_PROXY", "Ljava/net/Proxy;");
 inline jnipp::GlobalRef<jnipp::Class>& JavaSecurityCodeSource::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/security/CodeSource"));
@@ -5139,29 +5028,6 @@ inline jnipp::GlobalRef<jnipp::Class>& JavaSecurityPrincipal::clazz() {
     if (!cls) cls.set(jnipp::Class::forName("java/security/Principal"));
     return cls;
 }
-inline jnipp::GlobalRef<jnipp::Class>& JavaSecurityPermissionCollection::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/security/PermissionCollection"));
-    return cls;
-}
-
-// public java.security.PermissionCollection()
-jnipp::LocalRef<JavaSecurityPermissionCollection> JavaSecurityPermissionCollection::construct() {
-    static jnipp::Constructor<JavaSecurityPermissionCollection> constructor(clazz(), "()V");
-    return constructor.construct();
-}
-
-// public void java.security.PermissionCollection.setReadOnly()
-void JavaSecurityPermissionCollection::setReadOnly() const {
-    static jnipp::Method<void> method(clazz(), "setReadOnly", "()V");
-    method.call(*this);
-}
-
-// public boolean java.security.PermissionCollection.isReadOnly()
-jboolean JavaSecurityPermissionCollection::isReadOnly() const {
-    static jnipp::Method<jboolean> method(clazz(), "isReadOnly", "()Z");
-    return method.call(*this);
-}
 inline jnipp::GlobalRef<jnipp::Class>& JavaSecurityPermission::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/security/Permission"));
@@ -5190,6 +5056,145 @@ jnipp::LocalRef<JavaSecurityPermissionCollection> JavaSecurityPermission::newPer
 void JavaSecurityPermission::checkGuard(const jnipp::Ref<JavaLangObject>& a0) const {
     static jnipp::Method<void,JavaLangObject> method(clazz(), "checkGuard", "(Ljava/lang/Object;)V");
     method.call(*this, a0);
+}
+inline jnipp::GlobalRef<jnipp::Class>& JavaSecurityPermissionCollection::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/security/PermissionCollection"));
+    return cls;
+}
+
+// public java.security.PermissionCollection()
+jnipp::LocalRef<JavaSecurityPermissionCollection> JavaSecurityPermissionCollection::construct() {
+    static jnipp::Constructor<JavaSecurityPermissionCollection> constructor(clazz(), "()V");
+    return constructor.construct();
+}
+
+// public void java.security.PermissionCollection.setReadOnly()
+void JavaSecurityPermissionCollection::setReadOnly() const {
+    static jnipp::Method<void> method(clazz(), "setReadOnly", "()V");
+    method.call(*this);
+}
+
+// public boolean java.security.PermissionCollection.isReadOnly()
+jboolean JavaSecurityPermissionCollection::isReadOnly() const {
+    static jnipp::Method<jboolean> method(clazz(), "isReadOnly", "()Z");
+    return method.call(*this);
+}
+inline jnipp::GlobalRef<jnipp::Class>& JavaUtilEnumeration::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/util/Enumeration"));
+    return cls;
+}
+inline jnipp::GlobalRef<jnipp::Class>& JavaLangVoid::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/lang/Void"));
+    return cls;
+}
+
+// private java.lang.Void()
+jnipp::LocalRef<JavaLangVoid> JavaLangVoid::construct() {
+    static jnipp::Constructor<JavaLangVoid> constructor(clazz(), "()V");
+    return constructor.construct();
+}
+const jnipp::StaticField<JavaLangClass> JavaLangVoid::TYPE ("java/lang/Void", "TYPE", "Ljava/lang/Class;");
+inline jnipp::GlobalRef<jnipp::Class>& JavaLangPackage_1::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/lang/Package$1"));
+    return cls;
+}
+
+// java.lang.Package$1(java.lang.String,java.lang.String)
+jnipp::LocalRef<JavaLangPackage_1> JavaLangPackage_1::construct(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1) {
+    static jnipp::Constructor<JavaLangPackage_1,JavaLangString,JavaLangString> constructor(clazz(), "(Ljava/lang/String;Ljava/lang/String;)V");
+    return constructor.construct(a0, a1);
+}
+
+// public java.lang.Package java.lang.Package$1.run()
+jnipp::LocalRef<JavaLangPackage> JavaLangPackage_1::run() const {
+    static jnipp::Method<JavaLangPackage> method(clazz(), "run", "()Ljava/lang/Package;");
+    return method.call(*this);
+}
+inline jnipp::GlobalRef<jnipp::Class>& JavaUtilJarManifest::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/util/jar/Manifest"));
+    return cls;
+}
+
+// public java.util.jar.Manifest(java.util.jar.Manifest)
+jnipp::LocalRef<JavaUtilJarManifest> JavaUtilJarManifest::construct(const jnipp::Ref<JavaUtilJarManifest>& a0) {
+    static jnipp::Constructor<JavaUtilJarManifest,JavaUtilJarManifest> constructor(clazz(), "(Ljava/util/jar/Manifest;)V");
+    return constructor.construct(a0);
+}
+
+// public java.util.jar.Manifest(java.io.InputStream) throws java.io.IOException
+jnipp::LocalRef<JavaUtilJarManifest> JavaUtilJarManifest::construct(const jnipp::Ref<JavaIoInputStream>& a0) {
+    static jnipp::Constructor<JavaUtilJarManifest,JavaIoInputStream> constructor(clazz(), "(Ljava/io/InputStream;)V");
+    return constructor.construct(a0);
+}
+
+// public java.util.jar.Manifest()
+jnipp::LocalRef<JavaUtilJarManifest> JavaUtilJarManifest::construct() {
+    static jnipp::Constructor<JavaUtilJarManifest> constructor(clazz(), "()V");
+    return constructor.construct();
+}
+
+// public boolean java.util.jar.Manifest.equals(java.lang.Object)
+jboolean JavaUtilJarManifest::equals(const jnipp::Ref<JavaLangObject>& a0) const {
+    static jnipp::Method<jboolean,JavaLangObject> method(clazz(), "equals", "(Ljava/lang/Object;)Z");
+    return method.call(*this, a0);
+}
+
+// public int java.util.jar.Manifest.hashCode()
+jint JavaUtilJarManifest::hashCode() const {
+    static jnipp::Method<jint> method(clazz(), "hashCode", "()I");
+    return method.call(*this);
+}
+
+// public java.lang.Object java.util.jar.Manifest.clone()
+jnipp::LocalRef<JavaLangObject> JavaUtilJarManifest::clone() const {
+    static jnipp::Method<JavaLangObject> method(clazz(), "clone", "()Ljava/lang/Object;");
+    return method.call(*this);
+}
+
+// public void java.util.jar.Manifest.clear()
+void JavaUtilJarManifest::clear() const {
+    static jnipp::Method<void> method(clazz(), "clear", "()V");
+    method.call(*this);
+}
+
+// public void java.util.jar.Manifest.write(java.io.OutputStream) throws java.io.IOException
+void JavaUtilJarManifest::write(const jnipp::Ref<JavaIoOutputStream>& a0) const {
+    static jnipp::Method<void,JavaIoOutputStream> method(clazz(), "write", "(Ljava/io/OutputStream;)V");
+    method.call(*this, a0);
+}
+
+// public void java.util.jar.Manifest.read(java.io.InputStream) throws java.io.IOException
+void JavaUtilJarManifest::read(const jnipp::Ref<JavaIoInputStream>& a0) const {
+    static jnipp::Method<void,JavaIoInputStream> method(clazz(), "read", "(Ljava/io/InputStream;)V");
+    method.call(*this, a0);
+}
+
+// public java.util.jar.Attributes java.util.jar.Manifest.getAttributes(java.lang.String)
+jnipp::LocalRef<JavaUtilJarAttributes> JavaUtilJarManifest::getAttributes(const jnipp::Ref<JavaLangString>& a0) const {
+    static jnipp::Method<JavaUtilJarAttributes,JavaLangString> method(clazz(), "getAttributes", "(Ljava/lang/String;)Ljava/util/jar/Attributes;");
+    return method.call(*this, a0);
+}
+
+// public java.util.jar.Attributes java.util.jar.Manifest.getMainAttributes()
+jnipp::LocalRef<JavaUtilJarAttributes> JavaUtilJarManifest::getMainAttributes() const {
+    static jnipp::Method<JavaUtilJarAttributes> method(clazz(), "getMainAttributes", "()Ljava/util/jar/Attributes;");
+    return method.call(*this);
+}
+
+// public java.util.Map java.util.jar.Manifest.getEntries()
+jnipp::LocalRef<JavaUtilMap> JavaUtilJarManifest::getEntries() const {
+    static jnipp::Method<JavaUtilMap> method(clazz(), "getEntries", "()Ljava/util/Map;");
+    return method.call(*this);
+}
+inline jnipp::GlobalRef<jnipp::Class>& JavaNetFileNameMap::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/net/FileNameMap"));
+    return cls;
 }
 inline jnipp::GlobalRef<jnipp::Class>& JavaIoOutputStream::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
@@ -5225,6 +5230,112 @@ void JavaIoOutputStream::flush() const {
 void JavaIoOutputStream::close() const {
     static jnipp::Method<void> method(clazz(), "close", "()V");
     method.call(*this);
+}
+inline jnipp::GlobalRef<jnipp::Class>& JavaNetContentHandlerFactory::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/net/ContentHandlerFactory"));
+    return cls;
+}
+inline jnipp::GlobalRef<jnipp::Class>& JavaNetSocketAddress::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/net/SocketAddress"));
+    return cls;
+}
+
+// public java.net.SocketAddress()
+jnipp::LocalRef<JavaNetSocketAddress> JavaNetSocketAddress::construct() {
+    static jnipp::Constructor<JavaNetSocketAddress> constructor(clazz(), "()V");
+    return constructor.construct();
+}
+inline jnipp::GlobalRef<jnipp::Class>& JavaNetProxy_Type::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/net/Proxy$Type"));
+    return cls;
+}
+
+// private java.net.Proxy$Type(java.lang.String,int)
+jnipp::LocalRef<JavaNetProxy_Type> JavaNetProxy_Type::construct(const jnipp::Ref<JavaLangString>& a0, jint a1) {
+    static jnipp::Constructor<JavaNetProxy_Type,JavaLangString,jint> constructor(clazz(), "(Ljava/lang/String;I)V");
+    return constructor.construct(a0, a1);
+}
+
+// public static java.net.Proxy$Type[] java.net.Proxy$Type.values()
+jnipp::LocalRef<jnipp::Array<JavaNetProxy_Type>> JavaNetProxy_Type::values() {
+    static jnipp::StaticMethod<jnipp::Array<JavaNetProxy_Type>> method(clazz(), "values", "()[Ljava/net/Proxy$Type;");
+    return method.call();
+}
+
+// public static java.net.Proxy$Type java.net.Proxy$Type.valueOf(java.lang.String)
+jnipp::LocalRef<JavaNetProxy_Type> JavaNetProxy_Type::valueOf(const jnipp::Ref<JavaLangString>& a0) {
+    static jnipp::StaticMethod<JavaNetProxy_Type,JavaLangString> method(clazz(), "valueOf", "(Ljava/lang/String;)Ljava/net/Proxy$Type;");
+    return method.call(a0);
+}
+const jnipp::StaticField<JavaNetProxy_Type> JavaNetProxy_Type::DIRECT ("java/net/Proxy$Type", "DIRECT", "Ljava/net/Proxy$Type;");
+const jnipp::StaticField<JavaNetProxy_Type> JavaNetProxy_Type::HTTP ("java/net/Proxy$Type", "HTTP", "Ljava/net/Proxy$Type;");
+const jnipp::StaticField<JavaNetProxy_Type> JavaNetProxy_Type::SOCKS ("java/net/Proxy$Type", "SOCKS", "Ljava/net/Proxy$Type;");
+inline jnipp::GlobalRef<jnipp::Class>& JavaSecurityCertCertificate::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/security/cert/Certificate"));
+    return cls;
+}
+
+// protected java.security.cert.Certificate(java.lang.String)
+jnipp::LocalRef<JavaSecurityCertCertificate> JavaSecurityCertCertificate::construct(const jnipp::Ref<JavaLangString>& a0) {
+    static jnipp::Constructor<JavaSecurityCertCertificate,JavaLangString> constructor(clazz(), "(Ljava/lang/String;)V");
+    return constructor.construct(a0);
+}
+
+// public boolean java.security.cert.Certificate.equals(java.lang.Object)
+jboolean JavaSecurityCertCertificate::equals(const jnipp::Ref<JavaLangObject>& a0) const {
+    static jnipp::Method<jboolean,JavaLangObject> method(clazz(), "equals", "(Ljava/lang/Object;)Z");
+    return method.call(*this, a0);
+}
+
+// public int java.security.cert.Certificate.hashCode()
+jint JavaSecurityCertCertificate::hashCode() const {
+    static jnipp::Method<jint> method(clazz(), "hashCode", "()I");
+    return method.call(*this);
+}
+
+// public final java.lang.String java.security.cert.Certificate.getType()
+jnipp::LocalRef<JavaLangString> JavaSecurityCertCertificate::getType() const {
+    static jnipp::Method<JavaLangString> method(clazz(), "getType", "()Ljava/lang/String;");
+    return method.call(*this);
+}
+inline jnipp::GlobalRef<jnipp::Class>& JavaSecurityCodeSigner::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/security/CodeSigner"));
+    return cls;
+}
+
+// public java.security.CodeSigner(java.security.cert.CertPath,java.security.Timestamp)
+jnipp::LocalRef<JavaSecurityCodeSigner> JavaSecurityCodeSigner::construct(const jnipp::Ref<JavaSecurityCertCertPath>& a0, const jnipp::Ref<JavaSecurityTimestamp>& a1) {
+    static jnipp::Constructor<JavaSecurityCodeSigner,JavaSecurityCertCertPath,JavaSecurityTimestamp> constructor(clazz(), "(Ljava/security/cert/CertPath;Ljava/security/Timestamp;)V");
+    return constructor.construct(a0, a1);
+}
+
+// public boolean java.security.CodeSigner.equals(java.lang.Object)
+jboolean JavaSecurityCodeSigner::equals(const jnipp::Ref<JavaLangObject>& a0) const {
+    static jnipp::Method<jboolean,JavaLangObject> method(clazz(), "equals", "(Ljava/lang/Object;)Z");
+    return method.call(*this, a0);
+}
+
+// public int java.security.CodeSigner.hashCode()
+jint JavaSecurityCodeSigner::hashCode() const {
+    static jnipp::Method<jint> method(clazz(), "hashCode", "()I");
+    return method.call(*this);
+}
+
+// public java.security.cert.CertPath java.security.CodeSigner.getSignerCertPath()
+jnipp::LocalRef<JavaSecurityCertCertPath> JavaSecurityCodeSigner::getSignerCertPath() const {
+    static jnipp::Method<JavaSecurityCertCertPath> method(clazz(), "getSignerCertPath", "()Ljava/security/cert/CertPath;");
+    return method.call(*this);
+}
+
+// public java.security.Timestamp java.security.CodeSigner.getTimestamp()
+jnipp::LocalRef<JavaSecurityTimestamp> JavaSecurityCodeSigner::getTimestamp() const {
+    static jnipp::Method<JavaSecurityTimestamp> method(clazz(), "getTimestamp", "()Ljava/security/Timestamp;");
+    return method.call(*this);
 }
 inline jnipp::GlobalRef<jnipp::Class>& JavaUtilJarAttributes::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
@@ -5357,115 +5468,68 @@ jnipp::LocalRef<JavaLangString> JavaUtilJarAttributes::putValue(const jnipp::Ref
     static jnipp::Method<JavaLangString,JavaLangString,JavaLangString> method(clazz(), "putValue", "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;");
     return method.call(*this, a0, a1);
 }
-inline jnipp::GlobalRef<jnipp::Class>& JavaNetSocketAddress::clazz() {
+inline jnipp::GlobalRef<jnipp::Class>& JavaSecurityTimestamp::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/net/SocketAddress"));
+    if (!cls) cls.set(jnipp::Class::forName("java/security/Timestamp"));
     return cls;
 }
 
-// public java.net.SocketAddress()
-jnipp::LocalRef<JavaNetSocketAddress> JavaNetSocketAddress::construct() {
-    static jnipp::Constructor<JavaNetSocketAddress> constructor(clazz(), "()V");
-    return constructor.construct();
-}
-inline jnipp::GlobalRef<jnipp::Class>& JavaNetProxy_Type::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/net/Proxy$Type"));
-    return cls;
-}
-
-// private java.net.Proxy$Type(java.lang.String,int)
-jnipp::LocalRef<JavaNetProxy_Type> JavaNetProxy_Type::construct(const jnipp::Ref<JavaLangString>& a0, jint a1) {
-    static jnipp::Constructor<JavaNetProxy_Type,JavaLangString,jint> constructor(clazz(), "(Ljava/lang/String;I)V");
+// public java.security.Timestamp(java.util.Date,java.security.cert.CertPath)
+jnipp::LocalRef<JavaSecurityTimestamp> JavaSecurityTimestamp::construct(const jnipp::Ref<JavaUtilDate>& a0, const jnipp::Ref<JavaSecurityCertCertPath>& a1) {
+    static jnipp::Constructor<JavaSecurityTimestamp,JavaUtilDate,JavaSecurityCertCertPath> constructor(clazz(), "(Ljava/util/Date;Ljava/security/cert/CertPath;)V");
     return constructor.construct(a0, a1);
 }
 
-// public static java.net.Proxy$Type[] java.net.Proxy$Type.values()
-jnipp::LocalRef<jnipp::Array<JavaNetProxy_Type>> JavaNetProxy_Type::values() {
-    static jnipp::StaticMethod<jnipp::Array<JavaNetProxy_Type>> method(clazz(), "values", "()[Ljava/net/Proxy$Type;");
-    return method.call();
-}
-
-// public static java.net.Proxy$Type java.net.Proxy$Type.valueOf(java.lang.String)
-jnipp::LocalRef<JavaNetProxy_Type> JavaNetProxy_Type::valueOf(const jnipp::Ref<JavaLangString>& a0) {
-    static jnipp::StaticMethod<JavaNetProxy_Type,JavaLangString> method(clazz(), "valueOf", "(Ljava/lang/String;)Ljava/net/Proxy$Type;");
-    return method.call(a0);
-}
-const jnipp::StaticField<JavaNetProxy_Type> JavaNetProxy_Type::DIRECT ("java/net/Proxy$Type", "DIRECT", "Ljava/net/Proxy$Type;");
-const jnipp::StaticField<JavaNetProxy_Type> JavaNetProxy_Type::HTTP ("java/net/Proxy$Type", "HTTP", "Ljava/net/Proxy$Type;");
-const jnipp::StaticField<JavaNetProxy_Type> JavaNetProxy_Type::SOCKS ("java/net/Proxy$Type", "SOCKS", "Ljava/net/Proxy$Type;");
-inline jnipp::GlobalRef<jnipp::Class>& JavaNetFileNameMap::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/net/FileNameMap"));
-    return cls;
-}
-inline jnipp::GlobalRef<jnipp::Class>& JavaNetContentHandlerFactory::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/net/ContentHandlerFactory"));
-    return cls;
-}
-inline jnipp::GlobalRef<jnipp::Class>& JavaSecurityCertCertificate::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/security/cert/Certificate"));
-    return cls;
-}
-
-// protected java.security.cert.Certificate(java.lang.String)
-jnipp::LocalRef<JavaSecurityCertCertificate> JavaSecurityCertCertificate::construct(const jnipp::Ref<JavaLangString>& a0) {
-    static jnipp::Constructor<JavaSecurityCertCertificate,JavaLangString> constructor(clazz(), "(Ljava/lang/String;)V");
-    return constructor.construct(a0);
-}
-
-// public boolean java.security.cert.Certificate.equals(java.lang.Object)
-jboolean JavaSecurityCertCertificate::equals(const jnipp::Ref<JavaLangObject>& a0) const {
+// public boolean java.security.Timestamp.equals(java.lang.Object)
+jboolean JavaSecurityTimestamp::equals(const jnipp::Ref<JavaLangObject>& a0) const {
     static jnipp::Method<jboolean,JavaLangObject> method(clazz(), "equals", "(Ljava/lang/Object;)Z");
     return method.call(*this, a0);
 }
 
-// public int java.security.cert.Certificate.hashCode()
-jint JavaSecurityCertCertificate::hashCode() const {
+// public int java.security.Timestamp.hashCode()
+jint JavaSecurityTimestamp::hashCode() const {
     static jnipp::Method<jint> method(clazz(), "hashCode", "()I");
     return method.call(*this);
 }
 
-// public final java.lang.String java.security.cert.Certificate.getType()
-jnipp::LocalRef<JavaLangString> JavaSecurityCertCertificate::getType() const {
-    static jnipp::Method<JavaLangString> method(clazz(), "getType", "()Ljava/lang/String;");
-    return method.call(*this);
-}
-inline jnipp::GlobalRef<jnipp::Class>& JavaSecurityCodeSigner::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/security/CodeSigner"));
-    return cls;
-}
-
-// public java.security.CodeSigner(java.security.cert.CertPath,java.security.Timestamp)
-jnipp::LocalRef<JavaSecurityCodeSigner> JavaSecurityCodeSigner::construct(const jnipp::Ref<JavaSecurityCertCertPath>& a0, const jnipp::Ref<JavaSecurityTimestamp>& a1) {
-    static jnipp::Constructor<JavaSecurityCodeSigner,JavaSecurityCertCertPath,JavaSecurityTimestamp> constructor(clazz(), "(Ljava/security/cert/CertPath;Ljava/security/Timestamp;)V");
-    return constructor.construct(a0, a1);
-}
-
-// public boolean java.security.CodeSigner.equals(java.lang.Object)
-jboolean JavaSecurityCodeSigner::equals(const jnipp::Ref<JavaLangObject>& a0) const {
-    static jnipp::Method<jboolean,JavaLangObject> method(clazz(), "equals", "(Ljava/lang/Object;)Z");
-    return method.call(*this, a0);
-}
-
-// public int java.security.CodeSigner.hashCode()
-jint JavaSecurityCodeSigner::hashCode() const {
-    static jnipp::Method<jint> method(clazz(), "hashCode", "()I");
-    return method.call(*this);
-}
-
-// public java.security.cert.CertPath java.security.CodeSigner.getSignerCertPath()
-jnipp::LocalRef<JavaSecurityCertCertPath> JavaSecurityCodeSigner::getSignerCertPath() const {
+// public java.security.cert.CertPath java.security.Timestamp.getSignerCertPath()
+jnipp::LocalRef<JavaSecurityCertCertPath> JavaSecurityTimestamp::getSignerCertPath() const {
     static jnipp::Method<JavaSecurityCertCertPath> method(clazz(), "getSignerCertPath", "()Ljava/security/cert/CertPath;");
     return method.call(*this);
 }
 
-// public java.security.Timestamp java.security.CodeSigner.getTimestamp()
-jnipp::LocalRef<JavaSecurityTimestamp> JavaSecurityCodeSigner::getTimestamp() const {
-    static jnipp::Method<JavaSecurityTimestamp> method(clazz(), "getTimestamp", "()Ljava/security/Timestamp;");
+// public java.util.Date java.security.Timestamp.getTimestamp()
+jnipp::LocalRef<JavaUtilDate> JavaSecurityTimestamp::getTimestamp() const {
+    static jnipp::Method<JavaUtilDate> method(clazz(), "getTimestamp", "()Ljava/util/Date;");
+    return method.call(*this);
+}
+inline jnipp::GlobalRef<jnipp::Class>& JavaSecurityCertCertPath::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/security/cert/CertPath"));
+    return cls;
+}
+
+// protected java.security.cert.CertPath(java.lang.String)
+jnipp::LocalRef<JavaSecurityCertCertPath> JavaSecurityCertCertPath::construct(const jnipp::Ref<JavaLangString>& a0) {
+    static jnipp::Constructor<JavaSecurityCertCertPath,JavaLangString> constructor(clazz(), "(Ljava/lang/String;)V");
+    return constructor.construct(a0);
+}
+
+// public boolean java.security.cert.CertPath.equals(java.lang.Object)
+jboolean JavaSecurityCertCertPath::equals(const jnipp::Ref<JavaLangObject>& a0) const {
+    static jnipp::Method<jboolean,JavaLangObject> method(clazz(), "equals", "(Ljava/lang/Object;)Z");
+    return method.call(*this, a0);
+}
+
+// public int java.security.cert.CertPath.hashCode()
+jint JavaSecurityCertCertPath::hashCode() const {
+    static jnipp::Method<jint> method(clazz(), "hashCode", "()I");
+    return method.call(*this);
+}
+
+// public java.lang.String java.security.cert.CertPath.getType()
+jnipp::LocalRef<JavaLangString> JavaSecurityCertCertPath::getType() const {
+    static jnipp::Method<JavaLangString> method(clazz(), "getType", "()Ljava/lang/String;");
     return method.call(*this);
 }
 inline jnipp::GlobalRef<jnipp::Class>& JavaUtilJarAttributes_Name::clazz() {
@@ -5512,70 +5576,6 @@ inline jnipp::GlobalRef<jnipp::Class>& JavaUtilCollection::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/util/Collection"));
     return cls;
-}
-inline jnipp::GlobalRef<jnipp::Class>& JavaSecurityCertCertPath::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/security/cert/CertPath"));
-    return cls;
-}
-
-// protected java.security.cert.CertPath(java.lang.String)
-jnipp::LocalRef<JavaSecurityCertCertPath> JavaSecurityCertCertPath::construct(const jnipp::Ref<JavaLangString>& a0) {
-    static jnipp::Constructor<JavaSecurityCertCertPath,JavaLangString> constructor(clazz(), "(Ljava/lang/String;)V");
-    return constructor.construct(a0);
-}
-
-// public boolean java.security.cert.CertPath.equals(java.lang.Object)
-jboolean JavaSecurityCertCertPath::equals(const jnipp::Ref<JavaLangObject>& a0) const {
-    static jnipp::Method<jboolean,JavaLangObject> method(clazz(), "equals", "(Ljava/lang/Object;)Z");
-    return method.call(*this, a0);
-}
-
-// public int java.security.cert.CertPath.hashCode()
-jint JavaSecurityCertCertPath::hashCode() const {
-    static jnipp::Method<jint> method(clazz(), "hashCode", "()I");
-    return method.call(*this);
-}
-
-// public java.lang.String java.security.cert.CertPath.getType()
-jnipp::LocalRef<JavaLangString> JavaSecurityCertCertPath::getType() const {
-    static jnipp::Method<JavaLangString> method(clazz(), "getType", "()Ljava/lang/String;");
-    return method.call(*this);
-}
-inline jnipp::GlobalRef<jnipp::Class>& JavaSecurityTimestamp::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/security/Timestamp"));
-    return cls;
-}
-
-// public java.security.Timestamp(java.util.Date,java.security.cert.CertPath)
-jnipp::LocalRef<JavaSecurityTimestamp> JavaSecurityTimestamp::construct(const jnipp::Ref<JavaUtilDate>& a0, const jnipp::Ref<JavaSecurityCertCertPath>& a1) {
-    static jnipp::Constructor<JavaSecurityTimestamp,JavaUtilDate,JavaSecurityCertCertPath> constructor(clazz(), "(Ljava/util/Date;Ljava/security/cert/CertPath;)V");
-    return constructor.construct(a0, a1);
-}
-
-// public boolean java.security.Timestamp.equals(java.lang.Object)
-jboolean JavaSecurityTimestamp::equals(const jnipp::Ref<JavaLangObject>& a0) const {
-    static jnipp::Method<jboolean,JavaLangObject> method(clazz(), "equals", "(Ljava/lang/Object;)Z");
-    return method.call(*this, a0);
-}
-
-// public int java.security.Timestamp.hashCode()
-jint JavaSecurityTimestamp::hashCode() const {
-    static jnipp::Method<jint> method(clazz(), "hashCode", "()I");
-    return method.call(*this);
-}
-
-// public java.security.cert.CertPath java.security.Timestamp.getSignerCertPath()
-jnipp::LocalRef<JavaSecurityCertCertPath> JavaSecurityTimestamp::getSignerCertPath() const {
-    static jnipp::Method<JavaSecurityCertCertPath> method(clazz(), "getSignerCertPath", "()Ljava/security/cert/CertPath;");
-    return method.call(*this);
-}
-
-// public java.util.Date java.security.Timestamp.getTimestamp()
-jnipp::LocalRef<JavaUtilDate> JavaSecurityTimestamp::getTimestamp() const {
-    static jnipp::Method<JavaUtilDate> method(clazz(), "getTimestamp", "()Ljava/util/Date;");
-    return method.call(*this);
 }
 inline jnipp::GlobalRef<jnipp::Class>& JavaUtilDate::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
