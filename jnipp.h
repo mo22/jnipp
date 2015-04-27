@@ -1168,6 +1168,9 @@ public:
     operator LocalRef<R>() const {
         return get();
     }
+    operator GlobalRef<R>() const {
+        return get();
+    }
     LocalRef<R> operator->() const {
         return get();
     }
