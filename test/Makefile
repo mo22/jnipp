@@ -30,7 +30,7 @@ JAVACFLAGS = -g
 %.o: %.cpp _java.h ../jnipp.h
 	clang -c $(CPPFLAGS) $< -o $@
 
-libTest.dylib: test.o
+libTest.dylib: test.o _java.o
 	clang -o $@ $(LDFLAGS) $^
 	strip -S -x $@
 
