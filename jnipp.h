@@ -198,10 +198,13 @@ public:
     operator jobject() const {
         return _value;
     }
+
     LocalRef<String> toString() const;
     LocalRef<Class> getClass() const;
     jboolean isInstanceOf(Ref<Class> cls) const;
     Monitor lock() const;
+
+    static Ref<Class> clazz();
 };
 
 /**
@@ -247,6 +250,8 @@ public:
     bool operator != (const char* str) const {
         return std_str() != str;
     }
+
+    static Ref<Class> clazz();
 };
 
 /**
@@ -264,8 +269,10 @@ public:
     }
 
     LocalRef<String> getName() const;
-    jboolean isAssignableFrom(Ref<Class> other);
+    jboolean isAssignableFrom(Ref<Class> other) const;
     LocalRef<Class> getSuperclass() const;
+
+    static Ref<Class> clazz();
 };
 
 /**
@@ -301,6 +308,7 @@ public:
     }
 
     static LocalRef<Array<T>> construct(jsize length, jclass elementClass) {
+        // @TODO: get elementClass from T ?
         return LocalRef<Array<T>>( Env::get()->NewObjectArray(length, elementClass, nullptr) );
     }
 
@@ -1225,12 +1233,24 @@ inline Monitor Object::lock() const {
     return Monitor((jobject)*this);
 }
 
+inline Ref<Class> Object::clazz() {
+    static GlobalRef<Class> cls;
+    if (!cls) cls.set(Class::forName("java/lang/Object"));
+    return cls;
+}
+
 inline LocalRef<String> String::create(const char* value) {
     return LocalRef<String>( Env::get()->NewStringUTF(value) );
 }
 
 inline LocalRef<String> String::create(std::string value) {
     return LocalRef<String>( Env::get()->NewStringUTF(value.c_str()) );
+}
+
+inline Ref<Class> String::clazz() {
+    static GlobalRef<Class> cls;
+    if (!cls) cls.set(Class::forName("java/lang/String"));
+    return cls;
 }
 
 inline LocalRef<Class> Class::forName(const char* name) {
@@ -1242,7 +1262,7 @@ inline LocalRef<String> Class::getName() const {
     return method.call(*this);
 }
 
-inline jboolean Class::isAssignableFrom(Ref<Class> other) {
+inline jboolean Class::isAssignableFrom(Ref<Class> other) const {
     return env()->IsAssignableFrom((jclass)*this, (jclass)*other);
 }
 
@@ -1250,6 +1270,11 @@ inline LocalRef<Class> Class::getSuperclass() const {
     return LocalRef<Class>( env()->GetSuperclass((jclass)*this) );
 }
 
+inline Ref<Class> Class::clazz() {
+    static GlobalRef<Class> cls;
+    if (!cls) cls.set(Class::forName("java/lang/Class"));
+    return cls;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 
