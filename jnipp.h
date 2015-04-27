@@ -822,8 +822,11 @@ class Method : public MethodBase
 {
 public:
     using MethodBase::MethodBase;
-    LocalRef<R> call(jobject target, typename _AsRef<A>::R... args) {
+    LocalRef<R> call(jobject target, typename _AsRef<A>::R... args) const {
         return LocalRef<R>( Env::get()->CallObjectMethod(target, getMethodID(), _ConvertArg(args)...) );
+    }
+    LocalRef<R> operator()(jobject target, typename _AsRef<A>::R... args) const {
+        return call(target, args...);
     }
 };
 
@@ -832,8 +835,11 @@ class Method<void, A...> : public MethodBase
 {
 public:
     using MethodBase::MethodBase;
-    void call(jobject target, typename _AsRef<A>::R... args) {
-        return Env::get()->CallVoidMethod(target, getMethodID(), _ConvertArg(args)...);
+    void call(jobject target, typename _AsRef<A>::R... args) const {
+        Env::get()->CallVoidMethod(target, getMethodID(), _ConvertArg(args)...);
+    }
+    void operator()(jobject target, typename _AsRef<A>::R... args) const {
+        call(target, args...);
     }
 };
 
@@ -843,8 +849,11 @@ class Method<type, A...> : public MethodBase \
 { \
 public: \
     using MethodBase::MethodBase; \
-    type call(jobject target, typename _AsRef<A>::R... args) { \
+    type call(jobject target, typename _AsRef<A>::R... args) const { \
         return Env::get()->Call ## tag ## Method(target, getMethodID(), _ConvertArg(args)...); \
+    } \
+    type operator()(jobject target, typename _AsRef<A>::R... args) const { \
+        return call(target, args...); \
     } \
 };
 JNIPP_M_FOR_ALL_TYPES
@@ -886,8 +895,11 @@ class NonvirtualMethod : public NonvirtualMethodBase
 {
 public:
     using NonvirtualMethodBase::NonvirtualMethodBase;
-    LocalRef<R> call(jobject target, typename _AsRef<A>::R... args) {
+    LocalRef<R> call(jobject target, typename _AsRef<A>::R... args) const {
         return LocalRef<R>( Env::get()->CallNonvirtualObjectMethod(target, getMethodID(), _ConvertArg(args)...) );
+    }
+    LocalRef<R> operator()(jobject target, typename _AsRef<A>::R... args) const {
+        return call(target, args...);
     }
 };
 
@@ -896,8 +908,11 @@ class NonvirtualMethod<void, A...> : public NonvirtualMethodBase
 {
 public:
     using NonvirtualMethodBase::NonvirtualMethodBase;
-    void call(jobject target, typename _AsRef<A>::R... args) {
+    void call(jobject target, typename _AsRef<A>::R... args) const {
         return Env::get()->CallNonvirtualVoidMethod(target, getMethodID(), _ConvertArg(args)...);
+    }
+    void operator()(jobject target, typename _AsRef<A>::R... args) const {
+        call(target, args...);
     }
 };
 
@@ -907,8 +922,11 @@ class NonvirtualMethod<type, A...> : public NonvirtualMethodBase \
 { \
 public: \
     using NonvirtualMethodBase::NonvirtualMethodBase; \
-    type call(jobject target, typename _AsRef<A>::R... args) { \
+    type call(jobject target, typename _AsRef<A>::R... args) const { \
         return Env::get()->CallNonvirtual ## tag ## Method(target, getMethodID(), _ConvertArg(args)...); \
+    } \
+    type operator()(jobject target, typename _AsRef<A>::R... args) const { \
+        return call(target, args...); \
     } \
 };
 JNIPP_M_FOR_ALL_TYPES
@@ -957,8 +975,11 @@ class StaticMethod : public StaticMethodBase
 {
 public:
     using StaticMethodBase::StaticMethodBase;
-    LocalRef<R> call(typename _AsRef<A>::R... args) {
+    LocalRef<R> call(typename _AsRef<A>::R... args) const {
         return LocalRef<R>( Env::get()->CallStaticObjectMethod(getClass(), getMethodID(), _ConvertArg(args)...) );
+    }
+    LocalRef<R> operator()(typename _AsRef<A>::R... args) const {
+        return call(args...);
     }
 };
 
@@ -967,8 +988,11 @@ class StaticMethod<void, A...> : public StaticMethodBase
 {
 public:
     using StaticMethodBase::StaticMethodBase;
-    void call(typename _AsRef<A>::R... args) {
+    void call(typename _AsRef<A>::R... args) const {
         return Env::get()->CallStaticVoidMethod(getClass(), getMethodID(), _ConvertArg(args)...);
+    }
+    void operator()(typename _AsRef<A>::R... args) const {
+        call(args...);
     }
 };
 
@@ -978,8 +1002,11 @@ class StaticMethod<type, A...> : public StaticMethodBase \
 { \
 public: \
     using StaticMethodBase::StaticMethodBase; \
-    type call(typename _AsRef<A>::R... args) { \
+    type call(typename _AsRef<A>::R... args) const { \
         return Env::get()->CallStatic ## tag ## Method(getClass(), getMethodID(), _ConvertArg(args)...); \
+    } \
+    type operator()(typename _AsRef<A>::R... args) const { \
+        return call(args...); \
     } \
 };
 JNIPP_M_FOR_ALL_TYPES
@@ -1024,6 +1051,9 @@ public:
     }
     LocalRef<R> construct(typename _AsRef<A>::R... args) const {
         return LocalRef<R>( Env::get()->NewObject(getClass(), getMethodID(), _ConvertArg(args)...) );
+    }
+    LocalRef<R> operator()(typename _AsRef<A>::R... args) const {
+        return construct(args...);
     }
 };
 
