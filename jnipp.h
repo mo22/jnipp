@@ -109,7 +109,10 @@ public:
         }
         Scope(JavaVM* vm) {
             JNIEnv* env = nullptr;
-            assert(vm->AttachCurrentThread((void**)&env, NULL) == JNI_OK);
+            // @TODO: there are different definitions here :/
+            // jint res = vm->AttachCurrentThread((void**)&env, NULL);
+            jint res = reinterpret_cast<jint(*)(JavaVM*, void**, void*)>(vm->functions->AttachCurrentThread)(vm, (void**)&env, NULL);
+            assert(res == JNI_OK);
             _prev = *(_cur());
             *(_cur()) = env;
         }
@@ -126,14 +129,16 @@ public:
         JNIPP_ASSERT(res, "EnvScope: no environment set");
         return res;
     }
-    static void pushLocalFrame(jint capacity) {
-        assert( get()->PushLocalFrame(capacity) == 0 );
+    static void pushLocalFrame(jint capacity=32) {
+        jint res = get()->PushLocalFrame(capacity);
+        assert(res == 0);
     }
     static void popLocalFrame() {
         get()->PopLocalFrame(nullptr);
     }
     static void ensureLocalCapacity(jint capacity) {
-        assert( get()->EnsureLocalCapacity(capacity) == 0 );
+        jint res = get()->EnsureLocalCapacity(capacity);
+        assert(res == 0);
     }
     static void throwException(Ref<Object> exception);
     static void throwException(Ref<Class> cls, Ref<String> message);
@@ -143,9 +148,10 @@ public:
     }
     static LocalRef<Object> getException();
     static JavaVM* getVM() {
-        JavaVM* res = nullptr;
-        assert( get()->GetJavaVM(&res) == 0 );
-        return res;
+        JavaVM* result = nullptr;
+        jint res = get()->GetJavaVM(&result);
+        assert(res == 0);
+        return result;
     }
 };
 
@@ -653,6 +659,11 @@ public:
             if (Env::peek()) Env::get()->DeleteLocalRef((jobject)*this);
             this->__clear();
         }
+    }
+    jobject steal() {
+        jobject val = (jobject)*this;
+        __clear();
+        return val;
     }
     static bool is(jobject value) {
         return Env::get()->GetObjectRefType(value) == JNILocalRefType;
