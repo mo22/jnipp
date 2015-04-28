@@ -225,21 +225,24 @@ public:
     jsize length() const {
         return env()->GetStringLength((jstring)*this);
     }
-
+/*
+    // @TODO: this is buggy.
     const char* c_str() const {
-        return std_str().c_str();
+        std::string tmp = std_str();
+        return tmp.c_str();
     }
-
+*/
     std::string std_str() const {
         const char* data = env()->GetStringUTFChars((jstring)*this, nullptr);
         std::string res = data;
         env()->ReleaseStringUTFChars((jstring)*this, data);
         return res;
     }
-
+/*
     operator const char*() const {
         return c_str();
     }
+*/
     operator const std::string() const {
         return std_str();
     }
@@ -538,24 +541,33 @@ protected:
 public:
     using RefBase<T>::RefBase;
     Ref(const char* value) : RefBase<T>( Env::get()->NewStringUTF(value) ), _free(true) {
+        JNIPP_RLOG("Ref::Ref(const char*) this=%p jobject=%p", this, (jobject)*this);
     }
     ~Ref() {
         if (_free) {
+            JNIPP_RLOG("Ref::~Ref() this=%p jobject=%p DeleteLocalRef", this, (jobject)*this);
             Env::get()->DeleteLocalRef( (jobject)*this );
         }
     }
+/*
     operator const char*() const {
         return (*this)->std_str().c_str();
     }
     const char* c_str() const {
         return (*this)->std_str().c_str();
     }
-
+*/
+    operator std::string() const {
+        return std_str();
+    }
+    std::string std_str() const {
+        return (*this)->std_str();
+    }
     bool operator == (const char* str) const {
-        return **this == str;
+        return this->std_str() == str;
     }
     bool operator != (const char* str) const {
-        return **this != str;
+        return this->std_str() != str;
     }
 };
 
@@ -624,20 +636,20 @@ public:
         if (value) {
             assert( Env::get()->GetObjectRefType(value) == JNILocalRefType );
         }
-        JNIPP_RLOG("LocalRef::LocalRef(jobject) this=%p jobject=%p", this, (jobject)*this);
+        JNIPP_RLOG("LocalRef::LocalRef(jobject) this=%p jobject=%p (explicit)", this, (jobject)*this);
     }
     template <typename S>
     LocalRef(LocalRef<S>&& value) : Ref<T>((jobject)value) {
         value.__clear();
-        JNIPP_RLOG("LocalRef::LocalRef(LocalRef&&) this=%p value=<%p> jobject=%p", this, &value, (jobject)*this);
+        JNIPP_RLOG("LocalRef::LocalRef(LocalRef&&) this=%p value=<%p> jobject=%p (move)", this, &value, (jobject)*this);
     }
     template <typename S>
     LocalRef(const Ref<S>& value) : Ref<T>(Env::get()->NewLocalRef((jobject)value)) {
-        JNIPP_RLOG("LocalRef::LocalRef(Ref&) this=%p value=<%p> jobject=%p", this, &value, (jobject)*this);
+        JNIPP_RLOG("LocalRef::LocalRef(Ref&) this=%p value=<%p> jobject=%p (copy)", this, &value, (jobject)*this);
     }
     ~LocalRef() {
         if ((jobject)*this) {
-            JNIPP_RLOG("LocalRef::~LocalRef() this=%p jobject=%p", this, (jobject)*this);
+            JNIPP_RLOG("LocalRef::~LocalRef() this=%p jobject=%p (DeleteLocalRef)", this, (jobject)*this);
             if (Env::peek()) Env::get()->DeleteLocalRef((jobject)*this);
             this->__clear();
         }
@@ -659,23 +671,23 @@ protected:
     }
 public:
     GlobalRef() : Ref<T>((jobject)nullptr) {
-        JNIPP_RLOG("GlobalRef::GlobalRef() this=%p", this);
+        JNIPP_RLOG("GlobalRef::GlobalRef() this=%p (empty)", this);
     }
     explicit GlobalRef(jobject value) : Ref<T>(Env::get()->NewGlobalRef(value)) {
-        JNIPP_RLOG("GlobalRef::GlobalRef(jobject) this=%p jobject=%p", this, (jobject)*this);
+        JNIPP_RLOG("GlobalRef::GlobalRef(jobject) this=%p jobject=%p (explicit)", this, (jobject)*this);
     }
     template <typename S>
     GlobalRef(GlobalRef<S>&& value) : Ref<T>((jobject)value) {
-        JNIPP_RLOG("GlobalRef::GlobalRef(GlobalRef&&) this=%p value=<%p> jobject=%p", this, &value, (jobject)*this);
+        JNIPP_RLOG("GlobalRef::GlobalRef(GlobalRef&&) this=%p value=<%p> jobject=%p (move)", this, &value, (jobject)*this);
         value.__clear();
     }
     template <typename S>
     GlobalRef(const Ref<S>& value) : Ref<T>(Env::get()->NewGlobalRef((jobject)value)) {
-        JNIPP_RLOG("GlobalRef::GlobalRef(Ref&) this=%p value=<%p> jobject=%p", this, &value, (jobject)*this);
+        JNIPP_RLOG("GlobalRef::GlobalRef(Ref&) this=%p value=<%p> jobject=%p (copy)", this, &value, (jobject)*this);
     }
     ~GlobalRef() {
         if ((jobject)*this) {
-            JNIPP_RLOG("GlobalRef::~GlobalRef() this=%p jobject=%p", this, (jobject)*this);
+            JNIPP_RLOG("GlobalRef::~GlobalRef() this=%p jobject=%p (DeleteGlobalRef)", this, (jobject)*this);
             if (Env::peek()) Env::get()->DeleteGlobalRef((jobject)*this);
             this->__clear();
         }
