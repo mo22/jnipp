@@ -32,8 +32,7 @@ EXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved)
 void test_string() {
     LocalRef<JavaLangString> str = String::create("Hello World");
 
-    LOG("str=%s", (const char*)str);
-    LOG("str=%s", str->c_str());
+    LOG("str=%s", str->std_str().c_str());
     LOG("str.length()=%d", str->length());
     LOG("str.charAt(0)=%c", str->charAt(0));
 
@@ -42,26 +41,26 @@ void test_string() {
     LOG("bytes[0]=%d", bytes[0] );
 
     auto str2 = str->concat(String::create(" !!"));
-    LOG("str2=%s", str2->toString()->c_str());
+    LOG("str2=%s", str2->toString()->std_str().c_str());
 
     auto str3 = str->concat(" with const char*");
-    LOG("str3=%s", str3->c_str());
+    LOG("str3=%s", str3->std_str().c_str());
 
     auto parts = str->split(" ");
     LOG("parts.length()=%d", parts->length());
-    LOG("parts[0]=%s", parts[0]->c_str());
+    LOG("parts[0]=%s", parts[0]->std_str().c_str());
 
-    LOG("String.valueOf(3.141f)=%s", JavaLangString::valueOf(3.141f)->toString()->c_str());
+    LOG("String.valueOf(3.141f)=%s", JavaLangString::valueOf(3.141f)->toString()->std_str().c_str());
 
-    LOG("String.CASE_INSENSITIVE_ORDER %s", JavaLangString::CASE_INSENSITIVE_ORDER.get()->toString()->c_str());
-    LOG("String.CASE_INSENSITIVE_ORDER %s", JavaLangString::CASE_INSENSITIVE_ORDER->toString()->c_str());
+    LOG("String.CASE_INSENSITIVE_ORDER %s", JavaLangString::CASE_INSENSITIVE_ORDER.get()->toString()->std_str().c_str());
+    LOG("String.CASE_INSENSITIVE_ORDER %s", JavaLangString::CASE_INSENSITIVE_ORDER->toString()->std_str().c_str());
 
     // JavaLangString::CASE_INSENSITIVE_ORDER.set(String::create("test")); // fails with read only
 
     JavaTest::staticObject.set( String::create("test") );
-    LOG("JavaTest::staticObject %s", JavaTest::staticObject->toString()->c_str());
+    LOG("JavaTest::staticObject %s", JavaTest::staticObject->toString()->std_str().c_str());
     JavaTest::staticObject = (Ref<Object>) String::create("test");
-    LOG("JavaTest::staticObject %s", JavaTest::staticObject->toString()->c_str());
+    LOG("JavaTest::staticObject %s", JavaTest::staticObject->toString()->std_str().c_str());
 
     LOG("JavaTest::staticInt %d", (jint)JavaTest::staticInt);
     JavaTest::staticInt = 1234;
@@ -76,7 +75,7 @@ void test_string() {
         if (Env::hasException()) {
             LOG("got an exception");
             auto ex = Env::getException();
-            LOG("ex toString: %s", ex->toString()->c_str());
+            LOG("ex toString: %s", ex->toString()->std_str().c_str());
         }
     }
 
@@ -86,7 +85,7 @@ void test_string() {
         if (Env::hasException()) {
             LOG("got an exception");
             auto ex = Env::getException();
-            LOG("ex toString: %s", ex->toString()->c_str());
+            LOG("ex toString: %s", ex->toString()->std_str().c_str());
         }
     }
 
@@ -110,7 +109,7 @@ void test_string() {
         auto charArray = Array<jchar>::construct(10);
         for (int i=0; i<charArray->length(); i++) (*charArray)[i] = '0' + i;
         auto charString = JavaLangString::construct(charArray);
-        LOG("charString=%s", charString->c_str());
+        LOG("charString=%s", charString->std_str().c_str());
     }
 };
 
