@@ -47,7 +47,7 @@
 #endif
 
 #ifndef JNIPP_ASSERT
-    #if defined(__EXCEPTIONS)
+    #if defined(__EXCEPTIONS) && false
         #define JNIPP_ASSERT(condition, message) if (!(condition)) throw std::logic_error(message "(" #condition ")")
     #elif defined(ANDROID)
         #include <android/log.h>

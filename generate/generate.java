@@ -4,20 +4,48 @@ import java.io.*;
 
 public class generate
 {
+    private static class Item {
+        public Class cls;
+        public boolean includePrivate;
+        public boolean recursive;
+        public boolean stubOnly;
+        public Item()
+        {
+        }
+        public Item(Class cls, boolean includePrivate, boolean recursive)
+        {
+            this.cls = cls;
+            this.includePrivate = includePrivate;
+            this.recursive = recursive;
+        }
+    }
+
+    private Item item;
     private Class cls;
     private String defClsName;
     private Map<Class, String> usedClasses = new HashMap<Class, String>();
     private Set<Class> done = new HashSet<Class>();
     private Map<String, AccessibleObject> usedNames = new HashMap<String, AccessibleObject>();
+    private List<Item> todo = new ArrayList<Item>();
+
     private StringBuffer header = new StringBuffer();
     private StringBuffer declaration = new StringBuffer();
     private StringBuffer implementation = new StringBuffer();
+
+    public generate() throws Exception
+    {
+    }
 
     private String convertClassName(Class cls)
     {
         StringBuffer res = new StringBuffer();
         for (String i : cls.getName().replace('$', '_').split("\\.")) {
             res.append( i.substring(0, 1).toUpperCase() + i.substring(1) );
+        }
+        if (item.recursive) {
+            if (!done.contains(cls)) {
+                todo.add(new Item(cls, item.includePrivate, item.recursive));
+            }
         }
         usedClasses.put(cls, res.toString());
         return res.toString();
@@ -275,15 +303,18 @@ public class generate
         // @TODO...
     }
 
-    private void handleClass(Class cls) throws Exception
+    private void handleClass(Item item) throws Exception
     {
-        if (done.contains(cls)) return;
+        //if (done.contains(cls)) return;
+        this.item = item;
+        this.cls = item.cls;
         done.add(cls);
-        this.cls = cls;
         defClsName = convertClassName(cls);
 
+        usedNames.clear();
+
         declaration.append("\n");
-        declaration.append("// " + cls + "\n");
+        declaration.append("// " + cls + (item.stubOnly ? " (stub)" : "") + "\n");
 
         String parent = (cls.getSuperclass() == null) ? "jnipp::Object" : getNativeClassName(cls.getSuperclass());
         if (cls.equals(Class.class)) parent = "jnipp::Class";
@@ -297,207 +328,119 @@ public class generate
 
         handleGetClass();
 
-        usedNames.clear();
+        if (!item.stubOnly) {
 
-        for (Constructor member : cls.getDeclaredConstructors()) {
-            handleConstructor(member);
-        }
-
-        for (Method member : cls.getDeclaredMethods()) {
-
-            if (member.getName().equals("toString")) continue;
-            if (member.getName().equals("getClass")) continue;
-
-            //if ((member.getModifiers() & Modifier.PUBLIC) == 0) continue;
-            if ((member.getModifiers() & Modifier.ABSTRACT) != 0) continue;
-
-            if (member.isSynthetic()) continue;
-
-            if ((member.getModifiers() & Modifier.STATIC) != 0) {
-                handleStaticMethod(member);
-            } else {
-                handleMethod(member);
+            for (Constructor member : cls.getDeclaredConstructors()) {
+                handleConstructor(member);
             }
-        }
 
-        for (Field member : cls.getDeclaredFields()) {
-            //if ((member.getModifiers() & Modifier.PUBLIC) == 0) continue;
-            if ((member.getModifiers() & Modifier.STATIC) != 0) {
-                handleStaticField(member);
-            } else {
-                handleField(member);
+            for (Method member : cls.getDeclaredMethods()) {
+
+                if (member.getName().equals("toString")) continue;
+                if (member.getName().equals("getClass")) continue;
+
+                if (!item.includePrivate && (member.getModifiers() & Modifier.PUBLIC) == 0) continue;
+                if ((member.getModifiers() & Modifier.ABSTRACT) != 0) continue;
+
+                if (member.isSynthetic()) continue;
+
+                if ((member.getModifiers() & Modifier.STATIC) != 0) {
+                    handleStaticMethod(member);
+                } else {
+                    handleMethod(member);
+                }
             }
+
+            for (Field member : cls.getDeclaredFields()) {
+                if (!item.includePrivate && (member.getModifiers() & Modifier.PUBLIC) == 0) continue;
+                if ((member.getModifiers() & Modifier.STATIC) != 0) {
+                    handleStaticField(member);
+                } else {
+                    handleField(member);
+                }
+            }
+
+            // @TODO: nested classes
+
+            // @TODO: gather all dependencies
+
         }
-
-        // @TODO: nested classes
-
-        // @TODO: gather all dependencies
-
-
         declaration.append("};\n");
     }
 
-    public String getSingle() throws Exception
+    private void run(String[] args) throws Exception
     {
-        StringBuffer res = new StringBuffer();
-
-        res.append("\n");
-        for (String item : usedClasses.values()) {
-            res.append("class " + item + ";\n");
+        for (String arg : args) {
+            Item item = new Item();
+            if (arg.endsWith(":*")) {
+                arg = arg.substring(0, arg.length()-2);
+                item.recursive = true;
+            }
+            if (arg.endsWith(":p")) {
+                arg = arg.substring(0, arg.length()-2);
+                item.includePrivate = true;
+            }
+            item.cls = Class.forName(arg);
+            if (item.recursive) {
+                todo.add(0, item);
+            } else {
+                todo.add(item);
+            }
         }
-
-        res.append("\n");
-        res.append(declaration);
-
-        res.append("\n");
-        res.append(implementation);
-
-        res.append("\n");
-        return res.toString();
-    }
-
-    public String getSingleHeader() throws Exception
-    {
-        StringBuffer res = new StringBuffer();
-        res.append("#ifndef _JNIPP_CLASSES\n");
-        res.append("#define _JNIPP_CLASSES\n");
-        res.append("#include \"jnipp/jnipp.h\"\n");
-        res.append("\n");
-        for (String item : usedClasses.values()) {
-            res.append("class " + item + ";\n");
+        while (true) {
+            while (todo.size() > 0) {
+                Item item = todo.remove(0);
+                if (done.contains(item.cls)) continue;
+                Class scls = item.cls.getSuperclass();
+                if (scls != null && !done.contains(scls)) {
+                    todo.add(0, item);
+                    Item sitem = new Item();
+                    sitem.cls = scls;
+                    sitem.stubOnly = item.stubOnly;
+                    todo.add(0, sitem);
+                    continue;
+                }
+                System.err.println(item.cls);
+                handleClass(item);
+            }
+            for (Class cls : new ArrayList<Class>(usedClasses.keySet())) {
+                if (done.contains(cls)) continue;
+                Item item = new Item();
+                item.cls = cls;
+                item.stubOnly = true;
+                todo.add(item);
+            }
+            if (todo.size() == 0) break;
         }
-        res.append("\n");
-        res.append(declaration);
-        res.append("\n");
-        res.append("#endif\n");
-        return res.toString();
-    }
-
-    public String getSingleBody() throws Exception
-    {
-        StringBuffer res = new StringBuffer();
-        res.append("#include \"_java.h\"\n");
-        res.append("\n");
-        res.append(implementation);
-        res.append("\n");
-        return res.toString();
-    }
-
-    public String getHeader() throws Exception
-    {
-        StringBuffer res = new StringBuffer();
-
-        res.append("#ifndef _JNIPP_" + cls.getName().replace('.', '_').toUpperCase() + "\n");
-        res.append("#define _JNIPP_" + cls.getName().replace('.', '_').toUpperCase() + "\n");
-
-        res.append("\n");
-        for (String item : usedClasses.values()) {
-            res.append("class " + item + ";\n");
-        }
-
-        if (cls.getSuperclass() != null) {
+        {
+            StringBuffer res = new StringBuffer();
+            res.append("#pragma once\n");
+            res.append("#include \"jnipp/jnipp.h\"\n");
             res.append("\n");
-            res.append("#include \"" + convertClassName(cls.getSuperclass()) + ".h\"\n");
-        }
-
-        res.append("\n");
-        res.append(declaration);
-
-        res.append("\n");
-        for (String item : usedClasses.values()) {
-            if (item.equals(convertClassName(cls))) continue;
-            res.append("#include \"" + item + ".h\"\n");
-        }
-
-        res.append("\n");
-        res.append("#endif\n");
-        return res.toString();
-    }
-
-    public String getBody() throws Exception
-    {
-        StringBuffer res = new StringBuffer();
-        res.append("#include \"jnipp/jnipp.h\"\n");
-        res.append("#include \"" + convertClassName(cls) + ".h\"\n");
-        res.append("\n");
-        res.append(implementation);
-        return res.toString();
-    }
-
-    public generate() throws Exception
-    {
-    }
-
-    private void handleRecursive(Class startClass) throws Exception
-    {
-        List<Class> todo = new ArrayList<Class>();
-        todo.add(startClass);
-        while (todo.size() > 0) {
-            Class cls = todo.remove(0);
-            if (done.contains(cls)) continue;
-            Class scls = cls.getSuperclass();
-            if (scls != null && !done.contains(scls)) {
-                todo.add(0, cls);
-                todo.add(0, scls);
-                continue;
+            for (String item : usedClasses.values()) {
+                res.append("class " + item + ";\n");
             }
-            System.err.println(cls);
-            handleClass(cls);
-            for (Class ref : usedClasses.keySet()) {
-                if (done.contains(ref)) continue;
-                todo.add(ref);
-            }
+            res.append("\n");
+            res.append(declaration);
+            res.append("\n");
+            FileWriter writer = new FileWriter("_java.h");
+            writer.write(res.toString());
+            writer.flush();
         }
-    }
-
-    private static void convert(Class cls) throws Exception
-    {
-        System.err.println(cls);
-        generate x = new generate();
-        x.handleClass(cls);
-        String name = x.convertClassName(cls);
-        if (new File(name + ".h").exists()) return;
-        FileWriter writer = new FileWriter(name + ".h");
-        writer.write(x.getHeader());
-        writer.flush();
-        writer = new FileWriter(name + ".cpp");
-        writer.write(x.getBody());
-        writer.flush();
-        for (Class item : x.usedClasses.keySet()) {
-            convert(item);
+        {
+            StringBuffer res = new StringBuffer();
+            res.append("#include \"_java.h\"\n");
+            res.append("\n");
+            res.append(implementation);
+            res.append("\n");
+            FileWriter writer = new FileWriter("_java.cpp");
+            writer.write(res.toString());
+            writer.flush();
         }
-    }
-
-    private static void convert(String[] args) throws Exception
-    {
-        for (String arg : args) {
-            convert(Class.forName(arg));
-        }
-    }
-
-    private static void convertSingle(String[] args) throws Exception
-    {
-        generate x = new generate();
-        for (String arg : args) {
-            x.handleRecursive(Class.forName(arg));
-        }
-
-        //FileWriter writer = new FileWriter("_java.h");
-        //writer.write(x.getSingle());
-        //writer.flush();
-
-        FileWriter writer = new FileWriter("_java.h");
-        writer.write(x.getSingleHeader());
-        writer.flush();
-        writer = new FileWriter("_java.cpp");
-        writer.write(x.getSingleBody());
-        writer.flush();
-
     }
 
     public static void main(String[] args) throws Exception
     {
-        convertSingle(args);
-        //convert(args);
+        new generate().run(args);
     }
 }
