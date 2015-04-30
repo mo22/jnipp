@@ -299,7 +299,7 @@ public class generate
         declaration.append("    ");
         if ((member.getModifiers() & Modifier.FINAL) != 0) declaration.append("const ");
         declaration.append("jnipp::BoundField<" + getNativeClassName(type) + "> " + defName + " = ");
-        declaration.append("jnipp::BoundField<" + getNativeClassName(type) + ">(\"" + cls.getName() + "\", \"" + member.getName() + "\", \"" + getSignature(type) + "\", this);\n");
+        declaration.append("jnipp::BoundField<" + getNativeClassName(type) + ">(\"" + cls.getName().replace(".", "/") + "\", \"" + member.getName() + "\", \"" + getSignature(type) + "\", this);\n");
         // @TODO...
     }
 
