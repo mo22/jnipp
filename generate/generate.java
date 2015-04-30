@@ -8,7 +8,7 @@ public class generate
     private String defClsName;
     private Map<Class, String> usedClasses = new HashMap<Class, String>();
     private Set<Class> done = new HashSet<Class>();
-
+    private Set<String> usedNames = new HashSet<String>();
     private StringBuffer header = new StringBuffer();
     private StringBuffer declaration = new StringBuffer();
     private StringBuffer implementation = new StringBuffer();
@@ -103,6 +103,18 @@ public class generate
         return "(jobject)"+name;
     }
 
+    private String mangleName(String name)
+    {
+        if (name.equals("and") || name.equals("or") || name.equals("not") || name.equals("xor")) name += "_";
+        if (name.equals("register") || name.equals("virtual") || name.equals("union")) name += "_";
+        if (name.equals("delete")) name += "_";
+        if (name.equals("parent")) name += "_";
+        if (name.equals("clazz")) name += "_";
+        while (usedNames.contains(name)) name += "_";
+        usedNames.add(name);
+        return name;
+    }
+
     private void handleGetClass() throws Exception
     {
         declaration.append("\n");
@@ -120,8 +132,7 @@ public class generate
         Class retType = member.getReturnType();
         Class[] paramTypes = member.getParameterTypes();
         String name = member.getName();
-        String defName = name;
-        if (defName.equals("delete")) defName = "delete_";
+        String defName = mangleName(name);
 
         declaration.append("\n");
         declaration.append("    // " + member + "\n");
@@ -160,10 +171,11 @@ public class generate
     {
         Class retType = member.getReturnType();
         Class[] paramTypes = member.getParameterTypes();
+        String defName = mangleName(member.getName());
 
         declaration.append("\n");
         declaration.append("    // " + member + "\n");
-        declaration.append("    static " + getNativeClassNameLocalRef(retType) + " " + member.getName() + "(");
+        declaration.append("    static " + getNativeClassNameLocalRef(retType) + " " + defName + "(");
         for (int i=0; i<paramTypes.length; i++) {
             if (i > 0) declaration.append(", ");
             declaration.append(getNativeClassNameRef(paramTypes[i])+" a"+i);
@@ -172,7 +184,7 @@ public class generate
 
         implementation.append("\n");
         implementation.append("// " + member + "\n");
-        implementation.append(getNativeClassNameLocalRef(retType) + " " + defClsName + "::" + member.getName() + "(");
+        implementation.append(getNativeClassNameLocalRef(retType) + " " + defClsName + "::" + defName + "(");
         for (int i=0; i<paramTypes.length; i++) {
             if (i > 0) implementation.append(", ");
             implementation.append(getNativeClassNameRef(paramTypes[i])+" a"+i);
@@ -233,31 +245,34 @@ public class generate
     private void handleStaticField(Field member) throws Exception
     {
         Class type = member.getType();
+        String defName = mangleName(member.getName());
         declaration.append("\n");
+        declaration.append("#pragma push_macro(\"" + member.getName() + "\")\n");
         declaration.append("#undef " + member.getName() + "\n");
         declaration.append("    // " + member + "\n");
         declaration.append("    static ");
         if ((member.getModifiers() & Modifier.FINAL) != 0) declaration.append("const ");
-        declaration.append("jnipp::StaticField<" + getNativeClassName(type) + "> " + member.getName() + ";\n");
+        declaration.append("jnipp::StaticField<" + getNativeClassName(type) + "> " + defName + ";\n");
+        declaration.append("#pragma pop_macro(\"" + member.getName() + "\")\n");
 
+        implementation.append("#undef " + member.getName() + "\n");
         if ((member.getModifiers() & Modifier.FINAL) != 0) implementation.append("const ");
         implementation.append("jnipp::StaticField<" + getNativeClassName(type) + "> ");
-        implementation.append(convertClassName(cls) + "::" + member.getName());
+        implementation.append(convertClassName(cls) + "::" + defName);
         implementation.append(" (\"" + cls.getName().replace(".", "/") + "\", \"" + member.getName() + "\", \"" + getSignature(type) + "\");\n");
     }
 
     private void handleField(Field member) throws Exception
     {
-/*
         Class type = member.getType();
+        String defName = mangleName(member.getName());
         declaration.append("\n");
         declaration.append("    // " + member + "\n");
         declaration.append("    ");
         if ((member.getModifiers() & Modifier.FINAL) != 0) declaration.append("const ");
-        declaration.append("jnipp::Field<" + getNativeClassName(type) + "> " + member.getName() + " = ");
+        declaration.append("jnipp::Field<" + getNativeClassName(type) + "> " + defName + " = ");
         declaration.append("jnipp::Field<" + getNativeClassName(type) + ">(\"" + cls.getName() + "\", \"" + member.getName() + "\", \"" + getSignature(type) + "\");\n");
         // @TODO...
-*/
     }
 
     private void handleClass(Class cls) throws Exception
@@ -282,6 +297,8 @@ public class generate
 
         handleGetClass();
 
+        usedNames.clear();
+
         for (Constructor member : cls.getDeclaredConstructors()) {
             handleConstructor(member);
         }
@@ -291,7 +308,7 @@ public class generate
             if (member.getName().equals("toString")) continue;
             if (member.getName().equals("getClass")) continue;
 
-            if ((member.getModifiers() & Modifier.PUBLIC) == 0) continue;
+            //if ((member.getModifiers() & Modifier.PUBLIC) == 0) continue;
             if ((member.getModifiers() & Modifier.ABSTRACT) != 0) continue;
 
             if (member.isSynthetic()) continue;
@@ -304,7 +321,7 @@ public class generate
         }
 
         for (Field member : cls.getDeclaredFields()) {
-            if ((member.getModifiers() & Modifier.PUBLIC) == 0) continue;
+            //if ((member.getModifiers() & Modifier.PUBLIC) == 0) continue;
             if ((member.getModifiers() & Modifier.STATIC) != 0) {
                 handleStaticField(member);
             } else {
