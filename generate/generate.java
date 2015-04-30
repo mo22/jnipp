@@ -270,8 +270,8 @@ public class generate
         declaration.append("    // " + member + "\n");
         declaration.append("    ");
         if ((member.getModifiers() & Modifier.FINAL) != 0) declaration.append("const ");
-        declaration.append("jnipp::Field<" + getNativeClassName(type) + "> " + defName + " = ");
-        declaration.append("jnipp::Field<" + getNativeClassName(type) + ">(\"" + cls.getName() + "\", \"" + member.getName() + "\", \"" + getSignature(type) + "\");\n");
+        declaration.append("jnipp::BoundField<" + getNativeClassName(type) + "> " + defName + " = ");
+        declaration.append("jnipp::BoundField<" + getNativeClassName(type) + ">(\"" + cls.getName() + "\", \"" + member.getName() + "\", \"" + getSignature(type) + "\", this);\n");
         // @TODO...
     }
 

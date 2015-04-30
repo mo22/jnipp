@@ -1144,7 +1144,80 @@ public: \
 JNIPP_M_FOR_ALL_TYPES
 #undef M
 
-// make a ConcreteField that is bound to a specific instance?
+////////////////////////////////////////////////////////////////////////////////
+
+class BoundFieldBase {
+protected:
+    jclass _cls;
+    const char* _clsName;
+    const char* _name;
+    const char* _signature;
+    jfieldID _fieldID;
+    Object* _thiz;
+public:
+    BoundFieldBase(const char* clsName, const char* name, const char* signature, Object* thiz) : _cls(nullptr), _clsName(clsName), _name(name), _signature(signature), _fieldID(0), _thiz(thiz) {
+    }
+    jfieldID getFieldID() const {
+        if (_fieldID == nullptr) {
+            JNIEnv* env = Env::get();
+            if (_cls == nullptr && _clsName != nullptr) {
+                const_cast<BoundFieldBase*>(this)->_cls = env->FindClass(_clsName);
+            }
+            JNIPP_ASSERT(_cls, "Field: clsName not found");
+            jfieldID res = env->GetFieldID(_cls, _name, _signature);
+            JNIPP_ASSERT(res, "Field: field not found");
+            const_cast<BoundFieldBase*>(this)->_fieldID = res;
+        }
+        return _fieldID;
+    }
+    operator jfieldID() const {
+        return getFieldID();
+    }
+};
+
+template <typename R>
+class BoundField : public BoundFieldBase
+{
+public:
+    using BoundFieldBase::BoundFieldBase;
+    LocalRef<R> get() const {
+        return LocalRef<R>( Env::get()->GetObjectField((jobject)_thiz, getFieldID()) );
+    }
+    operator LocalRef<R>() const {
+        return get();
+    }
+    operator GlobalRef<R>() const {
+        return get();
+    }
+    LocalRef<R> operator->() const {
+        return get();
+    }
+    void set(Ref<R> value) {
+        Env::get()->SetObjectField((jobject)_thiz, getFieldID(), value);
+    }
+};
+
+#define M(type,tag) \
+template <> \
+class BoundField<type> : public BoundFieldBase \
+{ \
+public: \
+    using BoundFieldBase::BoundFieldBase; \
+    type get() const { \
+        return Env::get()->Get ## tag ## Field((jobject)_thiz, getFieldID()); \
+    } \
+    operator type() const { \
+        return get(); \
+    } \
+    void set(type value) { \
+        Env::get()->Set ## tag ## Field((jobject)_thiz, getFieldID(), value); \
+    } \
+    void operator=(type value) { \
+        set(value); \
+    } \
+};
+JNIPP_M_FOR_ALL_TYPES
+#undef M
 
 ////////////////////////////////////////////////////////////////////////////////
 
