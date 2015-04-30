@@ -1181,7 +1181,7 @@ class BoundField : public BoundFieldBase
 public:
     using BoundFieldBase::BoundFieldBase;
     LocalRef<R> get() const {
-        return LocalRef<R>( Env::get()->GetObjectField((jobject)_thiz, getFieldID()) );
+        return LocalRef<R>( Env::get()->GetObjectField(*_thiz, getFieldID()) );
     }
     operator LocalRef<R>() const {
         return get();
@@ -1193,7 +1193,7 @@ public:
         return get();
     }
     void set(Ref<R> value) {
-        Env::get()->SetObjectField((jobject)_thiz, getFieldID(), value);
+        Env::get()->SetObjectField(*_thiz, getFieldID(), value);
     }
 };
 
@@ -1204,13 +1204,13 @@ class BoundField<type> : public BoundFieldBase \
 public: \
     using BoundFieldBase::BoundFieldBase; \
     type get() const { \
-        return Env::get()->Get ## tag ## Field((jobject)_thiz, getFieldID()); \
+        return Env::get()->Get ## tag ## Field(*_thiz, getFieldID()); \
     } \
     operator type() const { \
         return get(); \
     } \
     void set(type value) { \
-        Env::get()->Set ## tag ## Field((jobject)_thiz, getFieldID(), value); \
+        Env::get()->Set ## tag ## Field(*_thiz, getFieldID(), value); \
     } \
     void operator=(type value) { \
         set(value); \
