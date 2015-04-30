@@ -8,7 +8,7 @@ public class generate
     private String defClsName;
     private Map<Class, String> usedClasses = new HashMap<Class, String>();
     private Set<Class> done = new HashSet<Class>();
-    private Set<String> usedNames = new HashSet<String>();
+    private Map<String, AccessibleObject> usedNames = new HashMap<String, AccessibleObject>();
     private StringBuffer header = new StringBuffer();
     private StringBuffer declaration = new StringBuffer();
     private StringBuffer implementation = new StringBuffer();
@@ -103,15 +103,15 @@ public class generate
         return "(jobject)"+name;
     }
 
-    private String mangleName(String name)
+    private String mangleName(String name, AccessibleObject obj)
     {
         if (name.equals("and") || name.equals("or") || name.equals("not") || name.equals("xor")) name += "_";
         if (name.equals("register") || name.equals("virtual") || name.equals("union")) name += "_";
         if (name.equals("delete")) name += "_";
         if (name.equals("parent")) name += "_";
         if (name.equals("clazz")) name += "_";
-        while (usedNames.contains(name)) name += "_";
-        usedNames.add(name);
+        while (usedNames.containsKey(name) && !usedNames.get(name).getClass().equals(obj.getClass())) name += "_";
+        usedNames.put(name, obj);
         return name;
     }
 
@@ -132,7 +132,7 @@ public class generate
         Class retType = member.getReturnType();
         Class[] paramTypes = member.getParameterTypes();
         String name = member.getName();
-        String defName = mangleName(name);
+        String defName = mangleName(name, member);
 
         declaration.append("\n");
         declaration.append("    // " + member + "\n");
@@ -171,7 +171,7 @@ public class generate
     {
         Class retType = member.getReturnType();
         Class[] paramTypes = member.getParameterTypes();
-        String defName = mangleName(member.getName());
+        String defName = mangleName(member.getName(), member);
 
         declaration.append("\n");
         declaration.append("    // " + member + "\n");
@@ -245,7 +245,7 @@ public class generate
     private void handleStaticField(Field member) throws Exception
     {
         Class type = member.getType();
-        String defName = mangleName(member.getName());
+        String defName = mangleName(member.getName(), member);
         declaration.append("\n");
         declaration.append("#pragma push_macro(\"" + member.getName() + "\")\n");
         declaration.append("#undef " + member.getName() + "\n");
@@ -265,7 +265,7 @@ public class generate
     private void handleField(Field member) throws Exception
     {
         Class type = member.getType();
-        String defName = mangleName(member.getName());
+        String defName = mangleName(member.getName(), member);
         declaration.append("\n");
         declaration.append("    // " + member + "\n");
         declaration.append("    ");

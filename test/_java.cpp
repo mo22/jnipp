@@ -25,13 +25,13 @@ void JavaLangObject::wait(jlong a0, jint a1) const {
 }
 
 // public final native void java.lang.Object.wait(long) throws java.lang.InterruptedException
-void JavaLangObject::wait_(jlong a0) const {
+void JavaLangObject::wait(jlong a0) const {
     static jnipp::Method<void,jlong> method(clazz(), "wait", "(J)V");
     method.call(*this, a0);
 }
 
 // public final void java.lang.Object.wait() throws java.lang.InterruptedException
-void JavaLangObject::wait__() const {
+void JavaLangObject::wait() const {
     static jnipp::Method<void> method(clazz(), "wait", "()V");
     method.call(*this);
 }
@@ -204,25 +204,25 @@ jint JavaLangString::indexOf(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1,
 }
 
 // public int java.lang.String.indexOf(java.lang.String,int)
-jint JavaLangString::indexOf_(const jnipp::Ref<JavaLangString>& a0, jint a1) const {
+jint JavaLangString::indexOf(const jnipp::Ref<JavaLangString>& a0, jint a1) const {
     static jnipp::Method<jint,JavaLangString,jint> method(clazz(), "indexOf", "(Ljava/lang/String;I)I");
     return method.call(*this, a0, a1);
 }
 
 // public int java.lang.String.indexOf(java.lang.String)
-jint JavaLangString::indexOf__(const jnipp::Ref<JavaLangString>& a0) const {
+jint JavaLangString::indexOf(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<jint,JavaLangString> method(clazz(), "indexOf", "(Ljava/lang/String;)I");
     return method.call(*this, a0);
 }
 
 // public int java.lang.String.indexOf(int)
-jint JavaLangString::indexOf___(jint a0) const {
+jint JavaLangString::indexOf(jint a0) const {
     static jnipp::Method<jint,jint> method(clazz(), "indexOf", "(I)I");
     return method.call(*this, a0);
 }
 
 // public int java.lang.String.indexOf(int,int)
-jint JavaLangString::indexOf____(jint a0, jint a1) const {
+jint JavaLangString::indexOf(jint a0, jint a1) const {
     static jnipp::Method<jint,jint,jint> method(clazz(), "indexOf", "(II)I");
     return method.call(*this, a0, a1);
 }
@@ -234,49 +234,49 @@ jnipp::LocalRef<JavaLangString> JavaLangString::valueOf(jchar a0) {
 }
 
 // public static java.lang.String java.lang.String.valueOf(java.lang.Object)
-jnipp::LocalRef<JavaLangString> JavaLangString::valueOf_(const jnipp::Ref<JavaLangObject>& a0) {
+jnipp::LocalRef<JavaLangString> JavaLangString::valueOf(const jnipp::Ref<JavaLangObject>& a0) {
     static jnipp::StaticMethod<JavaLangString,JavaLangObject> method(clazz(), "valueOf", "(Ljava/lang/Object;)Ljava/lang/String;");
     return method.call(a0);
 }
 
 // public static java.lang.String java.lang.String.valueOf(boolean)
-jnipp::LocalRef<JavaLangString> JavaLangString::valueOf__(jboolean a0) {
+jnipp::LocalRef<JavaLangString> JavaLangString::valueOf(jboolean a0) {
     static jnipp::StaticMethod<JavaLangString,jboolean> method(clazz(), "valueOf", "(Z)Ljava/lang/String;");
     return method.call(a0);
 }
 
 // public static java.lang.String java.lang.String.valueOf(char[],int,int)
-jnipp::LocalRef<JavaLangString> JavaLangString::valueOf___(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1, jint a2) {
+jnipp::LocalRef<JavaLangString> JavaLangString::valueOf(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1, jint a2) {
     static jnipp::StaticMethod<JavaLangString,jnipp::Array<jchar>,jint,jint> method(clazz(), "valueOf", "([CII)Ljava/lang/String;");
     return method.call(a0, a1, a2);
 }
 
 // public static java.lang.String java.lang.String.valueOf(char[])
-jnipp::LocalRef<JavaLangString> JavaLangString::valueOf____(const jnipp::Ref<jnipp::Array<jchar>>& a0) {
+jnipp::LocalRef<JavaLangString> JavaLangString::valueOf(const jnipp::Ref<jnipp::Array<jchar>>& a0) {
     static jnipp::StaticMethod<JavaLangString,jnipp::Array<jchar>> method(clazz(), "valueOf", "([C)Ljava/lang/String;");
     return method.call(a0);
 }
 
 // public static java.lang.String java.lang.String.valueOf(long)
-jnipp::LocalRef<JavaLangString> JavaLangString::valueOf_____(jlong a0) {
+jnipp::LocalRef<JavaLangString> JavaLangString::valueOf(jlong a0) {
     static jnipp::StaticMethod<JavaLangString,jlong> method(clazz(), "valueOf", "(J)Ljava/lang/String;");
     return method.call(a0);
 }
 
 // public static java.lang.String java.lang.String.valueOf(float)
-jnipp::LocalRef<JavaLangString> JavaLangString::valueOf______(jfloat a0) {
+jnipp::LocalRef<JavaLangString> JavaLangString::valueOf(jfloat a0) {
     static jnipp::StaticMethod<JavaLangString,jfloat> method(clazz(), "valueOf", "(F)Ljava/lang/String;");
     return method.call(a0);
 }
 
 // public static java.lang.String java.lang.String.valueOf(int)
-jnipp::LocalRef<JavaLangString> JavaLangString::valueOf_______(jint a0) {
+jnipp::LocalRef<JavaLangString> JavaLangString::valueOf(jint a0) {
     static jnipp::StaticMethod<JavaLangString,jint> method(clazz(), "valueOf", "(I)Ljava/lang/String;");
     return method.call(a0);
 }
 
 // public static java.lang.String java.lang.String.valueOf(double)
-jnipp::LocalRef<JavaLangString> JavaLangString::valueOf________(jdouble a0) {
+jnipp::LocalRef<JavaLangString> JavaLangString::valueOf(jdouble a0) {
     static jnipp::StaticMethod<JavaLangString,jdouble> method(clazz(), "valueOf", "(D)Ljava/lang/String;");
     return method.call(a0);
 }
@@ -342,7 +342,7 @@ void JavaLangString::getChars(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1
 }
 
 // public void java.lang.String.getChars(int,int,char[],int)
-void JavaLangString::getChars_(jint a0, jint a1, const jnipp::Ref<jnipp::Array<jchar>>& a2, jint a3) const {
+void JavaLangString::getChars(jint a0, jint a1, const jnipp::Ref<jnipp::Array<jchar>>& a2, jint a3) const {
     static jnipp::Method<void,jint,jint,jnipp::Array<jchar>,jint> method(clazz(), "getChars", "(II[CI)V");
     method.call(*this, a0, a1, a2, a3);
 }
@@ -354,19 +354,19 @@ jnipp::LocalRef<jnipp::Array<jbyte>> JavaLangString::getBytes(const jnipp::Ref<J
 }
 
 // public void java.lang.String.getBytes(int,int,byte[],int)
-void JavaLangString::getBytes_(jint a0, jint a1, const jnipp::Ref<jnipp::Array<jbyte>>& a2, jint a3) const {
+void JavaLangString::getBytes(jint a0, jint a1, const jnipp::Ref<jnipp::Array<jbyte>>& a2, jint a3) const {
     static jnipp::Method<void,jint,jint,jnipp::Array<jbyte>,jint> method(clazz(), "getBytes", "(II[BI)V");
     method.call(*this, a0, a1, a2, a3);
 }
 
 // public byte[] java.lang.String.getBytes(java.nio.charset.Charset)
-jnipp::LocalRef<jnipp::Array<jbyte>> JavaLangString::getBytes__(const jnipp::Ref<JavaNioCharsetCharset>& a0) const {
+jnipp::LocalRef<jnipp::Array<jbyte>> JavaLangString::getBytes(const jnipp::Ref<JavaNioCharsetCharset>& a0) const {
     static jnipp::Method<jnipp::Array<jbyte>,JavaNioCharsetCharset> method(clazz(), "getBytes", "(Ljava/nio/charset/Charset;)[B");
     return method.call(*this, a0);
 }
 
 // public byte[] java.lang.String.getBytes()
-jnipp::LocalRef<jnipp::Array<jbyte>> JavaLangString::getBytes___() const {
+jnipp::LocalRef<jnipp::Array<jbyte>> JavaLangString::getBytes() const {
     static jnipp::Method<jnipp::Array<jbyte>> method(clazz(), "getBytes", "()[B");
     return method.call(*this);
 }
@@ -378,7 +378,7 @@ jboolean JavaLangString::contentEquals(const jnipp::Ref<JavaLangCharSequence>& a
 }
 
 // public boolean java.lang.String.contentEquals(java.lang.StringBuffer)
-jboolean JavaLangString::contentEquals_(const jnipp::Ref<JavaLangStringBuffer>& a0) const {
+jboolean JavaLangString::contentEquals(const jnipp::Ref<JavaLangStringBuffer>& a0) const {
     static jnipp::Method<jboolean,JavaLangStringBuffer> method(clazz(), "contentEquals", "(Ljava/lang/StringBuffer;)Z");
     return method.call(*this, a0);
 }
@@ -402,7 +402,7 @@ jboolean JavaLangString::regionMatches(jboolean a0, jint a1, const jnipp::Ref<Ja
 }
 
 // public boolean java.lang.String.regionMatches(int,java.lang.String,int,int)
-jboolean JavaLangString::regionMatches_(jint a0, const jnipp::Ref<JavaLangString>& a1, jint a2, jint a3) const {
+jboolean JavaLangString::regionMatches(jint a0, const jnipp::Ref<JavaLangString>& a1, jint a2, jint a3) const {
     static jnipp::Method<jboolean,jint,JavaLangString,jint,jint> method(clazz(), "regionMatches", "(ILjava/lang/String;II)Z");
     return method.call(*this, a0, a1, a2, a3);
 }
@@ -414,7 +414,7 @@ jboolean JavaLangString::startsWith(const jnipp::Ref<JavaLangString>& a0, jint a
 }
 
 // public boolean java.lang.String.startsWith(java.lang.String)
-jboolean JavaLangString::startsWith_(const jnipp::Ref<JavaLangString>& a0) const {
+jboolean JavaLangString::startsWith(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<jboolean,JavaLangString> method(clazz(), "startsWith", "(Ljava/lang/String;)Z");
     return method.call(*this, a0);
 }
@@ -438,25 +438,25 @@ jint JavaLangString::lastIndexOf(const jnipp::Ref<JavaLangString>& a0) const {
 }
 
 // public int java.lang.String.lastIndexOf(java.lang.String,int)
-jint JavaLangString::lastIndexOf_(const jnipp::Ref<JavaLangString>& a0, jint a1) const {
+jint JavaLangString::lastIndexOf(const jnipp::Ref<JavaLangString>& a0, jint a1) const {
     static jnipp::Method<jint,JavaLangString,jint> method(clazz(), "lastIndexOf", "(Ljava/lang/String;I)I");
     return method.call(*this, a0, a1);
 }
 
 // static int java.lang.String.lastIndexOf(char[],int,int,char[],int,int,int)
-jint JavaLangString::lastIndexOf__(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1, jint a2, const jnipp::Ref<jnipp::Array<jchar>>& a3, jint a4, jint a5, jint a6) {
+jint JavaLangString::lastIndexOf(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1, jint a2, const jnipp::Ref<jnipp::Array<jchar>>& a3, jint a4, jint a5, jint a6) {
     static jnipp::StaticMethod<jint,jnipp::Array<jchar>,jint,jint,jnipp::Array<jchar>,jint,jint,jint> method(clazz(), "lastIndexOf", "([CII[CIII)I");
     return method.call(a0, a1, a2, a3, a4, a5, a6);
 }
 
 // public int java.lang.String.lastIndexOf(int)
-jint JavaLangString::lastIndexOf___(jint a0) const {
+jint JavaLangString::lastIndexOf(jint a0) const {
     static jnipp::Method<jint,jint> method(clazz(), "lastIndexOf", "(I)I");
     return method.call(*this, a0);
 }
 
 // public int java.lang.String.lastIndexOf(int,int)
-jint JavaLangString::lastIndexOf____(jint a0, jint a1) const {
+jint JavaLangString::lastIndexOf(jint a0, jint a1) const {
     static jnipp::Method<jint,jint,jint> method(clazz(), "lastIndexOf", "(II)I");
     return method.call(*this, a0, a1);
 }
@@ -474,7 +474,7 @@ jnipp::LocalRef<JavaLangString> JavaLangString::substring(jint a0, jint a1) cons
 }
 
 // public java.lang.String java.lang.String.substring(int)
-jnipp::LocalRef<JavaLangString> JavaLangString::substring_(jint a0) const {
+jnipp::LocalRef<JavaLangString> JavaLangString::substring(jint a0) const {
     static jnipp::Method<JavaLangString,jint> method(clazz(), "substring", "(I)Ljava/lang/String;");
     return method.call(*this, a0);
 }
@@ -498,7 +498,7 @@ jnipp::LocalRef<JavaLangString> JavaLangString::replace(jchar a0, jchar a1) cons
 }
 
 // public java.lang.String java.lang.String.replace(java.lang.CharSequence,java.lang.CharSequence)
-jnipp::LocalRef<JavaLangString> JavaLangString::replace_(const jnipp::Ref<JavaLangCharSequence>& a0, const jnipp::Ref<JavaLangCharSequence>& a1) const {
+jnipp::LocalRef<JavaLangString> JavaLangString::replace(const jnipp::Ref<JavaLangCharSequence>& a0, const jnipp::Ref<JavaLangCharSequence>& a1) const {
     static jnipp::Method<JavaLangString,JavaLangCharSequence,JavaLangCharSequence> method(clazz(), "replace", "(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Ljava/lang/String;");
     return method.call(*this, a0, a1);
 }
@@ -534,7 +534,7 @@ jnipp::LocalRef<jnipp::Array<JavaLangString>> JavaLangString::split(const jnipp:
 }
 
 // public java.lang.String[] java.lang.String.split(java.lang.String,int)
-jnipp::LocalRef<jnipp::Array<JavaLangString>> JavaLangString::split_(const jnipp::Ref<JavaLangString>& a0, jint a1) const {
+jnipp::LocalRef<jnipp::Array<JavaLangString>> JavaLangString::split(const jnipp::Ref<JavaLangString>& a0, jint a1) const {
     static jnipp::Method<jnipp::Array<JavaLangString>,JavaLangString,jint> method(clazz(), "split", "(Ljava/lang/String;I)[Ljava/lang/String;");
     return method.call(*this, a0, a1);
 }
@@ -546,7 +546,7 @@ jnipp::LocalRef<JavaLangString> JavaLangString::toLowerCase(const jnipp::Ref<Jav
 }
 
 // public java.lang.String java.lang.String.toLowerCase()
-jnipp::LocalRef<JavaLangString> JavaLangString::toLowerCase_() const {
+jnipp::LocalRef<JavaLangString> JavaLangString::toLowerCase() const {
     static jnipp::Method<JavaLangString> method(clazz(), "toLowerCase", "()Ljava/lang/String;");
     return method.call(*this);
 }
@@ -558,7 +558,7 @@ jnipp::LocalRef<JavaLangString> JavaLangString::toUpperCase(const jnipp::Ref<Jav
 }
 
 // public java.lang.String java.lang.String.toUpperCase()
-jnipp::LocalRef<JavaLangString> JavaLangString::toUpperCase_() const {
+jnipp::LocalRef<JavaLangString> JavaLangString::toUpperCase() const {
     static jnipp::Method<JavaLangString> method(clazz(), "toUpperCase", "()Ljava/lang/String;");
     return method.call(*this);
 }
@@ -582,7 +582,7 @@ jnipp::LocalRef<JavaLangString> JavaLangString::format(const jnipp::Ref<JavaLang
 }
 
 // public static java.lang.String java.lang.String.format(java.util.Locale,java.lang.String,java.lang.Object[])
-jnipp::LocalRef<JavaLangString> JavaLangString::format_(const jnipp::Ref<JavaUtilLocale>& a0, const jnipp::Ref<JavaLangString>& a1, const jnipp::Ref<jnipp::Array<JavaLangObject>>& a2) {
+jnipp::LocalRef<JavaLangString> JavaLangString::format(const jnipp::Ref<JavaUtilLocale>& a0, const jnipp::Ref<JavaLangString>& a1, const jnipp::Ref<jnipp::Array<JavaLangObject>>& a2) {
     static jnipp::StaticMethod<JavaLangString,JavaUtilLocale,JavaLangString,jnipp::Array<JavaLangObject>> method(clazz(), "format", "(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;");
     return method.call(a0, a1, a2);
 }
@@ -594,7 +594,7 @@ jnipp::LocalRef<JavaLangString> JavaLangString::copyValueOf(const jnipp::Ref<jni
 }
 
 // public static java.lang.String java.lang.String.copyValueOf(char[],int,int)
-jnipp::LocalRef<JavaLangString> JavaLangString::copyValueOf_(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1, jint a2) {
+jnipp::LocalRef<JavaLangString> JavaLangString::copyValueOf(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1, jint a2) {
     static jnipp::StaticMethod<JavaLangString,jnipp::Array<jchar>,jint,jint> method(clazz(), "copyValueOf", "([CII)Ljava/lang/String;");
     return method.call(a0, a1, a2);
 }
@@ -679,7 +679,7 @@ jnipp::LocalRef<JavaNioByteBuffer> JavaNioCharsetCharset::encode(const jnipp::Re
 }
 
 // public final java.nio.ByteBuffer java.nio.charset.Charset.encode(java.lang.String)
-jnipp::LocalRef<JavaNioByteBuffer> JavaNioCharsetCharset::encode_(const jnipp::Ref<JavaLangString>& a0) const {
+jnipp::LocalRef<JavaNioByteBuffer> JavaNioCharsetCharset::encode(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<JavaNioByteBuffer,JavaLangString> method(clazz(), "encode", "(Ljava/lang/String;)Ljava/nio/ByteBuffer;");
     return method.call(*this, a0);
 }
@@ -769,7 +769,7 @@ jnipp::LocalRef<JavaLangString> JavaNioCharsetCharset::displayName(const jnipp::
 }
 
 // public java.lang.String java.nio.charset.Charset.displayName()
-jnipp::LocalRef<JavaLangString> JavaNioCharsetCharset::displayName_() const {
+jnipp::LocalRef<JavaLangString> JavaNioCharsetCharset::displayName() const {
     static jnipp::Method<JavaLangString> method(clazz(), "displayName", "()Ljava/lang/String;");
     return method.call(*this);
 }
@@ -822,73 +822,73 @@ jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::ap
 }
 
 // public java.lang.AbstractStringBuilder java.lang.AbstractStringBuilder.append(char[])
-jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::append_(const jnipp::Ref<jnipp::Array<jchar>>& a0) const {
+jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::append(const jnipp::Ref<jnipp::Array<jchar>>& a0) const {
     static jnipp::Method<JavaLangAbstractStringBuilder,jnipp::Array<jchar>> method(clazz(), "append", "([C)Ljava/lang/AbstractStringBuilder;");
     return method.call(*this, a0);
 }
 
 // public java.lang.AbstractStringBuilder java.lang.AbstractStringBuilder.append(boolean)
-jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::append__(jboolean a0) const {
+jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::append(jboolean a0) const {
     static jnipp::Method<JavaLangAbstractStringBuilder,jboolean> method(clazz(), "append", "(Z)Ljava/lang/AbstractStringBuilder;");
     return method.call(*this, a0);
 }
 
 // public java.lang.AbstractStringBuilder java.lang.AbstractStringBuilder.append(char)
-jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::append___(jchar a0) const {
+jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::append(jchar a0) const {
     static jnipp::Method<JavaLangAbstractStringBuilder,jchar> method(clazz(), "append", "(C)Ljava/lang/AbstractStringBuilder;");
     return method.call(*this, a0);
 }
 
 // public java.lang.AbstractStringBuilder java.lang.AbstractStringBuilder.append(java.lang.String)
-jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::append____(const jnipp::Ref<JavaLangString>& a0) const {
+jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::append(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<JavaLangAbstractStringBuilder,JavaLangString> method(clazz(), "append", "(Ljava/lang/String;)Ljava/lang/AbstractStringBuilder;");
     return method.call(*this, a0);
 }
 
 // public java.lang.AbstractStringBuilder java.lang.AbstractStringBuilder.append(java.lang.StringBuffer)
-jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::append_____(const jnipp::Ref<JavaLangStringBuffer>& a0) const {
+jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::append(const jnipp::Ref<JavaLangStringBuffer>& a0) const {
     static jnipp::Method<JavaLangAbstractStringBuilder,JavaLangStringBuffer> method(clazz(), "append", "(Ljava/lang/StringBuffer;)Ljava/lang/AbstractStringBuilder;");
     return method.call(*this, a0);
 }
 
 // public java.lang.AbstractStringBuilder java.lang.AbstractStringBuilder.append(java.lang.CharSequence)
-jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::append______(const jnipp::Ref<JavaLangCharSequence>& a0) const {
+jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::append(const jnipp::Ref<JavaLangCharSequence>& a0) const {
     static jnipp::Method<JavaLangAbstractStringBuilder,JavaLangCharSequence> method(clazz(), "append", "(Ljava/lang/CharSequence;)Ljava/lang/AbstractStringBuilder;");
     return method.call(*this, a0);
 }
 
 // public java.lang.AbstractStringBuilder java.lang.AbstractStringBuilder.append(java.lang.CharSequence,int,int)
-jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::append_______(const jnipp::Ref<JavaLangCharSequence>& a0, jint a1, jint a2) const {
+jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::append(const jnipp::Ref<JavaLangCharSequence>& a0, jint a1, jint a2) const {
     static jnipp::Method<JavaLangAbstractStringBuilder,JavaLangCharSequence,jint,jint> method(clazz(), "append", "(Ljava/lang/CharSequence;II)Ljava/lang/AbstractStringBuilder;");
     return method.call(*this, a0, a1, a2);
 }
 
 // public java.lang.AbstractStringBuilder java.lang.AbstractStringBuilder.append(double)
-jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::append________(jdouble a0) const {
+jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::append(jdouble a0) const {
     static jnipp::Method<JavaLangAbstractStringBuilder,jdouble> method(clazz(), "append", "(D)Ljava/lang/AbstractStringBuilder;");
     return method.call(*this, a0);
 }
 
 // public java.lang.AbstractStringBuilder java.lang.AbstractStringBuilder.append(float)
-jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::append_________(jfloat a0) const {
+jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::append(jfloat a0) const {
     static jnipp::Method<JavaLangAbstractStringBuilder,jfloat> method(clazz(), "append", "(F)Ljava/lang/AbstractStringBuilder;");
     return method.call(*this, a0);
 }
 
 // public java.lang.AbstractStringBuilder java.lang.AbstractStringBuilder.append(long)
-jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::append__________(jlong a0) const {
+jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::append(jlong a0) const {
     static jnipp::Method<JavaLangAbstractStringBuilder,jlong> method(clazz(), "append", "(J)Ljava/lang/AbstractStringBuilder;");
     return method.call(*this, a0);
 }
 
 // public java.lang.AbstractStringBuilder java.lang.AbstractStringBuilder.append(int)
-jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::append___________(jint a0) const {
+jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::append(jint a0) const {
     static jnipp::Method<JavaLangAbstractStringBuilder,jint> method(clazz(), "append", "(I)Ljava/lang/AbstractStringBuilder;");
     return method.call(*this, a0);
 }
 
 // public java.lang.AbstractStringBuilder java.lang.AbstractStringBuilder.append(java.lang.Object)
-jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::append____________(const jnipp::Ref<JavaLangObject>& a0) const {
+jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::append(const jnipp::Ref<JavaLangObject>& a0) const {
     static jnipp::Method<JavaLangAbstractStringBuilder,JavaLangObject> method(clazz(), "append", "(Ljava/lang/Object;)Ljava/lang/AbstractStringBuilder;");
     return method.call(*this, a0);
 }
@@ -900,7 +900,7 @@ jint JavaLangAbstractStringBuilder::indexOf(const jnipp::Ref<JavaLangString>& a0
 }
 
 // public int java.lang.AbstractStringBuilder.indexOf(java.lang.String)
-jint JavaLangAbstractStringBuilder::indexOf_(const jnipp::Ref<JavaLangString>& a0) const {
+jint JavaLangAbstractStringBuilder::indexOf(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<jint,JavaLangString> method(clazz(), "indexOf", "(Ljava/lang/String;)I");
     return method.call(*this, a0);
 }
@@ -954,7 +954,7 @@ jint JavaLangAbstractStringBuilder::lastIndexOf(const jnipp::Ref<JavaLangString>
 }
 
 // public int java.lang.AbstractStringBuilder.lastIndexOf(java.lang.String)
-jint JavaLangAbstractStringBuilder::lastIndexOf_(const jnipp::Ref<JavaLangString>& a0) const {
+jint JavaLangAbstractStringBuilder::lastIndexOf(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<jint,JavaLangString> method(clazz(), "lastIndexOf", "(Ljava/lang/String;)I");
     return method.call(*this, a0);
 }
@@ -966,7 +966,7 @@ jnipp::LocalRef<JavaLangString> JavaLangAbstractStringBuilder::substring(jint a0
 }
 
 // public java.lang.String java.lang.AbstractStringBuilder.substring(int,int)
-jnipp::LocalRef<JavaLangString> JavaLangAbstractStringBuilder::substring_(jint a0, jint a1) const {
+jnipp::LocalRef<JavaLangString> JavaLangAbstractStringBuilder::substring(jint a0, jint a1) const {
     static jnipp::Method<JavaLangString,jint,jint> method(clazz(), "substring", "(II)Ljava/lang/String;");
     return method.call(*this, a0, a1);
 }
@@ -1044,67 +1044,67 @@ jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::in
 }
 
 // public java.lang.AbstractStringBuilder java.lang.AbstractStringBuilder.insert(int,char[])
-jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::insert_(jint a0, const jnipp::Ref<jnipp::Array<jchar>>& a1) const {
+jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::insert(jint a0, const jnipp::Ref<jnipp::Array<jchar>>& a1) const {
     static jnipp::Method<JavaLangAbstractStringBuilder,jint,jnipp::Array<jchar>> method(clazz(), "insert", "(I[C)Ljava/lang/AbstractStringBuilder;");
     return method.call(*this, a0, a1);
 }
 
 // public java.lang.AbstractStringBuilder java.lang.AbstractStringBuilder.insert(int,java.lang.Object)
-jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::insert__(jint a0, const jnipp::Ref<JavaLangObject>& a1) const {
+jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::insert(jint a0, const jnipp::Ref<JavaLangObject>& a1) const {
     static jnipp::Method<JavaLangAbstractStringBuilder,jint,JavaLangObject> method(clazz(), "insert", "(ILjava/lang/Object;)Ljava/lang/AbstractStringBuilder;");
     return method.call(*this, a0, a1);
 }
 
 // public java.lang.AbstractStringBuilder java.lang.AbstractStringBuilder.insert(int,char[],int,int)
-jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::insert___(jint a0, const jnipp::Ref<jnipp::Array<jchar>>& a1, jint a2, jint a3) const {
+jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::insert(jint a0, const jnipp::Ref<jnipp::Array<jchar>>& a1, jint a2, jint a3) const {
     static jnipp::Method<JavaLangAbstractStringBuilder,jint,jnipp::Array<jchar>,jint,jint> method(clazz(), "insert", "(I[CII)Ljava/lang/AbstractStringBuilder;");
     return method.call(*this, a0, a1, a2, a3);
 }
 
 // public java.lang.AbstractStringBuilder java.lang.AbstractStringBuilder.insert(int,java.lang.String)
-jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::insert____(jint a0, const jnipp::Ref<JavaLangString>& a1) const {
+jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::insert(jint a0, const jnipp::Ref<JavaLangString>& a1) const {
     static jnipp::Method<JavaLangAbstractStringBuilder,jint,JavaLangString> method(clazz(), "insert", "(ILjava/lang/String;)Ljava/lang/AbstractStringBuilder;");
     return method.call(*this, a0, a1);
 }
 
 // public java.lang.AbstractStringBuilder java.lang.AbstractStringBuilder.insert(int,int)
-jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::insert_____(jint a0, jint a1) const {
+jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::insert(jint a0, jint a1) const {
     static jnipp::Method<JavaLangAbstractStringBuilder,jint,jint> method(clazz(), "insert", "(II)Ljava/lang/AbstractStringBuilder;");
     return method.call(*this, a0, a1);
 }
 
 // public java.lang.AbstractStringBuilder java.lang.AbstractStringBuilder.insert(int,char)
-jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::insert______(jint a0, jchar a1) const {
+jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::insert(jint a0, jchar a1) const {
     static jnipp::Method<JavaLangAbstractStringBuilder,jint,jchar> method(clazz(), "insert", "(IC)Ljava/lang/AbstractStringBuilder;");
     return method.call(*this, a0, a1);
 }
 
 // public java.lang.AbstractStringBuilder java.lang.AbstractStringBuilder.insert(int,boolean)
-jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::insert_______(jint a0, jboolean a1) const {
+jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::insert(jint a0, jboolean a1) const {
     static jnipp::Method<JavaLangAbstractStringBuilder,jint,jboolean> method(clazz(), "insert", "(IZ)Ljava/lang/AbstractStringBuilder;");
     return method.call(*this, a0, a1);
 }
 
 // public java.lang.AbstractStringBuilder java.lang.AbstractStringBuilder.insert(int,java.lang.CharSequence,int,int)
-jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::insert________(jint a0, const jnipp::Ref<JavaLangCharSequence>& a1, jint a2, jint a3) const {
+jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::insert(jint a0, const jnipp::Ref<JavaLangCharSequence>& a1, jint a2, jint a3) const {
     static jnipp::Method<JavaLangAbstractStringBuilder,jint,JavaLangCharSequence,jint,jint> method(clazz(), "insert", "(ILjava/lang/CharSequence;II)Ljava/lang/AbstractStringBuilder;");
     return method.call(*this, a0, a1, a2, a3);
 }
 
 // public java.lang.AbstractStringBuilder java.lang.AbstractStringBuilder.insert(int,float)
-jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::insert_________(jint a0, jfloat a1) const {
+jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::insert(jint a0, jfloat a1) const {
     static jnipp::Method<JavaLangAbstractStringBuilder,jint,jfloat> method(clazz(), "insert", "(IF)Ljava/lang/AbstractStringBuilder;");
     return method.call(*this, a0, a1);
 }
 
 // public java.lang.AbstractStringBuilder java.lang.AbstractStringBuilder.insert(int,long)
-jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::insert__________(jint a0, jlong a1) const {
+jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::insert(jint a0, jlong a1) const {
     static jnipp::Method<JavaLangAbstractStringBuilder,jint,jlong> method(clazz(), "insert", "(IJ)Ljava/lang/AbstractStringBuilder;");
     return method.call(*this, a0, a1);
 }
 
 // public java.lang.AbstractStringBuilder java.lang.AbstractStringBuilder.insert(int,double)
-jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::insert___________(jint a0, jdouble a1) const {
+jnipp::LocalRef<JavaLangAbstractStringBuilder> JavaLangAbstractStringBuilder::insert(jint a0, jdouble a1) const {
     static jnipp::Method<JavaLangAbstractStringBuilder,jint,jdouble> method(clazz(), "insert", "(ID)Ljava/lang/AbstractStringBuilder;");
     return method.call(*this, a0, a1);
 }
@@ -1163,73 +1163,73 @@ jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::append(jfloat a0) co
 }
 
 // public synchronized java.lang.StringBuffer java.lang.StringBuffer.append(boolean)
-jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::append_(jboolean a0) const {
+jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::append(jboolean a0) const {
     static jnipp::Method<JavaLangStringBuffer,jboolean> method(clazz(), "append", "(Z)Ljava/lang/StringBuffer;");
     return method.call(*this, a0);
 }
 
 // public synchronized java.lang.StringBuffer java.lang.StringBuffer.append(char)
-jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::append__(jchar a0) const {
+jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::append(jchar a0) const {
     static jnipp::Method<JavaLangStringBuffer,jchar> method(clazz(), "append", "(C)Ljava/lang/StringBuffer;");
     return method.call(*this, a0);
 }
 
 // public synchronized java.lang.StringBuffer java.lang.StringBuffer.append(int)
-jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::append___(jint a0) const {
+jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::append(jint a0) const {
     static jnipp::Method<JavaLangStringBuffer,jint> method(clazz(), "append", "(I)Ljava/lang/StringBuffer;");
     return method.call(*this, a0);
 }
 
 // public synchronized java.lang.StringBuffer java.lang.StringBuffer.append(long)
-jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::append____(jlong a0) const {
+jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::append(jlong a0) const {
     static jnipp::Method<JavaLangStringBuffer,jlong> method(clazz(), "append", "(J)Ljava/lang/StringBuffer;");
     return method.call(*this, a0);
 }
 
 // public synchronized java.lang.StringBuffer java.lang.StringBuffer.append(java.lang.String)
-jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::append_____(const jnipp::Ref<JavaLangString>& a0) const {
+jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::append(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<JavaLangStringBuffer,JavaLangString> method(clazz(), "append", "(Ljava/lang/String;)Ljava/lang/StringBuffer;");
     return method.call(*this, a0);
 }
 
 // public synchronized java.lang.StringBuffer java.lang.StringBuffer.append(java.lang.Object)
-jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::append______(const jnipp::Ref<JavaLangObject>& a0) const {
+jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::append(const jnipp::Ref<JavaLangObject>& a0) const {
     static jnipp::Method<JavaLangStringBuffer,JavaLangObject> method(clazz(), "append", "(Ljava/lang/Object;)Ljava/lang/StringBuffer;");
     return method.call(*this, a0);
 }
 
 // public synchronized java.lang.StringBuffer java.lang.StringBuffer.append(double)
-jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::append_______(jdouble a0) const {
+jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::append(jdouble a0) const {
     static jnipp::Method<JavaLangStringBuffer,jdouble> method(clazz(), "append", "(D)Ljava/lang/StringBuffer;");
     return method.call(*this, a0);
 }
 
 // public java.lang.StringBuffer java.lang.StringBuffer.append(java.lang.CharSequence)
-jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::append________(const jnipp::Ref<JavaLangCharSequence>& a0) const {
+jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::append(const jnipp::Ref<JavaLangCharSequence>& a0) const {
     static jnipp::Method<JavaLangStringBuffer,JavaLangCharSequence> method(clazz(), "append", "(Ljava/lang/CharSequence;)Ljava/lang/StringBuffer;");
     return method.call(*this, a0);
 }
 
 // public synchronized java.lang.StringBuffer java.lang.StringBuffer.append(java.lang.CharSequence,int,int)
-jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::append_________(const jnipp::Ref<JavaLangCharSequence>& a0, jint a1, jint a2) const {
+jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::append(const jnipp::Ref<JavaLangCharSequence>& a0, jint a1, jint a2) const {
     static jnipp::Method<JavaLangStringBuffer,JavaLangCharSequence,jint,jint> method(clazz(), "append", "(Ljava/lang/CharSequence;II)Ljava/lang/StringBuffer;");
     return method.call(*this, a0, a1, a2);
 }
 
 // public synchronized java.lang.StringBuffer java.lang.StringBuffer.append(char[])
-jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::append__________(const jnipp::Ref<jnipp::Array<jchar>>& a0) const {
+jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::append(const jnipp::Ref<jnipp::Array<jchar>>& a0) const {
     static jnipp::Method<JavaLangStringBuffer,jnipp::Array<jchar>> method(clazz(), "append", "([C)Ljava/lang/StringBuffer;");
     return method.call(*this, a0);
 }
 
 // public synchronized java.lang.StringBuffer java.lang.StringBuffer.append(char[],int,int)
-jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::append___________(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1, jint a2) const {
+jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::append(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1, jint a2) const {
     static jnipp::Method<JavaLangStringBuffer,jnipp::Array<jchar>,jint,jint> method(clazz(), "append", "([CII)Ljava/lang/StringBuffer;");
     return method.call(*this, a0, a1, a2);
 }
 
 // public synchronized java.lang.StringBuffer java.lang.StringBuffer.append(java.lang.StringBuffer)
-jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::append____________(const jnipp::Ref<JavaLangStringBuffer>& a0) const {
+jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::append(const jnipp::Ref<JavaLangStringBuffer>& a0) const {
     static jnipp::Method<JavaLangStringBuffer,JavaLangStringBuffer> method(clazz(), "append", "(Ljava/lang/StringBuffer;)Ljava/lang/StringBuffer;");
     return method.call(*this, a0);
 }
@@ -1241,7 +1241,7 @@ jint JavaLangStringBuffer::indexOf(const jnipp::Ref<JavaLangString>& a0) const {
 }
 
 // public synchronized int java.lang.StringBuffer.indexOf(java.lang.String,int)
-jint JavaLangStringBuffer::indexOf_(const jnipp::Ref<JavaLangString>& a0, jint a1) const {
+jint JavaLangStringBuffer::indexOf(const jnipp::Ref<JavaLangString>& a0, jint a1) const {
     static jnipp::Method<jint,JavaLangString,jint> method(clazz(), "indexOf", "(Ljava/lang/String;I)I");
     return method.call(*this, a0, a1);
 }
@@ -1295,7 +1295,7 @@ jint JavaLangStringBuffer::lastIndexOf(const jnipp::Ref<JavaLangString>& a0, jin
 }
 
 // public int java.lang.StringBuffer.lastIndexOf(java.lang.String)
-jint JavaLangStringBuffer::lastIndexOf_(const jnipp::Ref<JavaLangString>& a0) const {
+jint JavaLangStringBuffer::lastIndexOf(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<jint,JavaLangString> method(clazz(), "lastIndexOf", "(Ljava/lang/String;)I");
     return method.call(*this, a0);
 }
@@ -1307,7 +1307,7 @@ jnipp::LocalRef<JavaLangString> JavaLangStringBuffer::substring(jint a0, jint a1
 }
 
 // public synchronized java.lang.String java.lang.StringBuffer.substring(int)
-jnipp::LocalRef<JavaLangString> JavaLangStringBuffer::substring_(jint a0) const {
+jnipp::LocalRef<JavaLangString> JavaLangStringBuffer::substring(jint a0) const {
     static jnipp::Method<JavaLangString,jint> method(clazz(), "substring", "(I)Ljava/lang/String;");
     return method.call(*this, a0);
 }
@@ -1391,67 +1391,67 @@ jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::insert(jint a0, jlon
 }
 
 // public java.lang.StringBuffer java.lang.StringBuffer.insert(int,boolean)
-jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::insert_(jint a0, jboolean a1) const {
+jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::insert(jint a0, jboolean a1) const {
     static jnipp::Method<JavaLangStringBuffer,jint,jboolean> method(clazz(), "insert", "(IZ)Ljava/lang/StringBuffer;");
     return method.call(*this, a0, a1);
 }
 
 // public synchronized java.lang.StringBuffer java.lang.StringBuffer.insert(int,char)
-jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::insert__(jint a0, jchar a1) const {
+jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::insert(jint a0, jchar a1) const {
     static jnipp::Method<JavaLangStringBuffer,jint,jchar> method(clazz(), "insert", "(IC)Ljava/lang/StringBuffer;");
     return method.call(*this, a0, a1);
 }
 
 // public java.lang.StringBuffer java.lang.StringBuffer.insert(int,int)
-jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::insert___(jint a0, jint a1) const {
+jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::insert(jint a0, jint a1) const {
     static jnipp::Method<JavaLangStringBuffer,jint,jint> method(clazz(), "insert", "(II)Ljava/lang/StringBuffer;");
     return method.call(*this, a0, a1);
 }
 
 // public java.lang.StringBuffer java.lang.StringBuffer.insert(int,float)
-jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::insert____(jint a0, jfloat a1) const {
+jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::insert(jint a0, jfloat a1) const {
     static jnipp::Method<JavaLangStringBuffer,jint,jfloat> method(clazz(), "insert", "(IF)Ljava/lang/StringBuffer;");
     return method.call(*this, a0, a1);
 }
 
 // public java.lang.StringBuffer java.lang.StringBuffer.insert(int,double)
-jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::insert_____(jint a0, jdouble a1) const {
+jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::insert(jint a0, jdouble a1) const {
     static jnipp::Method<JavaLangStringBuffer,jint,jdouble> method(clazz(), "insert", "(ID)Ljava/lang/StringBuffer;");
     return method.call(*this, a0, a1);
 }
 
 // public synchronized java.lang.StringBuffer java.lang.StringBuffer.insert(int,char[],int,int)
-jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::insert______(jint a0, const jnipp::Ref<jnipp::Array<jchar>>& a1, jint a2, jint a3) const {
+jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::insert(jint a0, const jnipp::Ref<jnipp::Array<jchar>>& a1, jint a2, jint a3) const {
     static jnipp::Method<JavaLangStringBuffer,jint,jnipp::Array<jchar>,jint,jint> method(clazz(), "insert", "(I[CII)Ljava/lang/StringBuffer;");
     return method.call(*this, a0, a1, a2, a3);
 }
 
 // public synchronized java.lang.StringBuffer java.lang.StringBuffer.insert(int,java.lang.Object)
-jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::insert_______(jint a0, const jnipp::Ref<JavaLangObject>& a1) const {
+jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::insert(jint a0, const jnipp::Ref<JavaLangObject>& a1) const {
     static jnipp::Method<JavaLangStringBuffer,jint,JavaLangObject> method(clazz(), "insert", "(ILjava/lang/Object;)Ljava/lang/StringBuffer;");
     return method.call(*this, a0, a1);
 }
 
 // public synchronized java.lang.StringBuffer java.lang.StringBuffer.insert(int,java.lang.String)
-jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::insert________(jint a0, const jnipp::Ref<JavaLangString>& a1) const {
+jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::insert(jint a0, const jnipp::Ref<JavaLangString>& a1) const {
     static jnipp::Method<JavaLangStringBuffer,jint,JavaLangString> method(clazz(), "insert", "(ILjava/lang/String;)Ljava/lang/StringBuffer;");
     return method.call(*this, a0, a1);
 }
 
 // public synchronized java.lang.StringBuffer java.lang.StringBuffer.insert(int,char[])
-jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::insert_________(jint a0, const jnipp::Ref<jnipp::Array<jchar>>& a1) const {
+jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::insert(jint a0, const jnipp::Ref<jnipp::Array<jchar>>& a1) const {
     static jnipp::Method<JavaLangStringBuffer,jint,jnipp::Array<jchar>> method(clazz(), "insert", "(I[C)Ljava/lang/StringBuffer;");
     return method.call(*this, a0, a1);
 }
 
 // public java.lang.StringBuffer java.lang.StringBuffer.insert(int,java.lang.CharSequence)
-jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::insert__________(jint a0, const jnipp::Ref<JavaLangCharSequence>& a1) const {
+jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::insert(jint a0, const jnipp::Ref<JavaLangCharSequence>& a1) const {
     static jnipp::Method<JavaLangStringBuffer,jint,JavaLangCharSequence> method(clazz(), "insert", "(ILjava/lang/CharSequence;)Ljava/lang/StringBuffer;");
     return method.call(*this, a0, a1);
 }
 
 // public synchronized java.lang.StringBuffer java.lang.StringBuffer.insert(int,java.lang.CharSequence,int,int)
-jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::insert___________(jint a0, const jnipp::Ref<JavaLangCharSequence>& a1, jint a2, jint a3) const {
+jnipp::LocalRef<JavaLangStringBuffer> JavaLangStringBuffer::insert(jint a0, const jnipp::Ref<JavaLangCharSequence>& a1, jint a2, jint a3) const {
     static jnipp::Method<JavaLangStringBuffer,jint,JavaLangCharSequence,jint,jint> method(clazz(), "insert", "(ILjava/lang/CharSequence;II)Ljava/lang/StringBuffer;");
     return method.call(*this, a0, a1, a2, a3);
 }
@@ -1532,7 +1532,7 @@ jnipp::LocalRef<JavaUtilLocale> JavaUtilLocale::getDefault(const jnipp::Ref<Java
 }
 
 // public static java.util.Locale java.util.Locale.getDefault()
-jnipp::LocalRef<JavaUtilLocale> JavaUtilLocale::getDefault_() {
+jnipp::LocalRef<JavaUtilLocale> JavaUtilLocale::getDefault() {
     static jnipp::StaticMethod<JavaUtilLocale> method(clazz(), "getDefault", "()Ljava/util/Locale;");
     return method.call();
 }
@@ -1544,13 +1544,13 @@ jnipp::LocalRef<JavaUtilLocale> JavaUtilLocale::getInstance(const jnipp::Ref<Jav
 }
 
 // static java.util.Locale java.util.Locale.getInstance(java.lang.String,java.lang.String,java.lang.String)
-jnipp::LocalRef<JavaUtilLocale> JavaUtilLocale::getInstance_(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1, const jnipp::Ref<JavaLangString>& a2) {
+jnipp::LocalRef<JavaUtilLocale> JavaUtilLocale::getInstance(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1, const jnipp::Ref<JavaLangString>& a2) {
     static jnipp::StaticMethod<JavaUtilLocale,JavaLangString,JavaLangString,JavaLangString> method(clazz(), "getInstance", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/util/Locale;");
     return method.call(a0, a1, a2);
 }
 
 // static java.util.Locale java.util.Locale.getInstance(sun.util.locale.BaseLocale,sun.util.locale.LocaleExtensions)
-jnipp::LocalRef<JavaUtilLocale> JavaUtilLocale::getInstance__(const jnipp::Ref<SunUtilLocaleBaseLocale>& a0, const jnipp::Ref<SunUtilLocaleLocaleExtensions>& a1) {
+jnipp::LocalRef<JavaUtilLocale> JavaUtilLocale::getInstance(const jnipp::Ref<SunUtilLocaleBaseLocale>& a0, const jnipp::Ref<SunUtilLocaleLocaleExtensions>& a1) {
     static jnipp::StaticMethod<JavaUtilLocale,SunUtilLocaleBaseLocale,SunUtilLocaleLocaleExtensions> method(clazz(), "getInstance", "(Lsun/util/locale/BaseLocale;Lsun/util/locale/LocaleExtensions;)Ljava/util/Locale;");
     return method.call(a0, a1);
 }
@@ -1586,7 +1586,7 @@ void JavaUtilLocale::initDefault(const jnipp::Ref<JavaUtilLocale_Category>& a0) 
 }
 
 // private static void java.util.Locale.initDefault()
-void JavaUtilLocale::initDefault_() {
+void JavaUtilLocale::initDefault() {
     static jnipp::StaticMethod<void> method(clazz(), "initDefault", "()V");
     method.call();
 }
@@ -1598,7 +1598,7 @@ void JavaUtilLocale::setDefault(const jnipp::Ref<JavaUtilLocale_Category>& a0, c
 }
 
 // public static synchronized void java.util.Locale.setDefault(java.util.Locale)
-void JavaUtilLocale::setDefault_(const jnipp::Ref<JavaUtilLocale>& a0) {
+void JavaUtilLocale::setDefault(const jnipp::Ref<JavaUtilLocale>& a0) {
     static jnipp::StaticMethod<void,JavaUtilLocale> method(clazz(), "setDefault", "(Ljava/util/Locale;)V");
     method.call(a0);
 }
@@ -1724,7 +1724,7 @@ jnipp::LocalRef<JavaLangString> JavaUtilLocale::getDisplayLanguage(const jnipp::
 }
 
 // public final java.lang.String java.util.Locale.getDisplayLanguage()
-jnipp::LocalRef<JavaLangString> JavaUtilLocale::getDisplayLanguage_() const {
+jnipp::LocalRef<JavaLangString> JavaUtilLocale::getDisplayLanguage() const {
     static jnipp::Method<JavaLangString> method(clazz(), "getDisplayLanguage", "()Ljava/lang/String;");
     return method.call(*this);
 }
@@ -1736,7 +1736,7 @@ jnipp::LocalRef<JavaLangString> JavaUtilLocale::getDisplayScript() const {
 }
 
 // public java.lang.String java.util.Locale.getDisplayScript(java.util.Locale)
-jnipp::LocalRef<JavaLangString> JavaUtilLocale::getDisplayScript_(const jnipp::Ref<JavaUtilLocale>& a0) const {
+jnipp::LocalRef<JavaLangString> JavaUtilLocale::getDisplayScript(const jnipp::Ref<JavaUtilLocale>& a0) const {
     static jnipp::Method<JavaLangString,JavaUtilLocale> method(clazz(), "getDisplayScript", "(Ljava/util/Locale;)Ljava/lang/String;");
     return method.call(*this, a0);
 }
@@ -1748,7 +1748,7 @@ jnipp::LocalRef<JavaLangString> JavaUtilLocale::getDisplayCountry(const jnipp::R
 }
 
 // public final java.lang.String java.util.Locale.getDisplayCountry()
-jnipp::LocalRef<JavaLangString> JavaUtilLocale::getDisplayCountry_() const {
+jnipp::LocalRef<JavaLangString> JavaUtilLocale::getDisplayCountry() const {
     static jnipp::Method<JavaLangString> method(clazz(), "getDisplayCountry", "()Ljava/lang/String;");
     return method.call(*this);
 }
@@ -1766,7 +1766,7 @@ jnipp::LocalRef<JavaLangString> JavaUtilLocale::getDisplayVariant(const jnipp::R
 }
 
 // public final java.lang.String java.util.Locale.getDisplayVariant()
-jnipp::LocalRef<JavaLangString> JavaUtilLocale::getDisplayVariant_() const {
+jnipp::LocalRef<JavaLangString> JavaUtilLocale::getDisplayVariant() const {
     static jnipp::Method<JavaLangString> method(clazz(), "getDisplayVariant", "()Ljava/lang/String;");
     return method.call(*this);
 }
@@ -1778,7 +1778,7 @@ jnipp::LocalRef<JavaLangString> JavaUtilLocale::getDisplayName() const {
 }
 
 // public java.lang.String java.util.Locale.getDisplayName(java.util.Locale)
-jnipp::LocalRef<JavaLangString> JavaUtilLocale::getDisplayName_(const jnipp::Ref<JavaUtilLocale>& a0) const {
+jnipp::LocalRef<JavaLangString> JavaUtilLocale::getDisplayName(const jnipp::Ref<JavaUtilLocale>& a0) const {
     static jnipp::Method<JavaLangString,JavaUtilLocale> method(clazz(), "getDisplayName", "(Ljava/util/Locale;)Ljava/lang/String;");
     return method.call(*this, a0);
 }
@@ -1923,79 +1923,79 @@ jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append(const jnipp
 }
 
 // public java.lang.StringBuilder java.lang.StringBuilder.append(char[])
-jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append_(const jnipp::Ref<jnipp::Array<jchar>>& a0) const {
+jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append(const jnipp::Ref<jnipp::Array<jchar>>& a0) const {
     static jnipp::Method<JavaLangStringBuilder,jnipp::Array<jchar>> method(clazz(), "append", "([C)Ljava/lang/StringBuilder;");
     return method.call(*this, a0);
 }
 
 // public java.lang.StringBuilder java.lang.StringBuilder.append(char[],int,int)
-jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append__(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1, jint a2) const {
+jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1, jint a2) const {
     static jnipp::Method<JavaLangStringBuilder,jnipp::Array<jchar>,jint,jint> method(clazz(), "append", "([CII)Ljava/lang/StringBuilder;");
     return method.call(*this, a0, a1, a2);
 }
 
 // public java.lang.StringBuilder java.lang.StringBuilder.append(boolean)
-jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append___(jboolean a0) const {
+jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append(jboolean a0) const {
     static jnipp::Method<JavaLangStringBuilder,jboolean> method(clazz(), "append", "(Z)Ljava/lang/StringBuilder;");
     return method.call(*this, a0);
 }
 
 // public java.lang.StringBuilder java.lang.StringBuilder.append(java.lang.StringBuffer)
-jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append____(const jnipp::Ref<JavaLangStringBuffer>& a0) const {
+jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append(const jnipp::Ref<JavaLangStringBuffer>& a0) const {
     static jnipp::Method<JavaLangStringBuilder,JavaLangStringBuffer> method(clazz(), "append", "(Ljava/lang/StringBuffer;)Ljava/lang/StringBuilder;");
     return method.call(*this, a0);
 }
 
 // public java.lang.StringBuilder java.lang.StringBuilder.append(java.lang.CharSequence)
-jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append_____(const jnipp::Ref<JavaLangCharSequence>& a0) const {
+jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append(const jnipp::Ref<JavaLangCharSequence>& a0) const {
     static jnipp::Method<JavaLangStringBuilder,JavaLangCharSequence> method(clazz(), "append", "(Ljava/lang/CharSequence;)Ljava/lang/StringBuilder;");
     return method.call(*this, a0);
 }
 
 // public java.lang.StringBuilder java.lang.StringBuilder.append(java.lang.CharSequence,int,int)
-jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append______(const jnipp::Ref<JavaLangCharSequence>& a0, jint a1, jint a2) const {
+jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append(const jnipp::Ref<JavaLangCharSequence>& a0, jint a1, jint a2) const {
     static jnipp::Method<JavaLangStringBuilder,JavaLangCharSequence,jint,jint> method(clazz(), "append", "(Ljava/lang/CharSequence;II)Ljava/lang/StringBuilder;");
     return method.call(*this, a0, a1, a2);
 }
 
 // public java.lang.StringBuilder java.lang.StringBuilder.append(float)
-jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append_______(jfloat a0) const {
+jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append(jfloat a0) const {
     static jnipp::Method<JavaLangStringBuilder,jfloat> method(clazz(), "append", "(F)Ljava/lang/StringBuilder;");
     return method.call(*this, a0);
 }
 
 // public java.lang.StringBuilder java.lang.StringBuilder.append(java.lang.String)
-jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append________(const jnipp::Ref<JavaLangString>& a0) const {
+jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<JavaLangStringBuilder,JavaLangString> method(clazz(), "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;");
     return method.call(*this, a0);
 }
 
 // public java.lang.StringBuilder java.lang.StringBuilder.append(java.lang.Object)
-jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append_________(const jnipp::Ref<JavaLangObject>& a0) const {
+jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append(const jnipp::Ref<JavaLangObject>& a0) const {
     static jnipp::Method<JavaLangStringBuilder,JavaLangObject> method(clazz(), "append", "(Ljava/lang/Object;)Ljava/lang/StringBuilder;");
     return method.call(*this, a0);
 }
 
 // public java.lang.StringBuilder java.lang.StringBuilder.append(double)
-jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append__________(jdouble a0) const {
+jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append(jdouble a0) const {
     static jnipp::Method<JavaLangStringBuilder,jdouble> method(clazz(), "append", "(D)Ljava/lang/StringBuilder;");
     return method.call(*this, a0);
 }
 
 // public java.lang.StringBuilder java.lang.StringBuilder.append(char)
-jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append___________(jchar a0) const {
+jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append(jchar a0) const {
     static jnipp::Method<JavaLangStringBuilder,jchar> method(clazz(), "append", "(C)Ljava/lang/StringBuilder;");
     return method.call(*this, a0);
 }
 
 // public java.lang.StringBuilder java.lang.StringBuilder.append(int)
-jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append____________(jint a0) const {
+jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append(jint a0) const {
     static jnipp::Method<JavaLangStringBuilder,jint> method(clazz(), "append", "(I)Ljava/lang/StringBuilder;");
     return method.call(*this, a0);
 }
 
 // public java.lang.StringBuilder java.lang.StringBuilder.append(long)
-jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append_____________(jlong a0) const {
+jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::append(jlong a0) const {
     static jnipp::Method<JavaLangStringBuilder,jlong> method(clazz(), "append", "(J)Ljava/lang/StringBuilder;");
     return method.call(*this, a0);
 }
@@ -2007,7 +2007,7 @@ jint JavaLangStringBuilder::indexOf(const jnipp::Ref<JavaLangString>& a0, jint a
 }
 
 // public int java.lang.StringBuilder.indexOf(java.lang.String)
-jint JavaLangStringBuilder::indexOf_(const jnipp::Ref<JavaLangString>& a0) const {
+jint JavaLangStringBuilder::indexOf(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<jint,JavaLangString> method(clazz(), "indexOf", "(Ljava/lang/String;)I");
     return method.call(*this, a0);
 }
@@ -2019,7 +2019,7 @@ jint JavaLangStringBuilder::lastIndexOf(const jnipp::Ref<JavaLangString>& a0) co
 }
 
 // public int java.lang.StringBuilder.lastIndexOf(java.lang.String,int)
-jint JavaLangStringBuilder::lastIndexOf_(const jnipp::Ref<JavaLangString>& a0, jint a1) const {
+jint JavaLangStringBuilder::lastIndexOf(const jnipp::Ref<JavaLangString>& a0, jint a1) const {
     static jnipp::Method<jint,JavaLangString,jint> method(clazz(), "lastIndexOf", "(Ljava/lang/String;I)I");
     return method.call(*this, a0, a1);
 }
@@ -2067,67 +2067,67 @@ jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::insert(jint a0, jc
 }
 
 // public java.lang.StringBuilder java.lang.StringBuilder.insert(int,boolean)
-jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::insert_(jint a0, jboolean a1) const {
+jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::insert(jint a0, jboolean a1) const {
     static jnipp::Method<JavaLangStringBuilder,jint,jboolean> method(clazz(), "insert", "(IZ)Ljava/lang/StringBuilder;");
     return method.call(*this, a0, a1);
 }
 
 // public java.lang.StringBuilder java.lang.StringBuilder.insert(int,char[],int,int)
-jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::insert__(jint a0, const jnipp::Ref<jnipp::Array<jchar>>& a1, jint a2, jint a3) const {
+jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::insert(jint a0, const jnipp::Ref<jnipp::Array<jchar>>& a1, jint a2, jint a3) const {
     static jnipp::Method<JavaLangStringBuilder,jint,jnipp::Array<jchar>,jint,jint> method(clazz(), "insert", "(I[CII)Ljava/lang/StringBuilder;");
     return method.call(*this, a0, a1, a2, a3);
 }
 
 // public java.lang.StringBuilder java.lang.StringBuilder.insert(int,int)
-jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::insert___(jint a0, jint a1) const {
+jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::insert(jint a0, jint a1) const {
     static jnipp::Method<JavaLangStringBuilder,jint,jint> method(clazz(), "insert", "(II)Ljava/lang/StringBuilder;");
     return method.call(*this, a0, a1);
 }
 
 // public java.lang.StringBuilder java.lang.StringBuilder.insert(int,long)
-jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::insert____(jint a0, jlong a1) const {
+jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::insert(jint a0, jlong a1) const {
     static jnipp::Method<JavaLangStringBuilder,jint,jlong> method(clazz(), "insert", "(IJ)Ljava/lang/StringBuilder;");
     return method.call(*this, a0, a1);
 }
 
 // public java.lang.StringBuilder java.lang.StringBuilder.insert(int,java.lang.String)
-jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::insert_____(jint a0, const jnipp::Ref<JavaLangString>& a1) const {
+jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::insert(jint a0, const jnipp::Ref<JavaLangString>& a1) const {
     static jnipp::Method<JavaLangStringBuilder,jint,JavaLangString> method(clazz(), "insert", "(ILjava/lang/String;)Ljava/lang/StringBuilder;");
     return method.call(*this, a0, a1);
 }
 
 // public java.lang.StringBuilder java.lang.StringBuilder.insert(int,char[])
-jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::insert______(jint a0, const jnipp::Ref<jnipp::Array<jchar>>& a1) const {
+jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::insert(jint a0, const jnipp::Ref<jnipp::Array<jchar>>& a1) const {
     static jnipp::Method<JavaLangStringBuilder,jint,jnipp::Array<jchar>> method(clazz(), "insert", "(I[C)Ljava/lang/StringBuilder;");
     return method.call(*this, a0, a1);
 }
 
 // public java.lang.StringBuilder java.lang.StringBuilder.insert(int,java.lang.CharSequence)
-jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::insert_______(jint a0, const jnipp::Ref<JavaLangCharSequence>& a1) const {
+jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::insert(jint a0, const jnipp::Ref<JavaLangCharSequence>& a1) const {
     static jnipp::Method<JavaLangStringBuilder,jint,JavaLangCharSequence> method(clazz(), "insert", "(ILjava/lang/CharSequence;)Ljava/lang/StringBuilder;");
     return method.call(*this, a0, a1);
 }
 
 // public java.lang.StringBuilder java.lang.StringBuilder.insert(int,java.lang.CharSequence,int,int)
-jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::insert________(jint a0, const jnipp::Ref<JavaLangCharSequence>& a1, jint a2, jint a3) const {
+jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::insert(jint a0, const jnipp::Ref<JavaLangCharSequence>& a1, jint a2, jint a3) const {
     static jnipp::Method<JavaLangStringBuilder,jint,JavaLangCharSequence,jint,jint> method(clazz(), "insert", "(ILjava/lang/CharSequence;II)Ljava/lang/StringBuilder;");
     return method.call(*this, a0, a1, a2, a3);
 }
 
 // public java.lang.StringBuilder java.lang.StringBuilder.insert(int,java.lang.Object)
-jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::insert_________(jint a0, const jnipp::Ref<JavaLangObject>& a1) const {
+jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::insert(jint a0, const jnipp::Ref<JavaLangObject>& a1) const {
     static jnipp::Method<JavaLangStringBuilder,jint,JavaLangObject> method(clazz(), "insert", "(ILjava/lang/Object;)Ljava/lang/StringBuilder;");
     return method.call(*this, a0, a1);
 }
 
 // public java.lang.StringBuilder java.lang.StringBuilder.insert(int,float)
-jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::insert__________(jint a0, jfloat a1) const {
+jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::insert(jint a0, jfloat a1) const {
     static jnipp::Method<JavaLangStringBuilder,jint,jfloat> method(clazz(), "insert", "(IF)Ljava/lang/StringBuilder;");
     return method.call(*this, a0, a1);
 }
 
 // public java.lang.StringBuilder java.lang.StringBuilder.insert(int,double)
-jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::insert___________(jint a0, jdouble a1) const {
+jnipp::LocalRef<JavaLangStringBuilder> JavaLangStringBuilder::insert(jint a0, jdouble a1) const {
     static jnipp::Method<JavaLangStringBuilder,jint,jdouble> method(clazz(), "insert", "(ID)Ljava/lang/StringBuilder;");
     return method.call(*this, a0, a1);
 }
@@ -2269,7 +2269,7 @@ jnipp::LocalRef<JavaNioBuffer> JavaNioBuffer::limit(jint a0) const {
 }
 
 // public final int java.nio.Buffer.limit()
-jint JavaNioBuffer::limit_() const {
+jint JavaNioBuffer::limit() const {
     static jnipp::Method<jint> method(clazz(), "limit", "()I");
     return method.call(*this);
 }
@@ -2281,7 +2281,7 @@ jint JavaNioBuffer::checkIndex(jint a0, jint a1) const {
 }
 
 // final int java.nio.Buffer.checkIndex(int)
-jint JavaNioBuffer::checkIndex_(jint a0) const {
+jint JavaNioBuffer::checkIndex(jint a0) const {
     static jnipp::Method<jint,jint> method(clazz(), "checkIndex", "(I)I");
     return method.call(*this, a0);
 }
@@ -2311,7 +2311,7 @@ jnipp::LocalRef<JavaNioBuffer> JavaNioBuffer::position(jint a0) const {
 }
 
 // public final int java.nio.Buffer.position()
-jint JavaNioBuffer::position_() const {
+jint JavaNioBuffer::position() const {
     static jnipp::Method<jint> method(clazz(), "position", "()I");
     return method.call(*this);
 }
@@ -2359,7 +2359,7 @@ jint JavaNioBuffer::nextGetIndex(jint a0) const {
 }
 
 // final int java.nio.Buffer.nextGetIndex()
-jint JavaNioBuffer::nextGetIndex_() const {
+jint JavaNioBuffer::nextGetIndex() const {
     static jnipp::Method<jint> method(clazz(), "nextGetIndex", "()I");
     return method.call(*this);
 }
@@ -2371,7 +2371,7 @@ jint JavaNioBuffer::nextPutIndex() const {
 }
 
 // final int java.nio.Buffer.nextPutIndex(int)
-jint JavaNioBuffer::nextPutIndex_(jint a0) const {
+jint JavaNioBuffer::nextPutIndex(jint a0) const {
     static jnipp::Method<jint,jint> method(clazz(), "nextPutIndex", "(I)I");
     return method.call(*this, a0);
 }
@@ -2418,7 +2418,7 @@ jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharBuffer::get(const jnipp::Ref<jnipp
 }
 
 // public java.nio.CharBuffer java.nio.CharBuffer.get(char[])
-jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharBuffer::get_(const jnipp::Ref<jnipp::Array<jchar>>& a0) const {
+jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharBuffer::get(const jnipp::Ref<jnipp::Array<jchar>>& a0) const {
     static jnipp::Method<JavaNioCharBuffer,jnipp::Array<jchar>> method(clazz(), "get", "([C)Ljava/nio/CharBuffer;");
     return method.call(*this, a0);
 }
@@ -2430,25 +2430,25 @@ jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharBuffer::put(const jnipp::Ref<JavaL
 }
 
 // public java.nio.CharBuffer java.nio.CharBuffer.put(java.lang.String,int,int)
-jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharBuffer::put_(const jnipp::Ref<JavaLangString>& a0, jint a1, jint a2) const {
+jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharBuffer::put(const jnipp::Ref<JavaLangString>& a0, jint a1, jint a2) const {
     static jnipp::Method<JavaNioCharBuffer,JavaLangString,jint,jint> method(clazz(), "put", "(Ljava/lang/String;II)Ljava/nio/CharBuffer;");
     return method.call(*this, a0, a1, a2);
 }
 
 // public final java.nio.CharBuffer java.nio.CharBuffer.put(char[])
-jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharBuffer::put__(const jnipp::Ref<jnipp::Array<jchar>>& a0) const {
+jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharBuffer::put(const jnipp::Ref<jnipp::Array<jchar>>& a0) const {
     static jnipp::Method<JavaNioCharBuffer,jnipp::Array<jchar>> method(clazz(), "put", "([C)Ljava/nio/CharBuffer;");
     return method.call(*this, a0);
 }
 
 // public java.nio.CharBuffer java.nio.CharBuffer.put(char[],int,int)
-jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharBuffer::put___(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1, jint a2) const {
+jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharBuffer::put(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1, jint a2) const {
     static jnipp::Method<JavaNioCharBuffer,jnipp::Array<jchar>,jint,jint> method(clazz(), "put", "([CII)Ljava/nio/CharBuffer;");
     return method.call(*this, a0, a1, a2);
 }
 
 // public java.nio.CharBuffer java.nio.CharBuffer.put(java.nio.CharBuffer)
-jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharBuffer::put____(const jnipp::Ref<JavaNioCharBuffer>& a0) const {
+jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharBuffer::put(const jnipp::Ref<JavaNioCharBuffer>& a0) const {
     static jnipp::Method<JavaNioCharBuffer,JavaNioCharBuffer> method(clazz(), "put", "(Ljava/nio/CharBuffer;)Ljava/nio/CharBuffer;");
     return method.call(*this, a0);
 }
@@ -2460,7 +2460,7 @@ jboolean JavaNioCharBuffer::equals(const jnipp::Ref<JavaLangObject>& a0) const {
 }
 
 // private static boolean java.nio.CharBuffer.equals(char,char)
-jboolean JavaNioCharBuffer::equals_(jchar a0, jchar a1) {
+jboolean JavaNioCharBuffer::equals(jchar a0, jchar a1) {
     static jnipp::StaticMethod<jboolean,jchar,jchar> method(clazz(), "equals", "(CC)Z");
     return method.call(a0, a1);
 }
@@ -2472,13 +2472,13 @@ jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharBuffer::append(const jnipp::Ref<Ja
 }
 
 // public java.nio.CharBuffer java.nio.CharBuffer.append(char)
-jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharBuffer::append_(jchar a0) const {
+jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharBuffer::append(jchar a0) const {
     static jnipp::Method<JavaNioCharBuffer,jchar> method(clazz(), "append", "(C)Ljava/nio/CharBuffer;");
     return method.call(*this, a0);
 }
 
 // public java.nio.CharBuffer java.nio.CharBuffer.append(java.lang.CharSequence,int,int)
-jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharBuffer::append__(const jnipp::Ref<JavaLangCharSequence>& a0, jint a1, jint a2) const {
+jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharBuffer::append(const jnipp::Ref<JavaLangCharSequence>& a0, jint a1, jint a2) const {
     static jnipp::Method<JavaNioCharBuffer,JavaLangCharSequence,jint,jint> method(clazz(), "append", "(Ljava/lang/CharSequence;II)Ljava/nio/CharBuffer;");
     return method.call(*this, a0, a1, a2);
 }
@@ -2538,19 +2538,19 @@ jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharBuffer::wrap(const jnipp::Ref<jnip
 }
 
 // public static java.nio.CharBuffer java.nio.CharBuffer.wrap(java.lang.CharSequence,int,int)
-jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharBuffer::wrap_(const jnipp::Ref<JavaLangCharSequence>& a0, jint a1, jint a2) {
+jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharBuffer::wrap(const jnipp::Ref<JavaLangCharSequence>& a0, jint a1, jint a2) {
     static jnipp::StaticMethod<JavaNioCharBuffer,JavaLangCharSequence,jint,jint> method(clazz(), "wrap", "(Ljava/lang/CharSequence;II)Ljava/nio/CharBuffer;");
     return method.call(a0, a1, a2);
 }
 
 // public static java.nio.CharBuffer java.nio.CharBuffer.wrap(char[],int,int)
-jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharBuffer::wrap__(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1, jint a2) {
+jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharBuffer::wrap(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1, jint a2) {
     static jnipp::StaticMethod<JavaNioCharBuffer,jnipp::Array<jchar>,jint,jint> method(clazz(), "wrap", "([CII)Ljava/nio/CharBuffer;");
     return method.call(a0, a1, a2);
 }
 
 // public static java.nio.CharBuffer java.nio.CharBuffer.wrap(java.lang.CharSequence)
-jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharBuffer::wrap___(const jnipp::Ref<JavaLangCharSequence>& a0) {
+jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharBuffer::wrap(const jnipp::Ref<JavaLangCharSequence>& a0) {
     static jnipp::StaticMethod<JavaNioCharBuffer,JavaLangCharSequence> method(clazz(), "wrap", "(Ljava/lang/CharSequence;)Ljava/nio/CharBuffer;");
     return method.call(a0);
 }
@@ -2666,7 +2666,7 @@ jnipp::LocalRef<JavaNioByteBuffer> JavaNioByteBuffer::get(const jnipp::Ref<jnipp
 }
 
 // public java.nio.ByteBuffer java.nio.ByteBuffer.get(byte[])
-jnipp::LocalRef<JavaNioByteBuffer> JavaNioByteBuffer::get_(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
+jnipp::LocalRef<JavaNioByteBuffer> JavaNioByteBuffer::get(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
     static jnipp::Method<JavaNioByteBuffer,jnipp::Array<jbyte>> method(clazz(), "get", "([B)Ljava/nio/ByteBuffer;");
     return method.call(*this, a0);
 }
@@ -2678,13 +2678,13 @@ jnipp::LocalRef<JavaNioByteBuffer> JavaNioByteBuffer::put(const jnipp::Ref<jnipp
 }
 
 // public java.nio.ByteBuffer java.nio.ByteBuffer.put(java.nio.ByteBuffer)
-jnipp::LocalRef<JavaNioByteBuffer> JavaNioByteBuffer::put_(const jnipp::Ref<JavaNioByteBuffer>& a0) const {
+jnipp::LocalRef<JavaNioByteBuffer> JavaNioByteBuffer::put(const jnipp::Ref<JavaNioByteBuffer>& a0) const {
     static jnipp::Method<JavaNioByteBuffer,JavaNioByteBuffer> method(clazz(), "put", "(Ljava/nio/ByteBuffer;)Ljava/nio/ByteBuffer;");
     return method.call(*this, a0);
 }
 
 // public final java.nio.ByteBuffer java.nio.ByteBuffer.put(byte[])
-jnipp::LocalRef<JavaNioByteBuffer> JavaNioByteBuffer::put__(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
+jnipp::LocalRef<JavaNioByteBuffer> JavaNioByteBuffer::put(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
     static jnipp::Method<JavaNioByteBuffer,jnipp::Array<jbyte>> method(clazz(), "put", "([B)Ljava/nio/ByteBuffer;");
     return method.call(*this, a0);
 }
@@ -2696,7 +2696,7 @@ jboolean JavaNioByteBuffer::equals(jbyte a0, jbyte a1) {
 }
 
 // public boolean java.nio.ByteBuffer.equals(java.lang.Object)
-jboolean JavaNioByteBuffer::equals_(const jnipp::Ref<JavaLangObject>& a0) const {
+jboolean JavaNioByteBuffer::equals(const jnipp::Ref<JavaLangObject>& a0) const {
     static jnipp::Method<jboolean,JavaLangObject> method(clazz(), "equals", "(Ljava/lang/Object;)Z");
     return method.call(*this, a0);
 }
@@ -2744,7 +2744,7 @@ jnipp::LocalRef<JavaNioByteBuffer> JavaNioByteBuffer::wrap(const jnipp::Ref<jnip
 }
 
 // public static java.nio.ByteBuffer java.nio.ByteBuffer.wrap(byte[],int,int)
-jnipp::LocalRef<JavaNioByteBuffer> JavaNioByteBuffer::wrap_(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) {
+jnipp::LocalRef<JavaNioByteBuffer> JavaNioByteBuffer::wrap(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) {
     static jnipp::StaticMethod<JavaNioByteBuffer,jnipp::Array<jbyte>,jint,jint> method(clazz(), "wrap", "([BII)Ljava/nio/ByteBuffer;");
     return method.call(a0, a1, a2);
 }
@@ -2768,7 +2768,7 @@ jnipp::LocalRef<JavaNioByteBuffer> JavaNioByteBuffer::order(const jnipp::Ref<Jav
 }
 
 // public final java.nio.ByteOrder java.nio.ByteBuffer.order()
-jnipp::LocalRef<JavaNioByteOrder> JavaNioByteBuffer::order_() const {
+jnipp::LocalRef<JavaNioByteOrder> JavaNioByteBuffer::order() const {
     static jnipp::Method<JavaNioByteOrder> method(clazz(), "order", "()Ljava/nio/ByteOrder;");
     return method.call(*this);
 }
@@ -2822,7 +2822,7 @@ void JavaIoOutputStream::write(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a
 }
 
 // public void java.io.OutputStream.write(byte[]) throws java.io.IOException
-void JavaIoOutputStream::write_(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
+void JavaIoOutputStream::write(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
     static jnipp::Method<void,jnipp::Array<jbyte>> method(clazz(), "write", "([B)V");
     method.call(*this, a0);
 }
@@ -2869,13 +2869,13 @@ void JavaIoObjectOutputStream::write(const jnipp::Ref<jnipp::Array<jbyte>>& a0) 
 }
 
 // public void java.io.ObjectOutputStream.write(byte[],int,int) throws java.io.IOException
-void JavaIoObjectOutputStream::write_(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
+void JavaIoObjectOutputStream::write(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
     static jnipp::Method<void,jnipp::Array<jbyte>,jint,jint> method(clazz(), "write", "([BII)V");
     method.call(*this, a0, a1, a2);
 }
 
 // public void java.io.ObjectOutputStream.write(int) throws java.io.IOException
-void JavaIoObjectOutputStream::write__(jint a0) const {
+void JavaIoObjectOutputStream::write(jint a0) const {
     static jnipp::Method<void,jint> method(clazz(), "write", "(I)V");
     method.call(*this, a0);
 }
@@ -3218,7 +3218,7 @@ jint JavaIoInputStream::read(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1,
 }
 
 // public int java.io.InputStream.read(byte[]) throws java.io.IOException
-jint JavaIoInputStream::read_(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
+jint JavaIoInputStream::read(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
     static jnipp::Method<jint,jnipp::Array<jbyte>> method(clazz(), "read", "([B)I");
     return method.call(*this, a0);
 }
@@ -3327,7 +3327,7 @@ jint JavaIoObjectInputStream::read(const jnipp::Ref<jnipp::Array<jbyte>>& a0, ji
 }
 
 // public int java.io.ObjectInputStream.read() throws java.io.IOException
-jint JavaIoObjectInputStream::read_() const {
+jint JavaIoObjectInputStream::read() const {
     static jnipp::Method<jint> method(clazz(), "read", "()I");
     return method.call(*this);
 }
@@ -3357,7 +3357,7 @@ void JavaIoObjectInputStream::readFully(const jnipp::Ref<jnipp::Array<jbyte>>& a
 }
 
 // public void java.io.ObjectInputStream.readFully(byte[]) throws java.io.IOException
-void JavaIoObjectInputStream::readFully_(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
+void JavaIoObjectInputStream::readFully(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
     static jnipp::Method<void,jnipp::Array<jbyte>> method(clazz(), "readFully", "([B)V");
     method.call(*this, a0);
 }
@@ -3725,31 +3725,31 @@ jnipp::LocalRef<JavaUtilResourceBundle> JavaUtilResourceBundle::getBundle(const 
 }
 
 // public static final java.util.ResourceBundle java.util.ResourceBundle.getBundle(java.lang.String,java.util.Locale,java.util.ResourceBundle$Control)
-jnipp::LocalRef<JavaUtilResourceBundle> JavaUtilResourceBundle::getBundle_(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaUtilLocale>& a1, const jnipp::Ref<JavaUtilResourceBundle_Control>& a2) {
+jnipp::LocalRef<JavaUtilResourceBundle> JavaUtilResourceBundle::getBundle(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaUtilLocale>& a1, const jnipp::Ref<JavaUtilResourceBundle_Control>& a2) {
     static jnipp::StaticMethod<JavaUtilResourceBundle,JavaLangString,JavaUtilLocale,JavaUtilResourceBundle_Control> method(clazz(), "getBundle", "(Ljava/lang/String;Ljava/util/Locale;Ljava/util/ResourceBundle$Control;)Ljava/util/ResourceBundle;");
     return method.call(a0, a1, a2);
 }
 
 // public static java.util.ResourceBundle java.util.ResourceBundle.getBundle(java.lang.String,java.util.Locale,java.lang.ClassLoader)
-jnipp::LocalRef<JavaUtilResourceBundle> JavaUtilResourceBundle::getBundle__(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaUtilLocale>& a1, const jnipp::Ref<JavaLangClassLoader>& a2) {
+jnipp::LocalRef<JavaUtilResourceBundle> JavaUtilResourceBundle::getBundle(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaUtilLocale>& a1, const jnipp::Ref<JavaLangClassLoader>& a2) {
     static jnipp::StaticMethod<JavaUtilResourceBundle,JavaLangString,JavaUtilLocale,JavaLangClassLoader> method(clazz(), "getBundle", "(Ljava/lang/String;Ljava/util/Locale;Ljava/lang/ClassLoader;)Ljava/util/ResourceBundle;");
     return method.call(a0, a1, a2);
 }
 
 // public static java.util.ResourceBundle java.util.ResourceBundle.getBundle(java.lang.String,java.util.Locale,java.lang.ClassLoader,java.util.ResourceBundle$Control)
-jnipp::LocalRef<JavaUtilResourceBundle> JavaUtilResourceBundle::getBundle___(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaUtilLocale>& a1, const jnipp::Ref<JavaLangClassLoader>& a2, const jnipp::Ref<JavaUtilResourceBundle_Control>& a3) {
+jnipp::LocalRef<JavaUtilResourceBundle> JavaUtilResourceBundle::getBundle(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaUtilLocale>& a1, const jnipp::Ref<JavaLangClassLoader>& a2, const jnipp::Ref<JavaUtilResourceBundle_Control>& a3) {
     static jnipp::StaticMethod<JavaUtilResourceBundle,JavaLangString,JavaUtilLocale,JavaLangClassLoader,JavaUtilResourceBundle_Control> method(clazz(), "getBundle", "(Ljava/lang/String;Ljava/util/Locale;Ljava/lang/ClassLoader;Ljava/util/ResourceBundle$Control;)Ljava/util/ResourceBundle;");
     return method.call(a0, a1, a2, a3);
 }
 
 // public static final java.util.ResourceBundle java.util.ResourceBundle.getBundle(java.lang.String,java.util.ResourceBundle$Control)
-jnipp::LocalRef<JavaUtilResourceBundle> JavaUtilResourceBundle::getBundle____(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaUtilResourceBundle_Control>& a1) {
+jnipp::LocalRef<JavaUtilResourceBundle> JavaUtilResourceBundle::getBundle(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaUtilResourceBundle_Control>& a1) {
     static jnipp::StaticMethod<JavaUtilResourceBundle,JavaLangString,JavaUtilResourceBundle_Control> method(clazz(), "getBundle", "(Ljava/lang/String;Ljava/util/ResourceBundle$Control;)Ljava/util/ResourceBundle;");
     return method.call(a0, a1);
 }
 
 // public static final java.util.ResourceBundle java.util.ResourceBundle.getBundle(java.lang.String)
-jnipp::LocalRef<JavaUtilResourceBundle> JavaUtilResourceBundle::getBundle_____(const jnipp::Ref<JavaLangString>& a0) {
+jnipp::LocalRef<JavaUtilResourceBundle> JavaUtilResourceBundle::getBundle(const jnipp::Ref<JavaLangString>& a0) {
     static jnipp::StaticMethod<JavaUtilResourceBundle,JavaLangString> method(clazz(), "getBundle", "(Ljava/lang/String;)Ljava/util/ResourceBundle;");
     return method.call(a0);
 }
@@ -3761,7 +3761,7 @@ void JavaUtilResourceBundle::clearCache() {
 }
 
 // public static final void java.util.ResourceBundle.clearCache(java.lang.ClassLoader)
-void JavaUtilResourceBundle::clearCache_(const jnipp::Ref<JavaLangClassLoader>& a0) {
+void JavaUtilResourceBundle::clearCache(const jnipp::Ref<JavaLangClassLoader>& a0) {
     static jnipp::StaticMethod<void,JavaLangClassLoader> method(clazz(), "clearCache", "(Ljava/lang/ClassLoader;)V");
     method.call(a0);
 }
@@ -4068,19 +4068,19 @@ jnipp::LocalRef<JavaTextAttributedCharacterIterator> JavaTextFormat::createAttri
 }
 
 // java.text.AttributedCharacterIterator java.text.Format.createAttributedCharacterIterator(java.lang.String,java.text.AttributedCharacterIterator$Attribute,java.lang.Object)
-jnipp::LocalRef<JavaTextAttributedCharacterIterator> JavaTextFormat::createAttributedCharacterIterator_(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaTextAttributedCharacterIterator_Attribute>& a1, const jnipp::Ref<JavaLangObject>& a2) const {
+jnipp::LocalRef<JavaTextAttributedCharacterIterator> JavaTextFormat::createAttributedCharacterIterator(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaTextAttributedCharacterIterator_Attribute>& a1, const jnipp::Ref<JavaLangObject>& a2) const {
     static jnipp::Method<JavaTextAttributedCharacterIterator,JavaLangString,JavaTextAttributedCharacterIterator_Attribute,JavaLangObject> method(clazz(), "createAttributedCharacterIterator", "(Ljava/lang/String;Ljava/text/AttributedCharacterIterator$Attribute;Ljava/lang/Object;)Ljava/text/AttributedCharacterIterator;");
     return method.call(*this, a0, a1, a2);
 }
 
 // java.text.AttributedCharacterIterator java.text.Format.createAttributedCharacterIterator(java.text.AttributedCharacterIterator[])
-jnipp::LocalRef<JavaTextAttributedCharacterIterator> JavaTextFormat::createAttributedCharacterIterator__(const jnipp::Ref<jnipp::Array<JavaTextAttributedCharacterIterator>>& a0) const {
+jnipp::LocalRef<JavaTextAttributedCharacterIterator> JavaTextFormat::createAttributedCharacterIterator(const jnipp::Ref<jnipp::Array<JavaTextAttributedCharacterIterator>>& a0) const {
     static jnipp::Method<JavaTextAttributedCharacterIterator,jnipp::Array<JavaTextAttributedCharacterIterator>> method(clazz(), "createAttributedCharacterIterator", "([Ljava/text/AttributedCharacterIterator;)Ljava/text/AttributedCharacterIterator;");
     return method.call(*this, a0);
 }
 
 // java.text.AttributedCharacterIterator java.text.Format.createAttributedCharacterIterator(java.lang.String)
-jnipp::LocalRef<JavaTextAttributedCharacterIterator> JavaTextFormat::createAttributedCharacterIterator___(const jnipp::Ref<JavaLangString>& a0) const {
+jnipp::LocalRef<JavaTextAttributedCharacterIterator> JavaTextFormat::createAttributedCharacterIterator(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<JavaTextAttributedCharacterIterator,JavaLangString> method(clazz(), "createAttributedCharacterIterator", "(Ljava/lang/String;)Ljava/text/AttributedCharacterIterator;");
     return method.call(*this, a0);
 }
@@ -4135,13 +4135,13 @@ jnipp::LocalRef<JavaLangStringBuffer> JavaTextMessageFormat::format(const jnipp:
 }
 
 // public static java.lang.String java.text.MessageFormat.format(java.lang.String,java.lang.Object[])
-jnipp::LocalRef<JavaLangString> JavaTextMessageFormat::format_(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<jnipp::Array<JavaLangObject>>& a1) {
+jnipp::LocalRef<JavaLangString> JavaTextMessageFormat::format(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<jnipp::Array<JavaLangObject>>& a1) {
     static jnipp::StaticMethod<JavaLangString,JavaLangString,jnipp::Array<JavaLangObject>> method(clazz(), "format", "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;");
     return method.call(a0, a1);
 }
 
 // public final java.lang.StringBuffer java.text.MessageFormat.format(java.lang.Object,java.lang.StringBuffer,java.text.FieldPosition)
-jnipp::LocalRef<JavaLangStringBuffer> JavaTextMessageFormat::format__(const jnipp::Ref<JavaLangObject>& a0, const jnipp::Ref<JavaLangStringBuffer>& a1, const jnipp::Ref<JavaTextFieldPosition>& a2) const {
+jnipp::LocalRef<JavaLangStringBuffer> JavaTextMessageFormat::format(const jnipp::Ref<JavaLangObject>& a0, const jnipp::Ref<JavaLangStringBuffer>& a1, const jnipp::Ref<JavaTextFieldPosition>& a2) const {
     static jnipp::Method<JavaLangStringBuffer,JavaLangObject,JavaLangStringBuffer,JavaTextFieldPosition> method(clazz(), "format", "(Ljava/lang/Object;Ljava/lang/StringBuffer;Ljava/text/FieldPosition;)Ljava/lang/StringBuffer;");
     return method.call(*this, a0, a1, a2);
 }
@@ -4159,7 +4159,7 @@ jnipp::LocalRef<jnipp::Array<JavaLangObject>> JavaTextMessageFormat::parse(const
 }
 
 // public java.lang.Object[] java.text.MessageFormat.parse(java.lang.String) throws java.text.ParseException
-jnipp::LocalRef<jnipp::Array<JavaLangObject>> JavaTextMessageFormat::parse_(const jnipp::Ref<JavaLangString>& a0) const {
+jnipp::LocalRef<jnipp::Array<JavaLangObject>> JavaTextMessageFormat::parse(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<jnipp::Array<JavaLangObject>,JavaLangString> method(clazz(), "parse", "(Ljava/lang/String;)[Ljava/lang/Object;");
     return method.call(*this, a0);
 }
@@ -4507,7 +4507,7 @@ jnipp::LocalRef<JavaLangClass> JavaLangClass::forName(const jnipp::Ref<JavaLangS
 }
 
 // public static java.lang.Class java.lang.Class.forName(java.lang.String) throws java.lang.ClassNotFoundException
-jnipp::LocalRef<JavaLangClass> JavaLangClass::forName_(const jnipp::Ref<JavaLangString>& a0) {
+jnipp::LocalRef<JavaLangClass> JavaLangClass::forName(const jnipp::Ref<JavaLangString>& a0) {
     static jnipp::StaticMethod<JavaLangClass,JavaLangString> method(clazz(), "forName", "(Ljava/lang/String;)Ljava/lang/Class;");
     return method.call(a0);
 }
@@ -5220,7 +5220,7 @@ void JavaLangReflectAccessibleObject::setAccessible(const jnipp::Ref<jnipp::Arra
 }
 
 // public void java.lang.reflect.AccessibleObject.setAccessible(boolean) throws java.lang.SecurityException
-void JavaLangReflectAccessibleObject::setAccessible_(jboolean a0) const {
+void JavaLangReflectAccessibleObject::setAccessible(jboolean a0) const {
     static jnipp::Method<void,jboolean> method(clazz(), "setAccessible", "(Z)V");
     method.call(*this, a0);
 }
@@ -5475,7 +5475,7 @@ jnipp::LocalRef<SunReflectFieldAccessor> JavaLangReflectField::getFieldAccessor(
 }
 
 // private sun.reflect.FieldAccessor java.lang.reflect.Field.getFieldAccessor(boolean)
-jnipp::LocalRef<SunReflectFieldAccessor> JavaLangReflectField::getFieldAccessor_(jboolean a0) const {
+jnipp::LocalRef<SunReflectFieldAccessor> JavaLangReflectField::getFieldAccessor(jboolean a0) const {
     static jnipp::Method<SunReflectFieldAccessor,jboolean> method(clazz(), "getFieldAccessor", "(Z)Lsun/reflect/FieldAccessor;");
     return method.call(*this, a0);
 }
@@ -5588,7 +5588,7 @@ jboolean JavaLangThread::isInterrupted() const {
 }
 
 // private native boolean java.lang.Thread.isInterrupted(boolean)
-jboolean JavaLangThread::isInterrupted_(jboolean a0) const {
+jboolean JavaLangThread::isInterrupted(jboolean a0) const {
     static jnipp::Method<jboolean,jboolean> method(clazz(), "isInterrupted", "(Z)Z");
     return method.call(*this, a0);
 }
@@ -5618,7 +5618,7 @@ void JavaLangThread::init(const jnipp::Ref<JavaLangThreadGroup>& a0, const jnipp
 }
 
 // private void java.lang.Thread.init(java.lang.ThreadGroup,java.lang.Runnable,java.lang.String,long)
-void JavaLangThread::init_(const jnipp::Ref<JavaLangThreadGroup>& a0, const jnipp::Ref<JavaLangRunnable>& a1, const jnipp::Ref<JavaLangString>& a2, jlong a3) const {
+void JavaLangThread::init(const jnipp::Ref<JavaLangThreadGroup>& a0, const jnipp::Ref<JavaLangRunnable>& a1, const jnipp::Ref<JavaLangString>& a2, jlong a3) const {
     static jnipp::Method<void,JavaLangThreadGroup,JavaLangRunnable,JavaLangString,jlong> method(clazz(), "init", "(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;J)V");
     method.call(*this, a0, a1, a2, a3);
 }
@@ -5696,7 +5696,7 @@ void JavaLangThread::sleep(jlong a0, jint a1) {
 }
 
 // public static native void java.lang.Thread.sleep(long) throws java.lang.InterruptedException
-void JavaLangThread::sleep_(jlong a0) {
+void JavaLangThread::sleep(jlong a0) {
     static jnipp::StaticMethod<void,jlong> method(clazz(), "sleep", "(J)V");
     method.call(a0);
 }
@@ -5714,7 +5714,7 @@ void JavaLangThread::stop() const {
 }
 
 // public final synchronized void java.lang.Thread.stop(java.lang.Throwable)
-void JavaLangThread::stop_(const jnipp::Ref<JavaLangThrowable>& a0) const {
+void JavaLangThread::stop(const jnipp::Ref<JavaLangThrowable>& a0) const {
     static jnipp::Method<void,JavaLangThrowable> method(clazz(), "stop", "(Ljava/lang/Throwable;)V");
     method.call(*this, a0);
 }
@@ -5792,13 +5792,13 @@ void JavaLangThread::join() const {
 }
 
 // public final synchronized void java.lang.Thread.join(long) throws java.lang.InterruptedException
-void JavaLangThread::join_(jlong a0) const {
+void JavaLangThread::join(jlong a0) const {
     static jnipp::Method<void,jlong> method(clazz(), "join", "(J)V");
     method.call(*this, a0);
 }
 
 // public final synchronized void java.lang.Thread.join(long,int) throws java.lang.InterruptedException
-void JavaLangThread::join__(jlong a0, jint a1) const {
+void JavaLangThread::join(jlong a0, jint a1) const {
     static jnipp::Method<void,jlong,jint> method(clazz(), "join", "(JI)V");
     method.call(*this, a0, a1);
 }
@@ -6248,19 +6248,19 @@ void JavaIoObjectOutputStream_BlockDataOutputStream::write(jint a0) const {
 }
 
 // public void java.io.ObjectOutputStream$BlockDataOutputStream.write(byte[]) throws java.io.IOException
-void JavaIoObjectOutputStream_BlockDataOutputStream::write_(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
+void JavaIoObjectOutputStream_BlockDataOutputStream::write(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
     static jnipp::Method<void,jnipp::Array<jbyte>> method(clazz(), "write", "([B)V");
     method.call(*this, a0);
 }
 
 // public void java.io.ObjectOutputStream$BlockDataOutputStream.write(byte[],int,int) throws java.io.IOException
-void JavaIoObjectOutputStream_BlockDataOutputStream::write__(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
+void JavaIoObjectOutputStream_BlockDataOutputStream::write(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
     static jnipp::Method<void,jnipp::Array<jbyte>,jint,jint> method(clazz(), "write", "([BII)V");
     method.call(*this, a0, a1, a2);
 }
 
 // void java.io.ObjectOutputStream$BlockDataOutputStream.write(byte[],int,int,boolean) throws java.io.IOException
-void JavaIoObjectOutputStream_BlockDataOutputStream::write___(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2, jboolean a3) const {
+void JavaIoObjectOutputStream_BlockDataOutputStream::write(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2, jboolean a3) const {
     static jnipp::Method<void,jnipp::Array<jbyte>,jint,jint,jboolean> method(clazz(), "write", "([BIIZ)V");
     method.call(*this, a0, a1, a2, a3);
 }
@@ -6302,7 +6302,7 @@ void JavaIoObjectOutputStream_BlockDataOutputStream::writeUTF(const jnipp::Ref<J
 }
 
 // void java.io.ObjectOutputStream$BlockDataOutputStream.writeUTF(java.lang.String,long) throws java.io.IOException
-void JavaIoObjectOutputStream_BlockDataOutputStream::writeUTF_(const jnipp::Ref<JavaLangString>& a0, jlong a1) const {
+void JavaIoObjectOutputStream_BlockDataOutputStream::writeUTF(const jnipp::Ref<JavaLangString>& a0, jlong a1) const {
     static jnipp::Method<void,JavaLangString,jlong> method(clazz(), "writeUTF", "(Ljava/lang/String;J)V");
     method.call(*this, a0, a1);
 }
@@ -6356,7 +6356,7 @@ void JavaIoObjectOutputStream_BlockDataOutputStream::writeChars(const jnipp::Ref
 }
 
 // void java.io.ObjectOutputStream$BlockDataOutputStream.writeChars(char[],int,int) throws java.io.IOException
-void JavaIoObjectOutputStream_BlockDataOutputStream::writeChars_(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1, jint a2) const {
+void JavaIoObjectOutputStream_BlockDataOutputStream::writeChars(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1, jint a2) const {
     static jnipp::Method<void,jnipp::Array<jchar>,jint,jint> method(clazz(), "writeChars", "([CII)V");
     method.call(*this, a0, a1, a2);
 }
@@ -6374,7 +6374,7 @@ void JavaIoObjectOutputStream_BlockDataOutputStream::writeLongUTF(const jnipp::R
 }
 
 // void java.io.ObjectOutputStream$BlockDataOutputStream.writeLongUTF(java.lang.String,long) throws java.io.IOException
-void JavaIoObjectOutputStream_BlockDataOutputStream::writeLongUTF_(const jnipp::Ref<JavaLangString>& a0, jlong a1) const {
+void JavaIoObjectOutputStream_BlockDataOutputStream::writeLongUTF(const jnipp::Ref<JavaLangString>& a0, jlong a1) const {
     static jnipp::Method<void,JavaLangString,jlong> method(clazz(), "writeLongUTF", "(Ljava/lang/String;J)V");
     method.call(*this, a0, a1);
 }
@@ -6562,19 +6562,19 @@ void JavaLangThrowable::printStackTrace() const {
 }
 
 // private void java.lang.Throwable.printStackTrace(java.lang.Throwable$PrintStreamOrWriter)
-void JavaLangThrowable::printStackTrace_(const jnipp::Ref<JavaLangThrowable_PrintStreamOrWriter>& a0) const {
+void JavaLangThrowable::printStackTrace(const jnipp::Ref<JavaLangThrowable_PrintStreamOrWriter>& a0) const {
     static jnipp::Method<void,JavaLangThrowable_PrintStreamOrWriter> method(clazz(), "printStackTrace", "(Ljava/lang/Throwable$PrintStreamOrWriter;)V");
     method.call(*this, a0);
 }
 
 // public void java.lang.Throwable.printStackTrace(java.io.PrintWriter)
-void JavaLangThrowable::printStackTrace__(const jnipp::Ref<JavaIoPrintWriter>& a0) const {
+void JavaLangThrowable::printStackTrace(const jnipp::Ref<JavaIoPrintWriter>& a0) const {
     static jnipp::Method<void,JavaIoPrintWriter> method(clazz(), "printStackTrace", "(Ljava/io/PrintWriter;)V");
     method.call(*this, a0);
 }
 
 // public void java.lang.Throwable.printStackTrace(java.io.PrintStream)
-void JavaLangThrowable::printStackTrace___(const jnipp::Ref<JavaIoPrintStream>& a0) const {
+void JavaLangThrowable::printStackTrace(const jnipp::Ref<JavaIoPrintStream>& a0) const {
     static jnipp::Method<void,JavaIoPrintStream> method(clazz(), "printStackTrace", "(Ljava/io/PrintStream;)V");
     method.call(*this, a0);
 }
@@ -6586,7 +6586,7 @@ jnipp::LocalRef<JavaLangThrowable> JavaLangThrowable::fillInStackTrace() const {
 }
 
 // private native java.lang.Throwable java.lang.Throwable.fillInStackTrace(int)
-jnipp::LocalRef<JavaLangThrowable> JavaLangThrowable::fillInStackTrace_(jint a0) const {
+jnipp::LocalRef<JavaLangThrowable> JavaLangThrowable::fillInStackTrace(jint a0) const {
     static jnipp::Method<JavaLangThrowable,jint> method(clazz(), "fillInStackTrace", "(I)Ljava/lang/Throwable;");
     return method.call(*this, a0);
 }
@@ -6891,7 +6891,7 @@ jnipp::LocalRef<jnipp::Array<JavaIoObjectStreamField>> JavaIoObjectStreamClass::
 }
 
 // public java.io.ObjectStreamField[] java.io.ObjectStreamClass.getFields()
-jnipp::LocalRef<jnipp::Array<JavaIoObjectStreamField>> JavaIoObjectStreamClass::getFields_() const {
+jnipp::LocalRef<jnipp::Array<JavaIoObjectStreamField>> JavaIoObjectStreamClass::getFields() const {
     static jnipp::Method<jnipp::Array<JavaIoObjectStreamField>> method(clazz(), "getFields", "()[Ljava/io/ObjectStreamField;");
     return method.call(*this);
 }
@@ -6903,7 +6903,7 @@ jnipp::LocalRef<JavaIoObjectStreamField> JavaIoObjectStreamClass::getField(const
 }
 
 // public java.io.ObjectStreamField java.io.ObjectStreamClass.getField(java.lang.String)
-jnipp::LocalRef<JavaIoObjectStreamField> JavaIoObjectStreamClass::getField_(const jnipp::Ref<JavaLangString>& a0) const {
+jnipp::LocalRef<JavaIoObjectStreamField> JavaIoObjectStreamClass::getField(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<JavaIoObjectStreamField,JavaLangString> method(clazz(), "getField", "(Ljava/lang/String;)Ljava/io/ObjectStreamField;");
     return method.call(*this, a0);
 }
@@ -6927,7 +6927,7 @@ jnipp::LocalRef<JavaIoObjectStreamClass> JavaIoObjectStreamClass::lookup(const j
 }
 
 // static java.io.ObjectStreamClass java.io.ObjectStreamClass.lookup(java.lang.Class,boolean)
-jnipp::LocalRef<JavaIoObjectStreamClass> JavaIoObjectStreamClass::lookup_(const jnipp::Ref<JavaLangClass>& a0, jboolean a1) {
+jnipp::LocalRef<JavaIoObjectStreamClass> JavaIoObjectStreamClass::lookup(const jnipp::Ref<JavaLangClass>& a0, jboolean a1) {
     static jnipp::StaticMethod<JavaIoObjectStreamClass,JavaLangClass,jboolean> method(clazz(), "lookup", "(Ljava/lang/Class;Z)Ljava/io/ObjectStreamClass;");
     return method.call(a0, a1);
 }
@@ -7306,49 +7306,49 @@ void JavaIoObjectOutputStream_PutFieldImpl::put(const jnipp::Ref<JavaLangString>
 }
 
 // public void java.io.ObjectOutputStream$PutFieldImpl.put(java.lang.String,float)
-void JavaIoObjectOutputStream_PutFieldImpl::put_(const jnipp::Ref<JavaLangString>& a0, jfloat a1) const {
+void JavaIoObjectOutputStream_PutFieldImpl::put(const jnipp::Ref<JavaLangString>& a0, jfloat a1) const {
     static jnipp::Method<void,JavaLangString,jfloat> method(clazz(), "put", "(Ljava/lang/String;F)V");
     method.call(*this, a0, a1);
 }
 
 // public void java.io.ObjectOutputStream$PutFieldImpl.put(java.lang.String,int)
-void JavaIoObjectOutputStream_PutFieldImpl::put__(const jnipp::Ref<JavaLangString>& a0, jint a1) const {
+void JavaIoObjectOutputStream_PutFieldImpl::put(const jnipp::Ref<JavaLangString>& a0, jint a1) const {
     static jnipp::Method<void,JavaLangString,jint> method(clazz(), "put", "(Ljava/lang/String;I)V");
     method.call(*this, a0, a1);
 }
 
 // public void java.io.ObjectOutputStream$PutFieldImpl.put(java.lang.String,double)
-void JavaIoObjectOutputStream_PutFieldImpl::put___(const jnipp::Ref<JavaLangString>& a0, jdouble a1) const {
+void JavaIoObjectOutputStream_PutFieldImpl::put(const jnipp::Ref<JavaLangString>& a0, jdouble a1) const {
     static jnipp::Method<void,JavaLangString,jdouble> method(clazz(), "put", "(Ljava/lang/String;D)V");
     method.call(*this, a0, a1);
 }
 
 // public void java.io.ObjectOutputStream$PutFieldImpl.put(java.lang.String,java.lang.Object)
-void JavaIoObjectOutputStream_PutFieldImpl::put____(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangObject>& a1) const {
+void JavaIoObjectOutputStream_PutFieldImpl::put(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangObject>& a1) const {
     static jnipp::Method<void,JavaLangString,JavaLangObject> method(clazz(), "put", "(Ljava/lang/String;Ljava/lang/Object;)V");
     method.call(*this, a0, a1);
 }
 
 // public void java.io.ObjectOutputStream$PutFieldImpl.put(java.lang.String,boolean)
-void JavaIoObjectOutputStream_PutFieldImpl::put_____(const jnipp::Ref<JavaLangString>& a0, jboolean a1) const {
+void JavaIoObjectOutputStream_PutFieldImpl::put(const jnipp::Ref<JavaLangString>& a0, jboolean a1) const {
     static jnipp::Method<void,JavaLangString,jboolean> method(clazz(), "put", "(Ljava/lang/String;Z)V");
     method.call(*this, a0, a1);
 }
 
 // public void java.io.ObjectOutputStream$PutFieldImpl.put(java.lang.String,byte)
-void JavaIoObjectOutputStream_PutFieldImpl::put______(const jnipp::Ref<JavaLangString>& a0, jbyte a1) const {
+void JavaIoObjectOutputStream_PutFieldImpl::put(const jnipp::Ref<JavaLangString>& a0, jbyte a1) const {
     static jnipp::Method<void,JavaLangString,jbyte> method(clazz(), "put", "(Ljava/lang/String;B)V");
     method.call(*this, a0, a1);
 }
 
 // public void java.io.ObjectOutputStream$PutFieldImpl.put(java.lang.String,char)
-void JavaIoObjectOutputStream_PutFieldImpl::put_______(const jnipp::Ref<JavaLangString>& a0, jchar a1) const {
+void JavaIoObjectOutputStream_PutFieldImpl::put(const jnipp::Ref<JavaLangString>& a0, jchar a1) const {
     static jnipp::Method<void,JavaLangString,jchar> method(clazz(), "put", "(Ljava/lang/String;C)V");
     method.call(*this, a0, a1);
 }
 
 // public void java.io.ObjectOutputStream$PutFieldImpl.put(java.lang.String,short)
-void JavaIoObjectOutputStream_PutFieldImpl::put________(const jnipp::Ref<JavaLangString>& a0, jshort a1) const {
+void JavaIoObjectOutputStream_PutFieldImpl::put(const jnipp::Ref<JavaLangString>& a0, jshort a1) const {
     static jnipp::Method<void,JavaLangString,jshort> method(clazz(), "put", "(Ljava/lang/String;S)V");
     method.call(*this, a0, a1);
 }
@@ -7490,13 +7490,13 @@ jint JavaIoObjectInputStream_BlockDataInputStream::read() const {
 }
 
 // int java.io.ObjectInputStream$BlockDataInputStream.read(byte[],int,int,boolean) throws java.io.IOException
-jint JavaIoObjectInputStream_BlockDataInputStream::read_(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2, jboolean a3) const {
+jint JavaIoObjectInputStream_BlockDataInputStream::read(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2, jboolean a3) const {
     static jnipp::Method<jint,jnipp::Array<jbyte>,jint,jint,jboolean> method(clazz(), "read", "([BIIZ)I");
     return method.call(*this, a0, a1, a2, a3);
 }
 
 // public int java.io.ObjectInputStream$BlockDataInputStream.read(byte[],int,int) throws java.io.IOException
-jint JavaIoObjectInputStream_BlockDataInputStream::read__(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
+jint JavaIoObjectInputStream_BlockDataInputStream::read(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
     static jnipp::Method<jint,jnipp::Array<jbyte>,jint,jint> method(clazz(), "read", "([BII)I");
     return method.call(*this, a0, a1, a2);
 }
@@ -7532,13 +7532,13 @@ void JavaIoObjectInputStream_BlockDataInputStream::readFully(const jnipp::Ref<jn
 }
 
 // public void java.io.ObjectInputStream$BlockDataInputStream.readFully(byte[]) throws java.io.IOException
-void JavaIoObjectInputStream_BlockDataInputStream::readFully_(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
+void JavaIoObjectInputStream_BlockDataInputStream::readFully(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
     static jnipp::Method<void,jnipp::Array<jbyte>> method(clazz(), "readFully", "([B)V");
     method.call(*this, a0);
 }
 
 // public void java.io.ObjectInputStream$BlockDataInputStream.readFully(byte[],int,int) throws java.io.IOException
-void JavaIoObjectInputStream_BlockDataInputStream::readFully__(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
+void JavaIoObjectInputStream_BlockDataInputStream::readFully(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
     static jnipp::Method<void,jnipp::Array<jbyte>,jint,jint> method(clazz(), "readFully", "([BII)V");
     method.call(*this, a0, a1, a2);
 }
@@ -7743,7 +7743,7 @@ jnipp::LocalRef<JavaLangClass> JavaLangClassLoader::loadClass(const jnipp::Ref<J
 }
 
 // public java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String) throws java.lang.ClassNotFoundException
-jnipp::LocalRef<JavaLangClass> JavaLangClassLoader::loadClass_(const jnipp::Ref<JavaLangString>& a0) const {
+jnipp::LocalRef<JavaLangClass> JavaLangClassLoader::loadClass(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<JavaLangClass,JavaLangString> method(clazz(), "loadClass", "(Ljava/lang/String;)Ljava/lang/Class;");
     return method.call(*this, a0);
 }
@@ -7863,19 +7863,19 @@ jnipp::LocalRef<JavaLangClass> JavaLangClassLoader::defineClass(const jnipp::Ref
 }
 
 // protected final java.lang.Class java.lang.ClassLoader.defineClass(java.lang.String,byte[],int,int,java.security.ProtectionDomain) throws java.lang.ClassFormatError
-jnipp::LocalRef<JavaLangClass> JavaLangClassLoader::defineClass_(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<jnipp::Array<jbyte>>& a1, jint a2, jint a3, const jnipp::Ref<JavaSecurityProtectionDomain>& a4) const {
+jnipp::LocalRef<JavaLangClass> JavaLangClassLoader::defineClass(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<jnipp::Array<jbyte>>& a1, jint a2, jint a3, const jnipp::Ref<JavaSecurityProtectionDomain>& a4) const {
     static jnipp::Method<JavaLangClass,JavaLangString,jnipp::Array<jbyte>,jint,jint,JavaSecurityProtectionDomain> method(clazz(), "defineClass", "(Ljava/lang/String;[BIILjava/security/ProtectionDomain;)Ljava/lang/Class;");
     return method.call(*this, a0, a1, a2, a3, a4);
 }
 
 // protected final java.lang.Class java.lang.ClassLoader.defineClass(java.lang.String,byte[],int,int) throws java.lang.ClassFormatError
-jnipp::LocalRef<JavaLangClass> JavaLangClassLoader::defineClass__(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<jnipp::Array<jbyte>>& a1, jint a2, jint a3) const {
+jnipp::LocalRef<JavaLangClass> JavaLangClassLoader::defineClass(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<jnipp::Array<jbyte>>& a1, jint a2, jint a3) const {
     static jnipp::Method<JavaLangClass,JavaLangString,jnipp::Array<jbyte>,jint,jint> method(clazz(), "defineClass", "(Ljava/lang/String;[BII)Ljava/lang/Class;");
     return method.call(*this, a0, a1, a2, a3);
 }
 
 // protected final java.lang.Class java.lang.ClassLoader.defineClass(java.lang.String,java.nio.ByteBuffer,java.security.ProtectionDomain) throws java.lang.ClassFormatError
-jnipp::LocalRef<JavaLangClass> JavaLangClassLoader::defineClass___(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaNioByteBuffer>& a1, const jnipp::Ref<JavaSecurityProtectionDomain>& a2) const {
+jnipp::LocalRef<JavaLangClass> JavaLangClassLoader::defineClass(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaNioByteBuffer>& a1, const jnipp::Ref<JavaSecurityProtectionDomain>& a2) const {
     static jnipp::Method<JavaLangClass,JavaLangString,JavaNioByteBuffer,JavaSecurityProtectionDomain> method(clazz(), "defineClass", "(Ljava/lang/String;Ljava/nio/ByteBuffer;Ljava/security/ProtectionDomain;)Ljava/lang/Class;");
     return method.call(*this, a0, a1, a2);
 }
@@ -8794,7 +8794,7 @@ jnipp::LocalRef<JavaLangRefReference> JavaLangRefReferenceQueue::remove(jlong a0
 }
 
 // public java.lang.ref.Reference java.lang.ref.ReferenceQueue.remove() throws java.lang.InterruptedException
-jnipp::LocalRef<JavaLangRefReference> JavaLangRefReferenceQueue::remove_() const {
+jnipp::LocalRef<JavaLangRefReference> JavaLangRefReferenceQueue::remove() const {
     static jnipp::Method<JavaLangRefReference> method(clazz(), "remove", "()Ljava/lang/ref/Reference;");
     return method.call(*this);
 }
@@ -8890,7 +8890,7 @@ jboolean JavaLangCharacter::isJavaIdentifierStart(jchar a0) {
 }
 
 // public static boolean java.lang.Character.isJavaIdentifierStart(int)
-jboolean JavaLangCharacter::isJavaIdentifierStart_(jint a0) {
+jboolean JavaLangCharacter::isJavaIdentifierStart(jint a0) {
     static jnipp::StaticMethod<jboolean,jint> method(clazz(), "isJavaIdentifierStart", "(I)Z");
     return method.call(a0);
 }
@@ -8902,7 +8902,7 @@ jboolean JavaLangCharacter::isJavaIdentifierPart(jchar a0) {
 }
 
 // public static boolean java.lang.Character.isJavaIdentifierPart(int)
-jboolean JavaLangCharacter::isJavaIdentifierPart_(jint a0) {
+jboolean JavaLangCharacter::isJavaIdentifierPart(jint a0) {
     static jnipp::StaticMethod<jboolean,jint> method(clazz(), "isJavaIdentifierPart", "(I)Z");
     return method.call(a0);
 }
@@ -8956,13 +8956,13 @@ jint JavaLangCharacter::codePointAt(const jnipp::Ref<jnipp::Array<jchar>>& a0, j
 }
 
 // public static int java.lang.Character.codePointAt(char[],int)
-jint JavaLangCharacter::codePointAt_(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1) {
+jint JavaLangCharacter::codePointAt(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1) {
     static jnipp::StaticMethod<jint,jnipp::Array<jchar>,jint> method(clazz(), "codePointAt", "([CI)I");
     return method.call(a0, a1);
 }
 
 // public static int java.lang.Character.codePointAt(java.lang.CharSequence,int)
-jint JavaLangCharacter::codePointAt__(const jnipp::Ref<JavaLangCharSequence>& a0, jint a1) {
+jint JavaLangCharacter::codePointAt(const jnipp::Ref<JavaLangCharSequence>& a0, jint a1) {
     static jnipp::StaticMethod<jint,JavaLangCharSequence,jint> method(clazz(), "codePointAt", "(Ljava/lang/CharSequence;I)I");
     return method.call(a0, a1);
 }
@@ -8974,13 +8974,13 @@ jint JavaLangCharacter::codePointBefore(const jnipp::Ref<jnipp::Array<jchar>>& a
 }
 
 // public static int java.lang.Character.codePointBefore(char[],int)
-jint JavaLangCharacter::codePointBefore_(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1) {
+jint JavaLangCharacter::codePointBefore(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1) {
     static jnipp::StaticMethod<jint,jnipp::Array<jchar>,jint> method(clazz(), "codePointBefore", "([CI)I");
     return method.call(a0, a1);
 }
 
 // public static int java.lang.Character.codePointBefore(java.lang.CharSequence,int)
-jint JavaLangCharacter::codePointBefore__(const jnipp::Ref<JavaLangCharSequence>& a0, jint a1) {
+jint JavaLangCharacter::codePointBefore(const jnipp::Ref<JavaLangCharSequence>& a0, jint a1) {
     static jnipp::StaticMethod<jint,JavaLangCharSequence,jint> method(clazz(), "codePointBefore", "(Ljava/lang/CharSequence;I)I");
     return method.call(a0, a1);
 }
@@ -8992,7 +8992,7 @@ jint JavaLangCharacter::codePointCount(const jnipp::Ref<jnipp::Array<jchar>>& a0
 }
 
 // public static int java.lang.Character.codePointCount(java.lang.CharSequence,int,int)
-jint JavaLangCharacter::codePointCount_(const jnipp::Ref<JavaLangCharSequence>& a0, jint a1, jint a2) {
+jint JavaLangCharacter::codePointCount(const jnipp::Ref<JavaLangCharSequence>& a0, jint a1, jint a2) {
     static jnipp::StaticMethod<jint,JavaLangCharSequence,jint,jint> method(clazz(), "codePointCount", "(Ljava/lang/CharSequence;II)I");
     return method.call(a0, a1, a2);
 }
@@ -9004,7 +9004,7 @@ jint JavaLangCharacter::offsetByCodePoints(const jnipp::Ref<jnipp::Array<jchar>>
 }
 
 // public static int java.lang.Character.offsetByCodePoints(java.lang.CharSequence,int,int)
-jint JavaLangCharacter::offsetByCodePoints_(const jnipp::Ref<JavaLangCharSequence>& a0, jint a1, jint a2) {
+jint JavaLangCharacter::offsetByCodePoints(const jnipp::Ref<JavaLangCharSequence>& a0, jint a1, jint a2) {
     static jnipp::StaticMethod<jint,JavaLangCharSequence,jint,jint> method(clazz(), "offsetByCodePoints", "(Ljava/lang/CharSequence;II)I");
     return method.call(a0, a1, a2);
 }
@@ -9016,7 +9016,7 @@ jint JavaLangCharacter::toLowerCase(jint a0) {
 }
 
 // public static char java.lang.Character.toLowerCase(char)
-jchar JavaLangCharacter::toLowerCase_(jchar a0) {
+jchar JavaLangCharacter::toLowerCase(jchar a0) {
     static jnipp::StaticMethod<jchar,jchar> method(clazz(), "toLowerCase", "(C)C");
     return method.call(a0);
 }
@@ -9028,7 +9028,7 @@ jint JavaLangCharacter::toUpperCase(jint a0) {
 }
 
 // public static char java.lang.Character.toUpperCase(char)
-jchar JavaLangCharacter::toUpperCase_(jchar a0) {
+jchar JavaLangCharacter::toUpperCase(jchar a0) {
     static jnipp::StaticMethod<jchar,jchar> method(clazz(), "toUpperCase", "(C)C");
     return method.call(a0);
 }
@@ -9106,7 +9106,7 @@ jint JavaLangCharacter::toChars(jint a0, const jnipp::Ref<jnipp::Array<jchar>>& 
 }
 
 // public static char[] java.lang.Character.toChars(int)
-jnipp::LocalRef<jnipp::Array<jchar>> JavaLangCharacter::toChars_(jint a0) {
+jnipp::LocalRef<jnipp::Array<jchar>> JavaLangCharacter::toChars(jint a0) {
     static jnipp::StaticMethod<jnipp::Array<jchar>,jint> method(clazz(), "toChars", "(I)[C");
     return method.call(a0);
 }
@@ -9130,7 +9130,7 @@ jint JavaLangCharacter::getType(jchar a0) {
 }
 
 // public static int java.lang.Character.getType(int)
-jint JavaLangCharacter::getType_(jint a0) {
+jint JavaLangCharacter::getType(jint a0) {
     static jnipp::StaticMethod<jint,jint> method(clazz(), "getType", "(I)I");
     return method.call(a0);
 }
@@ -9178,7 +9178,7 @@ jboolean JavaLangCharacter::isLowerCase(jint a0) {
 }
 
 // public static boolean java.lang.Character.isLowerCase(char)
-jboolean JavaLangCharacter::isLowerCase_(jchar a0) {
+jboolean JavaLangCharacter::isLowerCase(jchar a0) {
     static jnipp::StaticMethod<jboolean,jchar> method(clazz(), "isLowerCase", "(C)Z");
     return method.call(a0);
 }
@@ -9190,7 +9190,7 @@ jboolean JavaLangCharacter::isUpperCase(jchar a0) {
 }
 
 // public static boolean java.lang.Character.isUpperCase(int)
-jboolean JavaLangCharacter::isUpperCase_(jint a0) {
+jboolean JavaLangCharacter::isUpperCase(jint a0) {
     static jnipp::StaticMethod<jboolean,jint> method(clazz(), "isUpperCase", "(I)Z");
     return method.call(a0);
 }
@@ -9202,7 +9202,7 @@ jboolean JavaLangCharacter::isTitleCase(jint a0) {
 }
 
 // public static boolean java.lang.Character.isTitleCase(char)
-jboolean JavaLangCharacter::isTitleCase_(jchar a0) {
+jboolean JavaLangCharacter::isTitleCase(jchar a0) {
     static jnipp::StaticMethod<jboolean,jchar> method(clazz(), "isTitleCase", "(C)Z");
     return method.call(a0);
 }
@@ -9214,7 +9214,7 @@ jboolean JavaLangCharacter::isDigit(jchar a0) {
 }
 
 // public static boolean java.lang.Character.isDigit(int)
-jboolean JavaLangCharacter::isDigit_(jint a0) {
+jboolean JavaLangCharacter::isDigit(jint a0) {
     static jnipp::StaticMethod<jboolean,jint> method(clazz(), "isDigit", "(I)Z");
     return method.call(a0);
 }
@@ -9226,7 +9226,7 @@ jboolean JavaLangCharacter::isDefined(jchar a0) {
 }
 
 // public static boolean java.lang.Character.isDefined(int)
-jboolean JavaLangCharacter::isDefined_(jint a0) {
+jboolean JavaLangCharacter::isDefined(jint a0) {
     static jnipp::StaticMethod<jboolean,jint> method(clazz(), "isDefined", "(I)Z");
     return method.call(a0);
 }
@@ -9238,7 +9238,7 @@ jboolean JavaLangCharacter::isLetter(jint a0) {
 }
 
 // public static boolean java.lang.Character.isLetter(char)
-jboolean JavaLangCharacter::isLetter_(jchar a0) {
+jboolean JavaLangCharacter::isLetter(jchar a0) {
     static jnipp::StaticMethod<jboolean,jchar> method(clazz(), "isLetter", "(C)Z");
     return method.call(a0);
 }
@@ -9250,7 +9250,7 @@ jboolean JavaLangCharacter::isLetterOrDigit(jchar a0) {
 }
 
 // public static boolean java.lang.Character.isLetterOrDigit(int)
-jboolean JavaLangCharacter::isLetterOrDigit_(jint a0) {
+jboolean JavaLangCharacter::isLetterOrDigit(jint a0) {
     static jnipp::StaticMethod<jboolean,jint> method(clazz(), "isLetterOrDigit", "(I)Z");
     return method.call(a0);
 }
@@ -9286,7 +9286,7 @@ jboolean JavaLangCharacter::isUnicodeIdentifierStart(jint a0) {
 }
 
 // public static boolean java.lang.Character.isUnicodeIdentifierStart(char)
-jboolean JavaLangCharacter::isUnicodeIdentifierStart_(jchar a0) {
+jboolean JavaLangCharacter::isUnicodeIdentifierStart(jchar a0) {
     static jnipp::StaticMethod<jboolean,jchar> method(clazz(), "isUnicodeIdentifierStart", "(C)Z");
     return method.call(a0);
 }
@@ -9298,7 +9298,7 @@ jboolean JavaLangCharacter::isUnicodeIdentifierPart(jint a0) {
 }
 
 // public static boolean java.lang.Character.isUnicodeIdentifierPart(char)
-jboolean JavaLangCharacter::isUnicodeIdentifierPart_(jchar a0) {
+jboolean JavaLangCharacter::isUnicodeIdentifierPart(jchar a0) {
     static jnipp::StaticMethod<jboolean,jchar> method(clazz(), "isUnicodeIdentifierPart", "(C)Z");
     return method.call(a0);
 }
@@ -9310,7 +9310,7 @@ jboolean JavaLangCharacter::isIdentifierIgnorable(jchar a0) {
 }
 
 // public static boolean java.lang.Character.isIdentifierIgnorable(int)
-jboolean JavaLangCharacter::isIdentifierIgnorable_(jint a0) {
+jboolean JavaLangCharacter::isIdentifierIgnorable(jint a0) {
     static jnipp::StaticMethod<jboolean,jint> method(clazz(), "isIdentifierIgnorable", "(I)Z");
     return method.call(a0);
 }
@@ -9322,7 +9322,7 @@ jchar JavaLangCharacter::toTitleCase(jchar a0) {
 }
 
 // public static int java.lang.Character.toTitleCase(int)
-jint JavaLangCharacter::toTitleCase_(jint a0) {
+jint JavaLangCharacter::toTitleCase(jint a0) {
     static jnipp::StaticMethod<jint,jint> method(clazz(), "toTitleCase", "(I)I");
     return method.call(a0);
 }
@@ -9334,7 +9334,7 @@ jint JavaLangCharacter::digit(jint a0, jint a1) {
 }
 
 // public static int java.lang.Character.digit(char,int)
-jint JavaLangCharacter::digit_(jchar a0, jint a1) {
+jint JavaLangCharacter::digit(jchar a0, jint a1) {
     static jnipp::StaticMethod<jint,jchar,jint> method(clazz(), "digit", "(CI)I");
     return method.call(a0, a1);
 }
@@ -9346,7 +9346,7 @@ jint JavaLangCharacter::getNumericValue(jint a0) {
 }
 
 // public static int java.lang.Character.getNumericValue(char)
-jint JavaLangCharacter::getNumericValue_(jchar a0) {
+jint JavaLangCharacter::getNumericValue(jchar a0) {
     static jnipp::StaticMethod<jint,jchar> method(clazz(), "getNumericValue", "(C)I");
     return method.call(a0);
 }
@@ -9364,7 +9364,7 @@ jboolean JavaLangCharacter::isSpaceChar(jchar a0) {
 }
 
 // public static boolean java.lang.Character.isSpaceChar(int)
-jboolean JavaLangCharacter::isSpaceChar_(jint a0) {
+jboolean JavaLangCharacter::isSpaceChar(jint a0) {
     static jnipp::StaticMethod<jboolean,jint> method(clazz(), "isSpaceChar", "(I)Z");
     return method.call(a0);
 }
@@ -9376,7 +9376,7 @@ jboolean JavaLangCharacter::isWhitespace(jint a0) {
 }
 
 // public static boolean java.lang.Character.isWhitespace(char)
-jboolean JavaLangCharacter::isWhitespace_(jchar a0) {
+jboolean JavaLangCharacter::isWhitespace(jchar a0) {
     static jnipp::StaticMethod<jboolean,jchar> method(clazz(), "isWhitespace", "(C)Z");
     return method.call(a0);
 }
@@ -9388,7 +9388,7 @@ jboolean JavaLangCharacter::isISOControl(jint a0) {
 }
 
 // public static boolean java.lang.Character.isISOControl(char)
-jboolean JavaLangCharacter::isISOControl_(jchar a0) {
+jboolean JavaLangCharacter::isISOControl(jchar a0) {
     static jnipp::StaticMethod<jboolean,jchar> method(clazz(), "isISOControl", "(C)Z");
     return method.call(a0);
 }
@@ -9406,7 +9406,7 @@ jbyte JavaLangCharacter::getDirectionality(jchar a0) {
 }
 
 // public static byte java.lang.Character.getDirectionality(int)
-jbyte JavaLangCharacter::getDirectionality_(jint a0) {
+jbyte JavaLangCharacter::getDirectionality(jint a0) {
     static jnipp::StaticMethod<jbyte,jint> method(clazz(), "getDirectionality", "(I)B");
     return method.call(a0);
 }
@@ -9418,7 +9418,7 @@ jboolean JavaLangCharacter::isMirrored(jint a0) {
 }
 
 // public static boolean java.lang.Character.isMirrored(char)
-jboolean JavaLangCharacter::isMirrored_(jchar a0) {
+jboolean JavaLangCharacter::isMirrored(jchar a0) {
     static jnipp::StaticMethod<jboolean,jchar> method(clazz(), "isMirrored", "(C)Z");
     return method.call(a0);
 }
@@ -9740,7 +9740,7 @@ jboolean JavaTextFieldPosition::matchesField(const jnipp::Ref<JavaTextFormat_Fie
 }
 
 // private boolean java.text.FieldPosition.matchesField(java.text.Format$Field)
-jboolean JavaTextFieldPosition::matchesField_(const jnipp::Ref<JavaTextFormat_Field>& a0) const {
+jboolean JavaTextFieldPosition::matchesField(const jnipp::Ref<JavaTextFormat_Field>& a0) const {
     static jnipp::Method<jboolean,JavaTextFormat_Field> method(clazz(), "matchesField", "(Ljava/text/Format$Field;)Z");
     return method.call(*this, a0);
 }
@@ -9859,7 +9859,7 @@ void JavaNetURL::set(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<Java
 }
 
 // protected void java.net.URL.set(java.lang.String,java.lang.String,int,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)
-void JavaNetURL::set_(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1, jint a2, const jnipp::Ref<JavaLangString>& a3, const jnipp::Ref<JavaLangString>& a4, const jnipp::Ref<JavaLangString>& a5, const jnipp::Ref<JavaLangString>& a6, const jnipp::Ref<JavaLangString>& a7) const {
+void JavaNetURL::set(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1, jint a2, const jnipp::Ref<JavaLangString>& a3, const jnipp::Ref<JavaLangString>& a4, const jnipp::Ref<JavaLangString>& a5, const jnipp::Ref<JavaLangString>& a6, const jnipp::Ref<JavaLangString>& a7) const {
     static jnipp::Method<void,JavaLangString,JavaLangString,jint,JavaLangString,JavaLangString,JavaLangString,JavaLangString,JavaLangString> method(clazz(), "set", "(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
     method.call(*this, a0, a1, a2, a3, a4, a5, a6, a7);
 }
@@ -9895,7 +9895,7 @@ jnipp::LocalRef<JavaNetURLConnection> JavaNetURL::openConnection() const {
 }
 
 // public java.net.URLConnection java.net.URL.openConnection(java.net.Proxy) throws java.io.IOException
-jnipp::LocalRef<JavaNetURLConnection> JavaNetURL::openConnection_(const jnipp::Ref<JavaNetProxy>& a0) const {
+jnipp::LocalRef<JavaNetURLConnection> JavaNetURL::openConnection(const jnipp::Ref<JavaNetProxy>& a0) const {
     static jnipp::Method<JavaNetURLConnection,JavaNetProxy> method(clazz(), "openConnection", "(Ljava/net/Proxy;)Ljava/net/URLConnection;");
     return method.call(*this, a0);
 }
@@ -9973,7 +9973,7 @@ jnipp::LocalRef<JavaLangObject> JavaNetURL::getContent() const {
 }
 
 // public final java.lang.Object java.net.URL.getContent(java.lang.Class[]) throws java.io.IOException
-jnipp::LocalRef<JavaLangObject> JavaNetURL::getContent_(const jnipp::Ref<jnipp::Array<JavaLangClass>>& a0) const {
+jnipp::LocalRef<JavaLangObject> JavaNetURL::getContent(const jnipp::Ref<jnipp::Array<JavaLangClass>>& a0) const {
     static jnipp::Method<JavaLangObject,jnipp::Array<JavaLangClass>> method(clazz(), "getContent", "([Ljava/lang/Class;)Ljava/lang/Object;");
     return method.call(*this, a0);
 }
@@ -10600,13 +10600,13 @@ void JavaLangClassValue_ClassValueMap::removeStaleEntries(const jnipp::Ref<jnipp
 }
 
 // private void java.lang.ClassValue$ClassValueMap.removeStaleEntries()
-void JavaLangClassValue_ClassValueMap::removeStaleEntries_() const {
+void JavaLangClassValue_ClassValueMap::removeStaleEntries() const {
     static jnipp::Method<void> method(clazz(), "removeStaleEntries", "()V");
     method.call(*this);
 }
 
 // private void java.lang.ClassValue$ClassValueMap.removeStaleEntries(java.lang.ClassValue)
-void JavaLangClassValue_ClassValueMap::removeStaleEntries__(const jnipp::Ref<JavaLangClassValue>& a0) const {
+void JavaLangClassValue_ClassValueMap::removeStaleEntries(const jnipp::Ref<JavaLangClassValue>& a0) const {
     static jnipp::Method<void,JavaLangClassValue> method(clazz(), "removeStaleEntries", "(Ljava/lang/ClassValue;)V");
     method.call(*this, a0);
 }
@@ -10624,7 +10624,7 @@ void JavaLangClassValue_ClassValueMap::addToCache(const jnipp::Ref<JavaLangClass
 }
 
 // private void java.lang.ClassValue$ClassValueMap.addToCache(java.lang.ClassValue,java.lang.ClassValue$Entry)
-void JavaLangClassValue_ClassValueMap::addToCache_(const jnipp::Ref<JavaLangClassValue>& a0, const jnipp::Ref<JavaLangClassValue_Entry>& a1) const {
+void JavaLangClassValue_ClassValueMap::addToCache(const jnipp::Ref<JavaLangClassValue>& a0, const jnipp::Ref<JavaLangClassValue_Entry>& a1) const {
     static jnipp::Method<void,JavaLangClassValue,JavaLangClassValue_Entry> method(clazz(), "addToCache", "(Ljava/lang/ClassValue;Ljava/lang/ClassValue$Entry;)V");
     method.call(*this, a0, a1);
 }
@@ -10691,7 +10691,7 @@ jnipp::LocalRef<JavaLangPackage> JavaLangPackage::getPackage(const jnipp::Ref<Ja
 }
 
 // static java.lang.Package java.lang.Package.getPackage(java.lang.Class)
-jnipp::LocalRef<JavaLangPackage> JavaLangPackage::getPackage_(const jnipp::Ref<JavaLangClass>& a0) {
+jnipp::LocalRef<JavaLangPackage> JavaLangPackage::getPackage(const jnipp::Ref<JavaLangClass>& a0) {
     static jnipp::StaticMethod<JavaLangPackage,JavaLangClass> method(clazz(), "getPackage", "(Ljava/lang/Class;)Ljava/lang/Package;");
     return method.call(a0);
 }
@@ -10745,7 +10745,7 @@ jboolean JavaLangPackage::isSealed() const {
 }
 
 // public boolean java.lang.Package.isSealed(java.net.URL)
-jboolean JavaLangPackage::isSealed_(const jnipp::Ref<JavaNetURL>& a0) const {
+jboolean JavaLangPackage::isSealed(const jnipp::Ref<JavaNetURL>& a0) const {
     static jnipp::Method<jboolean,JavaNetURL> method(clazz(), "isSealed", "(Ljava/net/URL;)Z");
     return method.call(*this, a0);
 }
@@ -10858,7 +10858,7 @@ void JavaLangSecurityManager::checkPermission(const jnipp::Ref<JavaSecurityPermi
 }
 
 // public void java.lang.SecurityManager.checkPermission(java.security.Permission)
-void JavaLangSecurityManager::checkPermission_(const jnipp::Ref<JavaSecurityPermission>& a0) const {
+void JavaLangSecurityManager::checkPermission(const jnipp::Ref<JavaSecurityPermission>& a0) const {
     static jnipp::Method<void,JavaSecurityPermission> method(clazz(), "checkPermission", "(Ljava/security/Permission;)V");
     method.call(*this, a0);
 }
@@ -10900,7 +10900,7 @@ void JavaLangSecurityManager::checkAccess(const jnipp::Ref<JavaLangThreadGroup>&
 }
 
 // public void java.lang.SecurityManager.checkAccess(java.lang.Thread)
-void JavaLangSecurityManager::checkAccess_(const jnipp::Ref<JavaLangThread>& a0) const {
+void JavaLangSecurityManager::checkAccess(const jnipp::Ref<JavaLangThread>& a0) const {
     static jnipp::Method<void,JavaLangThread> method(clazz(), "checkAccess", "(Ljava/lang/Thread;)V");
     method.call(*this, a0);
 }
@@ -10924,13 +10924,13 @@ void JavaLangSecurityManager::checkRead(const jnipp::Ref<JavaLangString>& a0) co
 }
 
 // public void java.lang.SecurityManager.checkRead(java.lang.String,java.lang.Object)
-void JavaLangSecurityManager::checkRead_(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangObject>& a1) const {
+void JavaLangSecurityManager::checkRead(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangObject>& a1) const {
     static jnipp::Method<void,JavaLangString,JavaLangObject> method(clazz(), "checkRead", "(Ljava/lang/String;Ljava/lang/Object;)V");
     method.call(*this, a0, a1);
 }
 
 // public void java.lang.SecurityManager.checkRead(java.io.FileDescriptor)
-void JavaLangSecurityManager::checkRead__(const jnipp::Ref<JavaIoFileDescriptor>& a0) const {
+void JavaLangSecurityManager::checkRead(const jnipp::Ref<JavaIoFileDescriptor>& a0) const {
     static jnipp::Method<void,JavaIoFileDescriptor> method(clazz(), "checkRead", "(Ljava/io/FileDescriptor;)V");
     method.call(*this, a0);
 }
@@ -10942,7 +10942,7 @@ void JavaLangSecurityManager::checkWrite(const jnipp::Ref<JavaIoFileDescriptor>&
 }
 
 // public void java.lang.SecurityManager.checkWrite(java.lang.String)
-void JavaLangSecurityManager::checkWrite_(const jnipp::Ref<JavaLangString>& a0) const {
+void JavaLangSecurityManager::checkWrite(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<void,JavaLangString> method(clazz(), "checkWrite", "(Ljava/lang/String;)V");
     method.call(*this, a0);
 }
@@ -10966,7 +10966,7 @@ void JavaLangSecurityManager::checkConnect(const jnipp::Ref<JavaLangString>& a0,
 }
 
 // public void java.lang.SecurityManager.checkConnect(java.lang.String,int,java.lang.Object)
-void JavaLangSecurityManager::checkConnect_(const jnipp::Ref<JavaLangString>& a0, jint a1, const jnipp::Ref<JavaLangObject>& a2) const {
+void JavaLangSecurityManager::checkConnect(const jnipp::Ref<JavaLangString>& a0, jint a1, const jnipp::Ref<JavaLangObject>& a2) const {
     static jnipp::Method<void,JavaLangString,jint,JavaLangObject> method(clazz(), "checkConnect", "(Ljava/lang/String;ILjava/lang/Object;)V");
     method.call(*this, a0, a1, a2);
 }
@@ -11074,7 +11074,7 @@ void JavaLangSecurityManager::checkMulticast(const jnipp::Ref<JavaNetInetAddress
 }
 
 // public void java.lang.SecurityManager.checkMulticast(java.net.InetAddress)
-void JavaLangSecurityManager::checkMulticast_(const jnipp::Ref<JavaNetInetAddress>& a0) const {
+void JavaLangSecurityManager::checkMulticast(const jnipp::Ref<JavaNetInetAddress>& a0) const {
     static jnipp::Method<void,JavaNetInetAddress> method(clazz(), "checkMulticast", "(Ljava/net/InetAddress;)V");
     method.call(*this, a0);
 }
@@ -11928,6 +11928,61 @@ inline jnipp::GlobalRef<jnipp::Class>& JavaLangRunnable::clazz() {
     if (!cls) cls.set(jnipp::Class::forName("java/lang/Runnable"));
     return cls;
 }
+inline jnipp::GlobalRef<jnipp::Class>& JavaLangStackTraceElement::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/lang/StackTraceElement"));
+    return cls;
+}
+
+// public java.lang.StackTraceElement(java.lang.String,java.lang.String,java.lang.String,int)
+jnipp::LocalRef<JavaLangStackTraceElement> JavaLangStackTraceElement::construct(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1, const jnipp::Ref<JavaLangString>& a2, jint a3) {
+    static jnipp::Constructor<JavaLangStackTraceElement,JavaLangString,JavaLangString,JavaLangString,jint> constructor(clazz(), "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V");
+    return constructor.construct(a0, a1, a2, a3);
+}
+
+// public boolean java.lang.StackTraceElement.equals(java.lang.Object)
+jboolean JavaLangStackTraceElement::equals(const jnipp::Ref<JavaLangObject>& a0) const {
+    static jnipp::Method<jboolean,JavaLangObject> method(clazz(), "equals", "(Ljava/lang/Object;)Z");
+    return method.call(*this, a0);
+}
+
+// public int java.lang.StackTraceElement.hashCode()
+jint JavaLangStackTraceElement::hashCode() const {
+    static jnipp::Method<jint> method(clazz(), "hashCode", "()I");
+    return method.call(*this);
+}
+
+// public java.lang.String java.lang.StackTraceElement.getFileName()
+jnipp::LocalRef<JavaLangString> JavaLangStackTraceElement::getFileName() const {
+    static jnipp::Method<JavaLangString> method(clazz(), "getFileName", "()Ljava/lang/String;");
+    return method.call(*this);
+}
+
+// public int java.lang.StackTraceElement.getLineNumber()
+jint JavaLangStackTraceElement::getLineNumber() const {
+    static jnipp::Method<jint> method(clazz(), "getLineNumber", "()I");
+    return method.call(*this);
+}
+
+// public java.lang.String java.lang.StackTraceElement.getClassName()
+jnipp::LocalRef<JavaLangString> JavaLangStackTraceElement::getClassName() const {
+    static jnipp::Method<JavaLangString> method(clazz(), "getClassName", "()Ljava/lang/String;");
+    return method.call(*this);
+}
+
+// public java.lang.String java.lang.StackTraceElement.getMethodName()
+jnipp::LocalRef<JavaLangString> JavaLangStackTraceElement::getMethodName() const {
+    static jnipp::Method<JavaLangString> method(clazz(), "getMethodName", "()Ljava/lang/String;");
+    return method.call(*this);
+}
+
+// public boolean java.lang.StackTraceElement.isNativeMethod()
+jboolean JavaLangStackTraceElement::isNativeMethod() const {
+    static jnipp::Method<jboolean> method(clazz(), "isNativeMethod", "()Z");
+    return method.call(*this);
+}
+#undef serialVersionUID
+const jnipp::StaticField<jlong> JavaLangStackTraceElement::serialVersionUID ("java/lang/StackTraceElement", "serialVersionUID", "J");
 inline jnipp::GlobalRef<jnipp::Class>& JavaSecurityBasicPermission::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/security/BasicPermission"));
@@ -12014,61 +12069,6 @@ jnipp::LocalRef<JavaLangRuntimePermission> JavaLangRuntimePermission::construct(
 }
 #undef serialVersionUID
 const jnipp::StaticField<jlong> JavaLangRuntimePermission::serialVersionUID ("java/lang/RuntimePermission", "serialVersionUID", "J");
-inline jnipp::GlobalRef<jnipp::Class>& JavaLangStackTraceElement::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/lang/StackTraceElement"));
-    return cls;
-}
-
-// public java.lang.StackTraceElement(java.lang.String,java.lang.String,java.lang.String,int)
-jnipp::LocalRef<JavaLangStackTraceElement> JavaLangStackTraceElement::construct(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1, const jnipp::Ref<JavaLangString>& a2, jint a3) {
-    static jnipp::Constructor<JavaLangStackTraceElement,JavaLangString,JavaLangString,JavaLangString,jint> constructor(clazz(), "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V");
-    return constructor.construct(a0, a1, a2, a3);
-}
-
-// public boolean java.lang.StackTraceElement.equals(java.lang.Object)
-jboolean JavaLangStackTraceElement::equals(const jnipp::Ref<JavaLangObject>& a0) const {
-    static jnipp::Method<jboolean,JavaLangObject> method(clazz(), "equals", "(Ljava/lang/Object;)Z");
-    return method.call(*this, a0);
-}
-
-// public int java.lang.StackTraceElement.hashCode()
-jint JavaLangStackTraceElement::hashCode() const {
-    static jnipp::Method<jint> method(clazz(), "hashCode", "()I");
-    return method.call(*this);
-}
-
-// public java.lang.String java.lang.StackTraceElement.getFileName()
-jnipp::LocalRef<JavaLangString> JavaLangStackTraceElement::getFileName() const {
-    static jnipp::Method<JavaLangString> method(clazz(), "getFileName", "()Ljava/lang/String;");
-    return method.call(*this);
-}
-
-// public int java.lang.StackTraceElement.getLineNumber()
-jint JavaLangStackTraceElement::getLineNumber() const {
-    static jnipp::Method<jint> method(clazz(), "getLineNumber", "()I");
-    return method.call(*this);
-}
-
-// public java.lang.String java.lang.StackTraceElement.getClassName()
-jnipp::LocalRef<JavaLangString> JavaLangStackTraceElement::getClassName() const {
-    static jnipp::Method<JavaLangString> method(clazz(), "getClassName", "()Ljava/lang/String;");
-    return method.call(*this);
-}
-
-// public java.lang.String java.lang.StackTraceElement.getMethodName()
-jnipp::LocalRef<JavaLangString> JavaLangStackTraceElement::getMethodName() const {
-    static jnipp::Method<JavaLangString> method(clazz(), "getMethodName", "()Ljava/lang/String;");
-    return method.call(*this);
-}
-
-// public boolean java.lang.StackTraceElement.isNativeMethod()
-jboolean JavaLangStackTraceElement::isNativeMethod() const {
-    static jnipp::Method<jboolean> method(clazz(), "isNativeMethod", "()Z");
-    return method.call(*this);
-}
-#undef serialVersionUID
-const jnipp::StaticField<jlong> JavaLangStackTraceElement::serialVersionUID ("java/lang/StackTraceElement", "serialVersionUID", "J");
 inline jnipp::GlobalRef<jnipp::Class>& SunNioChInterruptible::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("sun/nio/ch/Interruptible"));
@@ -12258,7 +12258,7 @@ void JavaLangThreadGroup::add(const jnipp::Ref<JavaLangThread>& a0) const {
 }
 
 // private final void java.lang.ThreadGroup.add(java.lang.ThreadGroup)
-void JavaLangThreadGroup::add_(const jnipp::Ref<JavaLangThreadGroup>& a0) const {
+void JavaLangThreadGroup::add(const jnipp::Ref<JavaLangThreadGroup>& a0) const {
     static jnipp::Method<void,JavaLangThreadGroup> method(clazz(), "add", "(Ljava/lang/ThreadGroup;)V");
     method.call(*this, a0);
 }
@@ -12270,7 +12270,7 @@ void JavaLangThreadGroup::remove(const jnipp::Ref<JavaLangThreadGroup>& a0) cons
 }
 
 // private void java.lang.ThreadGroup.remove(java.lang.Thread)
-void JavaLangThreadGroup::remove_(const jnipp::Ref<JavaLangThread>& a0) const {
+void JavaLangThreadGroup::remove(const jnipp::Ref<JavaLangThread>& a0) const {
     static jnipp::Method<void,JavaLangThread> method(clazz(), "remove", "(Ljava/lang/Thread;)V");
     method.call(*this, a0);
 }
@@ -12342,31 +12342,31 @@ jint JavaLangThreadGroup::enumerate(const jnipp::Ref<jnipp::Array<JavaLangThread
 }
 
 // public int java.lang.ThreadGroup.enumerate(java.lang.ThreadGroup[],boolean)
-jint JavaLangThreadGroup::enumerate_(const jnipp::Ref<jnipp::Array<JavaLangThreadGroup>>& a0, jboolean a1) const {
+jint JavaLangThreadGroup::enumerate(const jnipp::Ref<jnipp::Array<JavaLangThreadGroup>>& a0, jboolean a1) const {
     static jnipp::Method<jint,jnipp::Array<JavaLangThreadGroup>,jboolean> method(clazz(), "enumerate", "([Ljava/lang/ThreadGroup;Z)I");
     return method.call(*this, a0, a1);
 }
 
 // public int java.lang.ThreadGroup.enumerate(java.lang.Thread[],boolean)
-jint JavaLangThreadGroup::enumerate__(const jnipp::Ref<jnipp::Array<JavaLangThread>>& a0, jboolean a1) const {
+jint JavaLangThreadGroup::enumerate(const jnipp::Ref<jnipp::Array<JavaLangThread>>& a0, jboolean a1) const {
     static jnipp::Method<jint,jnipp::Array<JavaLangThread>,jboolean> method(clazz(), "enumerate", "([Ljava/lang/Thread;Z)I");
     return method.call(*this, a0, a1);
 }
 
 // private int java.lang.ThreadGroup.enumerate(java.lang.Thread[],int,boolean)
-jint JavaLangThreadGroup::enumerate___(const jnipp::Ref<jnipp::Array<JavaLangThread>>& a0, jint a1, jboolean a2) const {
+jint JavaLangThreadGroup::enumerate(const jnipp::Ref<jnipp::Array<JavaLangThread>>& a0, jint a1, jboolean a2) const {
     static jnipp::Method<jint,jnipp::Array<JavaLangThread>,jint,jboolean> method(clazz(), "enumerate", "([Ljava/lang/Thread;IZ)I");
     return method.call(*this, a0, a1, a2);
 }
 
 // public int java.lang.ThreadGroup.enumerate(java.lang.Thread[])
-jint JavaLangThreadGroup::enumerate____(const jnipp::Ref<jnipp::Array<JavaLangThread>>& a0) const {
+jint JavaLangThreadGroup::enumerate(const jnipp::Ref<jnipp::Array<JavaLangThread>>& a0) const {
     static jnipp::Method<jint,jnipp::Array<JavaLangThread>> method(clazz(), "enumerate", "([Ljava/lang/Thread;)I");
     return method.call(*this, a0);
 }
 
 // public int java.lang.ThreadGroup.enumerate(java.lang.ThreadGroup[])
-jint JavaLangThreadGroup::enumerate_____(const jnipp::Ref<jnipp::Array<JavaLangThreadGroup>>& a0) const {
+jint JavaLangThreadGroup::enumerate(const jnipp::Ref<jnipp::Array<JavaLangThreadGroup>>& a0) const {
     static jnipp::Method<jint,jnipp::Array<JavaLangThreadGroup>> method(clazz(), "enumerate", "([Ljava/lang/ThreadGroup;)I");
     return method.call(*this, a0);
 }
@@ -12450,7 +12450,7 @@ void JavaLangThreadGroup::list() const {
 }
 
 // void java.lang.ThreadGroup.list(java.io.PrintStream,int)
-void JavaLangThreadGroup::list_(const jnipp::Ref<JavaIoPrintStream>& a0, jint a1) const {
+void JavaLangThreadGroup::list(const jnipp::Ref<JavaIoPrintStream>& a0, jint a1) const {
     static jnipp::Method<void,JavaIoPrintStream,jint> method(clazz(), "list", "(Ljava/io/PrintStream;I)V");
     method.call(*this, a0, a1);
 }
@@ -12518,7 +12518,7 @@ void SunMiscUnsafe::copyMemory(const jnipp::Ref<JavaLangObject>& a0, jlong a1, c
 }
 
 // public void sun.misc.Unsafe.copyMemory(long,long,long)
-void SunMiscUnsafe::copyMemory_(jlong a0, jlong a1, jlong a2) const {
+void SunMiscUnsafe::copyMemory(jlong a0, jlong a1, jlong a2) const {
     static jnipp::Method<void,jlong,jlong,jlong> method(clazz(), "copyMemory", "(JJJ)V");
     method.call(*this, a0, a1, a2);
 }
@@ -12542,7 +12542,7 @@ jnipp::LocalRef<JavaLangObject> SunMiscUnsafe::getObject(const jnipp::Ref<JavaLa
 }
 
 // public native java.lang.Object sun.misc.Unsafe.getObject(java.lang.Object,long)
-jnipp::LocalRef<JavaLangObject> SunMiscUnsafe::getObject_(const jnipp::Ref<JavaLangObject>& a0, jlong a1) const {
+jnipp::LocalRef<JavaLangObject> SunMiscUnsafe::getObject(const jnipp::Ref<JavaLangObject>& a0, jlong a1) const {
     static jnipp::Method<JavaLangObject,JavaLangObject,jlong> method(clazz(), "getObject", "(Ljava/lang/Object;J)Ljava/lang/Object;");
     return method.call(*this, a0, a1);
 }
@@ -12554,7 +12554,7 @@ void SunMiscUnsafe::putObject(const jnipp::Ref<JavaLangObject>& a0, jlong a1, co
 }
 
 // public void sun.misc.Unsafe.putObject(java.lang.Object,int,java.lang.Object)
-void SunMiscUnsafe::putObject_(const jnipp::Ref<JavaLangObject>& a0, jint a1, const jnipp::Ref<JavaLangObject>& a2) const {
+void SunMiscUnsafe::putObject(const jnipp::Ref<JavaLangObject>& a0, jint a1, const jnipp::Ref<JavaLangObject>& a2) const {
     static jnipp::Method<void,JavaLangObject,jint,JavaLangObject> method(clazz(), "putObject", "(Ljava/lang/Object;ILjava/lang/Object;)V");
     method.call(*this, a0, a1, a2);
 }
@@ -12566,7 +12566,7 @@ jboolean SunMiscUnsafe::getBoolean(const jnipp::Ref<JavaLangObject>& a0, jlong a
 }
 
 // public boolean sun.misc.Unsafe.getBoolean(java.lang.Object,int)
-jboolean SunMiscUnsafe::getBoolean_(const jnipp::Ref<JavaLangObject>& a0, jint a1) const {
+jboolean SunMiscUnsafe::getBoolean(const jnipp::Ref<JavaLangObject>& a0, jint a1) const {
     static jnipp::Method<jboolean,JavaLangObject,jint> method(clazz(), "getBoolean", "(Ljava/lang/Object;I)Z");
     return method.call(*this, a0, a1);
 }
@@ -12578,7 +12578,7 @@ void SunMiscUnsafe::putBoolean(const jnipp::Ref<JavaLangObject>& a0, jlong a1, j
 }
 
 // public void sun.misc.Unsafe.putBoolean(java.lang.Object,int,boolean)
-void SunMiscUnsafe::putBoolean_(const jnipp::Ref<JavaLangObject>& a0, jint a1, jboolean a2) const {
+void SunMiscUnsafe::putBoolean(const jnipp::Ref<JavaLangObject>& a0, jint a1, jboolean a2) const {
     static jnipp::Method<void,JavaLangObject,jint,jboolean> method(clazz(), "putBoolean", "(Ljava/lang/Object;IZ)V");
     method.call(*this, a0, a1, a2);
 }
@@ -12590,13 +12590,13 @@ jbyte SunMiscUnsafe::getByte(const jnipp::Ref<JavaLangObject>& a0, jint a1) cons
 }
 
 // public native byte sun.misc.Unsafe.getByte(long)
-jbyte SunMiscUnsafe::getByte_(jlong a0) const {
+jbyte SunMiscUnsafe::getByte(jlong a0) const {
     static jnipp::Method<jbyte,jlong> method(clazz(), "getByte", "(J)B");
     return method.call(*this, a0);
 }
 
 // public native byte sun.misc.Unsafe.getByte(java.lang.Object,long)
-jbyte SunMiscUnsafe::getByte__(const jnipp::Ref<JavaLangObject>& a0, jlong a1) const {
+jbyte SunMiscUnsafe::getByte(const jnipp::Ref<JavaLangObject>& a0, jlong a1) const {
     static jnipp::Method<jbyte,JavaLangObject,jlong> method(clazz(), "getByte", "(Ljava/lang/Object;J)B");
     return method.call(*this, a0, a1);
 }
@@ -12608,13 +12608,13 @@ void SunMiscUnsafe::putByte(jlong a0, jbyte a1) const {
 }
 
 // public void sun.misc.Unsafe.putByte(java.lang.Object,int,byte)
-void SunMiscUnsafe::putByte_(const jnipp::Ref<JavaLangObject>& a0, jint a1, jbyte a2) const {
+void SunMiscUnsafe::putByte(const jnipp::Ref<JavaLangObject>& a0, jint a1, jbyte a2) const {
     static jnipp::Method<void,JavaLangObject,jint,jbyte> method(clazz(), "putByte", "(Ljava/lang/Object;IB)V");
     method.call(*this, a0, a1, a2);
 }
 
 // public native void sun.misc.Unsafe.putByte(java.lang.Object,long,byte)
-void SunMiscUnsafe::putByte__(const jnipp::Ref<JavaLangObject>& a0, jlong a1, jbyte a2) const {
+void SunMiscUnsafe::putByte(const jnipp::Ref<JavaLangObject>& a0, jlong a1, jbyte a2) const {
     static jnipp::Method<void,JavaLangObject,jlong,jbyte> method(clazz(), "putByte", "(Ljava/lang/Object;JB)V");
     method.call(*this, a0, a1, a2);
 }
@@ -12626,13 +12626,13 @@ jshort SunMiscUnsafe::getShort(const jnipp::Ref<JavaLangObject>& a0, jlong a1) c
 }
 
 // public short sun.misc.Unsafe.getShort(java.lang.Object,int)
-jshort SunMiscUnsafe::getShort_(const jnipp::Ref<JavaLangObject>& a0, jint a1) const {
+jshort SunMiscUnsafe::getShort(const jnipp::Ref<JavaLangObject>& a0, jint a1) const {
     static jnipp::Method<jshort,JavaLangObject,jint> method(clazz(), "getShort", "(Ljava/lang/Object;I)S");
     return method.call(*this, a0, a1);
 }
 
 // public native short sun.misc.Unsafe.getShort(long)
-jshort SunMiscUnsafe::getShort__(jlong a0) const {
+jshort SunMiscUnsafe::getShort(jlong a0) const {
     static jnipp::Method<jshort,jlong> method(clazz(), "getShort", "(J)S");
     return method.call(*this, a0);
 }
@@ -12644,13 +12644,13 @@ void SunMiscUnsafe::putShort(const jnipp::Ref<JavaLangObject>& a0, jint a1, jsho
 }
 
 // public native void sun.misc.Unsafe.putShort(java.lang.Object,long,short)
-void SunMiscUnsafe::putShort_(const jnipp::Ref<JavaLangObject>& a0, jlong a1, jshort a2) const {
+void SunMiscUnsafe::putShort(const jnipp::Ref<JavaLangObject>& a0, jlong a1, jshort a2) const {
     static jnipp::Method<void,JavaLangObject,jlong,jshort> method(clazz(), "putShort", "(Ljava/lang/Object;JS)V");
     method.call(*this, a0, a1, a2);
 }
 
 // public native void sun.misc.Unsafe.putShort(long,short)
-void SunMiscUnsafe::putShort__(jlong a0, jshort a1) const {
+void SunMiscUnsafe::putShort(jlong a0, jshort a1) const {
     static jnipp::Method<void,jlong,jshort> method(clazz(), "putShort", "(JS)V");
     method.call(*this, a0, a1);
 }
@@ -12662,13 +12662,13 @@ jchar SunMiscUnsafe::getChar(const jnipp::Ref<JavaLangObject>& a0, jint a1) cons
 }
 
 // public native char sun.misc.Unsafe.getChar(long)
-jchar SunMiscUnsafe::getChar_(jlong a0) const {
+jchar SunMiscUnsafe::getChar(jlong a0) const {
     static jnipp::Method<jchar,jlong> method(clazz(), "getChar", "(J)C");
     return method.call(*this, a0);
 }
 
 // public native char sun.misc.Unsafe.getChar(java.lang.Object,long)
-jchar SunMiscUnsafe::getChar__(const jnipp::Ref<JavaLangObject>& a0, jlong a1) const {
+jchar SunMiscUnsafe::getChar(const jnipp::Ref<JavaLangObject>& a0, jlong a1) const {
     static jnipp::Method<jchar,JavaLangObject,jlong> method(clazz(), "getChar", "(Ljava/lang/Object;J)C");
     return method.call(*this, a0, a1);
 }
@@ -12680,13 +12680,13 @@ void SunMiscUnsafe::putChar(jlong a0, jchar a1) const {
 }
 
 // public void sun.misc.Unsafe.putChar(java.lang.Object,int,char)
-void SunMiscUnsafe::putChar_(const jnipp::Ref<JavaLangObject>& a0, jint a1, jchar a2) const {
+void SunMiscUnsafe::putChar(const jnipp::Ref<JavaLangObject>& a0, jint a1, jchar a2) const {
     static jnipp::Method<void,JavaLangObject,jint,jchar> method(clazz(), "putChar", "(Ljava/lang/Object;IC)V");
     method.call(*this, a0, a1, a2);
 }
 
 // public native void sun.misc.Unsafe.putChar(java.lang.Object,long,char)
-void SunMiscUnsafe::putChar__(const jnipp::Ref<JavaLangObject>& a0, jlong a1, jchar a2) const {
+void SunMiscUnsafe::putChar(const jnipp::Ref<JavaLangObject>& a0, jlong a1, jchar a2) const {
     static jnipp::Method<void,JavaLangObject,jlong,jchar> method(clazz(), "putChar", "(Ljava/lang/Object;JC)V");
     method.call(*this, a0, a1, a2);
 }
@@ -12698,13 +12698,13 @@ jint SunMiscUnsafe::getInt(const jnipp::Ref<JavaLangObject>& a0, jlong a1) const
 }
 
 // public native int sun.misc.Unsafe.getInt(long)
-jint SunMiscUnsafe::getInt_(jlong a0) const {
+jint SunMiscUnsafe::getInt(jlong a0) const {
     static jnipp::Method<jint,jlong> method(clazz(), "getInt", "(J)I");
     return method.call(*this, a0);
 }
 
 // public int sun.misc.Unsafe.getInt(java.lang.Object,int)
-jint SunMiscUnsafe::getInt__(const jnipp::Ref<JavaLangObject>& a0, jint a1) const {
+jint SunMiscUnsafe::getInt(const jnipp::Ref<JavaLangObject>& a0, jint a1) const {
     static jnipp::Method<jint,JavaLangObject,jint> method(clazz(), "getInt", "(Ljava/lang/Object;I)I");
     return method.call(*this, a0, a1);
 }
@@ -12716,13 +12716,13 @@ void SunMiscUnsafe::putInt(const jnipp::Ref<JavaLangObject>& a0, jint a1, jint a
 }
 
 // public native void sun.misc.Unsafe.putInt(long,int)
-void SunMiscUnsafe::putInt_(jlong a0, jint a1) const {
+void SunMiscUnsafe::putInt(jlong a0, jint a1) const {
     static jnipp::Method<void,jlong,jint> method(clazz(), "putInt", "(JI)V");
     method.call(*this, a0, a1);
 }
 
 // public native void sun.misc.Unsafe.putInt(java.lang.Object,long,int)
-void SunMiscUnsafe::putInt__(const jnipp::Ref<JavaLangObject>& a0, jlong a1, jint a2) const {
+void SunMiscUnsafe::putInt(const jnipp::Ref<JavaLangObject>& a0, jlong a1, jint a2) const {
     static jnipp::Method<void,JavaLangObject,jlong,jint> method(clazz(), "putInt", "(Ljava/lang/Object;JI)V");
     method.call(*this, a0, a1, a2);
 }
@@ -12734,13 +12734,13 @@ jlong SunMiscUnsafe::getLong(const jnipp::Ref<JavaLangObject>& a0, jlong a1) con
 }
 
 // public native long sun.misc.Unsafe.getLong(long)
-jlong SunMiscUnsafe::getLong_(jlong a0) const {
+jlong SunMiscUnsafe::getLong(jlong a0) const {
     static jnipp::Method<jlong,jlong> method(clazz(), "getLong", "(J)J");
     return method.call(*this, a0);
 }
 
 // public long sun.misc.Unsafe.getLong(java.lang.Object,int)
-jlong SunMiscUnsafe::getLong__(const jnipp::Ref<JavaLangObject>& a0, jint a1) const {
+jlong SunMiscUnsafe::getLong(const jnipp::Ref<JavaLangObject>& a0, jint a1) const {
     static jnipp::Method<jlong,JavaLangObject,jint> method(clazz(), "getLong", "(Ljava/lang/Object;I)J");
     return method.call(*this, a0, a1);
 }
@@ -12752,13 +12752,13 @@ void SunMiscUnsafe::putLong(jlong a0, jlong a1) const {
 }
 
 // public native void sun.misc.Unsafe.putLong(java.lang.Object,long,long)
-void SunMiscUnsafe::putLong_(const jnipp::Ref<JavaLangObject>& a0, jlong a1, jlong a2) const {
+void SunMiscUnsafe::putLong(const jnipp::Ref<JavaLangObject>& a0, jlong a1, jlong a2) const {
     static jnipp::Method<void,JavaLangObject,jlong,jlong> method(clazz(), "putLong", "(Ljava/lang/Object;JJ)V");
     method.call(*this, a0, a1, a2);
 }
 
 // public void sun.misc.Unsafe.putLong(java.lang.Object,int,long)
-void SunMiscUnsafe::putLong__(const jnipp::Ref<JavaLangObject>& a0, jint a1, jlong a2) const {
+void SunMiscUnsafe::putLong(const jnipp::Ref<JavaLangObject>& a0, jint a1, jlong a2) const {
     static jnipp::Method<void,JavaLangObject,jint,jlong> method(clazz(), "putLong", "(Ljava/lang/Object;IJ)V");
     method.call(*this, a0, a1, a2);
 }
@@ -12770,13 +12770,13 @@ jfloat SunMiscUnsafe::getFloat(const jnipp::Ref<JavaLangObject>& a0, jint a1) co
 }
 
 // public native float sun.misc.Unsafe.getFloat(long)
-jfloat SunMiscUnsafe::getFloat_(jlong a0) const {
+jfloat SunMiscUnsafe::getFloat(jlong a0) const {
     static jnipp::Method<jfloat,jlong> method(clazz(), "getFloat", "(J)F");
     return method.call(*this, a0);
 }
 
 // public native float sun.misc.Unsafe.getFloat(java.lang.Object,long)
-jfloat SunMiscUnsafe::getFloat__(const jnipp::Ref<JavaLangObject>& a0, jlong a1) const {
+jfloat SunMiscUnsafe::getFloat(const jnipp::Ref<JavaLangObject>& a0, jlong a1) const {
     static jnipp::Method<jfloat,JavaLangObject,jlong> method(clazz(), "getFloat", "(Ljava/lang/Object;J)F");
     return method.call(*this, a0, a1);
 }
@@ -12788,13 +12788,13 @@ void SunMiscUnsafe::putFloat(const jnipp::Ref<JavaLangObject>& a0, jint a1, jflo
 }
 
 // public native void sun.misc.Unsafe.putFloat(long,float)
-void SunMiscUnsafe::putFloat_(jlong a0, jfloat a1) const {
+void SunMiscUnsafe::putFloat(jlong a0, jfloat a1) const {
     static jnipp::Method<void,jlong,jfloat> method(clazz(), "putFloat", "(JF)V");
     method.call(*this, a0, a1);
 }
 
 // public native void sun.misc.Unsafe.putFloat(java.lang.Object,long,float)
-void SunMiscUnsafe::putFloat__(const jnipp::Ref<JavaLangObject>& a0, jlong a1, jfloat a2) const {
+void SunMiscUnsafe::putFloat(const jnipp::Ref<JavaLangObject>& a0, jlong a1, jfloat a2) const {
     static jnipp::Method<void,JavaLangObject,jlong,jfloat> method(clazz(), "putFloat", "(Ljava/lang/Object;JF)V");
     method.call(*this, a0, a1, a2);
 }
@@ -12806,13 +12806,13 @@ jdouble SunMiscUnsafe::getDouble(jlong a0) const {
 }
 
 // public double sun.misc.Unsafe.getDouble(java.lang.Object,int)
-jdouble SunMiscUnsafe::getDouble_(const jnipp::Ref<JavaLangObject>& a0, jint a1) const {
+jdouble SunMiscUnsafe::getDouble(const jnipp::Ref<JavaLangObject>& a0, jint a1) const {
     static jnipp::Method<jdouble,JavaLangObject,jint> method(clazz(), "getDouble", "(Ljava/lang/Object;I)D");
     return method.call(*this, a0, a1);
 }
 
 // public native double sun.misc.Unsafe.getDouble(java.lang.Object,long)
-jdouble SunMiscUnsafe::getDouble__(const jnipp::Ref<JavaLangObject>& a0, jlong a1) const {
+jdouble SunMiscUnsafe::getDouble(const jnipp::Ref<JavaLangObject>& a0, jlong a1) const {
     static jnipp::Method<jdouble,JavaLangObject,jlong> method(clazz(), "getDouble", "(Ljava/lang/Object;J)D");
     return method.call(*this, a0, a1);
 }
@@ -12824,13 +12824,13 @@ void SunMiscUnsafe::putDouble(const jnipp::Ref<JavaLangObject>& a0, jint a1, jdo
 }
 
 // public native void sun.misc.Unsafe.putDouble(long,double)
-void SunMiscUnsafe::putDouble_(jlong a0, jdouble a1) const {
+void SunMiscUnsafe::putDouble(jlong a0, jdouble a1) const {
     static jnipp::Method<void,jlong,jdouble> method(clazz(), "putDouble", "(JD)V");
     method.call(*this, a0, a1);
 }
 
 // public native void sun.misc.Unsafe.putDouble(java.lang.Object,long,double)
-void SunMiscUnsafe::putDouble__(const jnipp::Ref<JavaLangObject>& a0, jlong a1, jdouble a2) const {
+void SunMiscUnsafe::putDouble(const jnipp::Ref<JavaLangObject>& a0, jlong a1, jdouble a2) const {
     static jnipp::Method<void,JavaLangObject,jlong,jdouble> method(clazz(), "putDouble", "(Ljava/lang/Object;JD)V");
     method.call(*this, a0, a1, a2);
 }
@@ -13010,7 +13010,7 @@ jnipp::LocalRef<JavaLangClass> SunMiscUnsafe::defineClass(const jnipp::Ref<JavaL
 }
 
 // public native java.lang.Class sun.misc.Unsafe.defineClass(java.lang.String,byte[],int,int,java.lang.ClassLoader,java.security.ProtectionDomain)
-jnipp::LocalRef<JavaLangClass> SunMiscUnsafe::defineClass_(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<jnipp::Array<jbyte>>& a1, jint a2, jint a3, const jnipp::Ref<JavaLangClassLoader>& a4, const jnipp::Ref<JavaSecurityProtectionDomain>& a5) const {
+jnipp::LocalRef<JavaLangClass> SunMiscUnsafe::defineClass(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<jnipp::Array<jbyte>>& a1, jint a2, jint a3, const jnipp::Ref<JavaLangClassLoader>& a4, const jnipp::Ref<JavaSecurityProtectionDomain>& a5) const {
     static jnipp::Method<JavaLangClass,JavaLangString,jnipp::Array<jbyte>,jint,jint,JavaLangClassLoader,JavaSecurityProtectionDomain> method(clazz(), "defineClass", "(Ljava/lang/String;[BIILjava/lang/ClassLoader;Ljava/security/ProtectionDomain;)Ljava/lang/Class;");
     return method.call(*this, a0, a1, a2, a3, a4, a5);
 }
@@ -13022,7 +13022,7 @@ jnipp::LocalRef<JavaLangObject> SunMiscUnsafe::staticFieldBase(const jnipp::Ref<
 }
 
 // public native java.lang.Object sun.misc.Unsafe.staticFieldBase(java.lang.reflect.Field)
-jnipp::LocalRef<JavaLangObject> SunMiscUnsafe::staticFieldBase_(const jnipp::Ref<JavaLangReflectField>& a0) const {
+jnipp::LocalRef<JavaLangObject> SunMiscUnsafe::staticFieldBase(const jnipp::Ref<JavaLangReflectField>& a0) const {
     static jnipp::Method<JavaLangObject,JavaLangReflectField> method(clazz(), "staticFieldBase", "(Ljava/lang/reflect/Field;)Ljava/lang/Object;");
     return method.call(*this, a0);
 }
@@ -13064,7 +13064,7 @@ void SunMiscUnsafe::setMemory(jlong a0, jlong a1, jbyte a2) const {
 }
 
 // public native void sun.misc.Unsafe.setMemory(java.lang.Object,long,long,byte)
-void SunMiscUnsafe::setMemory_(const jnipp::Ref<JavaLangObject>& a0, jlong a1, jlong a2, jbyte a3) const {
+void SunMiscUnsafe::setMemory(const jnipp::Ref<JavaLangObject>& a0, jlong a1, jlong a2, jbyte a3) const {
     static jnipp::Method<void,JavaLangObject,jlong,jlong,jbyte> method(clazz(), "setMemory", "(Ljava/lang/Object;JJB)V");
     method.call(*this, a0, a1, a2, a3);
 }
@@ -13201,13 +13201,13 @@ void JavaIoFilterOutputStream::write(const jnipp::Ref<jnipp::Array<jbyte>>& a0, 
 }
 
 // public void java.io.FilterOutputStream.write(byte[]) throws java.io.IOException
-void JavaIoFilterOutputStream::write_(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
+void JavaIoFilterOutputStream::write(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
     static jnipp::Method<void,jnipp::Array<jbyte>> method(clazz(), "write", "([B)V");
     method.call(*this, a0);
 }
 
 // public void java.io.FilterOutputStream.write(int) throws java.io.IOException
-void JavaIoFilterOutputStream::write__(jint a0) const {
+void JavaIoFilterOutputStream::write(jint a0) const {
     static jnipp::Method<void,jint> method(clazz(), "write", "(I)V");
     method.call(*this, a0);
 }
@@ -13248,7 +13248,7 @@ void JavaIoDataOutputStream::write(jint a0) const {
 }
 
 // public synchronized void java.io.DataOutputStream.write(byte[],int,int) throws java.io.IOException
-void JavaIoDataOutputStream::write_(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
+void JavaIoDataOutputStream::write(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
     static jnipp::Method<void,jnipp::Array<jbyte>,jint,jint> method(clazz(), "write", "([BII)V");
     method.call(*this, a0, a1, a2);
 }
@@ -13284,7 +13284,7 @@ void JavaIoDataOutputStream::writeUTF(const jnipp::Ref<JavaLangString>& a0) cons
 }
 
 // static int java.io.DataOutputStream.writeUTF(java.lang.String,java.io.DataOutput) throws java.io.IOException
-jint JavaIoDataOutputStream::writeUTF_(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaIoDataOutput>& a1) {
+jint JavaIoDataOutputStream::writeUTF(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaIoDataOutput>& a1) {
     static jnipp::StaticMethod<jint,JavaLangString,JavaIoDataOutput> method(clazz(), "writeUTF", "(Ljava/lang/String;Ljava/io/DataOutput;)I");
     return method.call(a0, a1);
 }
@@ -13361,13 +13361,13 @@ jnipp::LocalRef<JavaIoWriter> JavaIoWriter::append(const jnipp::Ref<JavaLangChar
 }
 
 // public java.io.Writer java.io.Writer.append(char) throws java.io.IOException
-jnipp::LocalRef<JavaIoWriter> JavaIoWriter::append_(jchar a0) const {
+jnipp::LocalRef<JavaIoWriter> JavaIoWriter::append(jchar a0) const {
     static jnipp::Method<JavaIoWriter,jchar> method(clazz(), "append", "(C)Ljava/io/Writer;");
     return method.call(*this, a0);
 }
 
 // public java.io.Writer java.io.Writer.append(java.lang.CharSequence) throws java.io.IOException
-jnipp::LocalRef<JavaIoWriter> JavaIoWriter::append__(const jnipp::Ref<JavaLangCharSequence>& a0) const {
+jnipp::LocalRef<JavaIoWriter> JavaIoWriter::append(const jnipp::Ref<JavaLangCharSequence>& a0) const {
     static jnipp::Method<JavaIoWriter,JavaLangCharSequence> method(clazz(), "append", "(Ljava/lang/CharSequence;)Ljava/io/Writer;");
     return method.call(*this, a0);
 }
@@ -13379,19 +13379,19 @@ void JavaIoWriter::write(const jnipp::Ref<jnipp::Array<jchar>>& a0) const {
 }
 
 // public void java.io.Writer.write(int) throws java.io.IOException
-void JavaIoWriter::write_(jint a0) const {
+void JavaIoWriter::write(jint a0) const {
     static jnipp::Method<void,jint> method(clazz(), "write", "(I)V");
     method.call(*this, a0);
 }
 
 // public void java.io.Writer.write(java.lang.String,int,int) throws java.io.IOException
-void JavaIoWriter::write__(const jnipp::Ref<JavaLangString>& a0, jint a1, jint a2) const {
+void JavaIoWriter::write(const jnipp::Ref<JavaLangString>& a0, jint a1, jint a2) const {
     static jnipp::Method<void,JavaLangString,jint,jint> method(clazz(), "write", "(Ljava/lang/String;II)V");
     method.call(*this, a0, a1, a2);
 }
 
 // public void java.io.Writer.write(java.lang.String) throws java.io.IOException
-void JavaIoWriter::write___(const jnipp::Ref<JavaLangString>& a0) const {
+void JavaIoWriter::write(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<void,JavaLangString> method(clazz(), "write", "(Ljava/lang/String;)V");
     method.call(*this, a0);
 }
@@ -13462,55 +13462,55 @@ void JavaIoPrintWriter::println(jdouble a0) const {
 }
 
 // public void java.io.PrintWriter.println(char[])
-void JavaIoPrintWriter::println_(const jnipp::Ref<jnipp::Array<jchar>>& a0) const {
+void JavaIoPrintWriter::println(const jnipp::Ref<jnipp::Array<jchar>>& a0) const {
     static jnipp::Method<void,jnipp::Array<jchar>> method(clazz(), "println", "([C)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintWriter.println(float)
-void JavaIoPrintWriter::println__(jfloat a0) const {
+void JavaIoPrintWriter::println(jfloat a0) const {
     static jnipp::Method<void,jfloat> method(clazz(), "println", "(F)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintWriter.println(java.lang.String)
-void JavaIoPrintWriter::println___(const jnipp::Ref<JavaLangString>& a0) const {
+void JavaIoPrintWriter::println(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<void,JavaLangString> method(clazz(), "println", "(Ljava/lang/String;)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintWriter.println(java.lang.Object)
-void JavaIoPrintWriter::println____(const jnipp::Ref<JavaLangObject>& a0) const {
+void JavaIoPrintWriter::println(const jnipp::Ref<JavaLangObject>& a0) const {
     static jnipp::Method<void,JavaLangObject> method(clazz(), "println", "(Ljava/lang/Object;)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintWriter.println(int)
-void JavaIoPrintWriter::println_____(jint a0) const {
+void JavaIoPrintWriter::println(jint a0) const {
     static jnipp::Method<void,jint> method(clazz(), "println", "(I)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintWriter.println(char)
-void JavaIoPrintWriter::println______(jchar a0) const {
+void JavaIoPrintWriter::println(jchar a0) const {
     static jnipp::Method<void,jchar> method(clazz(), "println", "(C)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintWriter.println(boolean)
-void JavaIoPrintWriter::println_______(jboolean a0) const {
+void JavaIoPrintWriter::println(jboolean a0) const {
     static jnipp::Method<void,jboolean> method(clazz(), "println", "(Z)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintWriter.println()
-void JavaIoPrintWriter::println________() const {
+void JavaIoPrintWriter::println() const {
     static jnipp::Method<void> method(clazz(), "println", "()V");
     method.call(*this);
 }
 
 // public void java.io.PrintWriter.println(long)
-void JavaIoPrintWriter::println_________(jlong a0) const {
+void JavaIoPrintWriter::println(jlong a0) const {
     static jnipp::Method<void,jlong> method(clazz(), "println", "(J)V");
     method.call(*this, a0);
 }
@@ -13522,13 +13522,13 @@ jnipp::LocalRef<JavaIoPrintWriter> JavaIoPrintWriter::append(const jnipp::Ref<Ja
 }
 
 // public java.io.PrintWriter java.io.PrintWriter.append(java.lang.CharSequence)
-jnipp::LocalRef<JavaIoPrintWriter> JavaIoPrintWriter::append_(const jnipp::Ref<JavaLangCharSequence>& a0) const {
+jnipp::LocalRef<JavaIoPrintWriter> JavaIoPrintWriter::append(const jnipp::Ref<JavaLangCharSequence>& a0) const {
     static jnipp::Method<JavaIoPrintWriter,JavaLangCharSequence> method(clazz(), "append", "(Ljava/lang/CharSequence;)Ljava/io/PrintWriter;");
     return method.call(*this, a0);
 }
 
 // public java.io.PrintWriter java.io.PrintWriter.append(char)
-jnipp::LocalRef<JavaIoPrintWriter> JavaIoPrintWriter::append__(jchar a0) const {
+jnipp::LocalRef<JavaIoPrintWriter> JavaIoPrintWriter::append(jchar a0) const {
     static jnipp::Method<JavaIoPrintWriter,jchar> method(clazz(), "append", "(C)Ljava/io/PrintWriter;");
     return method.call(*this, a0);
 }
@@ -13540,7 +13540,7 @@ jnipp::LocalRef<JavaIoPrintWriter> JavaIoPrintWriter::format(const jnipp::Ref<Ja
 }
 
 // public java.io.PrintWriter java.io.PrintWriter.format(java.lang.String,java.lang.Object[])
-jnipp::LocalRef<JavaIoPrintWriter> JavaIoPrintWriter::format_(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<jnipp::Array<JavaLangObject>>& a1) const {
+jnipp::LocalRef<JavaIoPrintWriter> JavaIoPrintWriter::format(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<jnipp::Array<JavaLangObject>>& a1) const {
     static jnipp::Method<JavaIoPrintWriter,JavaLangString,jnipp::Array<JavaLangObject>> method(clazz(), "format", "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintWriter;");
     return method.call(*this, a0, a1);
 }
@@ -13552,25 +13552,25 @@ void JavaIoPrintWriter::write(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1
 }
 
 // public void java.io.PrintWriter.write(java.lang.String,int,int)
-void JavaIoPrintWriter::write_(const jnipp::Ref<JavaLangString>& a0, jint a1, jint a2) const {
+void JavaIoPrintWriter::write(const jnipp::Ref<JavaLangString>& a0, jint a1, jint a2) const {
     static jnipp::Method<void,JavaLangString,jint,jint> method(clazz(), "write", "(Ljava/lang/String;II)V");
     method.call(*this, a0, a1, a2);
 }
 
 // public void java.io.PrintWriter.write(char[])
-void JavaIoPrintWriter::write__(const jnipp::Ref<jnipp::Array<jchar>>& a0) const {
+void JavaIoPrintWriter::write(const jnipp::Ref<jnipp::Array<jchar>>& a0) const {
     static jnipp::Method<void,jnipp::Array<jchar>> method(clazz(), "write", "([C)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintWriter.write(int)
-void JavaIoPrintWriter::write___(jint a0) const {
+void JavaIoPrintWriter::write(jint a0) const {
     static jnipp::Method<void,jint> method(clazz(), "write", "(I)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintWriter.write(java.lang.String)
-void JavaIoPrintWriter::write____(const jnipp::Ref<JavaLangString>& a0) const {
+void JavaIoPrintWriter::write(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<void,JavaLangString> method(clazz(), "write", "(Ljava/lang/String;)V");
     method.call(*this, a0);
 }
@@ -13582,49 +13582,49 @@ void JavaIoPrintWriter::print(jfloat a0) const {
 }
 
 // public void java.io.PrintWriter.print(long)
-void JavaIoPrintWriter::print_(jlong a0) const {
+void JavaIoPrintWriter::print(jlong a0) const {
     static jnipp::Method<void,jlong> method(clazz(), "print", "(J)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintWriter.print(int)
-void JavaIoPrintWriter::print__(jint a0) const {
+void JavaIoPrintWriter::print(jint a0) const {
     static jnipp::Method<void,jint> method(clazz(), "print", "(I)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintWriter.print(char)
-void JavaIoPrintWriter::print___(jchar a0) const {
+void JavaIoPrintWriter::print(jchar a0) const {
     static jnipp::Method<void,jchar> method(clazz(), "print", "(C)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintWriter.print(boolean)
-void JavaIoPrintWriter::print____(jboolean a0) const {
+void JavaIoPrintWriter::print(jboolean a0) const {
     static jnipp::Method<void,jboolean> method(clazz(), "print", "(Z)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintWriter.print(java.lang.Object)
-void JavaIoPrintWriter::print_____(const jnipp::Ref<JavaLangObject>& a0) const {
+void JavaIoPrintWriter::print(const jnipp::Ref<JavaLangObject>& a0) const {
     static jnipp::Method<void,JavaLangObject> method(clazz(), "print", "(Ljava/lang/Object;)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintWriter.print(java.lang.String)
-void JavaIoPrintWriter::print______(const jnipp::Ref<JavaLangString>& a0) const {
+void JavaIoPrintWriter::print(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<void,JavaLangString> method(clazz(), "print", "(Ljava/lang/String;)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintWriter.print(char[])
-void JavaIoPrintWriter::print_______(const jnipp::Ref<jnipp::Array<jchar>>& a0) const {
+void JavaIoPrintWriter::print(const jnipp::Ref<jnipp::Array<jchar>>& a0) const {
     static jnipp::Method<void,jnipp::Array<jchar>> method(clazz(), "print", "([C)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintWriter.print(double)
-void JavaIoPrintWriter::print________(jdouble a0) const {
+void JavaIoPrintWriter::print(jdouble a0) const {
     static jnipp::Method<void,jdouble> method(clazz(), "print", "(D)V");
     method.call(*this, a0);
 }
@@ -13684,7 +13684,7 @@ jnipp::LocalRef<JavaIoPrintWriter> JavaIoPrintWriter::printf(const jnipp::Ref<Ja
 }
 
 // public java.io.PrintWriter java.io.PrintWriter.printf(java.lang.String,java.lang.Object[])
-jnipp::LocalRef<JavaIoPrintWriter> JavaIoPrintWriter::printf_(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<jnipp::Array<JavaLangObject>>& a1) const {
+jnipp::LocalRef<JavaIoPrintWriter> JavaIoPrintWriter::printf(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<jnipp::Array<JavaLangObject>>& a1) const {
     static jnipp::Method<JavaIoPrintWriter,JavaLangString,jnipp::Array<JavaLangObject>> method(clazz(), "printf", "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintWriter;");
     return method.call(*this, a0, a1);
 }
@@ -13778,55 +13778,55 @@ void JavaIoPrintStream::println(const jnipp::Ref<jnipp::Array<jchar>>& a0) const
 }
 
 // public void java.io.PrintStream.println(double)
-void JavaIoPrintStream::println_(jdouble a0) const {
+void JavaIoPrintStream::println(jdouble a0) const {
     static jnipp::Method<void,jdouble> method(clazz(), "println", "(D)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintStream.println(float)
-void JavaIoPrintStream::println__(jfloat a0) const {
+void JavaIoPrintStream::println(jfloat a0) const {
     static jnipp::Method<void,jfloat> method(clazz(), "println", "(F)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintStream.println(java.lang.String)
-void JavaIoPrintStream::println___(const jnipp::Ref<JavaLangString>& a0) const {
+void JavaIoPrintStream::println(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<void,JavaLangString> method(clazz(), "println", "(Ljava/lang/String;)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintStream.println(java.lang.Object)
-void JavaIoPrintStream::println____(const jnipp::Ref<JavaLangObject>& a0) const {
+void JavaIoPrintStream::println(const jnipp::Ref<JavaLangObject>& a0) const {
     static jnipp::Method<void,JavaLangObject> method(clazz(), "println", "(Ljava/lang/Object;)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintStream.println(boolean)
-void JavaIoPrintStream::println_____(jboolean a0) const {
+void JavaIoPrintStream::println(jboolean a0) const {
     static jnipp::Method<void,jboolean> method(clazz(), "println", "(Z)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintStream.println()
-void JavaIoPrintStream::println______() const {
+void JavaIoPrintStream::println() const {
     static jnipp::Method<void> method(clazz(), "println", "()V");
     method.call(*this);
 }
 
 // public void java.io.PrintStream.println(char)
-void JavaIoPrintStream::println_______(jchar a0) const {
+void JavaIoPrintStream::println(jchar a0) const {
     static jnipp::Method<void,jchar> method(clazz(), "println", "(C)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintStream.println(int)
-void JavaIoPrintStream::println________(jint a0) const {
+void JavaIoPrintStream::println(jint a0) const {
     static jnipp::Method<void,jint> method(clazz(), "println", "(I)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintStream.println(long)
-void JavaIoPrintStream::println_________(jlong a0) const {
+void JavaIoPrintStream::println(jlong a0) const {
     static jnipp::Method<void,jlong> method(clazz(), "println", "(J)V");
     method.call(*this, a0);
 }
@@ -13838,13 +13838,13 @@ jnipp::LocalRef<JavaIoPrintStream> JavaIoPrintStream::append(const jnipp::Ref<Ja
 }
 
 // public java.io.PrintStream java.io.PrintStream.append(char)
-jnipp::LocalRef<JavaIoPrintStream> JavaIoPrintStream::append_(jchar a0) const {
+jnipp::LocalRef<JavaIoPrintStream> JavaIoPrintStream::append(jchar a0) const {
     static jnipp::Method<JavaIoPrintStream,jchar> method(clazz(), "append", "(C)Ljava/io/PrintStream;");
     return method.call(*this, a0);
 }
 
 // public java.io.PrintStream java.io.PrintStream.append(java.lang.CharSequence)
-jnipp::LocalRef<JavaIoPrintStream> JavaIoPrintStream::append__(const jnipp::Ref<JavaLangCharSequence>& a0) const {
+jnipp::LocalRef<JavaIoPrintStream> JavaIoPrintStream::append(const jnipp::Ref<JavaLangCharSequence>& a0) const {
     static jnipp::Method<JavaIoPrintStream,JavaLangCharSequence> method(clazz(), "append", "(Ljava/lang/CharSequence;)Ljava/io/PrintStream;");
     return method.call(*this, a0);
 }
@@ -13856,7 +13856,7 @@ jnipp::LocalRef<JavaIoPrintStream> JavaIoPrintStream::format(const jnipp::Ref<Ja
 }
 
 // public java.io.PrintStream java.io.PrintStream.format(java.lang.String,java.lang.Object[])
-jnipp::LocalRef<JavaIoPrintStream> JavaIoPrintStream::format_(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<jnipp::Array<JavaLangObject>>& a1) const {
+jnipp::LocalRef<JavaIoPrintStream> JavaIoPrintStream::format(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<jnipp::Array<JavaLangObject>>& a1) const {
     static jnipp::Method<JavaIoPrintStream,JavaLangString,jnipp::Array<JavaLangObject>> method(clazz(), "format", "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;");
     return method.call(*this, a0, a1);
 }
@@ -13868,19 +13868,19 @@ void JavaIoPrintStream::write(const jnipp::Ref<jnipp::Array<jchar>>& a0) const {
 }
 
 // private void java.io.PrintStream.write(java.lang.String)
-void JavaIoPrintStream::write_(const jnipp::Ref<JavaLangString>& a0) const {
+void JavaIoPrintStream::write(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<void,JavaLangString> method(clazz(), "write", "(Ljava/lang/String;)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintStream.write(byte[],int,int)
-void JavaIoPrintStream::write__(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
+void JavaIoPrintStream::write(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
     static jnipp::Method<void,jnipp::Array<jbyte>,jint,jint> method(clazz(), "write", "([BII)V");
     method.call(*this, a0, a1, a2);
 }
 
 // public void java.io.PrintStream.write(int)
-void JavaIoPrintStream::write___(jint a0) const {
+void JavaIoPrintStream::write(jint a0) const {
     static jnipp::Method<void,jint> method(clazz(), "write", "(I)V");
     method.call(*this, a0);
 }
@@ -13892,49 +13892,49 @@ void JavaIoPrintStream::print(jfloat a0) const {
 }
 
 // public void java.io.PrintStream.print(long)
-void JavaIoPrintStream::print_(jlong a0) const {
+void JavaIoPrintStream::print(jlong a0) const {
     static jnipp::Method<void,jlong> method(clazz(), "print", "(J)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintStream.print(int)
-void JavaIoPrintStream::print__(jint a0) const {
+void JavaIoPrintStream::print(jint a0) const {
     static jnipp::Method<void,jint> method(clazz(), "print", "(I)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintStream.print(char)
-void JavaIoPrintStream::print___(jchar a0) const {
+void JavaIoPrintStream::print(jchar a0) const {
     static jnipp::Method<void,jchar> method(clazz(), "print", "(C)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintStream.print(boolean)
-void JavaIoPrintStream::print____(jboolean a0) const {
+void JavaIoPrintStream::print(jboolean a0) const {
     static jnipp::Method<void,jboolean> method(clazz(), "print", "(Z)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintStream.print(java.lang.Object)
-void JavaIoPrintStream::print_____(const jnipp::Ref<JavaLangObject>& a0) const {
+void JavaIoPrintStream::print(const jnipp::Ref<JavaLangObject>& a0) const {
     static jnipp::Method<void,JavaLangObject> method(clazz(), "print", "(Ljava/lang/Object;)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintStream.print(java.lang.String)
-void JavaIoPrintStream::print______(const jnipp::Ref<JavaLangString>& a0) const {
+void JavaIoPrintStream::print(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<void,JavaLangString> method(clazz(), "print", "(Ljava/lang/String;)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintStream.print(char[])
-void JavaIoPrintStream::print_______(const jnipp::Ref<jnipp::Array<jchar>>& a0) const {
+void JavaIoPrintStream::print(const jnipp::Ref<jnipp::Array<jchar>>& a0) const {
     static jnipp::Method<void,jnipp::Array<jchar>> method(clazz(), "print", "([C)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PrintStream.print(double)
-void JavaIoPrintStream::print________(jdouble a0) const {
+void JavaIoPrintStream::print(jdouble a0) const {
     static jnipp::Method<void,jdouble> method(clazz(), "print", "(D)V");
     method.call(*this, a0);
 }
@@ -14000,7 +14000,7 @@ jnipp::LocalRef<JavaIoPrintStream> JavaIoPrintStream::printf(const jnipp::Ref<Ja
 }
 
 // public java.io.PrintStream java.io.PrintStream.printf(java.lang.String,java.lang.Object[])
-jnipp::LocalRef<JavaIoPrintStream> JavaIoPrintStream::printf_(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<jnipp::Array<JavaLangObject>>& a1) const {
+jnipp::LocalRef<JavaIoPrintStream> JavaIoPrintStream::printf(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<jnipp::Array<JavaLangObject>>& a1) const {
     static jnipp::Method<JavaIoPrintStream,JavaLangString,jnipp::Array<JavaLangObject>> method(clazz(), "printf", "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;");
     return method.call(*this, a0, a1);
 }
@@ -14199,13 +14199,13 @@ jnipp::LocalRef<JavaLangLong> JavaLangLong::getLong(const jnipp::Ref<JavaLangStr
 }
 
 // public static java.lang.Long java.lang.Long.getLong(java.lang.String,java.lang.Long)
-jnipp::LocalRef<JavaLangLong> JavaLangLong::getLong_(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangLong>& a1) {
+jnipp::LocalRef<JavaLangLong> JavaLangLong::getLong(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangLong>& a1) {
     static jnipp::StaticMethod<JavaLangLong,JavaLangString,JavaLangLong> method(clazz(), "getLong", "(Ljava/lang/String;Ljava/lang/Long;)Ljava/lang/Long;");
     return method.call(a0, a1);
 }
 
 // public static java.lang.Long java.lang.Long.getLong(java.lang.String,long)
-jnipp::LocalRef<JavaLangLong> JavaLangLong::getLong__(const jnipp::Ref<JavaLangString>& a0, jlong a1) {
+jnipp::LocalRef<JavaLangLong> JavaLangLong::getLong(const jnipp::Ref<JavaLangString>& a0, jlong a1) {
     static jnipp::StaticMethod<JavaLangLong,JavaLangString,jlong> method(clazz(), "getLong", "(Ljava/lang/String;J)Ljava/lang/Long;");
     return method.call(a0, a1);
 }
@@ -14253,13 +14253,13 @@ jnipp::LocalRef<JavaLangLong> JavaLangLong::valueOf(jlong a0) {
 }
 
 // public static java.lang.Long java.lang.Long.valueOf(java.lang.String,int) throws java.lang.NumberFormatException
-jnipp::LocalRef<JavaLangLong> JavaLangLong::valueOf_(const jnipp::Ref<JavaLangString>& a0, jint a1) {
+jnipp::LocalRef<JavaLangLong> JavaLangLong::valueOf(const jnipp::Ref<JavaLangString>& a0, jint a1) {
     static jnipp::StaticMethod<JavaLangLong,JavaLangString,jint> method(clazz(), "valueOf", "(Ljava/lang/String;I)Ljava/lang/Long;");
     return method.call(a0, a1);
 }
 
 // public static java.lang.Long java.lang.Long.valueOf(java.lang.String) throws java.lang.NumberFormatException
-jnipp::LocalRef<JavaLangLong> JavaLangLong::valueOf__(const jnipp::Ref<JavaLangString>& a0) {
+jnipp::LocalRef<JavaLangLong> JavaLangLong::valueOf(const jnipp::Ref<JavaLangString>& a0) {
     static jnipp::StaticMethod<JavaLangLong,JavaLangString> method(clazz(), "valueOf", "(Ljava/lang/String;)Ljava/lang/Long;");
     return method.call(a0);
 }
@@ -14355,7 +14355,7 @@ jlong JavaLangLong::parseLong(const jnipp::Ref<JavaLangString>& a0) {
 }
 
 // public static long java.lang.Long.parseLong(java.lang.String,int) throws java.lang.NumberFormatException
-jlong JavaLangLong::parseLong_(const jnipp::Ref<JavaLangString>& a0, jint a1) {
+jlong JavaLangLong::parseLong(const jnipp::Ref<JavaLangString>& a0, jint a1) {
     static jnipp::StaticMethod<jlong,JavaLangString,jint> method(clazz(), "parseLong", "(Ljava/lang/String;I)J");
     return method.call(a0, a1);
 }
@@ -14445,7 +14445,7 @@ jint JavaIoObjectInputStream_PeekInputStream::read() const {
 }
 
 // public int java.io.ObjectInputStream$PeekInputStream.read(byte[],int,int) throws java.io.IOException
-jint JavaIoObjectInputStream_PeekInputStream::read_(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
+jint JavaIoObjectInputStream_PeekInputStream::read(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
     static jnipp::Method<jint,jnipp::Array<jbyte>,jint,jint> method(clazz(), "read", "([BII)I");
     return method.call(*this, a0, a1, a2);
 }
@@ -14504,13 +14504,13 @@ jint JavaIoFilterInputStream::read() const {
 }
 
 // public int java.io.FilterInputStream.read(byte[],int,int) throws java.io.IOException
-jint JavaIoFilterInputStream::read_(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
+jint JavaIoFilterInputStream::read(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
     static jnipp::Method<jint,jnipp::Array<jbyte>,jint,jint> method(clazz(), "read", "([BII)I");
     return method.call(*this, a0, a1, a2);
 }
 
 // public int java.io.FilterInputStream.read(byte[]) throws java.io.IOException
-jint JavaIoFilterInputStream::read__(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
+jint JavaIoFilterInputStream::read(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
     static jnipp::Method<jint,jnipp::Array<jbyte>> method(clazz(), "read", "([B)I");
     return method.call(*this, a0);
 }
@@ -14563,7 +14563,7 @@ jint JavaIoDataInputStream::read(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint
 }
 
 // public final int java.io.DataInputStream.read(byte[]) throws java.io.IOException
-jint JavaIoDataInputStream::read_(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
+jint JavaIoDataInputStream::read(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
     static jnipp::Method<jint,jnipp::Array<jbyte>> method(clazz(), "read", "([B)I");
     return method.call(*this, a0);
 }
@@ -14581,7 +14581,7 @@ jnipp::LocalRef<JavaLangString> JavaIoDataInputStream::readUTF() const {
 }
 
 // public static final java.lang.String java.io.DataInputStream.readUTF(java.io.DataInput) throws java.io.IOException
-jnipp::LocalRef<JavaLangString> JavaIoDataInputStream::readUTF_(const jnipp::Ref<JavaIoDataInput>& a0) {
+jnipp::LocalRef<JavaLangString> JavaIoDataInputStream::readUTF(const jnipp::Ref<JavaIoDataInput>& a0) {
     static jnipp::StaticMethod<JavaLangString,JavaIoDataInput> method(clazz(), "readUTF", "(Ljava/io/DataInput;)Ljava/lang/String;");
     return method.call(a0);
 }
@@ -14593,7 +14593,7 @@ void JavaIoDataInputStream::readFully(const jnipp::Ref<jnipp::Array<jbyte>>& a0)
 }
 
 // public final void java.io.DataInputStream.readFully(byte[],int,int) throws java.io.IOException
-void JavaIoDataInputStream::readFully_(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
+void JavaIoDataInputStream::readFully(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
     static jnipp::Method<void,jnipp::Array<jbyte>,jint,jint> method(clazz(), "readFully", "([BII)V");
     method.call(*this, a0, a1, a2);
 }
@@ -14676,7 +14676,7 @@ jnipp::LocalRef<SunMiscResource> SunMiscURLClassPath::getResource(const jnipp::R
 }
 
 // public sun.misc.Resource sun.misc.URLClassPath.getResource(java.lang.String)
-jnipp::LocalRef<SunMiscResource> SunMiscURLClassPath::getResource_(const jnipp::Ref<JavaLangString>& a0) const {
+jnipp::LocalRef<SunMiscResource> SunMiscURLClassPath::getResource(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<SunMiscResource,JavaLangString> method(clazz(), "getResource", "(Ljava/lang/String;)Lsun/misc/Resource;");
     return method.call(*this, a0);
 }
@@ -14688,7 +14688,7 @@ jnipp::LocalRef<JavaUtilEnumeration> SunMiscURLClassPath::getResources(const jni
 }
 
 // public java.util.Enumeration sun.misc.URLClassPath.getResources(java.lang.String,boolean)
-jnipp::LocalRef<JavaUtilEnumeration> SunMiscURLClassPath::getResources_(const jnipp::Ref<JavaLangString>& a0, jboolean a1) const {
+jnipp::LocalRef<JavaUtilEnumeration> SunMiscURLClassPath::getResources(const jnipp::Ref<JavaLangString>& a0, jboolean a1) const {
     static jnipp::Method<JavaUtilEnumeration,JavaLangString,jboolean> method(clazz(), "getResources", "(Ljava/lang/String;Z)Ljava/util/Enumeration;");
     return method.call(*this, a0, a1);
 }
@@ -14754,7 +14754,7 @@ jnipp::LocalRef<SunMiscURLClassPath_Loader> SunMiscURLClassPath::getLoader(jint 
 }
 
 // private sun.misc.URLClassPath$Loader sun.misc.URLClassPath.getLoader(java.net.URL) throws java.io.IOException
-jnipp::LocalRef<SunMiscURLClassPath_Loader> SunMiscURLClassPath::getLoader_(const jnipp::Ref<JavaNetURL>& a0) const {
+jnipp::LocalRef<SunMiscURLClassPath_Loader> SunMiscURLClassPath::getLoader(const jnipp::Ref<JavaNetURL>& a0) const {
     static jnipp::Method<SunMiscURLClassPath_Loader,JavaNetURL> method(clazz(), "getLoader", "(Ljava/net/URL;)Lsun/misc/URLClassPath$Loader;");
     return method.call(*this, a0);
 }
@@ -14815,7 +14815,7 @@ jnipp::LocalRef<jnipp::Array<JavaLangObject>> JavaUtilAbstractCollection::toArra
 }
 
 // public java.lang.Object[] java.util.AbstractCollection.toArray()
-jnipp::LocalRef<jnipp::Array<JavaLangObject>> JavaUtilAbstractCollection::toArray_() const {
+jnipp::LocalRef<jnipp::Array<JavaLangObject>> JavaUtilAbstractCollection::toArray() const {
     static jnipp::Method<jnipp::Array<JavaLangObject>> method(clazz(), "toArray", "()[Ljava/lang/Object;");
     return method.call(*this);
 }
@@ -14876,7 +14876,7 @@ void JavaUtilAbstractList::add(jint a0, const jnipp::Ref<JavaLangObject>& a1) co
 }
 
 // public boolean java.util.AbstractList.add(java.lang.Object)
-jboolean JavaUtilAbstractList::add_(const jnipp::Ref<JavaLangObject>& a0) const {
+jboolean JavaUtilAbstractList::add(const jnipp::Ref<JavaLangObject>& a0) const {
     static jnipp::Method<jboolean,JavaLangObject> method(clazz(), "add", "(Ljava/lang/Object;)Z");
     return method.call(*this, a0);
 }
@@ -14954,7 +14954,7 @@ jnipp::LocalRef<JavaUtilListIterator> JavaUtilAbstractList::listIterator() const
 }
 
 // public java.util.ListIterator java.util.AbstractList.listIterator(int)
-jnipp::LocalRef<JavaUtilListIterator> JavaUtilAbstractList::listIterator_(jint a0) const {
+jnipp::LocalRef<JavaUtilListIterator> JavaUtilAbstractList::listIterator(jint a0) const {
     static jnipp::Method<JavaUtilListIterator,jint> method(clazz(), "listIterator", "(I)Ljava/util/ListIterator;");
     return method.call(*this, a0);
 }
@@ -15007,7 +15007,7 @@ jboolean JavaUtilVector::add(const jnipp::Ref<JavaLangObject>& a0) const {
 }
 
 // public void java.util.Vector.add(int,java.lang.Object)
-void JavaUtilVector::add_(jint a0, const jnipp::Ref<JavaLangObject>& a1) const {
+void JavaUtilVector::add(jint a0, const jnipp::Ref<JavaLangObject>& a1) const {
     static jnipp::Method<void,jint,JavaLangObject> method(clazz(), "add", "(ILjava/lang/Object;)V");
     method.call(*this, a0, a1);
 }
@@ -15019,7 +15019,7 @@ jboolean JavaUtilVector::remove(const jnipp::Ref<JavaLangObject>& a0) const {
 }
 
 // public synchronized java.lang.Object java.util.Vector.remove(int)
-jnipp::LocalRef<JavaLangObject> JavaUtilVector::remove_(jint a0) const {
+jnipp::LocalRef<JavaLangObject> JavaUtilVector::remove(jint a0) const {
     static jnipp::Method<JavaLangObject,jint> method(clazz(), "remove", "(I)Ljava/lang/Object;");
     return method.call(*this, a0);
 }
@@ -15055,7 +15055,7 @@ jint JavaUtilVector::indexOf(const jnipp::Ref<JavaLangObject>& a0) const {
 }
 
 // public synchronized int java.util.Vector.indexOf(java.lang.Object,int)
-jint JavaUtilVector::indexOf_(const jnipp::Ref<JavaLangObject>& a0, jint a1) const {
+jint JavaUtilVector::indexOf(const jnipp::Ref<JavaLangObject>& a0, jint a1) const {
     static jnipp::Method<jint,JavaLangObject,jint> method(clazz(), "indexOf", "(Ljava/lang/Object;I)I");
     return method.call(*this, a0, a1);
 }
@@ -15079,7 +15079,7 @@ jint JavaUtilVector::lastIndexOf(const jnipp::Ref<JavaLangObject>& a0) const {
 }
 
 // public synchronized int java.util.Vector.lastIndexOf(java.lang.Object,int)
-jint JavaUtilVector::lastIndexOf_(const jnipp::Ref<JavaLangObject>& a0, jint a1) const {
+jint JavaUtilVector::lastIndexOf(const jnipp::Ref<JavaLangObject>& a0, jint a1) const {
     static jnipp::Method<jint,JavaLangObject,jint> method(clazz(), "lastIndexOf", "(Ljava/lang/Object;I)I");
     return method.call(*this, a0, a1);
 }
@@ -15109,7 +15109,7 @@ jnipp::LocalRef<jnipp::Array<JavaLangObject>> JavaUtilVector::toArray() const {
 }
 
 // public synchronized java.lang.Object[] java.util.Vector.toArray(java.lang.Object[])
-jnipp::LocalRef<jnipp::Array<JavaLangObject>> JavaUtilVector::toArray_(const jnipp::Ref<jnipp::Array<JavaLangObject>>& a0) const {
+jnipp::LocalRef<jnipp::Array<JavaLangObject>> JavaUtilVector::toArray(const jnipp::Ref<jnipp::Array<JavaLangObject>>& a0) const {
     static jnipp::Method<jnipp::Array<JavaLangObject>,jnipp::Array<JavaLangObject>> method(clazz(), "toArray", "([Ljava/lang/Object;)[Ljava/lang/Object;");
     return method.call(*this, a0);
 }
@@ -15121,7 +15121,7 @@ jboolean JavaUtilVector::addAll(jint a0, const jnipp::Ref<JavaUtilCollection>& a
 }
 
 // public synchronized boolean java.util.Vector.addAll(java.util.Collection)
-jboolean JavaUtilVector::addAll_(const jnipp::Ref<JavaUtilCollection>& a0) const {
+jboolean JavaUtilVector::addAll(const jnipp::Ref<JavaUtilCollection>& a0) const {
     static jnipp::Method<jboolean,JavaUtilCollection> method(clazz(), "addAll", "(Ljava/util/Collection;)Z");
     return method.call(*this, a0);
 }
@@ -15289,7 +15289,7 @@ jnipp::LocalRef<JavaUtilListIterator> JavaUtilVector::listIterator() const {
 }
 
 // public synchronized java.util.ListIterator java.util.Vector.listIterator(int)
-jnipp::LocalRef<JavaUtilListIterator> JavaUtilVector::listIterator_(jint a0) const {
+jnipp::LocalRef<JavaUtilListIterator> JavaUtilVector::listIterator(jint a0) const {
     static jnipp::Method<JavaUtilListIterator,jint> method(clazz(), "listIterator", "(I)Ljava/util/ListIterator;");
     return method.call(*this, a0);
 }
@@ -15564,7 +15564,7 @@ jnipp::LocalRef<jnipp::Array<JavaLangString>> JavaIoFile::list() const {
 }
 
 // public java.lang.String[] java.io.File.list(java.io.FilenameFilter)
-jnipp::LocalRef<jnipp::Array<JavaLangString>> JavaIoFile::list_(const jnipp::Ref<JavaIoFilenameFilter>& a0) const {
+jnipp::LocalRef<jnipp::Array<JavaLangString>> JavaIoFile::list(const jnipp::Ref<JavaIoFilenameFilter>& a0) const {
     static jnipp::Method<jnipp::Array<JavaLangString>,JavaIoFilenameFilter> method(clazz(), "list", "(Ljava/io/FilenameFilter;)[Ljava/lang/String;");
     return method.call(*this, a0);
 }
@@ -15696,13 +15696,13 @@ jnipp::LocalRef<jnipp::Array<JavaIoFile>> JavaIoFile::listFiles(const jnipp::Ref
 }
 
 // public java.io.File[] java.io.File.listFiles()
-jnipp::LocalRef<jnipp::Array<JavaIoFile>> JavaIoFile::listFiles_() const {
+jnipp::LocalRef<jnipp::Array<JavaIoFile>> JavaIoFile::listFiles() const {
     static jnipp::Method<jnipp::Array<JavaIoFile>> method(clazz(), "listFiles", "()[Ljava/io/File;");
     return method.call(*this);
 }
 
 // public java.io.File[] java.io.File.listFiles(java.io.FilenameFilter)
-jnipp::LocalRef<jnipp::Array<JavaIoFile>> JavaIoFile::listFiles__(const jnipp::Ref<JavaIoFilenameFilter>& a0) const {
+jnipp::LocalRef<jnipp::Array<JavaIoFile>> JavaIoFile::listFiles(const jnipp::Ref<JavaIoFilenameFilter>& a0) const {
     static jnipp::Method<jnipp::Array<JavaIoFile>,JavaIoFilenameFilter> method(clazz(), "listFiles", "(Ljava/io/FilenameFilter;)[Ljava/io/File;");
     return method.call(*this, a0);
 }
@@ -15738,7 +15738,7 @@ jboolean JavaIoFile::setWritable(jboolean a0) const {
 }
 
 // public boolean java.io.File.setWritable(boolean,boolean)
-jboolean JavaIoFile::setWritable_(jboolean a0, jboolean a1) const {
+jboolean JavaIoFile::setWritable(jboolean a0, jboolean a1) const {
     static jnipp::Method<jboolean,jboolean,jboolean> method(clazz(), "setWritable", "(ZZ)Z");
     return method.call(*this, a0, a1);
 }
@@ -15750,7 +15750,7 @@ jboolean JavaIoFile::setReadable(jboolean a0) const {
 }
 
 // public boolean java.io.File.setReadable(boolean,boolean)
-jboolean JavaIoFile::setReadable_(jboolean a0, jboolean a1) const {
+jboolean JavaIoFile::setReadable(jboolean a0, jboolean a1) const {
     static jnipp::Method<jboolean,jboolean,jboolean> method(clazz(), "setReadable", "(ZZ)Z");
     return method.call(*this, a0, a1);
 }
@@ -15762,7 +15762,7 @@ jboolean JavaIoFile::setExecutable(jboolean a0, jboolean a1) const {
 }
 
 // public boolean java.io.File.setExecutable(boolean)
-jboolean JavaIoFile::setExecutable_(jboolean a0) const {
+jboolean JavaIoFile::setExecutable(jboolean a0) const {
     static jnipp::Method<jboolean,jboolean> method(clazz(), "setExecutable", "(Z)Z");
     return method.call(*this, a0);
 }
@@ -15804,7 +15804,7 @@ jnipp::LocalRef<JavaIoFile> JavaIoFile::createTempFile(const jnipp::Ref<JavaLang
 }
 
 // public static java.io.File java.io.File.createTempFile(java.lang.String,java.lang.String) throws java.io.IOException
-jnipp::LocalRef<JavaIoFile> JavaIoFile::createTempFile_(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1) {
+jnipp::LocalRef<JavaIoFile> JavaIoFile::createTempFile(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1) {
     static jnipp::StaticMethod<JavaIoFile,JavaLangString,JavaLangString> method(clazz(), "createTempFile", "(Ljava/lang/String;Ljava/lang/String;)Ljava/io/File;");
     return method.call(a0, a1);
 }
@@ -15908,7 +15908,7 @@ jnipp::LocalRef<JavaLangObject> JavaUtilConcurrentConcurrentHashMap::remove(cons
 }
 
 // public boolean java.util.concurrent.ConcurrentHashMap.remove(java.lang.Object,java.lang.Object)
-jboolean JavaUtilConcurrentConcurrentHashMap::remove_(const jnipp::Ref<JavaLangObject>& a0, const jnipp::Ref<JavaLangObject>& a1) const {
+jboolean JavaUtilConcurrentConcurrentHashMap::remove(const jnipp::Ref<JavaLangObject>& a0, const jnipp::Ref<JavaLangObject>& a1) const {
     static jnipp::Method<jboolean,JavaLangObject,JavaLangObject> method(clazz(), "remove", "(Ljava/lang/Object;Ljava/lang/Object;)Z");
     return method.call(*this, a0, a1);
 }
@@ -15956,7 +15956,7 @@ jnipp::LocalRef<JavaLangObject> JavaUtilConcurrentConcurrentHashMap::replace(con
 }
 
 // public boolean java.util.concurrent.ConcurrentHashMap.replace(java.lang.Object,java.lang.Object,java.lang.Object)
-jboolean JavaUtilConcurrentConcurrentHashMap::replace_(const jnipp::Ref<JavaLangObject>& a0, const jnipp::Ref<JavaLangObject>& a1, const jnipp::Ref<JavaLangObject>& a2) const {
+jboolean JavaUtilConcurrentConcurrentHashMap::replace(const jnipp::Ref<JavaLangObject>& a0, const jnipp::Ref<JavaLangObject>& a1, const jnipp::Ref<JavaLangObject>& a2) const {
     static jnipp::Method<jboolean,JavaLangObject,JavaLangObject,JavaLangObject> method(clazz(), "replace", "(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Z");
     return method.call(*this, a0, a1, a2);
 }
@@ -16713,7 +16713,7 @@ void JavaNetURLStreamHandler::setURL(const jnipp::Ref<JavaNetURL>& a0, const jni
 }
 
 // protected void java.net.URLStreamHandler.setURL(java.net.URL,java.lang.String,java.lang.String,int,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)
-void JavaNetURLStreamHandler::setURL_(const jnipp::Ref<JavaNetURL>& a0, const jnipp::Ref<JavaLangString>& a1, const jnipp::Ref<JavaLangString>& a2, jint a3, const jnipp::Ref<JavaLangString>& a4, const jnipp::Ref<JavaLangString>& a5, const jnipp::Ref<JavaLangString>& a6, const jnipp::Ref<JavaLangString>& a7, const jnipp::Ref<JavaLangString>& a8) const {
+void JavaNetURLStreamHandler::setURL(const jnipp::Ref<JavaNetURL>& a0, const jnipp::Ref<JavaLangString>& a1, const jnipp::Ref<JavaLangString>& a2, jint a3, const jnipp::Ref<JavaLangString>& a4, const jnipp::Ref<JavaLangString>& a5, const jnipp::Ref<JavaLangString>& a6, const jnipp::Ref<JavaLangString>& a7, const jnipp::Ref<JavaLangString>& a8) const {
     static jnipp::Method<void,JavaNetURL,JavaLangString,JavaLangString,jint,JavaLangString,JavaLangString,JavaLangString,JavaLangString,JavaLangString> method(clazz(), "setURL", "(Ljava/net/URL;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
     method.call(*this, a0, a1, a2, a3, a4, a5, a6, a7, a8);
 }
@@ -16784,7 +16784,7 @@ jnipp::LocalRef<JavaLangString> JavaNetInetAddress::getHostName() const {
 }
 
 // java.lang.String java.net.InetAddress.getHostName(boolean)
-jnipp::LocalRef<JavaLangString> JavaNetInetAddress::getHostName_(jboolean a0) const {
+jnipp::LocalRef<JavaLangString> JavaNetInetAddress::getHostName(jboolean a0) const {
     static jnipp::Method<JavaLangString,jboolean> method(clazz(), "getHostName", "(Z)Ljava/lang/String;");
     return method.call(*this, a0);
 }
@@ -16802,7 +16802,7 @@ jnipp::LocalRef<JavaNetInetAddress> JavaNetInetAddress::getByName(const jnipp::R
 }
 
 // public static java.net.InetAddress java.net.InetAddress.getByName(java.lang.String) throws java.net.UnknownHostException
-jnipp::LocalRef<JavaNetInetAddress> JavaNetInetAddress::getByName_(const jnipp::Ref<JavaLangString>& a0) {
+jnipp::LocalRef<JavaNetInetAddress> JavaNetInetAddress::getByName(const jnipp::Ref<JavaLangString>& a0) {
     static jnipp::StaticMethod<JavaNetInetAddress,JavaLangString> method(clazz(), "getByName", "(Ljava/lang/String;)Ljava/net/InetAddress;");
     return method.call(a0);
 }
@@ -16880,7 +16880,7 @@ jboolean JavaNetInetAddress::isReachable(const jnipp::Ref<JavaNetNetworkInterfac
 }
 
 // public boolean java.net.InetAddress.isReachable(int) throws java.io.IOException
-jboolean JavaNetInetAddress::isReachable_(jint a0) const {
+jboolean JavaNetInetAddress::isReachable(jint a0) const {
     static jnipp::Method<jboolean,jint> method(clazz(), "isReachable", "(I)Z");
     return method.call(*this, a0);
 }
@@ -16928,7 +16928,7 @@ jnipp::LocalRef<JavaNetInetAddress> JavaNetInetAddress::getByAddress(const jnipp
 }
 
 // public static java.net.InetAddress java.net.InetAddress.getByAddress(byte[]) throws java.net.UnknownHostException
-jnipp::LocalRef<JavaNetInetAddress> JavaNetInetAddress::getByAddress_(const jnipp::Ref<jnipp::Array<jbyte>>& a0) {
+jnipp::LocalRef<JavaNetInetAddress> JavaNetInetAddress::getByAddress(const jnipp::Ref<jnipp::Array<jbyte>>& a0) {
     static jnipp::StaticMethod<JavaNetInetAddress,jnipp::Array<jbyte>> method(clazz(), "getByAddress", "([B)Ljava/net/InetAddress;");
     return method.call(a0);
 }
@@ -16940,7 +16940,7 @@ jnipp::LocalRef<jnipp::Array<JavaNetInetAddress>> JavaNetInetAddress::getAllByNa
 }
 
 // private static java.net.InetAddress[] java.net.InetAddress.getAllByName(java.lang.String,java.net.InetAddress) throws java.net.UnknownHostException
-jnipp::LocalRef<jnipp::Array<JavaNetInetAddress>> JavaNetInetAddress::getAllByName_(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaNetInetAddress>& a1) {
+jnipp::LocalRef<jnipp::Array<JavaNetInetAddress>> JavaNetInetAddress::getAllByName(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaNetInetAddress>& a1) {
     static jnipp::StaticMethod<jnipp::Array<JavaNetInetAddress>,JavaLangString,JavaNetInetAddress> method(clazz(), "getAllByName", "(Ljava/lang/String;Ljava/net/InetAddress;)[Ljava/net/InetAddress;");
     return method.call(a0, a1);
 }
@@ -16964,13 +16964,13 @@ jnipp::LocalRef<jnipp::Array<JavaNetInetAddress>> JavaNetInetAddress::getAllByNa
 }
 
 // static java.net.InetAddress[] java.net.InetAddress.getAllByName0(java.lang.String,boolean) throws java.net.UnknownHostException
-jnipp::LocalRef<jnipp::Array<JavaNetInetAddress>> JavaNetInetAddress::getAllByName0_(const jnipp::Ref<JavaLangString>& a0, jboolean a1) {
+jnipp::LocalRef<jnipp::Array<JavaNetInetAddress>> JavaNetInetAddress::getAllByName0(const jnipp::Ref<JavaLangString>& a0, jboolean a1) {
     static jnipp::StaticMethod<jnipp::Array<JavaNetInetAddress>,JavaLangString,jboolean> method(clazz(), "getAllByName0", "(Ljava/lang/String;Z)[Ljava/net/InetAddress;");
     return method.call(a0, a1);
 }
 
 // private static java.net.InetAddress[] java.net.InetAddress.getAllByName0(java.lang.String) throws java.net.UnknownHostException
-jnipp::LocalRef<jnipp::Array<JavaNetInetAddress>> JavaNetInetAddress::getAllByName0__(const jnipp::Ref<JavaLangString>& a0) {
+jnipp::LocalRef<jnipp::Array<JavaNetInetAddress>> JavaNetInetAddress::getAllByName0(const jnipp::Ref<JavaLangString>& a0) {
     static jnipp::StaticMethod<jnipp::Array<JavaNetInetAddress>,JavaLangString> method(clazz(), "getAllByName0", "(Ljava/lang/String;)[Ljava/net/InetAddress;");
     return method.call(a0);
 }
@@ -17096,7 +17096,7 @@ jnipp::LocalRef<JavaLangObject> JavaNetURLConnection::getContent(const jnipp::Re
 }
 
 // public java.lang.Object java.net.URLConnection.getContent() throws java.io.IOException
-jnipp::LocalRef<JavaLangObject> JavaNetURLConnection::getContent_() const {
+jnipp::LocalRef<JavaLangObject> JavaNetURLConnection::getContent() const {
     static jnipp::Method<JavaLangObject> method(clazz(), "getContent", "()Ljava/lang/Object;");
     return method.call(*this);
 }
@@ -17126,7 +17126,7 @@ jnipp::LocalRef<JavaLangString> JavaNetURLConnection::getHeaderField(const jnipp
 }
 
 // public java.lang.String java.net.URLConnection.getHeaderField(int)
-jnipp::LocalRef<JavaLangString> JavaNetURLConnection::getHeaderField_(jint a0) const {
+jnipp::LocalRef<JavaLangString> JavaNetURLConnection::getHeaderField(jint a0) const {
     static jnipp::Method<JavaLangString,jint> method(clazz(), "getHeaderField", "(I)Ljava/lang/String;");
     return method.call(*this, a0);
 }
@@ -17501,13 +17501,13 @@ jint JavaNetURI::decode(jchar a0) {
 }
 
 // private static java.lang.String java.net.URI.decode(java.lang.String)
-jnipp::LocalRef<JavaLangString> JavaNetURI::decode_(const jnipp::Ref<JavaLangString>& a0) {
+jnipp::LocalRef<JavaLangString> JavaNetURI::decode(const jnipp::Ref<JavaLangString>& a0) {
     static jnipp::StaticMethod<JavaLangString,JavaLangString> method(clazz(), "decode", "(Ljava/lang/String;)Ljava/lang/String;");
     return method.call(a0);
 }
 
 // private static byte java.net.URI.decode(char,char)
-jbyte JavaNetURI::decode__(jchar a0, jchar a1) {
+jbyte JavaNetURI::decode(jchar a0, jchar a1) {
     static jnipp::StaticMethod<jbyte,jchar,jchar> method(clazz(), "decode", "(CC)B");
     return method.call(a0, a1);
 }
@@ -17555,13 +17555,13 @@ jnipp::LocalRef<JavaNetURI> JavaNetURI::resolve(const jnipp::Ref<JavaNetURI>& a0
 }
 
 // public java.net.URI java.net.URI.resolve(java.net.URI)
-jnipp::LocalRef<JavaNetURI> JavaNetURI::resolve_(const jnipp::Ref<JavaNetURI>& a0) const {
+jnipp::LocalRef<JavaNetURI> JavaNetURI::resolve(const jnipp::Ref<JavaNetURI>& a0) const {
     static jnipp::Method<JavaNetURI,JavaNetURI> method(clazz(), "resolve", "(Ljava/net/URI;)Ljava/net/URI;");
     return method.call(*this, a0);
 }
 
 // public java.net.URI java.net.URI.resolve(java.lang.String)
-jnipp::LocalRef<JavaNetURI> JavaNetURI::resolve__(const jnipp::Ref<JavaLangString>& a0) const {
+jnipp::LocalRef<JavaNetURI> JavaNetURI::resolve(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<JavaNetURI,JavaLangString> method(clazz(), "resolve", "(Ljava/lang/String;)Ljava/net/URI;");
     return method.call(*this, a0);
 }
@@ -17573,13 +17573,13 @@ jnipp::LocalRef<JavaNetURI> JavaNetURI::normalize() const {
 }
 
 // private static java.net.URI java.net.URI.normalize(java.net.URI)
-jnipp::LocalRef<JavaNetURI> JavaNetURI::normalize_(const jnipp::Ref<JavaNetURI>& a0) {
+jnipp::LocalRef<JavaNetURI> JavaNetURI::normalize(const jnipp::Ref<JavaNetURI>& a0) {
     static jnipp::StaticMethod<JavaNetURI,JavaNetURI> method(clazz(), "normalize", "(Ljava/net/URI;)Ljava/net/URI;");
     return method.call(a0);
 }
 
 // private static java.lang.String java.net.URI.normalize(java.lang.String)
-jnipp::LocalRef<JavaLangString> JavaNetURI::normalize__(const jnipp::Ref<JavaLangString>& a0) {
+jnipp::LocalRef<JavaLangString> JavaNetURI::normalize(const jnipp::Ref<JavaLangString>& a0) {
     static jnipp::StaticMethod<JavaLangString,JavaLangString> method(clazz(), "normalize", "(Ljava/lang/String;)Ljava/lang/String;");
     return method.call(a0);
 }
@@ -17699,7 +17699,7 @@ jlong JavaNetURI::lowMask(const jnipp::Ref<JavaLangString>& a0) {
 }
 
 // private static long java.net.URI.lowMask(char,char)
-jlong JavaNetURI::lowMask_(jchar a0, jchar a1) {
+jlong JavaNetURI::lowMask(jchar a0, jchar a1) {
     static jnipp::StaticMethod<jlong,jchar,jchar> method(clazz(), "lowMask", "(CC)J");
     return method.call(a0, a1);
 }
@@ -17711,7 +17711,7 @@ jlong JavaNetURI::highMask(const jnipp::Ref<JavaLangString>& a0) {
 }
 
 // private static long java.net.URI.highMask(char,char)
-jlong JavaNetURI::highMask_(jchar a0, jchar a1) {
+jlong JavaNetURI::highMask(jchar a0, jchar a1) {
     static jnipp::StaticMethod<jlong,jchar,jchar> method(clazz(), "highMask", "(CC)J");
     return method.call(a0, a1);
 }
@@ -17741,7 +17741,7 @@ jnipp::LocalRef<JavaNetURI> JavaNetURI::relativize(const jnipp::Ref<JavaNetURI>&
 }
 
 // public java.net.URI java.net.URI.relativize(java.net.URI)
-jnipp::LocalRef<JavaNetURI> JavaNetURI::relativize_(const jnipp::Ref<JavaNetURI>& a0) const {
+jnipp::LocalRef<JavaNetURI> JavaNetURI::relativize(const jnipp::Ref<JavaNetURI>& a0) const {
     static jnipp::Method<JavaNetURI,JavaNetURI> method(clazz(), "relativize", "(Ljava/net/URI;)Ljava/net/URI;");
     return method.call(*this, a0);
 }
@@ -18661,13 +18661,13 @@ void SunSecurityUtilDebug::println() const {
 }
 
 // public void sun.security.util.Debug.println(java.lang.String)
-void SunSecurityUtilDebug::println_(const jnipp::Ref<JavaLangString>& a0) const {
+void SunSecurityUtilDebug::println(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<void,JavaLangString> method(clazz(), "println", "(Ljava/lang/String;)V");
     method.call(*this, a0);
 }
 
 // public static void sun.security.util.Debug.println(java.lang.String,java.lang.String)
-void SunSecurityUtilDebug::println__(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1) {
+void SunSecurityUtilDebug::println(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1) {
     static jnipp::StaticMethod<void,JavaLangString,JavaLangString> method(clazz(), "println", "(Ljava/lang/String;Ljava/lang/String;)V");
     method.call(a0, a1);
 }
@@ -18685,7 +18685,7 @@ jnipp::LocalRef<SunSecurityUtilDebug> SunSecurityUtilDebug::getInstance(const jn
 }
 
 // public static sun.security.util.Debug sun.security.util.Debug.getInstance(java.lang.String,java.lang.String)
-jnipp::LocalRef<SunSecurityUtilDebug> SunSecurityUtilDebug::getInstance_(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1) {
+jnipp::LocalRef<SunSecurityUtilDebug> SunSecurityUtilDebug::getInstance(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1) {
     static jnipp::StaticMethod<SunSecurityUtilDebug,JavaLangString,JavaLangString> method(clazz(), "getInstance", "(Ljava/lang/String;Ljava/lang/String;)Lsun/security/util/Debug;");
     return method.call(a0, a1);
 }
@@ -18875,7 +18875,7 @@ jnipp::LocalRef<JavaUtilFormatter> JavaUtilFormatter::format(const jnipp::Ref<Ja
 }
 
 // public java.util.Formatter java.util.Formatter.format(java.lang.String,java.lang.Object[])
-jnipp::LocalRef<JavaUtilFormatter> JavaUtilFormatter::format_(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<jnipp::Array<JavaLangObject>>& a1) const {
+jnipp::LocalRef<JavaUtilFormatter> JavaUtilFormatter::format(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<jnipp::Array<JavaLangObject>>& a1) const {
     static jnipp::Method<JavaUtilFormatter,JavaLangString,jnipp::Array<JavaLangObject>> method(clazz(), "format", "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/util/Formatter;");
     return method.call(*this, a0, a1);
 }
@@ -18989,13 +18989,13 @@ void JavaIoBufferedWriter::write(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint
 }
 
 // public void java.io.BufferedWriter.write(int) throws java.io.IOException
-void JavaIoBufferedWriter::write_(jint a0) const {
+void JavaIoBufferedWriter::write(jint a0) const {
     static jnipp::Method<void,jint> method(clazz(), "write", "(I)V");
     method.call(*this, a0);
 }
 
 // public void java.io.BufferedWriter.write(java.lang.String,int,int) throws java.io.IOException
-void JavaIoBufferedWriter::write__(const jnipp::Ref<JavaLangString>& a0, jint a1, jint a2) const {
+void JavaIoBufferedWriter::write(const jnipp::Ref<JavaLangString>& a0, jint a1, jint a2) const {
     static jnipp::Method<void,JavaLangString,jint,jint> method(clazz(), "write", "(Ljava/lang/String;II)V");
     method.call(*this, a0, a1, a2);
 }
@@ -19068,13 +19068,13 @@ void JavaIoOutputStreamWriter::write(const jnipp::Ref<JavaLangString>& a0, jint 
 }
 
 // public void java.io.OutputStreamWriter.write(int) throws java.io.IOException
-void JavaIoOutputStreamWriter::write_(jint a0) const {
+void JavaIoOutputStreamWriter::write(jint a0) const {
     static jnipp::Method<void,jint> method(clazz(), "write", "(I)V");
     method.call(*this, a0);
 }
 
 // public void java.io.OutputStreamWriter.write(char[],int,int) throws java.io.IOException
-void JavaIoOutputStreamWriter::write__(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1, jint a2) const {
+void JavaIoOutputStreamWriter::write(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1, jint a2) const {
     static jnipp::Method<void,jnipp::Array<jchar>,jint,jint> method(clazz(), "write", "([CII)V");
     method.call(*this, a0, a1, a2);
 }
@@ -19229,7 +19229,7 @@ void JavaUtilArrayList::add(jint a0, const jnipp::Ref<JavaLangObject>& a1) const
 }
 
 // public boolean java.util.ArrayList.add(java.lang.Object)
-jboolean JavaUtilArrayList::add_(const jnipp::Ref<JavaLangObject>& a0) const {
+jboolean JavaUtilArrayList::add(const jnipp::Ref<JavaLangObject>& a0) const {
     static jnipp::Method<jboolean,JavaLangObject> method(clazz(), "add", "(Ljava/lang/Object;)Z");
     return method.call(*this, a0);
 }
@@ -19241,7 +19241,7 @@ jnipp::LocalRef<JavaLangObject> JavaUtilArrayList::remove(jint a0) const {
 }
 
 // public boolean java.util.ArrayList.remove(java.lang.Object)
-jboolean JavaUtilArrayList::remove_(const jnipp::Ref<JavaLangObject>& a0) const {
+jboolean JavaUtilArrayList::remove(const jnipp::Ref<JavaLangObject>& a0) const {
     static jnipp::Method<jboolean,JavaLangObject> method(clazz(), "remove", "(Ljava/lang/Object;)Z");
     return method.call(*this, a0);
 }
@@ -19307,7 +19307,7 @@ jnipp::LocalRef<jnipp::Array<JavaLangObject>> JavaUtilArrayList::toArray() const
 }
 
 // public java.lang.Object[] java.util.ArrayList.toArray(java.lang.Object[])
-jnipp::LocalRef<jnipp::Array<JavaLangObject>> JavaUtilArrayList::toArray_(const jnipp::Ref<jnipp::Array<JavaLangObject>>& a0) const {
+jnipp::LocalRef<jnipp::Array<JavaLangObject>> JavaUtilArrayList::toArray(const jnipp::Ref<jnipp::Array<JavaLangObject>>& a0) const {
     static jnipp::Method<jnipp::Array<JavaLangObject>,jnipp::Array<JavaLangObject>> method(clazz(), "toArray", "([Ljava/lang/Object;)[Ljava/lang/Object;");
     return method.call(*this, a0);
 }
@@ -19319,7 +19319,7 @@ jboolean JavaUtilArrayList::addAll(const jnipp::Ref<JavaUtilCollection>& a0) con
 }
 
 // public boolean java.util.ArrayList.addAll(int,java.util.Collection)
-jboolean JavaUtilArrayList::addAll_(jint a0, const jnipp::Ref<JavaUtilCollection>& a1) const {
+jboolean JavaUtilArrayList::addAll(jint a0, const jnipp::Ref<JavaUtilCollection>& a1) const {
     static jnipp::Method<jboolean,jint,JavaUtilCollection> method(clazz(), "addAll", "(ILjava/util/Collection;)Z");
     return method.call(*this, a0, a1);
 }
@@ -19409,7 +19409,7 @@ jnipp::LocalRef<JavaUtilListIterator> JavaUtilArrayList::listIterator(jint a0) c
 }
 
 // public java.util.ListIterator java.util.ArrayList.listIterator()
-jnipp::LocalRef<JavaUtilListIterator> JavaUtilArrayList::listIterator_() const {
+jnipp::LocalRef<JavaUtilListIterator> JavaUtilArrayList::listIterator() const {
     static jnipp::Method<JavaUtilListIterator> method(clazz(), "listIterator", "()Ljava/util/ListIterator;");
     return method.call(*this);
 }
@@ -19482,7 +19482,7 @@ jnipp::LocalRef<SunMiscResource> SunMiscURLClassPath_Loader::getResource(const j
 }
 
 // sun.misc.Resource sun.misc.URLClassPath$Loader.getResource(java.lang.String,boolean)
-jnipp::LocalRef<SunMiscResource> SunMiscURLClassPath_Loader::getResource_(const jnipp::Ref<JavaLangString>& a0, jboolean a1) const {
+jnipp::LocalRef<SunMiscResource> SunMiscURLClassPath_Loader::getResource(const jnipp::Ref<JavaLangString>& a0, jboolean a1) const {
     static jnipp::Method<SunMiscResource,JavaLangString,jboolean> method(clazz(), "getResource", "(Ljava/lang/String;Z)Lsun/misc/Resource;");
     return method.call(*this, a0, a1);
 }
@@ -19576,7 +19576,7 @@ jnipp::LocalRef<JavaLangString> JavaNetSocketPermission::getActions(jint a0) {
 }
 
 // public java.lang.String java.net.SocketPermission.getActions()
-jnipp::LocalRef<JavaLangString> JavaNetSocketPermission::getActions_() const {
+jnipp::LocalRef<JavaLangString> JavaNetSocketPermission::getActions() const {
     static jnipp::Method<JavaLangString> method(clazz(), "getActions", "()Ljava/lang/String;");
     return method.call(*this);
 }
@@ -19603,30 +19603,6 @@ jnipp::LocalRef<JavaLangString> JavaNetSocketPermission::getHost(const jnipp::Re
 jboolean JavaNetSocketPermission::match(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1) const {
     static jnipp::Method<jboolean,JavaLangString,JavaLangString> method(clazz(), "match", "(Ljava/lang/String;Ljava/lang/String;)Z");
     return method.call(*this, a0, a1);
-}
-
-// boolean java.net.SocketPermission.impliesIgnoreMask(java.net.SocketPermission)
-jboolean JavaNetSocketPermission::impliesIgnoreMask(const jnipp::Ref<JavaNetSocketPermission>& a0) const {
-    static jnipp::Method<jboolean,JavaNetSocketPermission> method(clazz(), "impliesIgnoreMask", "(Ljava/net/SocketPermission;)Z");
-    return method.call(*this, a0);
-}
-
-// int java.net.SocketPermission.getMask()
-jint JavaNetSocketPermission::getMask() const {
-    static jnipp::Method<jint> method(clazz(), "getMask", "()I");
-    return method.call(*this);
-}
-
-// private static int java.net.SocketPermission.getMask(java.lang.String)
-jint JavaNetSocketPermission::getMask_(const jnipp::Ref<JavaLangString>& a0) {
-    static jnipp::StaticMethod<jint,JavaLangString> method(clazz(), "getMask", "(Ljava/lang/String;)I");
-    return method.call(a0);
-}
-
-// private static boolean java.net.SocketPermission.inRange(int,int,int,int)
-jboolean JavaNetSocketPermission::inRange(jint a0, jint a1, jint a2, jint a3) {
-    static jnipp::StaticMethod<jboolean,jint,jint,jint,jint> method(clazz(), "inRange", "(IIII)Z");
-    return method.call(a0, a1, a2, a3);
 }
 
 // private void java.net.SocketPermission.setDeny()
@@ -19694,6 +19670,30 @@ jint JavaNetSocketPermission::initEphemeralPorts(const jnipp::Ref<JavaLangString
     static jnipp::StaticMethod<jint,JavaLangString,jint> method(clazz(), "initEphemeralPorts", "(Ljava/lang/String;I)I");
     return method.call(a0, a1);
 }
+
+// boolean java.net.SocketPermission.impliesIgnoreMask(java.net.SocketPermission)
+jboolean JavaNetSocketPermission::impliesIgnoreMask(const jnipp::Ref<JavaNetSocketPermission>& a0) const {
+    static jnipp::Method<jboolean,JavaNetSocketPermission> method(clazz(), "impliesIgnoreMask", "(Ljava/net/SocketPermission;)Z");
+    return method.call(*this, a0);
+}
+
+// private static int java.net.SocketPermission.getMask(java.lang.String)
+jint JavaNetSocketPermission::getMask(const jnipp::Ref<JavaLangString>& a0) {
+    static jnipp::StaticMethod<jint,JavaLangString> method(clazz(), "getMask", "(Ljava/lang/String;)I");
+    return method.call(a0);
+}
+
+// int java.net.SocketPermission.getMask()
+jint JavaNetSocketPermission::getMask() const {
+    static jnipp::Method<jint> method(clazz(), "getMask", "()I");
+    return method.call(*this);
+}
+
+// private static boolean java.net.SocketPermission.inRange(int,int,int,int)
+jboolean JavaNetSocketPermission::inRange(jint a0, jint a1, jint a2, jint a3) {
+    static jnipp::StaticMethod<jboolean,jint,jint,jint,jint> method(clazz(), "inRange", "(IIII)Z");
+    return method.call(a0, a1, a2, a3);
+}
 #undef serialVersionUID
 const jnipp::StaticField<jlong> JavaNetSocketPermission::serialVersionUID ("java/net/SocketPermission", "serialVersionUID", "J");
 #undef CONNECT
@@ -19745,13 +19745,13 @@ jnipp::LocalRef<JavaSecurityCertCertificateFactory> JavaSecurityCertCertificateF
 }
 
 // public static final java.security.cert.CertificateFactory java.security.cert.CertificateFactory.getInstance(java.lang.String,java.lang.String) throws java.security.cert.CertificateException,java.security.NoSuchProviderException
-jnipp::LocalRef<JavaSecurityCertCertificateFactory> JavaSecurityCertCertificateFactory::getInstance_(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1) {
+jnipp::LocalRef<JavaSecurityCertCertificateFactory> JavaSecurityCertCertificateFactory::getInstance(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1) {
     static jnipp::StaticMethod<JavaSecurityCertCertificateFactory,JavaLangString,JavaLangString> method(clazz(), "getInstance", "(Ljava/lang/String;Ljava/lang/String;)Ljava/security/cert/CertificateFactory;");
     return method.call(a0, a1);
 }
 
 // public static final java.security.cert.CertificateFactory java.security.cert.CertificateFactory.getInstance(java.lang.String) throws java.security.cert.CertificateException
-jnipp::LocalRef<JavaSecurityCertCertificateFactory> JavaSecurityCertCertificateFactory::getInstance__(const jnipp::Ref<JavaLangString>& a0) {
+jnipp::LocalRef<JavaSecurityCertCertificateFactory> JavaSecurityCertCertificateFactory::getInstance(const jnipp::Ref<JavaLangString>& a0) {
     static jnipp::StaticMethod<JavaSecurityCertCertificateFactory,JavaLangString> method(clazz(), "getInstance", "(Ljava/lang/String;)Ljava/security/cert/CertificateFactory;");
     return method.call(a0);
 }
@@ -19775,13 +19775,13 @@ jnipp::LocalRef<JavaSecurityCertCertPath> JavaSecurityCertCertificateFactory::ge
 }
 
 // public final java.security.cert.CertPath java.security.cert.CertificateFactory.generateCertPath(java.io.InputStream,java.lang.String) throws java.security.cert.CertificateException
-jnipp::LocalRef<JavaSecurityCertCertPath> JavaSecurityCertCertificateFactory::generateCertPath_(const jnipp::Ref<JavaIoInputStream>& a0, const jnipp::Ref<JavaLangString>& a1) const {
+jnipp::LocalRef<JavaSecurityCertCertPath> JavaSecurityCertCertificateFactory::generateCertPath(const jnipp::Ref<JavaIoInputStream>& a0, const jnipp::Ref<JavaLangString>& a1) const {
     static jnipp::Method<JavaSecurityCertCertPath,JavaIoInputStream,JavaLangString> method(clazz(), "generateCertPath", "(Ljava/io/InputStream;Ljava/lang/String;)Ljava/security/cert/CertPath;");
     return method.call(*this, a0, a1);
 }
 
 // public final java.security.cert.CertPath java.security.cert.CertificateFactory.generateCertPath(java.util.List) throws java.security.cert.CertificateException
-jnipp::LocalRef<JavaSecurityCertCertPath> JavaSecurityCertCertificateFactory::generateCertPath__(const jnipp::Ref<JavaUtilList>& a0) const {
+jnipp::LocalRef<JavaSecurityCertCertPath> JavaSecurityCertCertificateFactory::generateCertPath(const jnipp::Ref<JavaUtilList>& a0) const {
     static jnipp::Method<JavaSecurityCertCertPath,JavaUtilList> method(clazz(), "generateCertPath", "(Ljava/util/List;)Ljava/security/cert/CertPath;");
     return method.call(*this, a0);
 }
@@ -19986,7 +19986,7 @@ jboolean JavaUtilConcurrentLocksReentrantLock::tryLock() const {
 }
 
 // public boolean java.util.concurrent.locks.ReentrantLock.tryLock(long,java.util.concurrent.TimeUnit) throws java.lang.InterruptedException
-jboolean JavaUtilConcurrentLocksReentrantLock::tryLock_(jlong a0, const jnipp::Ref<JavaUtilConcurrentTimeUnit>& a1) const {
+jboolean JavaUtilConcurrentLocksReentrantLock::tryLock(jlong a0, const jnipp::Ref<JavaUtilConcurrentTimeUnit>& a1) const {
     static jnipp::Method<jboolean,jlong,JavaUtilConcurrentTimeUnit> method(clazz(), "tryLock", "(JLjava/util/concurrent/TimeUnit;)Z");
     return method.call(*this, a0, a1);
 }
@@ -20113,7 +20113,7 @@ jboolean JavaUtilConcurrentConcurrentHashMap_Segment::replace(const jnipp::Ref<J
 }
 
 // final java.lang.Object java.util.concurrent.ConcurrentHashMap$Segment.replace(java.lang.Object,int,java.lang.Object)
-jnipp::LocalRef<JavaLangObject> JavaUtilConcurrentConcurrentHashMap_Segment::replace_(const jnipp::Ref<JavaLangObject>& a0, jint a1, const jnipp::Ref<JavaLangObject>& a2) const {
+jnipp::LocalRef<JavaLangObject> JavaUtilConcurrentConcurrentHashMap_Segment::replace(const jnipp::Ref<JavaLangObject>& a0, jint a1, const jnipp::Ref<JavaLangObject>& a2) const {
     static jnipp::Method<JavaLangObject,JavaLangObject,jint,JavaLangObject> method(clazz(), "replace", "(Ljava/lang/Object;ILjava/lang/Object;)Ljava/lang/Object;");
     return method.call(*this, a0, a1, a2);
 }
@@ -20618,7 +20618,7 @@ jint SunNetWwwMessageHeader::getKey(const jnipp::Ref<JavaLangString>& a0) const 
 }
 
 // public synchronized java.lang.String sun.net.www.MessageHeader.getKey(int)
-jnipp::LocalRef<JavaLangString> SunNetWwwMessageHeader::getKey_(jint a0) const {
+jnipp::LocalRef<JavaLangString> SunNetWwwMessageHeader::getKey(jint a0) const {
     static jnipp::Method<JavaLangString,jint> method(clazz(), "getKey", "(I)Ljava/lang/String;");
     return method.call(*this, a0);
 }
@@ -20636,7 +20636,7 @@ void SunNetWwwMessageHeader::set(const jnipp::Ref<JavaLangString>& a0, const jni
 }
 
 // public synchronized void sun.net.www.MessageHeader.set(int,java.lang.String,java.lang.String)
-void SunNetWwwMessageHeader::set_(jint a0, const jnipp::Ref<JavaLangString>& a1, const jnipp::Ref<JavaLangString>& a2) const {
+void SunNetWwwMessageHeader::set(jint a0, const jnipp::Ref<JavaLangString>& a1, const jnipp::Ref<JavaLangString>& a2) const {
     static jnipp::Method<void,jint,JavaLangString,JavaLangString> method(clazz(), "set", "(ILjava/lang/String;Ljava/lang/String;)V");
     method.call(*this, a0, a1, a2);
 }
@@ -20666,7 +20666,7 @@ jnipp::LocalRef<JavaUtilMap> SunNetWwwMessageHeader::getHeaders() const {
 }
 
 // public synchronized java.util.Map sun.net.www.MessageHeader.getHeaders(java.lang.String[])
-jnipp::LocalRef<JavaUtilMap> SunNetWwwMessageHeader::getHeaders_(const jnipp::Ref<jnipp::Array<JavaLangString>>& a0) const {
+jnipp::LocalRef<JavaUtilMap> SunNetWwwMessageHeader::getHeaders(const jnipp::Ref<jnipp::Array<JavaLangString>>& a0) const {
     static jnipp::Method<JavaUtilMap,jnipp::Array<JavaLangString>> method(clazz(), "getHeaders", "([Ljava/lang/String;)Ljava/util/Map;");
     return method.call(*this, a0);
 }
@@ -21331,7 +21331,7 @@ jnipp::LocalRef<JavaLangString> JavaUtilJarAttributes::getValue(const jnipp::Ref
 }
 
 // public java.lang.String java.util.jar.Attributes.getValue(java.lang.String)
-jnipp::LocalRef<JavaLangString> JavaUtilJarAttributes::getValue_(const jnipp::Ref<JavaLangString>& a0) const {
+jnipp::LocalRef<JavaLangString> JavaUtilJarAttributes::getValue(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<JavaLangString,JavaLangString> method(clazz(), "getValue", "(Ljava/lang/String;)Ljava/lang/String;");
     return method.call(*this, a0);
 }
@@ -21527,7 +21527,7 @@ jnipp::LocalRef<jnipp::Array<jint>> JavaMathBigInteger::add(const jnipp::Ref<jni
 }
 
 // public java.math.BigInteger java.math.BigInteger.add(java.math.BigInteger)
-jnipp::LocalRef<JavaMathBigInteger> JavaMathBigInteger::add_(const jnipp::Ref<JavaMathBigInteger>& a0) const {
+jnipp::LocalRef<JavaMathBigInteger> JavaMathBigInteger::add(const jnipp::Ref<JavaMathBigInteger>& a0) const {
     static jnipp::Method<JavaMathBigInteger,JavaMathBigInteger> method(clazz(), "add", "(Ljava/math/BigInteger;)Ljava/math/BigInteger;");
     return method.call(*this, a0);
 }
@@ -21617,7 +21617,7 @@ jnipp::LocalRef<JavaMathBigInteger> JavaMathBigInteger::valueOf(const jnipp::Ref
 }
 
 // public static java.math.BigInteger java.math.BigInteger.valueOf(long)
-jnipp::LocalRef<JavaMathBigInteger> JavaMathBigInteger::valueOf_(jlong a0) {
+jnipp::LocalRef<JavaMathBigInteger> JavaMathBigInteger::valueOf(jlong a0) {
     static jnipp::StaticMethod<JavaMathBigInteger,jlong> method(clazz(), "valueOf", "(J)Ljava/math/BigInteger;");
     return method.call(a0);
 }
@@ -21689,7 +21689,7 @@ jint JavaMathBigInteger::bitLength() const {
 }
 
 // private static int java.math.BigInteger.bitLength(int[],int)
-jint JavaMathBigInteger::bitLength_(const jnipp::Ref<jnipp::Array<jint>>& a0, jint a1) {
+jint JavaMathBigInteger::bitLength(const jnipp::Ref<jnipp::Array<jint>>& a0, jint a1) {
     static jnipp::StaticMethod<jint,jnipp::Array<jint>,jint> method(clazz(), "bitLength", "([II)I");
     return method.call(a0, a1);
 }
@@ -21779,7 +21779,7 @@ jnipp::LocalRef<jnipp::Array<jint>> JavaMathBigInteger::subtract(const jnipp::Re
 }
 
 // public java.math.BigInteger java.math.BigInteger.subtract(java.math.BigInteger)
-jnipp::LocalRef<JavaMathBigInteger> JavaMathBigInteger::subtract_(const jnipp::Ref<JavaMathBigInteger>& a0) const {
+jnipp::LocalRef<JavaMathBigInteger> JavaMathBigInteger::subtract(const jnipp::Ref<JavaMathBigInteger>& a0) const {
     static jnipp::Method<JavaMathBigInteger,JavaMathBigInteger> method(clazz(), "subtract", "(Ljava/math/BigInteger;)Ljava/math/BigInteger;");
     return method.call(*this, a0);
 }
@@ -21791,7 +21791,7 @@ jnipp::LocalRef<JavaMathBigInteger> JavaMathBigInteger::multiply(const jnipp::Re
 }
 
 // java.math.BigInteger java.math.BigInteger.multiply(long)
-jnipp::LocalRef<JavaMathBigInteger> JavaMathBigInteger::multiply_(jlong a0) const {
+jnipp::LocalRef<JavaMathBigInteger> JavaMathBigInteger::multiply(jlong a0) const {
     static jnipp::Method<JavaMathBigInteger,jlong> method(clazz(), "multiply", "(J)Ljava/math/BigInteger;");
     return method.call(*this, a0);
 }
@@ -22019,7 +22019,7 @@ jnipp::LocalRef<jnipp::Array<jint>> JavaMathBigInteger::makePositive(const jnipp
 }
 
 // private static int[] java.math.BigInteger.makePositive(int[])
-jnipp::LocalRef<jnipp::Array<jint>> JavaMathBigInteger::makePositive_(const jnipp::Ref<jnipp::Array<jint>>& a0) {
+jnipp::LocalRef<jnipp::Array<jint>> JavaMathBigInteger::makePositive(const jnipp::Ref<jnipp::Array<jint>>& a0) {
     static jnipp::StaticMethod<jnipp::Array<jint>,jnipp::Array<jint>> method(clazz(), "makePositive", "([I)[I");
     return method.call(a0);
 }
@@ -22145,7 +22145,7 @@ jnipp::LocalRef<jnipp::Array<JavaLangString>> JavaUtilRegexPattern::split(const 
 }
 
 // public java.lang.String[] java.util.regex.Pattern.split(java.lang.CharSequence)
-jnipp::LocalRef<jnipp::Array<JavaLangString>> JavaUtilRegexPattern::split_(const jnipp::Ref<JavaLangCharSequence>& a0) const {
+jnipp::LocalRef<jnipp::Array<JavaLangString>> JavaUtilRegexPattern::split(const jnipp::Ref<JavaLangCharSequence>& a0) const {
     static jnipp::Method<jnipp::Array<JavaLangString>,JavaLangCharSequence> method(clazz(), "split", "(Ljava/lang/CharSequence;)[Ljava/lang/String;");
     return method.call(*this, a0);
 }
@@ -22157,13 +22157,13 @@ void JavaUtilRegexPattern::compile() const {
 }
 
 // public static java.util.regex.Pattern java.util.regex.Pattern.compile(java.lang.String)
-jnipp::LocalRef<JavaUtilRegexPattern> JavaUtilRegexPattern::compile_(const jnipp::Ref<JavaLangString>& a0) {
+jnipp::LocalRef<JavaUtilRegexPattern> JavaUtilRegexPattern::compile(const jnipp::Ref<JavaLangString>& a0) {
     static jnipp::StaticMethod<JavaUtilRegexPattern,JavaLangString> method(clazz(), "compile", "(Ljava/lang/String;)Ljava/util/regex/Pattern;");
     return method.call(a0);
 }
 
 // public static java.util.regex.Pattern java.util.regex.Pattern.compile(java.lang.String,int)
-jnipp::LocalRef<JavaUtilRegexPattern> JavaUtilRegexPattern::compile__(const jnipp::Ref<JavaLangString>& a0, jint a1) {
+jnipp::LocalRef<JavaUtilRegexPattern> JavaUtilRegexPattern::compile(const jnipp::Ref<JavaLangString>& a0, jint a1) {
     static jnipp::StaticMethod<JavaUtilRegexPattern,JavaLangString,jint> method(clazz(), "compile", "(Ljava/lang/String;I)Ljava/util/regex/Pattern;");
     return method.call(a0, a1);
 }
@@ -22642,13 +22642,13 @@ void SunNioCsStreamEncoder::write(jint a0) const {
 }
 
 // public void sun.nio.cs.StreamEncoder.write(char[],int,int) throws java.io.IOException
-void SunNioCsStreamEncoder::write_(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1, jint a2) const {
+void SunNioCsStreamEncoder::write(const jnipp::Ref<jnipp::Array<jchar>>& a0, jint a1, jint a2) const {
     static jnipp::Method<void,jnipp::Array<jchar>,jint,jint> method(clazz(), "write", "([CII)V");
     method.call(*this, a0, a1, a2);
 }
 
 // public void sun.nio.cs.StreamEncoder.write(java.lang.String,int,int) throws java.io.IOException
-void SunNioCsStreamEncoder::write__(const jnipp::Ref<JavaLangString>& a0, jint a1, jint a2) const {
+void SunNioCsStreamEncoder::write(const jnipp::Ref<JavaLangString>& a0, jint a1, jint a2) const {
     static jnipp::Method<void,JavaLangString,jint,jint> method(clazz(), "write", "(Ljava/lang/String;II)V");
     method.call(*this, a0, a1, a2);
 }
@@ -22702,13 +22702,13 @@ jnipp::LocalRef<SunNioCsStreamEncoder> SunNioCsStreamEncoder::forOutputStreamWri
 }
 
 // public static sun.nio.cs.StreamEncoder sun.nio.cs.StreamEncoder.forOutputStreamWriter(java.io.OutputStream,java.lang.Object,java.nio.charset.Charset)
-jnipp::LocalRef<SunNioCsStreamEncoder> SunNioCsStreamEncoder::forOutputStreamWriter_(const jnipp::Ref<JavaIoOutputStream>& a0, const jnipp::Ref<JavaLangObject>& a1, const jnipp::Ref<JavaNioCharsetCharset>& a2) {
+jnipp::LocalRef<SunNioCsStreamEncoder> SunNioCsStreamEncoder::forOutputStreamWriter(const jnipp::Ref<JavaIoOutputStream>& a0, const jnipp::Ref<JavaLangObject>& a1, const jnipp::Ref<JavaNioCharsetCharset>& a2) {
     static jnipp::StaticMethod<SunNioCsStreamEncoder,JavaIoOutputStream,JavaLangObject,JavaNioCharsetCharset> method(clazz(), "forOutputStreamWriter", "(Ljava/io/OutputStream;Ljava/lang/Object;Ljava/nio/charset/Charset;)Lsun/nio/cs/StreamEncoder;");
     return method.call(a0, a1, a2);
 }
 
 // public static sun.nio.cs.StreamEncoder sun.nio.cs.StreamEncoder.forOutputStreamWriter(java.io.OutputStream,java.lang.Object,java.lang.String) throws java.io.UnsupportedEncodingException
-jnipp::LocalRef<SunNioCsStreamEncoder> SunNioCsStreamEncoder::forOutputStreamWriter__(const jnipp::Ref<JavaIoOutputStream>& a0, const jnipp::Ref<JavaLangObject>& a1, const jnipp::Ref<JavaLangString>& a2) {
+jnipp::LocalRef<SunNioCsStreamEncoder> SunNioCsStreamEncoder::forOutputStreamWriter(const jnipp::Ref<JavaIoOutputStream>& a0, const jnipp::Ref<JavaLangObject>& a1, const jnipp::Ref<JavaLangString>& a2) {
     static jnipp::StaticMethod<SunNioCsStreamEncoder,JavaIoOutputStream,JavaLangObject,JavaLangString> method(clazz(), "forOutputStreamWriter", "(Ljava/io/OutputStream;Ljava/lang/Object;Ljava/lang/String;)Lsun/nio/cs/StreamEncoder;");
     return method.call(a0, a1, a2);
 }
@@ -22789,7 +22789,7 @@ jnipp::LocalRef<JavaNioByteBuffer> JavaNioCharsetCharsetEncoder::encode(const jn
 }
 
 // public final java.nio.charset.CoderResult java.nio.charset.CharsetEncoder.encode(java.nio.CharBuffer,java.nio.ByteBuffer,boolean)
-jnipp::LocalRef<JavaNioCharsetCoderResult> JavaNioCharsetCharsetEncoder::encode_(const jnipp::Ref<JavaNioCharBuffer>& a0, const jnipp::Ref<JavaNioByteBuffer>& a1, jboolean a2) const {
+jnipp::LocalRef<JavaNioCharsetCoderResult> JavaNioCharsetCharsetEncoder::encode(const jnipp::Ref<JavaNioCharBuffer>& a0, const jnipp::Ref<JavaNioByteBuffer>& a1, jboolean a2) const {
     static jnipp::Method<JavaNioCharsetCoderResult,JavaNioCharBuffer,JavaNioByteBuffer,jboolean> method(clazz(), "encode", "(Ljava/nio/CharBuffer;Ljava/nio/ByteBuffer;Z)Ljava/nio/charset/CoderResult;");
     return method.call(*this, a0, a1, a2);
 }
@@ -22813,13 +22813,13 @@ jboolean JavaNioCharsetCharsetEncoder::canEncode(jchar a0) const {
 }
 
 // public boolean java.nio.charset.CharsetEncoder.canEncode(java.lang.CharSequence)
-jboolean JavaNioCharsetCharsetEncoder::canEncode_(const jnipp::Ref<JavaLangCharSequence>& a0) const {
+jboolean JavaNioCharsetCharsetEncoder::canEncode(const jnipp::Ref<JavaLangCharSequence>& a0) const {
     static jnipp::Method<jboolean,JavaLangCharSequence> method(clazz(), "canEncode", "(Ljava/lang/CharSequence;)Z");
     return method.call(*this, a0);
 }
 
 // private boolean java.nio.charset.CharsetEncoder.canEncode(java.nio.CharBuffer)
-jboolean JavaNioCharsetCharsetEncoder::canEncode__(const jnipp::Ref<JavaNioCharBuffer>& a0) const {
+jboolean JavaNioCharsetCharsetEncoder::canEncode(const jnipp::Ref<JavaNioCharBuffer>& a0) const {
     static jnipp::Method<jboolean,JavaNioCharBuffer> method(clazz(), "canEncode", "(Ljava/nio/CharBuffer;)Z");
     return method.call(*this, a0);
 }
@@ -22992,7 +22992,7 @@ void JavaUtilZipZipFile::close(jlong a0) {
 }
 
 // public void java.util.zip.ZipFile.close() throws java.io.IOException
-void JavaUtilZipZipFile::close_() const {
+void JavaUtilZipZipFile::close() const {
     static jnipp::Method<void> method(clazz(), "close", "()V");
     method.call(*this);
 }
@@ -23004,7 +23004,7 @@ jlong JavaUtilZipZipFile::getEntry(jlong a0, const jnipp::Ref<jnipp::Array<jbyte
 }
 
 // public java.util.zip.ZipEntry java.util.zip.ZipFile.getEntry(java.lang.String)
-jnipp::LocalRef<JavaUtilZipZipEntry> JavaUtilZipZipFile::getEntry_(const jnipp::Ref<JavaLangString>& a0) const {
+jnipp::LocalRef<JavaUtilZipZipEntry> JavaUtilZipZipFile::getEntry(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<JavaUtilZipZipEntry,JavaLangString> method(clazz(), "getEntry", "(Ljava/lang/String;)Ljava/util/zip/ZipEntry;");
     return method.call(*this, a0);
 }
@@ -23421,7 +23421,7 @@ jnipp::LocalRef<JavaLangString> JavaUtilProperties::getProperty(const jnipp::Ref
 }
 
 // public java.lang.String java.util.Properties.getProperty(java.lang.String)
-jnipp::LocalRef<JavaLangString> JavaUtilProperties::getProperty_(const jnipp::Ref<JavaLangString>& a0) const {
+jnipp::LocalRef<JavaLangString> JavaUtilProperties::getProperty(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<JavaLangString,JavaLangString> method(clazz(), "getProperty", "(Ljava/lang/String;)Ljava/lang/String;");
     return method.call(*this, a0);
 }
@@ -23433,7 +23433,7 @@ void JavaUtilProperties::load(const jnipp::Ref<JavaIoReader>& a0) const {
 }
 
 // public synchronized void java.util.Properties.load(java.io.InputStream) throws java.io.IOException
-void JavaUtilProperties::load_(const jnipp::Ref<JavaIoInputStream>& a0) const {
+void JavaUtilProperties::load(const jnipp::Ref<JavaIoInputStream>& a0) const {
     static jnipp::Method<void,JavaIoInputStream> method(clazz(), "load", "(Ljava/io/InputStream;)V");
     method.call(*this, a0);
 }
@@ -23457,7 +23457,7 @@ void JavaUtilProperties::list(const jnipp::Ref<JavaIoPrintWriter>& a0) const {
 }
 
 // public void java.util.Properties.list(java.io.PrintStream)
-void JavaUtilProperties::list_(const jnipp::Ref<JavaIoPrintStream>& a0) const {
+void JavaUtilProperties::list(const jnipp::Ref<JavaIoPrintStream>& a0) const {
     static jnipp::Method<void,JavaIoPrintStream> method(clazz(), "list", "(Ljava/io/PrintStream;)V");
     method.call(*this, a0);
 }
@@ -23493,7 +23493,7 @@ void JavaUtilProperties::store(const jnipp::Ref<JavaIoOutputStream>& a0, const j
 }
 
 // public void java.util.Properties.store(java.io.Writer,java.lang.String) throws java.io.IOException
-void JavaUtilProperties::store_(const jnipp::Ref<JavaIoWriter>& a0, const jnipp::Ref<JavaLangString>& a1) const {
+void JavaUtilProperties::store(const jnipp::Ref<JavaIoWriter>& a0, const jnipp::Ref<JavaLangString>& a1) const {
     static jnipp::Method<void,JavaIoWriter,JavaLangString> method(clazz(), "store", "(Ljava/io/Writer;Ljava/lang/String;)V");
     method.call(*this, a0, a1);
 }
@@ -23517,7 +23517,7 @@ void JavaUtilProperties::storeToXML(const jnipp::Ref<JavaIoOutputStream>& a0, co
 }
 
 // public void java.util.Properties.storeToXML(java.io.OutputStream,java.lang.String,java.lang.String) throws java.io.IOException
-void JavaUtilProperties::storeToXML_(const jnipp::Ref<JavaIoOutputStream>& a0, const jnipp::Ref<JavaLangString>& a1, const jnipp::Ref<JavaLangString>& a2) const {
+void JavaUtilProperties::storeToXML(const jnipp::Ref<JavaIoOutputStream>& a0, const jnipp::Ref<JavaLangString>& a1, const jnipp::Ref<JavaLangString>& a2) const {
     static jnipp::Method<void,JavaIoOutputStream,JavaLangString,JavaLangString> method(clazz(), "storeToXML", "(Ljava/io/OutputStream;Ljava/lang/String;Ljava/lang/String;)V");
     method.call(*this, a0, a1, a2);
 }
@@ -23815,13 +23815,13 @@ jnipp::LocalRef<JavaSecurityCertCertPath> JavaSecurityCertCertificateFactorySpi:
 }
 
 // public java.security.cert.CertPath java.security.cert.CertificateFactorySpi.engineGenerateCertPath(java.io.InputStream,java.lang.String) throws java.security.cert.CertificateException
-jnipp::LocalRef<JavaSecurityCertCertPath> JavaSecurityCertCertificateFactorySpi::engineGenerateCertPath_(const jnipp::Ref<JavaIoInputStream>& a0, const jnipp::Ref<JavaLangString>& a1) const {
+jnipp::LocalRef<JavaSecurityCertCertPath> JavaSecurityCertCertificateFactorySpi::engineGenerateCertPath(const jnipp::Ref<JavaIoInputStream>& a0, const jnipp::Ref<JavaLangString>& a1) const {
     static jnipp::Method<JavaSecurityCertCertPath,JavaIoInputStream,JavaLangString> method(clazz(), "engineGenerateCertPath", "(Ljava/io/InputStream;Ljava/lang/String;)Ljava/security/cert/CertPath;");
     return method.call(*this, a0, a1);
 }
 
 // public java.security.cert.CertPath java.security.cert.CertificateFactorySpi.engineGenerateCertPath(java.io.InputStream) throws java.security.cert.CertificateException
-jnipp::LocalRef<JavaSecurityCertCertPath> JavaSecurityCertCertificateFactorySpi::engineGenerateCertPath__(const jnipp::Ref<JavaIoInputStream>& a0) const {
+jnipp::LocalRef<JavaSecurityCertCertPath> JavaSecurityCertCertificateFactorySpi::engineGenerateCertPath(const jnipp::Ref<JavaIoInputStream>& a0) const {
     static jnipp::Method<JavaSecurityCertCertPath,JavaIoInputStream> method(clazz(), "engineGenerateCertPath", "(Ljava/io/InputStream;)Ljava/security/cert/CertPath;");
     return method.call(*this, a0);
 }
@@ -24472,46 +24472,6 @@ inline jnipp::GlobalRef<jnipp::Class>& JavaUtilConcurrentLocksCondition::clazz()
     if (!cls) cls.set(jnipp::Class::forName("java/util/concurrent/locks/Condition"));
     return cls;
 }
-inline jnipp::GlobalRef<jnipp::Class>& JavaNetInetAddress_CacheEntry::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/net/InetAddress$CacheEntry"));
-    return cls;
-}
-
-// java.net.InetAddress$CacheEntry(java.net.InetAddress[],long)
-jnipp::LocalRef<JavaNetInetAddress_CacheEntry> JavaNetInetAddress_CacheEntry::construct(const jnipp::Ref<jnipp::Array<JavaNetInetAddress>>& a0, jlong a1) {
-    static jnipp::Constructor<JavaNetInetAddress_CacheEntry,jnipp::Array<JavaNetInetAddress>,jlong> constructor(clazz(), "([Ljava/net/InetAddress;J)V");
-    return constructor.construct(a0, a1);
-}
-inline jnipp::GlobalRef<jnipp::Class>& JavaNetInetAddress_Cache_Type::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/net/InetAddress$Cache$Type"));
-    return cls;
-}
-
-// private java.net.InetAddress$Cache$Type(java.lang.String,int)
-jnipp::LocalRef<JavaNetInetAddress_Cache_Type> JavaNetInetAddress_Cache_Type::construct(const jnipp::Ref<JavaLangString>& a0, jint a1) {
-    static jnipp::Constructor<JavaNetInetAddress_Cache_Type,JavaLangString,jint> constructor(clazz(), "(Ljava/lang/String;I)V");
-    return constructor.construct(a0, a1);
-}
-
-// public static java.net.InetAddress$Cache$Type[] java.net.InetAddress$Cache$Type.values()
-jnipp::LocalRef<jnipp::Array<JavaNetInetAddress_Cache_Type>> JavaNetInetAddress_Cache_Type::values() {
-    static jnipp::StaticMethod<jnipp::Array<JavaNetInetAddress_Cache_Type>> method(clazz(), "values", "()[Ljava/net/InetAddress$Cache$Type;");
-    return method.call();
-}
-
-// public static java.net.InetAddress$Cache$Type java.net.InetAddress$Cache$Type.valueOf(java.lang.String)
-jnipp::LocalRef<JavaNetInetAddress_Cache_Type> JavaNetInetAddress_Cache_Type::valueOf(const jnipp::Ref<JavaLangString>& a0) {
-    static jnipp::StaticMethod<JavaNetInetAddress_Cache_Type,JavaLangString> method(clazz(), "valueOf", "(Ljava/lang/String;)Ljava/net/InetAddress$Cache$Type;");
-    return method.call(a0);
-}
-#undef Positive
-const jnipp::StaticField<JavaNetInetAddress_Cache_Type> JavaNetInetAddress_Cache_Type::Positive ("java/net/InetAddress$Cache$Type", "Positive", "Ljava/net/InetAddress$Cache$Type;");
-#undef Negative
-const jnipp::StaticField<JavaNetInetAddress_Cache_Type> JavaNetInetAddress_Cache_Type::Negative ("java/net/InetAddress$Cache$Type", "Negative", "Ljava/net/InetAddress$Cache$Type;");
-#undef $VALUES
-const jnipp::StaticField<jnipp::Array<JavaNetInetAddress_Cache_Type>> JavaNetInetAddress_Cache_Type::$VALUES ("java/net/InetAddress$Cache$Type", "$VALUES", "[Ljava/net/InetAddress$Cache$Type;");
 inline jnipp::GlobalRef<jnipp::Class>& JavaUtilLinkedHashMap::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/util/LinkedHashMap"));
@@ -24615,6 +24575,46 @@ jboolean JavaUtilLinkedHashMap::removeEldestEntry(const jnipp::Ref<JavaUtilMap_E
 }
 #undef serialVersionUID
 const jnipp::StaticField<jlong> JavaUtilLinkedHashMap::serialVersionUID ("java/util/LinkedHashMap", "serialVersionUID", "J");
+inline jnipp::GlobalRef<jnipp::Class>& JavaNetInetAddress_CacheEntry::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/net/InetAddress$CacheEntry"));
+    return cls;
+}
+
+// java.net.InetAddress$CacheEntry(java.net.InetAddress[],long)
+jnipp::LocalRef<JavaNetInetAddress_CacheEntry> JavaNetInetAddress_CacheEntry::construct(const jnipp::Ref<jnipp::Array<JavaNetInetAddress>>& a0, jlong a1) {
+    static jnipp::Constructor<JavaNetInetAddress_CacheEntry,jnipp::Array<JavaNetInetAddress>,jlong> constructor(clazz(), "([Ljava/net/InetAddress;J)V");
+    return constructor.construct(a0, a1);
+}
+inline jnipp::GlobalRef<jnipp::Class>& JavaNetInetAddress_Cache_Type::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/net/InetAddress$Cache$Type"));
+    return cls;
+}
+
+// private java.net.InetAddress$Cache$Type(java.lang.String,int)
+jnipp::LocalRef<JavaNetInetAddress_Cache_Type> JavaNetInetAddress_Cache_Type::construct(const jnipp::Ref<JavaLangString>& a0, jint a1) {
+    static jnipp::Constructor<JavaNetInetAddress_Cache_Type,JavaLangString,jint> constructor(clazz(), "(Ljava/lang/String;I)V");
+    return constructor.construct(a0, a1);
+}
+
+// public static java.net.InetAddress$Cache$Type[] java.net.InetAddress$Cache$Type.values()
+jnipp::LocalRef<jnipp::Array<JavaNetInetAddress_Cache_Type>> JavaNetInetAddress_Cache_Type::values() {
+    static jnipp::StaticMethod<jnipp::Array<JavaNetInetAddress_Cache_Type>> method(clazz(), "values", "()[Ljava/net/InetAddress$Cache$Type;");
+    return method.call();
+}
+
+// public static java.net.InetAddress$Cache$Type java.net.InetAddress$Cache$Type.valueOf(java.lang.String)
+jnipp::LocalRef<JavaNetInetAddress_Cache_Type> JavaNetInetAddress_Cache_Type::valueOf(const jnipp::Ref<JavaLangString>& a0) {
+    static jnipp::StaticMethod<JavaNetInetAddress_Cache_Type,JavaLangString> method(clazz(), "valueOf", "(Ljava/lang/String;)Ljava/net/InetAddress$Cache$Type;");
+    return method.call(a0);
+}
+#undef Positive
+const jnipp::StaticField<JavaNetInetAddress_Cache_Type> JavaNetInetAddress_Cache_Type::Positive ("java/net/InetAddress$Cache$Type", "Positive", "Ljava/net/InetAddress$Cache$Type;");
+#undef Negative
+const jnipp::StaticField<JavaNetInetAddress_Cache_Type> JavaNetInetAddress_Cache_Type::Negative ("java/net/InetAddress$Cache$Type", "Negative", "Ljava/net/InetAddress$Cache$Type;");
+#undef $VALUES
+const jnipp::StaticField<jnipp::Array<JavaNetInetAddress_Cache_Type>> JavaNetInetAddress_Cache_Type::$VALUES ("java/net/InetAddress$Cache$Type", "$VALUES", "[Ljava/net/InetAddress$Cache$Type;");
 inline jnipp::GlobalRef<jnipp::Class>& JavaNetInterfaceAddress::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/net/InterfaceAddress"));
@@ -24709,7 +24709,7 @@ jboolean JavaUtilJarAttributes_Name::isValid(const jnipp::Ref<JavaLangString>& a
 }
 
 // private static boolean java.util.jar.Attributes$Name.isValid(char)
-jboolean JavaUtilJarAttributes_Name::isValid_(jchar a0) {
+jboolean JavaUtilJarAttributes_Name::isValid(jchar a0) {
     static jnipp::StaticMethod<jboolean,jchar> method(clazz(), "isValid", "(C)Z");
     return method.call(a0);
 }
@@ -24772,7 +24772,7 @@ jint JavaUtilJarManifest_FastInputStream::readLine(const jnipp::Ref<jnipp::Array
 }
 
 // public int java.util.jar.Manifest$FastInputStream.readLine(byte[],int,int) throws java.io.IOException
-jint JavaUtilJarManifest_FastInputStream::readLine_(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
+jint JavaUtilJarManifest_FastInputStream::readLine(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
     static jnipp::Method<jint,jnipp::Array<jbyte>,jint,jint> method(clazz(), "readLine", "([BII)I");
     return method.call(*this, a0, a1, a2);
 }
@@ -24802,7 +24802,7 @@ jint JavaUtilJarManifest_FastInputStream::read() const {
 }
 
 // public int java.util.jar.Manifest$FastInputStream.read(byte[],int,int) throws java.io.IOException
-jint JavaUtilJarManifest_FastInputStream::read_(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
+jint JavaUtilJarManifest_FastInputStream::read(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
     static jnipp::Method<jint,jnipp::Array<jbyte>,jint,jint> method(clazz(), "read", "([BII)I");
     return method.call(*this, a0, a1, a2);
 }
@@ -24872,7 +24872,7 @@ jint JavaUtilRandom::nextInt(jint a0) const {
 }
 
 // public int java.util.Random.nextInt()
-jint JavaUtilRandom::nextInt_() const {
+jint JavaUtilRandom::nextInt() const {
     static jnipp::Method<jint> method(clazz(), "nextInt", "()I");
     return method.call(*this);
 }
@@ -24969,6 +24969,29 @@ jboolean JavaUtilRegexPattern_Node::study(const jnipp::Ref<JavaUtilRegexPattern_
     static jnipp::Method<jboolean,JavaUtilRegexPattern_TreeInfo> method(clazz(), "study", "(Ljava/util/regex/Pattern$TreeInfo;)Z");
     return method.call(*this, a0);
 }
+inline jnipp::GlobalRef<jnipp::Class>& JavaUtilRegexPattern_GroupHead::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/util/regex/Pattern$GroupHead"));
+    return cls;
+}
+
+// java.util.regex.Pattern$GroupHead(int)
+jnipp::LocalRef<JavaUtilRegexPattern_GroupHead> JavaUtilRegexPattern_GroupHead::construct(jint a0) {
+    static jnipp::Constructor<JavaUtilRegexPattern_GroupHead,jint> constructor(clazz(), "(I)V");
+    return constructor.construct(a0);
+}
+
+// boolean java.util.regex.Pattern$GroupHead.match(java.util.regex.Matcher,int,java.lang.CharSequence)
+jboolean JavaUtilRegexPattern_GroupHead::match(const jnipp::Ref<JavaUtilRegexMatcher>& a0, jint a1, const jnipp::Ref<JavaLangCharSequence>& a2) const {
+    static jnipp::Method<jboolean,JavaUtilRegexMatcher,jint,JavaLangCharSequence> method(clazz(), "match", "(Ljava/util/regex/Matcher;ILjava/lang/CharSequence;)Z");
+    return method.call(*this, a0, a1, a2);
+}
+
+// boolean java.util.regex.Pattern$GroupHead.matchRef(java.util.regex.Matcher,int,java.lang.CharSequence)
+jboolean JavaUtilRegexPattern_GroupHead::matchRef(const jnipp::Ref<JavaUtilRegexMatcher>& a0, jint a1, const jnipp::Ref<JavaLangCharSequence>& a2) const {
+    static jnipp::Method<jboolean,JavaUtilRegexMatcher,jint,JavaLangCharSequence> method(clazz(), "matchRef", "(Ljava/util/regex/Matcher;ILjava/lang/CharSequence;)Z");
+    return method.call(*this, a0, a1, a2);
+}
 inline jnipp::GlobalRef<jnipp::Class>& JavaUtilRegexPattern_CharProperty::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/util/regex/Pattern$CharProperty"));
@@ -25004,29 +25027,60 @@ jboolean JavaUtilRegexPattern_CharProperty::study(const jnipp::Ref<JavaUtilRegex
     static jnipp::Method<jboolean,JavaUtilRegexPattern_TreeInfo> method(clazz(), "study", "(Ljava/util/regex/Pattern$TreeInfo;)Z");
     return method.call(*this, a0);
 }
-inline jnipp::GlobalRef<jnipp::Class>& JavaUtilRegexPattern_GroupHead::clazz() {
+inline jnipp::GlobalRef<jnipp::Class>& JavaUtilRegexPattern_BmpCharProperty::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/util/regex/Pattern$GroupHead"));
+    if (!cls) cls.set(jnipp::Class::forName("java/util/regex/Pattern$BmpCharProperty"));
     return cls;
 }
 
-// java.util.regex.Pattern$GroupHead(int)
-jnipp::LocalRef<JavaUtilRegexPattern_GroupHead> JavaUtilRegexPattern_GroupHead::construct(jint a0) {
-    static jnipp::Constructor<JavaUtilRegexPattern_GroupHead,jint> constructor(clazz(), "(I)V");
+// private java.util.regex.Pattern$BmpCharProperty()
+jnipp::LocalRef<JavaUtilRegexPattern_BmpCharProperty> JavaUtilRegexPattern_BmpCharProperty::construct() {
+    static jnipp::Constructor<JavaUtilRegexPattern_BmpCharProperty> constructor(clazz(), "()V");
+    return constructor.construct();
+}
+
+// java.util.regex.Pattern$BmpCharProperty(java.util.regex.Pattern$1)
+jnipp::LocalRef<JavaUtilRegexPattern_BmpCharProperty> JavaUtilRegexPattern_BmpCharProperty::construct(const jnipp::Ref<JavaUtilRegexPattern_1>& a0) {
+    static jnipp::Constructor<JavaUtilRegexPattern_BmpCharProperty,JavaUtilRegexPattern_1> constructor(clazz(), "(Ljava/util/regex/Pattern$1;)V");
     return constructor.construct(a0);
 }
 
-// boolean java.util.regex.Pattern$GroupHead.match(java.util.regex.Matcher,int,java.lang.CharSequence)
-jboolean JavaUtilRegexPattern_GroupHead::match(const jnipp::Ref<JavaUtilRegexMatcher>& a0, jint a1, const jnipp::Ref<JavaLangCharSequence>& a2) const {
+// boolean java.util.regex.Pattern$BmpCharProperty.match(java.util.regex.Matcher,int,java.lang.CharSequence)
+jboolean JavaUtilRegexPattern_BmpCharProperty::match(const jnipp::Ref<JavaUtilRegexMatcher>& a0, jint a1, const jnipp::Ref<JavaLangCharSequence>& a2) const {
     static jnipp::Method<jboolean,JavaUtilRegexMatcher,jint,JavaLangCharSequence> method(clazz(), "match", "(Ljava/util/regex/Matcher;ILjava/lang/CharSequence;)Z");
     return method.call(*this, a0, a1, a2);
 }
-
-// boolean java.util.regex.Pattern$GroupHead.matchRef(java.util.regex.Matcher,int,java.lang.CharSequence)
-jboolean JavaUtilRegexPattern_GroupHead::matchRef(const jnipp::Ref<JavaUtilRegexMatcher>& a0, jint a1, const jnipp::Ref<JavaLangCharSequence>& a2) const {
-    static jnipp::Method<jboolean,JavaUtilRegexMatcher,jint,JavaLangCharSequence> method(clazz(), "matchRef", "(Ljava/util/regex/Matcher;ILjava/lang/CharSequence;)Z");
-    return method.call(*this, a0, a1, a2);
+inline jnipp::GlobalRef<jnipp::Class>& JavaUtilRegexPattern_BitClass::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/util/regex/Pattern$BitClass"));
+    return cls;
 }
+
+// java.util.regex.Pattern$BitClass()
+jnipp::LocalRef<JavaUtilRegexPattern_BitClass> JavaUtilRegexPattern_BitClass::construct() {
+    static jnipp::Constructor<JavaUtilRegexPattern_BitClass> constructor(clazz(), "()V");
+    return constructor.construct();
+}
+
+// private java.util.regex.Pattern$BitClass(boolean[])
+jnipp::LocalRef<JavaUtilRegexPattern_BitClass> JavaUtilRegexPattern_BitClass::construct(const jnipp::Ref<jnipp::Array<jboolean>>& a0) {
+    static jnipp::Constructor<JavaUtilRegexPattern_BitClass,jnipp::Array<jboolean>> constructor(clazz(), "([Z)V");
+    return constructor.construct(a0);
+}
+
+// java.util.regex.Pattern$BitClass java.util.regex.Pattern$BitClass.add(int,int)
+jnipp::LocalRef<JavaUtilRegexPattern_BitClass> JavaUtilRegexPattern_BitClass::add(jint a0, jint a1) const {
+    static jnipp::Method<JavaUtilRegexPattern_BitClass,jint,jint> method(clazz(), "add", "(II)Ljava/util/regex/Pattern$BitClass;");
+    return method.call(*this, a0, a1);
+}
+
+// boolean java.util.regex.Pattern$BitClass.isSatisfiedBy(int)
+jboolean JavaUtilRegexPattern_BitClass::isSatisfiedBy(jint a0) const {
+    static jnipp::Method<jboolean,jint> method(clazz(), "isSatisfiedBy", "(I)Z");
+    return method.call(*this, a0);
+}
+#undef $assertionsDisabled
+const jnipp::StaticField<jboolean> JavaUtilRegexPattern_BitClass::$assertionsDisabled ("java/util/regex/Pattern$BitClass", "$assertionsDisabled", "Z");
 inline jnipp::GlobalRef<jnipp::Class>& JavaUtilRegexMatcher::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/util/regex/Matcher"));
@@ -25052,13 +25106,13 @@ jnipp::LocalRef<JavaLangString> JavaUtilRegexMatcher::group(const jnipp::Ref<Jav
 }
 
 // public java.lang.String java.util.regex.Matcher.group(int)
-jnipp::LocalRef<JavaLangString> JavaUtilRegexMatcher::group_(jint a0) const {
+jnipp::LocalRef<JavaLangString> JavaUtilRegexMatcher::group(jint a0) const {
     static jnipp::Method<JavaLangString,jint> method(clazz(), "group", "(I)Ljava/lang/String;");
     return method.call(*this, a0);
 }
 
 // public java.lang.String java.util.regex.Matcher.group()
-jnipp::LocalRef<JavaLangString> JavaUtilRegexMatcher::group__() const {
+jnipp::LocalRef<JavaLangString> JavaUtilRegexMatcher::group() const {
     static jnipp::Method<JavaLangString> method(clazz(), "group", "()Ljava/lang/String;");
     return method.call(*this);
 }
@@ -25100,7 +25154,7 @@ jboolean JavaUtilRegexMatcher::find() const {
 }
 
 // public boolean java.util.regex.Matcher.find(int)
-jboolean JavaUtilRegexMatcher::find_(jint a0) const {
+jboolean JavaUtilRegexMatcher::find(jint a0) const {
     static jnipp::Method<jboolean,jint> method(clazz(), "find", "(I)Z");
     return method.call(*this, a0);
 }
@@ -25112,7 +25166,7 @@ jint JavaUtilRegexMatcher::start() const {
 }
 
 // public int java.util.regex.Matcher.start(int)
-jint JavaUtilRegexMatcher::start_(jint a0) const {
+jint JavaUtilRegexMatcher::start(jint a0) const {
     static jnipp::Method<jint,jint> method(clazz(), "start", "(I)I");
     return method.call(*this, a0);
 }
@@ -25124,7 +25178,7 @@ jnipp::LocalRef<JavaUtilRegexMatcher> JavaUtilRegexMatcher::reset(const jnipp::R
 }
 
 // public java.util.regex.Matcher java.util.regex.Matcher.reset()
-jnipp::LocalRef<JavaUtilRegexMatcher> JavaUtilRegexMatcher::reset_() const {
+jnipp::LocalRef<JavaUtilRegexMatcher> JavaUtilRegexMatcher::reset() const {
     static jnipp::Method<JavaUtilRegexMatcher> method(clazz(), "reset", "()Ljava/util/regex/Matcher;");
     return method.call(*this);
 }
@@ -25166,7 +25220,7 @@ jint JavaUtilRegexMatcher::end() const {
 }
 
 // public int java.util.regex.Matcher.end(int)
-jint JavaUtilRegexMatcher::end_(jint a0) const {
+jint JavaUtilRegexMatcher::end(jint a0) const {
     static jnipp::Method<jint,jint> method(clazz(), "end", "(I)I");
     return method.call(*this, a0);
 }
@@ -25264,60 +25318,6 @@ jnipp::LocalRef<JavaLangCharSequence> JavaUtilRegexMatcher::getSubSequence(jint 
 const jnipp::StaticField<jint> JavaUtilRegexMatcher::ENDANCHOR ("java/util/regex/Matcher", "ENDANCHOR", "I");
 #undef NOANCHOR
 const jnipp::StaticField<jint> JavaUtilRegexMatcher::NOANCHOR ("java/util/regex/Matcher", "NOANCHOR", "I");
-inline jnipp::GlobalRef<jnipp::Class>& JavaUtilRegexPattern_BmpCharProperty::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/util/regex/Pattern$BmpCharProperty"));
-    return cls;
-}
-
-// private java.util.regex.Pattern$BmpCharProperty()
-jnipp::LocalRef<JavaUtilRegexPattern_BmpCharProperty> JavaUtilRegexPattern_BmpCharProperty::construct() {
-    static jnipp::Constructor<JavaUtilRegexPattern_BmpCharProperty> constructor(clazz(), "()V");
-    return constructor.construct();
-}
-
-// java.util.regex.Pattern$BmpCharProperty(java.util.regex.Pattern$1)
-jnipp::LocalRef<JavaUtilRegexPattern_BmpCharProperty> JavaUtilRegexPattern_BmpCharProperty::construct(const jnipp::Ref<JavaUtilRegexPattern_1>& a0) {
-    static jnipp::Constructor<JavaUtilRegexPattern_BmpCharProperty,JavaUtilRegexPattern_1> constructor(clazz(), "(Ljava/util/regex/Pattern$1;)V");
-    return constructor.construct(a0);
-}
-
-// boolean java.util.regex.Pattern$BmpCharProperty.match(java.util.regex.Matcher,int,java.lang.CharSequence)
-jboolean JavaUtilRegexPattern_BmpCharProperty::match(const jnipp::Ref<JavaUtilRegexMatcher>& a0, jint a1, const jnipp::Ref<JavaLangCharSequence>& a2) const {
-    static jnipp::Method<jboolean,JavaUtilRegexMatcher,jint,JavaLangCharSequence> method(clazz(), "match", "(Ljava/util/regex/Matcher;ILjava/lang/CharSequence;)Z");
-    return method.call(*this, a0, a1, a2);
-}
-inline jnipp::GlobalRef<jnipp::Class>& JavaUtilRegexPattern_BitClass::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/util/regex/Pattern$BitClass"));
-    return cls;
-}
-
-// java.util.regex.Pattern$BitClass()
-jnipp::LocalRef<JavaUtilRegexPattern_BitClass> JavaUtilRegexPattern_BitClass::construct() {
-    static jnipp::Constructor<JavaUtilRegexPattern_BitClass> constructor(clazz(), "()V");
-    return constructor.construct();
-}
-
-// private java.util.regex.Pattern$BitClass(boolean[])
-jnipp::LocalRef<JavaUtilRegexPattern_BitClass> JavaUtilRegexPattern_BitClass::construct(const jnipp::Ref<jnipp::Array<jboolean>>& a0) {
-    static jnipp::Constructor<JavaUtilRegexPattern_BitClass,jnipp::Array<jboolean>> constructor(clazz(), "([Z)V");
-    return constructor.construct(a0);
-}
-
-// java.util.regex.Pattern$BitClass java.util.regex.Pattern$BitClass.add(int,int)
-jnipp::LocalRef<JavaUtilRegexPattern_BitClass> JavaUtilRegexPattern_BitClass::add(jint a0, jint a1) const {
-    static jnipp::Method<JavaUtilRegexPattern_BitClass,jint,jint> method(clazz(), "add", "(II)Ljava/util/regex/Pattern$BitClass;");
-    return method.call(*this, a0, a1);
-}
-
-// boolean java.util.regex.Pattern$BitClass.isSatisfiedBy(int)
-jboolean JavaUtilRegexPattern_BitClass::isSatisfiedBy(jint a0) const {
-    static jnipp::Method<jboolean,jint> method(clazz(), "isSatisfiedBy", "(I)Z");
-    return method.call(*this, a0);
-}
-#undef $assertionsDisabled
-const jnipp::StaticField<jboolean> JavaUtilRegexPattern_BitClass::$assertionsDisabled ("java/util/regex/Pattern$BitClass", "$assertionsDisabled", "Z");
 inline jnipp::GlobalRef<jnipp::Class>& JavaLangRuntimeException::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/lang/RuntimeException"));
@@ -25540,6 +25540,194 @@ jnipp::StaticField<JavaNioCharsetCoderResult_Cache> JavaNioCharsetCoderResult::m
 jnipp::StaticField<JavaNioCharsetCoderResult_Cache> JavaNioCharsetCoderResult::unmappableCache ("java/nio/charset/CoderResult", "unmappableCache", "Ljava/nio/charset/CoderResult$Cache;");
 #undef $assertionsDisabled
 const jnipp::StaticField<jboolean> JavaNioCharsetCoderResult::$assertionsDisabled ("java/nio/charset/CoderResult", "$assertionsDisabled", "Z");
+inline jnipp::GlobalRef<jnipp::Class>& JavaUtilZipInflater::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/util/zip/Inflater"));
+    return cls;
+}
+
+// public java.util.zip.Inflater(boolean)
+jnipp::LocalRef<JavaUtilZipInflater> JavaUtilZipInflater::construct(jboolean a0) {
+    static jnipp::Constructor<JavaUtilZipInflater,jboolean> constructor(clazz(), "(Z)V");
+    return constructor.construct(a0);
+}
+
+// public java.util.zip.Inflater()
+jnipp::LocalRef<JavaUtilZipInflater> JavaUtilZipInflater::construct() {
+    static jnipp::Constructor<JavaUtilZipInflater> constructor(clazz(), "()V");
+    return constructor.construct();
+}
+
+// protected void java.util.zip.Inflater.finalize()
+void JavaUtilZipInflater::finalize() const {
+    static jnipp::Method<void> method(clazz(), "finalize", "()V");
+    method.call(*this);
+}
+
+// private static native long java.util.zip.Inflater.init(boolean)
+jlong JavaUtilZipInflater::init(jboolean a0) {
+    static jnipp::StaticMethod<jlong,jboolean> method(clazz(), "init", "(Z)J");
+    return method.call(a0);
+}
+
+// private static native void java.util.zip.Inflater.reset(long)
+void JavaUtilZipInflater::reset(jlong a0) {
+    static jnipp::StaticMethod<void,jlong> method(clazz(), "reset", "(J)V");
+    method.call(a0);
+}
+
+// public void java.util.zip.Inflater.reset()
+void JavaUtilZipInflater::reset() const {
+    static jnipp::Method<void> method(clazz(), "reset", "()V");
+    method.call(*this);
+}
+
+// private static native void java.util.zip.Inflater.initIDs()
+void JavaUtilZipInflater::initIDs() {
+    static jnipp::StaticMethod<void> method(clazz(), "initIDs", "()V");
+    method.call();
+}
+
+// private void java.util.zip.Inflater.ensureOpen()
+void JavaUtilZipInflater::ensureOpen() const {
+    static jnipp::Method<void> method(clazz(), "ensureOpen", "()V");
+    method.call(*this);
+}
+
+// boolean java.util.zip.Inflater.ended()
+jboolean JavaUtilZipInflater::ended() const {
+    static jnipp::Method<jboolean> method(clazz(), "ended", "()Z");
+    return method.call(*this);
+}
+
+// private static native void java.util.zip.Inflater.end(long)
+void JavaUtilZipInflater::end(jlong a0) {
+    static jnipp::StaticMethod<void,jlong> method(clazz(), "end", "(J)V");
+    method.call(a0);
+}
+
+// public void java.util.zip.Inflater.end()
+void JavaUtilZipInflater::end() const {
+    static jnipp::Method<void> method(clazz(), "end", "()V");
+    method.call(*this);
+}
+
+// public boolean java.util.zip.Inflater.finished()
+jboolean JavaUtilZipInflater::finished() const {
+    static jnipp::Method<jboolean> method(clazz(), "finished", "()Z");
+    return method.call(*this);
+}
+
+// public void java.util.zip.Inflater.setInput(byte[],int,int)
+void JavaUtilZipInflater::setInput(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
+    static jnipp::Method<void,jnipp::Array<jbyte>,jint,jint> method(clazz(), "setInput", "([BII)V");
+    method.call(*this, a0, a1, a2);
+}
+
+// public void java.util.zip.Inflater.setInput(byte[])
+void JavaUtilZipInflater::setInput(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
+    static jnipp::Method<void,jnipp::Array<jbyte>> method(clazz(), "setInput", "([B)V");
+    method.call(*this, a0);
+}
+
+// public void java.util.zip.Inflater.setDictionary(byte[],int,int)
+void JavaUtilZipInflater::setDictionary(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
+    static jnipp::Method<void,jnipp::Array<jbyte>,jint,jint> method(clazz(), "setDictionary", "([BII)V");
+    method.call(*this, a0, a1, a2);
+}
+
+// private static native void java.util.zip.Inflater.setDictionary(long,byte[],int,int)
+void JavaUtilZipInflater::setDictionary(jlong a0, const jnipp::Ref<jnipp::Array<jbyte>>& a1, jint a2, jint a3) {
+    static jnipp::StaticMethod<void,jlong,jnipp::Array<jbyte>,jint,jint> method(clazz(), "setDictionary", "(J[BII)V");
+    method.call(a0, a1, a2, a3);
+}
+
+// public void java.util.zip.Inflater.setDictionary(byte[])
+void JavaUtilZipInflater::setDictionary(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
+    static jnipp::Method<void,jnipp::Array<jbyte>> method(clazz(), "setDictionary", "([B)V");
+    method.call(*this, a0);
+}
+
+// public int java.util.zip.Inflater.getRemaining()
+jint JavaUtilZipInflater::getRemaining() const {
+    static jnipp::Method<jint> method(clazz(), "getRemaining", "()I");
+    return method.call(*this);
+}
+
+// public boolean java.util.zip.Inflater.needsInput()
+jboolean JavaUtilZipInflater::needsInput() const {
+    static jnipp::Method<jboolean> method(clazz(), "needsInput", "()Z");
+    return method.call(*this);
+}
+
+// public boolean java.util.zip.Inflater.needsDictionary()
+jboolean JavaUtilZipInflater::needsDictionary() const {
+    static jnipp::Method<jboolean> method(clazz(), "needsDictionary", "()Z");
+    return method.call(*this);
+}
+
+// public int java.util.zip.Inflater.inflate(byte[],int,int) throws java.util.zip.DataFormatException
+jint JavaUtilZipInflater::inflate(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
+    static jnipp::Method<jint,jnipp::Array<jbyte>,jint,jint> method(clazz(), "inflate", "([BII)I");
+    return method.call(*this, a0, a1, a2);
+}
+
+// public int java.util.zip.Inflater.inflate(byte[]) throws java.util.zip.DataFormatException
+jint JavaUtilZipInflater::inflate(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
+    static jnipp::Method<jint,jnipp::Array<jbyte>> method(clazz(), "inflate", "([B)I");
+    return method.call(*this, a0);
+}
+
+// private static native int java.util.zip.Inflater.getAdler(long)
+jint JavaUtilZipInflater::getAdler(jlong a0) {
+    static jnipp::StaticMethod<jint,jlong> method(clazz(), "getAdler", "(J)I");
+    return method.call(a0);
+}
+
+// public int java.util.zip.Inflater.getAdler()
+jint JavaUtilZipInflater::getAdler() const {
+    static jnipp::Method<jint> method(clazz(), "getAdler", "()I");
+    return method.call(*this);
+}
+
+// public int java.util.zip.Inflater.getTotalIn()
+jint JavaUtilZipInflater::getTotalIn() const {
+    static jnipp::Method<jint> method(clazz(), "getTotalIn", "()I");
+    return method.call(*this);
+}
+
+// public long java.util.zip.Inflater.getBytesRead()
+jlong JavaUtilZipInflater::getBytesRead() const {
+    static jnipp::Method<jlong> method(clazz(), "getBytesRead", "()J");
+    return method.call(*this);
+}
+
+// public int java.util.zip.Inflater.getTotalOut()
+jint JavaUtilZipInflater::getTotalOut() const {
+    static jnipp::Method<jint> method(clazz(), "getTotalOut", "()I");
+    return method.call(*this);
+}
+
+// public long java.util.zip.Inflater.getBytesWritten()
+jlong JavaUtilZipInflater::getBytesWritten() const {
+    static jnipp::Method<jlong> method(clazz(), "getBytesWritten", "()J");
+    return method.call(*this);
+}
+
+// private native int java.util.zip.Inflater.inflateBytes(long,byte[],int,int) throws java.util.zip.DataFormatException
+jint JavaUtilZipInflater::inflateBytes(jlong a0, const jnipp::Ref<jnipp::Array<jbyte>>& a1, jint a2, jint a3) const {
+    static jnipp::Method<jint,jlong,jnipp::Array<jbyte>,jint,jint> method(clazz(), "inflateBytes", "(J[BII)I");
+    return method.call(*this, a0, a1, a2, a3);
+}
+#undef defaultBuf
+const jnipp::StaticField<jnipp::Array<jbyte>> JavaUtilZipInflater::defaultBuf ("java/util/zip/Inflater", "defaultBuf", "[B");
+#undef $assertionsDisabled
+const jnipp::StaticField<jboolean> JavaUtilZipInflater::$assertionsDisabled ("java/util/zip/Inflater", "$assertionsDisabled", "Z");
+inline jnipp::GlobalRef<jnipp::Class>& JavaUtilDeque::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/util/Deque"));
+    return cls;
+}
 inline jnipp::GlobalRef<jnipp::Class>& JavaUtilZipZipCoder::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/util/zip/ZipCoder"));
@@ -25740,194 +25928,6 @@ jlong JavaUtilZipZipEntry::javaToDosTime(jlong a0) {
 const jnipp::StaticField<jint> JavaUtilZipZipEntry::STORED ("java/util/zip/ZipEntry", "STORED", "I");
 #undef DEFLATED
 const jnipp::StaticField<jint> JavaUtilZipZipEntry::DEFLATED ("java/util/zip/ZipEntry", "DEFLATED", "I");
-inline jnipp::GlobalRef<jnipp::Class>& JavaUtilZipInflater::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/util/zip/Inflater"));
-    return cls;
-}
-
-// public java.util.zip.Inflater(boolean)
-jnipp::LocalRef<JavaUtilZipInflater> JavaUtilZipInflater::construct(jboolean a0) {
-    static jnipp::Constructor<JavaUtilZipInflater,jboolean> constructor(clazz(), "(Z)V");
-    return constructor.construct(a0);
-}
-
-// public java.util.zip.Inflater()
-jnipp::LocalRef<JavaUtilZipInflater> JavaUtilZipInflater::construct() {
-    static jnipp::Constructor<JavaUtilZipInflater> constructor(clazz(), "()V");
-    return constructor.construct();
-}
-
-// protected void java.util.zip.Inflater.finalize()
-void JavaUtilZipInflater::finalize() const {
-    static jnipp::Method<void> method(clazz(), "finalize", "()V");
-    method.call(*this);
-}
-
-// private static native long java.util.zip.Inflater.init(boolean)
-jlong JavaUtilZipInflater::init(jboolean a0) {
-    static jnipp::StaticMethod<jlong,jboolean> method(clazz(), "init", "(Z)J");
-    return method.call(a0);
-}
-
-// private static native void java.util.zip.Inflater.reset(long)
-void JavaUtilZipInflater::reset(jlong a0) {
-    static jnipp::StaticMethod<void,jlong> method(clazz(), "reset", "(J)V");
-    method.call(a0);
-}
-
-// public void java.util.zip.Inflater.reset()
-void JavaUtilZipInflater::reset_() const {
-    static jnipp::Method<void> method(clazz(), "reset", "()V");
-    method.call(*this);
-}
-
-// private static native void java.util.zip.Inflater.initIDs()
-void JavaUtilZipInflater::initIDs() {
-    static jnipp::StaticMethod<void> method(clazz(), "initIDs", "()V");
-    method.call();
-}
-
-// private void java.util.zip.Inflater.ensureOpen()
-void JavaUtilZipInflater::ensureOpen() const {
-    static jnipp::Method<void> method(clazz(), "ensureOpen", "()V");
-    method.call(*this);
-}
-
-// boolean java.util.zip.Inflater.ended()
-jboolean JavaUtilZipInflater::ended() const {
-    static jnipp::Method<jboolean> method(clazz(), "ended", "()Z");
-    return method.call(*this);
-}
-
-// private static native void java.util.zip.Inflater.end(long)
-void JavaUtilZipInflater::end(jlong a0) {
-    static jnipp::StaticMethod<void,jlong> method(clazz(), "end", "(J)V");
-    method.call(a0);
-}
-
-// public void java.util.zip.Inflater.end()
-void JavaUtilZipInflater::end_() const {
-    static jnipp::Method<void> method(clazz(), "end", "()V");
-    method.call(*this);
-}
-
-// public boolean java.util.zip.Inflater.finished()
-jboolean JavaUtilZipInflater::finished() const {
-    static jnipp::Method<jboolean> method(clazz(), "finished", "()Z");
-    return method.call(*this);
-}
-
-// public void java.util.zip.Inflater.setInput(byte[],int,int)
-void JavaUtilZipInflater::setInput(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
-    static jnipp::Method<void,jnipp::Array<jbyte>,jint,jint> method(clazz(), "setInput", "([BII)V");
-    method.call(*this, a0, a1, a2);
-}
-
-// public void java.util.zip.Inflater.setInput(byte[])
-void JavaUtilZipInflater::setInput_(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
-    static jnipp::Method<void,jnipp::Array<jbyte>> method(clazz(), "setInput", "([B)V");
-    method.call(*this, a0);
-}
-
-// public void java.util.zip.Inflater.setDictionary(byte[],int,int)
-void JavaUtilZipInflater::setDictionary(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
-    static jnipp::Method<void,jnipp::Array<jbyte>,jint,jint> method(clazz(), "setDictionary", "([BII)V");
-    method.call(*this, a0, a1, a2);
-}
-
-// private static native void java.util.zip.Inflater.setDictionary(long,byte[],int,int)
-void JavaUtilZipInflater::setDictionary_(jlong a0, const jnipp::Ref<jnipp::Array<jbyte>>& a1, jint a2, jint a3) {
-    static jnipp::StaticMethod<void,jlong,jnipp::Array<jbyte>,jint,jint> method(clazz(), "setDictionary", "(J[BII)V");
-    method.call(a0, a1, a2, a3);
-}
-
-// public void java.util.zip.Inflater.setDictionary(byte[])
-void JavaUtilZipInflater::setDictionary__(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
-    static jnipp::Method<void,jnipp::Array<jbyte>> method(clazz(), "setDictionary", "([B)V");
-    method.call(*this, a0);
-}
-
-// public int java.util.zip.Inflater.getRemaining()
-jint JavaUtilZipInflater::getRemaining() const {
-    static jnipp::Method<jint> method(clazz(), "getRemaining", "()I");
-    return method.call(*this);
-}
-
-// public boolean java.util.zip.Inflater.needsInput()
-jboolean JavaUtilZipInflater::needsInput() const {
-    static jnipp::Method<jboolean> method(clazz(), "needsInput", "()Z");
-    return method.call(*this);
-}
-
-// public boolean java.util.zip.Inflater.needsDictionary()
-jboolean JavaUtilZipInflater::needsDictionary() const {
-    static jnipp::Method<jboolean> method(clazz(), "needsDictionary", "()Z");
-    return method.call(*this);
-}
-
-// public int java.util.zip.Inflater.inflate(byte[],int,int) throws java.util.zip.DataFormatException
-jint JavaUtilZipInflater::inflate(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
-    static jnipp::Method<jint,jnipp::Array<jbyte>,jint,jint> method(clazz(), "inflate", "([BII)I");
-    return method.call(*this, a0, a1, a2);
-}
-
-// public int java.util.zip.Inflater.inflate(byte[]) throws java.util.zip.DataFormatException
-jint JavaUtilZipInflater::inflate_(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
-    static jnipp::Method<jint,jnipp::Array<jbyte>> method(clazz(), "inflate", "([B)I");
-    return method.call(*this, a0);
-}
-
-// private static native int java.util.zip.Inflater.getAdler(long)
-jint JavaUtilZipInflater::getAdler(jlong a0) {
-    static jnipp::StaticMethod<jint,jlong> method(clazz(), "getAdler", "(J)I");
-    return method.call(a0);
-}
-
-// public int java.util.zip.Inflater.getAdler()
-jint JavaUtilZipInflater::getAdler_() const {
-    static jnipp::Method<jint> method(clazz(), "getAdler", "()I");
-    return method.call(*this);
-}
-
-// public int java.util.zip.Inflater.getTotalIn()
-jint JavaUtilZipInflater::getTotalIn() const {
-    static jnipp::Method<jint> method(clazz(), "getTotalIn", "()I");
-    return method.call(*this);
-}
-
-// public long java.util.zip.Inflater.getBytesRead()
-jlong JavaUtilZipInflater::getBytesRead() const {
-    static jnipp::Method<jlong> method(clazz(), "getBytesRead", "()J");
-    return method.call(*this);
-}
-
-// public int java.util.zip.Inflater.getTotalOut()
-jint JavaUtilZipInflater::getTotalOut() const {
-    static jnipp::Method<jint> method(clazz(), "getTotalOut", "()I");
-    return method.call(*this);
-}
-
-// public long java.util.zip.Inflater.getBytesWritten()
-jlong JavaUtilZipInflater::getBytesWritten() const {
-    static jnipp::Method<jlong> method(clazz(), "getBytesWritten", "()J");
-    return method.call(*this);
-}
-
-// private native int java.util.zip.Inflater.inflateBytes(long,byte[],int,int) throws java.util.zip.DataFormatException
-jint JavaUtilZipInflater::inflateBytes(jlong a0, const jnipp::Ref<jnipp::Array<jbyte>>& a1, jint a2, jint a3) const {
-    static jnipp::Method<jint,jlong,jnipp::Array<jbyte>,jint,jint> method(clazz(), "inflateBytes", "(J[BII)I");
-    return method.call(*this, a0, a1, a2, a3);
-}
-#undef defaultBuf
-const jnipp::StaticField<jnipp::Array<jbyte>> JavaUtilZipInflater::defaultBuf ("java/util/zip/Inflater", "defaultBuf", "[B");
-#undef $assertionsDisabled
-const jnipp::StaticField<jboolean> JavaUtilZipInflater::$assertionsDisabled ("java/util/zip/Inflater", "$assertionsDisabled", "Z");
-inline jnipp::GlobalRef<jnipp::Class>& JavaUtilDeque::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/util/Deque"));
-    return cls;
-}
 inline jnipp::GlobalRef<jnipp::Class>& JavaUtilJarJarVerifier::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/util/jar/JarVerifier"));
@@ -25947,7 +25947,7 @@ jnipp::LocalRef<JavaSecurityCodeSource> JavaUtilJarJarVerifier::getCodeSource(co
 }
 
 // public java.security.CodeSource java.util.jar.JarVerifier.getCodeSource(java.net.URL,java.lang.String)
-jnipp::LocalRef<JavaSecurityCodeSource> JavaUtilJarJarVerifier::getCodeSource_(const jnipp::Ref<JavaNetURL>& a0, const jnipp::Ref<JavaLangString>& a1) const {
+jnipp::LocalRef<JavaSecurityCodeSource> JavaUtilJarJarVerifier::getCodeSource(const jnipp::Ref<JavaNetURL>& a0, const jnipp::Ref<JavaLangString>& a1) const {
     static jnipp::Method<JavaSecurityCodeSource,JavaNetURL,JavaLangString> method(clazz(), "getCodeSource", "(Ljava/net/URL;Ljava/lang/String;)Ljava/security/CodeSource;");
     return method.call(*this, a0, a1);
 }
@@ -25959,7 +25959,7 @@ jnipp::LocalRef<jnipp::Array<JavaSecurityCodeSigner>> JavaUtilJarJarVerifier::ge
 }
 
 // public java.security.CodeSigner[] java.util.jar.JarVerifier.getCodeSigners(java.lang.String)
-jnipp::LocalRef<jnipp::Array<JavaSecurityCodeSigner>> JavaUtilJarJarVerifier::getCodeSigners_(const jnipp::Ref<JavaLangString>& a0) const {
+jnipp::LocalRef<jnipp::Array<JavaSecurityCodeSigner>> JavaUtilJarJarVerifier::getCodeSigners(const jnipp::Ref<JavaLangString>& a0) const {
     static jnipp::Method<jnipp::Array<JavaSecurityCodeSigner>,JavaLangString> method(clazz(), "getCodeSigners", "(Ljava/lang/String;)[Ljava/security/CodeSigner;");
     return method.call(*this, a0);
 }
@@ -26013,7 +26013,7 @@ void JavaUtilJarJarVerifier::update(jint a0, const jnipp::Ref<SunSecurityUtilMan
 }
 
 // public void java.util.jar.JarVerifier.update(int,byte[],int,int,sun.security.util.ManifestEntryVerifier) throws java.io.IOException
-void JavaUtilJarJarVerifier::update_(jint a0, const jnipp::Ref<jnipp::Array<jbyte>>& a1, jint a2, jint a3, const jnipp::Ref<SunSecurityUtilManifestEntryVerifier>& a4) const {
+void JavaUtilJarJarVerifier::update(jint a0, const jnipp::Ref<jnipp::Array<jbyte>>& a1, jint a2, jint a3, const jnipp::Ref<SunSecurityUtilManifestEntryVerifier>& a4) const {
     static jnipp::Method<void,jint,jnipp::Array<jbyte>,jint,jint,SunSecurityUtilManifestEntryVerifier> method(clazz(), "update", "(I[BIILsun/security/util/ManifestEntryVerifier;)V");
     method.call(*this, a0, a1, a2, a3, a4);
 }
@@ -26043,7 +26043,7 @@ jnipp::LocalRef<jnipp::Array<JavaSecurityCertCertificate>> JavaUtilJarJarVerifie
 }
 
 // public java.security.cert.Certificate[] java.util.jar.JarVerifier.getCerts(java.util.jar.JarFile,java.util.jar.JarEntry)
-jnipp::LocalRef<jnipp::Array<JavaSecurityCertCertificate>> JavaUtilJarJarVerifier::getCerts_(const jnipp::Ref<JavaUtilJarJarFile>& a0, const jnipp::Ref<JavaUtilJarJarEntry>& a1) const {
+jnipp::LocalRef<jnipp::Array<JavaSecurityCertCertificate>> JavaUtilJarJarVerifier::getCerts(const jnipp::Ref<JavaUtilJarJarFile>& a0, const jnipp::Ref<JavaUtilJarJarEntry>& a1) const {
     static jnipp::Method<jnipp::Array<JavaSecurityCertCertificate>,JavaUtilJarJarFile,JavaUtilJarJarEntry> method(clazz(), "getCerts", "(Ljava/util/jar/JarFile;Ljava/util/jar/JarEntry;)[Ljava/security/cert/Certificate;");
     return method.call(*this, a0, a1);
 }
@@ -26138,29 +26138,6 @@ jnipp::LocalRef<JavaUtilJarAttributes> JavaUtilJarJarEntry::getAttributes() cons
     static jnipp::Method<JavaUtilJarAttributes> method(clazz(), "getAttributes", "()Ljava/util/jar/Attributes;");
     return method.call(*this);
 }
-inline jnipp::GlobalRef<jnipp::Class>& JavaUtilProperties_LineReader::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/util/Properties$LineReader"));
-    return cls;
-}
-
-// public java.util.Properties$LineReader(java.util.Properties,java.io.InputStream)
-jnipp::LocalRef<JavaUtilProperties_LineReader> JavaUtilProperties_LineReader::construct(const jnipp::Ref<JavaUtilProperties>& a0, const jnipp::Ref<JavaIoInputStream>& a1) {
-    static jnipp::Constructor<JavaUtilProperties_LineReader,JavaUtilProperties,JavaIoInputStream> constructor(clazz(), "(Ljava/util/Properties;Ljava/io/InputStream;)V");
-    return constructor.construct(a0, a1);
-}
-
-// public java.util.Properties$LineReader(java.util.Properties,java.io.Reader)
-jnipp::LocalRef<JavaUtilProperties_LineReader> JavaUtilProperties_LineReader::construct(const jnipp::Ref<JavaUtilProperties>& a0, const jnipp::Ref<JavaIoReader>& a1) {
-    static jnipp::Constructor<JavaUtilProperties_LineReader,JavaUtilProperties,JavaIoReader> constructor(clazz(), "(Ljava/util/Properties;Ljava/io/Reader;)V");
-    return constructor.construct(a0, a1);
-}
-
-// int java.util.Properties$LineReader.readLine() throws java.io.IOException
-jint JavaUtilProperties_LineReader::readLine() const {
-    static jnipp::Method<jint> method(clazz(), "readLine", "()I");
-    return method.call(*this);
-}
 inline jnipp::GlobalRef<jnipp::Class>& JavaIoReader::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/io/Reader"));
@@ -26198,13 +26175,13 @@ jint JavaIoReader::read() const {
 }
 
 // public int java.io.Reader.read(java.nio.CharBuffer) throws java.io.IOException
-jint JavaIoReader::read_(const jnipp::Ref<JavaNioCharBuffer>& a0) const {
+jint JavaIoReader::read(const jnipp::Ref<JavaNioCharBuffer>& a0) const {
     static jnipp::Method<jint,JavaNioCharBuffer> method(clazz(), "read", "(Ljava/nio/CharBuffer;)I");
     return method.call(*this, a0);
 }
 
 // public int java.io.Reader.read(char[]) throws java.io.IOException
-jint JavaIoReader::read__(const jnipp::Ref<jnipp::Array<jchar>>& a0) const {
+jint JavaIoReader::read(const jnipp::Ref<jnipp::Array<jchar>>& a0) const {
     static jnipp::Method<jint,jnipp::Array<jchar>> method(clazz(), "read", "([C)I");
     return method.call(*this, a0);
 }
@@ -26228,6 +26205,29 @@ jboolean JavaIoReader::ready() const {
 }
 #undef maxSkipBufferSize
 const jnipp::StaticField<jint> JavaIoReader::maxSkipBufferSize ("java/io/Reader", "maxSkipBufferSize", "I");
+inline jnipp::GlobalRef<jnipp::Class>& JavaUtilProperties_LineReader::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/util/Properties$LineReader"));
+    return cls;
+}
+
+// public java.util.Properties$LineReader(java.util.Properties,java.io.InputStream)
+jnipp::LocalRef<JavaUtilProperties_LineReader> JavaUtilProperties_LineReader::construct(const jnipp::Ref<JavaUtilProperties>& a0, const jnipp::Ref<JavaIoInputStream>& a1) {
+    static jnipp::Constructor<JavaUtilProperties_LineReader,JavaUtilProperties,JavaIoInputStream> constructor(clazz(), "(Ljava/util/Properties;Ljava/io/InputStream;)V");
+    return constructor.construct(a0, a1);
+}
+
+// public java.util.Properties$LineReader(java.util.Properties,java.io.Reader)
+jnipp::LocalRef<JavaUtilProperties_LineReader> JavaUtilProperties_LineReader::construct(const jnipp::Ref<JavaUtilProperties>& a0, const jnipp::Ref<JavaIoReader>& a1) {
+    static jnipp::Constructor<JavaUtilProperties_LineReader,JavaUtilProperties,JavaIoReader> constructor(clazz(), "(Ljava/util/Properties;Ljava/io/Reader;)V");
+    return constructor.construct(a0, a1);
+}
+
+// int java.util.Properties$LineReader.readLine() throws java.io.IOException
+jint JavaUtilProperties_LineReader::readLine() const {
+    static jnipp::Method<jint> method(clazz(), "readLine", "()I");
+    return method.call(*this);
+}
 inline jnipp::GlobalRef<jnipp::Class>& JavaSecurityProvider_ServiceKey::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/security/Provider$ServiceKey"));
@@ -26305,6 +26305,24 @@ jnipp::LocalRef<JavaLangString> JavaSecurityProvider_Service::getClassName() con
     return method.call(*this);
 }
 
+// void java.security.Provider$Service.addAttribute(java.lang.String,java.lang.String)
+void JavaSecurityProvider_Service::addAttribute(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1) const {
+    static jnipp::Method<void,JavaLangString,JavaLangString> method(clazz(), "addAttribute", "(Ljava/lang/String;Ljava/lang/String;)V");
+    method.call(*this, a0, a1);
+}
+
+// public final java.security.Provider java.security.Provider$Service.getProvider()
+jnipp::LocalRef<JavaSecurityProvider> JavaSecurityProvider_Service::getProvider() const {
+    static jnipp::Method<JavaSecurityProvider> method(clazz(), "getProvider", "()Ljava/security/Provider;");
+    return method.call(*this);
+}
+
+// public final java.lang.String java.security.Provider$Service.getAlgorithm()
+jnipp::LocalRef<JavaLangString> JavaSecurityProvider_Service::getAlgorithm() const {
+    static jnipp::Method<JavaLangString> method(clazz(), "getAlgorithm", "()Ljava/lang/String;");
+    return method.call(*this);
+}
+
 // private boolean java.security.Provider$Service.isValid()
 jboolean JavaSecurityProvider_Service::isValid() const {
     static jnipp::Method<jboolean> method(clazz(), "isValid", "()Z");
@@ -26363,24 +26381,6 @@ jboolean JavaSecurityProvider_Service::supportsKeyFormat(const jnipp::Ref<JavaSe
 jboolean JavaSecurityProvider_Service::supportsKeyClass(const jnipp::Ref<JavaSecurityKey>& a0) const {
     static jnipp::Method<jboolean,JavaSecurityKey> method(clazz(), "supportsKeyClass", "(Ljava/security/Key;)Z");
     return method.call(*this, a0);
-}
-
-// void java.security.Provider$Service.addAttribute(java.lang.String,java.lang.String)
-void JavaSecurityProvider_Service::addAttribute(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1) const {
-    static jnipp::Method<void,JavaLangString,JavaLangString> method(clazz(), "addAttribute", "(Ljava/lang/String;Ljava/lang/String;)V");
-    method.call(*this, a0, a1);
-}
-
-// public final java.security.Provider java.security.Provider$Service.getProvider()
-jnipp::LocalRef<JavaSecurityProvider> JavaSecurityProvider_Service::getProvider() const {
-    static jnipp::Method<JavaSecurityProvider> method(clazz(), "getProvider", "()Ljava/security/Provider;");
-    return method.call(*this);
-}
-
-// public final java.lang.String java.security.Provider$Service.getAlgorithm()
-jnipp::LocalRef<JavaLangString> JavaSecurityProvider_Service::getAlgorithm() const {
-    static jnipp::Method<JavaLangString> method(clazz(), "getAlgorithm", "()Ljava/lang/String;");
-    return method.call(*this);
 }
 
 // public final java.lang.String java.security.Provider$Service.getAttribute(java.lang.String)
@@ -26475,7 +26475,7 @@ jnipp::LocalRef<SunUtilCalendarBaseCalendar_Date> JavaUtilDate::normalize() cons
 }
 
 // private final sun.util.calendar.BaseCalendar$Date java.util.Date.normalize(sun.util.calendar.BaseCalendar$Date)
-jnipp::LocalRef<SunUtilCalendarBaseCalendar_Date> JavaUtilDate::normalize_(const jnipp::Ref<SunUtilCalendarBaseCalendar_Date>& a0) const {
+jnipp::LocalRef<SunUtilCalendarBaseCalendar_Date> JavaUtilDate::normalize(const jnipp::Ref<SunUtilCalendarBaseCalendar_Date>& a0) const {
     static jnipp::Method<SunUtilCalendarBaseCalendar_Date,SunUtilCalendarBaseCalendar_Date> method(clazz(), "normalize", "(Lsun/util/calendar/BaseCalendar$Date;)Lsun/util/calendar/BaseCalendar$Date;");
     return method.call(*this, a0);
 }
@@ -26643,13 +26643,13 @@ jnipp::LocalRef<SunUtilCalendarBaseCalendar> JavaUtilDate::getCalendarSystem(jin
 }
 
 // private static final sun.util.calendar.BaseCalendar java.util.Date.getCalendarSystem(long)
-jnipp::LocalRef<SunUtilCalendarBaseCalendar> JavaUtilDate::getCalendarSystem_(jlong a0) {
+jnipp::LocalRef<SunUtilCalendarBaseCalendar> JavaUtilDate::getCalendarSystem(jlong a0) {
     static jnipp::StaticMethod<SunUtilCalendarBaseCalendar,jlong> method(clazz(), "getCalendarSystem", "(J)Lsun/util/calendar/BaseCalendar;");
     return method.call(a0);
 }
 
 // private static final sun.util.calendar.BaseCalendar java.util.Date.getCalendarSystem(sun.util.calendar.BaseCalendar$Date)
-jnipp::LocalRef<SunUtilCalendarBaseCalendar> JavaUtilDate::getCalendarSystem__(const jnipp::Ref<SunUtilCalendarBaseCalendar_Date>& a0) {
+jnipp::LocalRef<SunUtilCalendarBaseCalendar> JavaUtilDate::getCalendarSystem(const jnipp::Ref<SunUtilCalendarBaseCalendar_Date>& a0) {
     static jnipp::StaticMethod<SunUtilCalendarBaseCalendar,SunUtilCalendarBaseCalendar_Date> method(clazz(), "getCalendarSystem", "(Lsun/util/calendar/BaseCalendar$Date;)Lsun/util/calendar/BaseCalendar;");
     return method.call(a0);
 }
@@ -26761,7 +26761,7 @@ void JavaUtilConcurrentLocksAbstractQueuedSynchronizer_ConditionObject::await() 
 }
 
 // public final boolean java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(long,java.util.concurrent.TimeUnit) throws java.lang.InterruptedException
-jboolean JavaUtilConcurrentLocksAbstractQueuedSynchronizer_ConditionObject::await_(jlong a0, const jnipp::Ref<JavaUtilConcurrentTimeUnit>& a1) const {
+jboolean JavaUtilConcurrentLocksAbstractQueuedSynchronizer_ConditionObject::await(jlong a0, const jnipp::Ref<JavaUtilConcurrentTimeUnit>& a1) const {
     static jnipp::Method<jboolean,jlong,JavaUtilConcurrentTimeUnit> method(clazz(), "await", "(JLjava/util/concurrent/TimeUnit;)Z");
     return method.call(*this, a0, a1);
 }
@@ -26902,11 +26902,6 @@ jint JavaUtilConcurrentTimeUnit_1::excessNanos(jlong a0, jlong a1) const {
     static jnipp::Method<jint,jlong,jlong> method(clazz(), "excessNanos", "(JJ)I");
     return method.call(*this, a0, a1);
 }
-inline jnipp::GlobalRef<jnipp::Class>& JavaUtilMap_Entry::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/util/Map$Entry"));
-    return cls;
-}
 inline jnipp::GlobalRef<jnipp::Class>& JavaUtilLinkedHashMap_Entry::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/util/LinkedHashMap$Entry"));
@@ -26941,6 +26936,11 @@ void JavaUtilLinkedHashMap_Entry::recordRemoval(const jnipp::Ref<JavaUtilHashMap
 void JavaUtilLinkedHashMap_Entry::addBefore(const jnipp::Ref<JavaUtilLinkedHashMap_Entry>& a0) const {
     static jnipp::Method<void,JavaUtilLinkedHashMap_Entry> method(clazz(), "addBefore", "(Ljava/util/LinkedHashMap$Entry;)V");
     method.call(*this, a0);
+}
+inline jnipp::GlobalRef<jnipp::Class>& JavaUtilMap_Entry::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/util/Map$Entry"));
+    return cls;
 }
 inline jnipp::GlobalRef<jnipp::Class>& JavaNetInet4Address::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
@@ -27279,6 +27279,29 @@ jnipp::LocalRef<JavaNioCharsetCoderResult> JavaNioCharsetCoderResult_1::create(j
     static jnipp::Method<JavaNioCharsetCoderResult,jint> method(clazz(), "create", "(I)Ljava/nio/charset/CoderResult;");
     return method.call(*this, a0);
 }
+inline jnipp::GlobalRef<jnipp::Class>& JavaUtilZipZStreamRef::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/util/zip/ZStreamRef"));
+    return cls;
+}
+
+// java.util.zip.ZStreamRef(long)
+jnipp::LocalRef<JavaUtilZipZStreamRef> JavaUtilZipZStreamRef::construct(jlong a0) {
+    static jnipp::Constructor<JavaUtilZipZStreamRef,jlong> constructor(clazz(), "(J)V");
+    return constructor.construct(a0);
+}
+
+// void java.util.zip.ZStreamRef.clear()
+void JavaUtilZipZStreamRef::clear() const {
+    static jnipp::Method<void> method(clazz(), "clear", "()V");
+    method.call(*this);
+}
+
+// long java.util.zip.ZStreamRef.address()
+jlong JavaUtilZipZStreamRef::address() const {
+    static jnipp::Method<jlong> method(clazz(), "address", "()J");
+    return method.call(*this);
+}
 inline jnipp::GlobalRef<jnipp::Class>& JavaNioCharsetCharsetDecoder::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/nio/charset/CharsetDecoder"));
@@ -27310,7 +27333,7 @@ jnipp::LocalRef<JavaNioCharsetCoderResult> JavaNioCharsetCharsetDecoder::decode(
 }
 
 // public final java.nio.CharBuffer java.nio.charset.CharsetDecoder.decode(java.nio.ByteBuffer) throws java.nio.charset.CharacterCodingException
-jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharsetCharsetDecoder::decode_(const jnipp::Ref<JavaNioByteBuffer>& a0) const {
+jnipp::LocalRef<JavaNioCharBuffer> JavaNioCharsetCharsetDecoder::decode(const jnipp::Ref<JavaNioByteBuffer>& a0) const {
     static jnipp::Method<JavaNioCharBuffer,JavaNioByteBuffer> method(clazz(), "decode", "(Ljava/nio/ByteBuffer;)Ljava/nio/CharBuffer;");
     return method.call(*this, a0);
 }
@@ -27440,29 +27463,6 @@ const jnipp::StaticField<jint> JavaNioCharsetCharsetDecoder::ST_FLUSHED ("java/n
 jnipp::StaticField<jnipp::Array<JavaLangString>> JavaNioCharsetCharsetDecoder::stateNames ("java/nio/charset/CharsetDecoder", "stateNames", "[Ljava/lang/String;");
 #undef $assertionsDisabled
 const jnipp::StaticField<jboolean> JavaNioCharsetCharsetDecoder::$assertionsDisabled ("java/nio/charset/CharsetDecoder", "$assertionsDisabled", "Z");
-inline jnipp::GlobalRef<jnipp::Class>& JavaUtilZipZStreamRef::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/util/zip/ZStreamRef"));
-    return cls;
-}
-
-// java.util.zip.ZStreamRef(long)
-jnipp::LocalRef<JavaUtilZipZStreamRef> JavaUtilZipZStreamRef::construct(jlong a0) {
-    static jnipp::Constructor<JavaUtilZipZStreamRef,jlong> constructor(clazz(), "(J)V");
-    return constructor.construct(a0);
-}
-
-// void java.util.zip.ZStreamRef.clear()
-void JavaUtilZipZStreamRef::clear() const {
-    static jnipp::Method<void> method(clazz(), "clear", "()V");
-    method.call(*this);
-}
-
-// long java.util.zip.ZStreamRef.address()
-jlong JavaUtilZipZStreamRef::address() const {
-    static jnipp::Method<jlong> method(clazz(), "address", "()J");
-    return method.call(*this);
-}
 inline jnipp::GlobalRef<jnipp::Class>& JavaIoByteArrayOutputStream::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/io/ByteArrayOutputStream"));
@@ -27494,7 +27494,7 @@ void JavaIoByteArrayOutputStream::write(const jnipp::Ref<jnipp::Array<jbyte>>& a
 }
 
 // public synchronized void java.io.ByteArrayOutputStream.write(int)
-void JavaIoByteArrayOutputStream::write_(jint a0) const {
+void JavaIoByteArrayOutputStream::write(jint a0) const {
     static jnipp::Method<void,jint> method(clazz(), "write", "(I)V");
     method.call(*this, a0);
 }
@@ -27571,7 +27571,7 @@ void SunSecurityUtilManifestEntryVerifier::update(const jnipp::Ref<jnipp::Array<
 }
 
 // public void sun.security.util.ManifestEntryVerifier.update(byte)
-void SunSecurityUtilManifestEntryVerifier::update_(jbyte a0) const {
+void SunSecurityUtilManifestEntryVerifier::update(jbyte a0) const {
     static jnipp::Method<void,jbyte> method(clazz(), "update", "(B)V");
     method.call(*this, a0);
 }
@@ -27627,6 +27627,13 @@ inline jnipp::GlobalRef<jnipp::Class>& JavaSecurityProvider_1::clazz() {
     if (!cls) cls.set(jnipp::Class::forName("java/security/Provider$1"));
     return cls;
 }
+inline jnipp::GlobalRef<jnipp::Class>& JavaSecurityKey::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("java/security/Key"));
+    return cls;
+}
+#undef serialVersionUID
+const jnipp::StaticField<jlong> JavaSecurityKey::serialVersionUID ("java/security/Key", "serialVersionUID", "J");
 inline jnipp::GlobalRef<jnipp::Class>& JavaLangBoolean::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/lang/Boolean"));
@@ -27682,7 +27689,7 @@ jnipp::LocalRef<JavaLangBoolean> JavaLangBoolean::valueOf(const jnipp::Ref<JavaL
 }
 
 // public static java.lang.Boolean java.lang.Boolean.valueOf(boolean)
-jnipp::LocalRef<JavaLangBoolean> JavaLangBoolean::valueOf_(jboolean a0) {
+jnipp::LocalRef<JavaLangBoolean> JavaLangBoolean::valueOf(jboolean a0) {
     static jnipp::StaticMethod<JavaLangBoolean,jboolean> method(clazz(), "valueOf", "(Z)Ljava/lang/Boolean;");
     return method.call(a0);
 }
@@ -27712,13 +27719,6 @@ const jnipp::StaticField<JavaLangBoolean> JavaLangBoolean::FALSE ("java/lang/Boo
 const jnipp::StaticField<JavaLangClass> JavaLangBoolean::TYPE ("java/lang/Boolean", "TYPE", "Ljava/lang/Class;");
 #undef serialVersionUID
 const jnipp::StaticField<jlong> JavaLangBoolean::serialVersionUID ("java/lang/Boolean", "serialVersionUID", "J");
-inline jnipp::GlobalRef<jnipp::Class>& JavaSecurityKey::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("java/security/Key"));
-    return cls;
-}
-#undef serialVersionUID
-const jnipp::StaticField<jlong> JavaSecurityKey::serialVersionUID ("java/security/Key", "serialVersionUID", "J");
 inline jnipp::GlobalRef<jnipp::Class>& SunUtilCalendarCalendarDate::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("sun/util/calendar/CalendarDate"));
@@ -27785,6 +27785,12 @@ jint SunUtilCalendarCalendarDate::getSeconds() const {
     return method.call(*this);
 }
 
+// protected void sun.util.calendar.CalendarDate.setLocale(java.util.Locale)
+void SunUtilCalendarCalendarDate::setLocale(const jnipp::Ref<JavaUtilLocale>& a0) const {
+    static jnipp::Method<void,JavaUtilLocale> method(clazz(), "setLocale", "(Ljava/util/Locale;)V");
+    method.call(*this, a0);
+}
+
 // public sun.util.calendar.CalendarDate sun.util.calendar.CalendarDate.setYear(int)
 jnipp::LocalRef<SunUtilCalendarCalendarDate> SunUtilCalendarCalendarDate::setYear(jint a0) const {
     static jnipp::Method<SunUtilCalendarCalendarDate,jint> method(clazz(), "setYear", "(I)Lsun/util/calendar/CalendarDate;");
@@ -27828,7 +27834,7 @@ jnipp::LocalRef<SunUtilCalendarCalendarDate> SunUtilCalendarCalendarDate::setTim
 }
 
 // protected void sun.util.calendar.CalendarDate.setTimeOfDay(long)
-void SunUtilCalendarCalendarDate::setTimeOfDay_(jlong a0) const {
+void SunUtilCalendarCalendarDate::setTimeOfDay(jlong a0) const {
     static jnipp::Method<void,jlong> method(clazz(), "setTimeOfDay", "(J)V");
     method.call(*this, a0);
 }
@@ -28024,12 +28030,6 @@ void SunUtilCalendarCalendarDate::setDaylightSaving(jint a0) const {
     static jnipp::Method<void,jint> method(clazz(), "setDaylightSaving", "(I)V");
     method.call(*this, a0);
 }
-
-// protected void sun.util.calendar.CalendarDate.setLocale(java.util.Locale)
-void SunUtilCalendarCalendarDate::setLocale(const jnipp::Ref<JavaUtilLocale>& a0) const {
-    static jnipp::Method<void,JavaUtilLocale> method(clazz(), "setLocale", "(Ljava/util/Locale;)V");
-    method.call(*this, a0);
-}
 #undef FIELD_UNDEFINED
 const jnipp::StaticField<jint> SunUtilCalendarCalendarDate::FIELD_UNDEFINED ("sun/util/calendar/CalendarDate", "FIELD_UNDEFINED", "I");
 #undef TIME_UNDEFINED
@@ -28065,7 +28065,7 @@ jboolean SunUtilCalendarBaseCalendar_Date::hit(jlong a0) const {
 }
 
 // protected final boolean sun.util.calendar.BaseCalendar$Date.hit(int)
-jboolean SunUtilCalendarBaseCalendar_Date::hit_(jint a0) const {
+jboolean SunUtilCalendarBaseCalendar_Date::hit(jint a0) const {
     static jnipp::Method<jboolean,jint> method(clazz(), "hit", "(I)Z");
     return method.call(*this, a0);
 }
@@ -28153,19 +28153,19 @@ jnipp::LocalRef<SunUtilCalendarCalendarDate> SunUtilCalendarAbstractCalendar::ge
 }
 
 // public sun.util.calendar.CalendarDate sun.util.calendar.AbstractCalendar.getCalendarDate()
-jnipp::LocalRef<SunUtilCalendarCalendarDate> SunUtilCalendarAbstractCalendar::getCalendarDate_() const {
+jnipp::LocalRef<SunUtilCalendarCalendarDate> SunUtilCalendarAbstractCalendar::getCalendarDate() const {
     static jnipp::Method<SunUtilCalendarCalendarDate> method(clazz(), "getCalendarDate", "()Lsun/util/calendar/CalendarDate;");
     return method.call(*this);
 }
 
 // public sun.util.calendar.CalendarDate sun.util.calendar.AbstractCalendar.getCalendarDate(long,java.util.TimeZone)
-jnipp::LocalRef<SunUtilCalendarCalendarDate> SunUtilCalendarAbstractCalendar::getCalendarDate__(jlong a0, const jnipp::Ref<JavaUtilTimeZone>& a1) const {
+jnipp::LocalRef<SunUtilCalendarCalendarDate> SunUtilCalendarAbstractCalendar::getCalendarDate(jlong a0, const jnipp::Ref<JavaUtilTimeZone>& a1) const {
     static jnipp::Method<SunUtilCalendarCalendarDate,jlong,JavaUtilTimeZone> method(clazz(), "getCalendarDate", "(JLjava/util/TimeZone;)Lsun/util/calendar/CalendarDate;");
     return method.call(*this, a0, a1);
 }
 
 // public sun.util.calendar.CalendarDate sun.util.calendar.AbstractCalendar.getCalendarDate(long,sun.util.calendar.CalendarDate)
-jnipp::LocalRef<SunUtilCalendarCalendarDate> SunUtilCalendarAbstractCalendar::getCalendarDate___(jlong a0, const jnipp::Ref<SunUtilCalendarCalendarDate>& a1) const {
+jnipp::LocalRef<SunUtilCalendarCalendarDate> SunUtilCalendarAbstractCalendar::getCalendarDate(jlong a0, const jnipp::Ref<SunUtilCalendarCalendarDate>& a1) const {
     static jnipp::Method<SunUtilCalendarCalendarDate,jlong,SunUtilCalendarCalendarDate> method(clazz(), "getCalendarDate", "(JLsun/util/calendar/CalendarDate;)Lsun/util/calendar/CalendarDate;");
     return method.call(*this, a0, a1);
 }
@@ -28294,7 +28294,7 @@ jboolean SunUtilCalendarBaseCalendar::isLeapYear(const jnipp::Ref<SunUtilCalenda
 }
 
 // boolean sun.util.calendar.BaseCalendar.isLeapYear(int)
-jboolean SunUtilCalendarBaseCalendar::isLeapYear_(jint a0) const {
+jboolean SunUtilCalendarBaseCalendar::isLeapYear(jint a0) const {
     static jnipp::Method<jboolean,jint> method(clazz(), "isLeapYear", "(I)Z");
     return method.call(*this, a0);
 }
@@ -28330,7 +28330,7 @@ jint SunUtilCalendarBaseCalendar::getMonthLength(const jnipp::Ref<SunUtilCalenda
 }
 
 // private final int sun.util.calendar.BaseCalendar.getMonthLength(int,int)
-jint SunUtilCalendarBaseCalendar::getMonthLength_(jint a0, jint a1) const {
+jint SunUtilCalendarBaseCalendar::getMonthLength(jint a0, jint a1) const {
     static jnipp::Method<jint,jint,jint> method(clazz(), "getMonthLength", "(II)I");
     return method.call(*this, a0, a1);
 }
@@ -28342,7 +28342,7 @@ jlong SunUtilCalendarBaseCalendar::getDayOfYear(const jnipp::Ref<SunUtilCalendar
 }
 
 // final long sun.util.calendar.BaseCalendar.getDayOfYear(int,int,int)
-jlong SunUtilCalendarBaseCalendar::getDayOfYear_(jint a0, jint a1, jint a2) const {
+jlong SunUtilCalendarBaseCalendar::getDayOfYear(jint a0, jint a1, jint a2) const {
     static jnipp::Method<jlong,jint,jint,jint> method(clazz(), "getDayOfYear", "(III)J");
     return method.call(*this, a0, a1, a2);
 }
@@ -28354,7 +28354,7 @@ jlong SunUtilCalendarBaseCalendar::getFixedDate(const jnipp::Ref<SunUtilCalendar
 }
 
 // public long sun.util.calendar.BaseCalendar.getFixedDate(int,int,int,sun.util.calendar.BaseCalendar$Date)
-jlong SunUtilCalendarBaseCalendar::getFixedDate_(jint a0, jint a1, jint a2, const jnipp::Ref<SunUtilCalendarBaseCalendar_Date>& a3) const {
+jlong SunUtilCalendarBaseCalendar::getFixedDate(jint a0, jint a1, jint a2, const jnipp::Ref<SunUtilCalendarBaseCalendar_Date>& a3) const {
     static jnipp::Method<jlong,jint,jint,jint,SunUtilCalendarBaseCalendar_Date> method(clazz(), "getFixedDate", "(IIILsun/util/calendar/BaseCalendar$Date;)J");
     return method.call(*this, a0, a1, a2, a3);
 }
@@ -28457,13 +28457,13 @@ jnipp::LocalRef<jnipp::Array<jbyte>> SunMiscCharacterDecoder::decodeBuffer(const
 }
 
 // public void sun.misc.CharacterDecoder.decodeBuffer(java.io.InputStream,java.io.OutputStream) throws java.io.IOException
-void SunMiscCharacterDecoder::decodeBuffer_(const jnipp::Ref<JavaIoInputStream>& a0, const jnipp::Ref<JavaIoOutputStream>& a1) const {
+void SunMiscCharacterDecoder::decodeBuffer(const jnipp::Ref<JavaIoInputStream>& a0, const jnipp::Ref<JavaIoOutputStream>& a1) const {
     static jnipp::Method<void,JavaIoInputStream,JavaIoOutputStream> method(clazz(), "decodeBuffer", "(Ljava/io/InputStream;Ljava/io/OutputStream;)V");
     method.call(*this, a0, a1);
 }
 
 // public byte[] sun.misc.CharacterDecoder.decodeBuffer(java.io.InputStream) throws java.io.IOException
-jnipp::LocalRef<jnipp::Array<jbyte>> SunMiscCharacterDecoder::decodeBuffer__(const jnipp::Ref<JavaIoInputStream>& a0) const {
+jnipp::LocalRef<jnipp::Array<jbyte>> SunMiscCharacterDecoder::decodeBuffer(const jnipp::Ref<JavaIoInputStream>& a0) const {
     static jnipp::Method<jnipp::Array<jbyte>,JavaIoInputStream> method(clazz(), "decodeBuffer", "(Ljava/io/InputStream;)[B");
     return method.call(*this, a0);
 }
@@ -28505,7 +28505,7 @@ jnipp::LocalRef<JavaNioByteBuffer> SunMiscCharacterDecoder::decodeBufferToByteBu
 }
 
 // public java.nio.ByteBuffer sun.misc.CharacterDecoder.decodeBufferToByteBuffer(java.io.InputStream) throws java.io.IOException
-jnipp::LocalRef<JavaNioByteBuffer> SunMiscCharacterDecoder::decodeBufferToByteBuffer_(const jnipp::Ref<JavaIoInputStream>& a0) const {
+jnipp::LocalRef<JavaNioByteBuffer> SunMiscCharacterDecoder::decodeBufferToByteBuffer(const jnipp::Ref<JavaIoInputStream>& a0) const {
     static jnipp::Method<JavaNioByteBuffer,JavaIoInputStream> method(clazz(), "decodeBufferToByteBuffer", "(Ljava/io/InputStream;)Ljava/nio/ByteBuffer;");
     return method.call(*this, a0);
 }
@@ -28542,46 +28542,6 @@ void SunMiscBASE64Decoder::decodeAtom(const jnipp::Ref<JavaIoPushbackInputStream
 const jnipp::StaticField<jnipp::Array<jchar>> SunMiscBASE64Decoder::pem_array ("sun/misc/BASE64Decoder", "pem_array", "[C");
 #undef pem_convert_array
 const jnipp::StaticField<jnipp::Array<jbyte>> SunMiscBASE64Decoder::pem_convert_array ("sun/misc/BASE64Decoder", "pem_convert_array", "[B");
-inline jnipp::GlobalRef<jnipp::Class>& SunSecurityUtilManifestDigester_Entry::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("sun/security/util/ManifestDigester$Entry"));
-    return cls;
-}
-
-// public sun.security.util.ManifestDigester$Entry(int,int,int,byte[])
-jnipp::LocalRef<SunSecurityUtilManifestDigester_Entry> SunSecurityUtilManifestDigester_Entry::construct(jint a0, jint a1, jint a2, const jnipp::Ref<jnipp::Array<jbyte>>& a3) {
-    static jnipp::Constructor<SunSecurityUtilManifestDigester_Entry,jint,jint,jint,jnipp::Array<jbyte>> constructor(clazz(), "(III[B)V");
-    return constructor.construct(a0, a1, a2, a3);
-}
-
-// private void sun.security.util.ManifestDigester$Entry.doOldStyle(java.security.MessageDigest,byte[],int,int)
-void SunSecurityUtilManifestDigester_Entry::doOldStyle(const jnipp::Ref<JavaSecurityMessageDigest>& a0, const jnipp::Ref<jnipp::Array<jbyte>>& a1, jint a2, jint a3) const {
-    static jnipp::Method<void,JavaSecurityMessageDigest,jnipp::Array<jbyte>,jint,jint> method(clazz(), "doOldStyle", "(Ljava/security/MessageDigest;[BII)V");
-    method.call(*this, a0, a1, a2, a3);
-}
-
-// public byte[] sun.security.util.ManifestDigester$Entry.digestWorkaround(java.security.MessageDigest)
-jnipp::LocalRef<jnipp::Array<jbyte>> SunSecurityUtilManifestDigester_Entry::digestWorkaround(const jnipp::Ref<JavaSecurityMessageDigest>& a0) const {
-    static jnipp::Method<jnipp::Array<jbyte>,JavaSecurityMessageDigest> method(clazz(), "digestWorkaround", "(Ljava/security/MessageDigest;)[B");
-    return method.call(*this, a0);
-}
-
-// public byte[] sun.security.util.ManifestDigester$Entry.digest(java.security.MessageDigest)
-jnipp::LocalRef<jnipp::Array<jbyte>> SunSecurityUtilManifestDigester_Entry::digest(const jnipp::Ref<JavaSecurityMessageDigest>& a0) const {
-    static jnipp::Method<jnipp::Array<jbyte>,JavaSecurityMessageDigest> method(clazz(), "digest", "(Ljava/security/MessageDigest;)[B");
-    return method.call(*this, a0);
-}
-inline jnipp::GlobalRef<jnipp::Class>& SunSecurityUtilManifestDigester_Position::clazz() {
-    static jnipp::GlobalRef<jnipp::Class> cls;
-    if (!cls) cls.set(jnipp::Class::forName("sun/security/util/ManifestDigester$Position"));
-    return cls;
-}
-
-// sun.security.util.ManifestDigester$Position()
-jnipp::LocalRef<SunSecurityUtilManifestDigester_Position> SunSecurityUtilManifestDigester_Position::construct() {
-    static jnipp::Constructor<SunSecurityUtilManifestDigester_Position> constructor(clazz(), "()V");
-    return constructor.construct();
-}
 inline jnipp::GlobalRef<jnipp::Class>& JavaSecurityMessageDigestSpi::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/security/MessageDigestSpi"));
@@ -28642,13 +28602,13 @@ jnipp::LocalRef<JavaSecurityMessageDigest> JavaSecurityMessageDigest::getInstanc
 }
 
 // public static java.security.MessageDigest java.security.MessageDigest.getInstance(java.lang.String,java.lang.String) throws java.security.NoSuchAlgorithmException,java.security.NoSuchProviderException
-jnipp::LocalRef<JavaSecurityMessageDigest> JavaSecurityMessageDigest::getInstance_(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1) {
+jnipp::LocalRef<JavaSecurityMessageDigest> JavaSecurityMessageDigest::getInstance(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaLangString>& a1) {
     static jnipp::StaticMethod<JavaSecurityMessageDigest,JavaLangString,JavaLangString> method(clazz(), "getInstance", "(Ljava/lang/String;Ljava/lang/String;)Ljava/security/MessageDigest;");
     return method.call(a0, a1);
 }
 
 // public static java.security.MessageDigest java.security.MessageDigest.getInstance(java.lang.String,java.security.Provider) throws java.security.NoSuchAlgorithmException
-jnipp::LocalRef<JavaSecurityMessageDigest> JavaSecurityMessageDigest::getInstance__(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaSecurityProvider>& a1) {
+jnipp::LocalRef<JavaSecurityMessageDigest> JavaSecurityMessageDigest::getInstance(const jnipp::Ref<JavaLangString>& a0, const jnipp::Ref<JavaSecurityProvider>& a1) {
     static jnipp::StaticMethod<JavaSecurityMessageDigest,JavaLangString,JavaSecurityProvider> method(clazz(), "getInstance", "(Ljava/lang/String;Ljava/security/Provider;)Ljava/security/MessageDigest;");
     return method.call(a0, a1);
 }
@@ -28659,40 +28619,28 @@ void JavaSecurityMessageDigest::reset() const {
     method.call(*this);
 }
 
+// public void java.security.MessageDigest.update(byte[],int,int)
+void JavaSecurityMessageDigest::update(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
+    static jnipp::Method<void,jnipp::Array<jbyte>,jint,jint> method(clazz(), "update", "([BII)V");
+    method.call(*this, a0, a1, a2);
+}
+
 // public void java.security.MessageDigest.update(byte[])
 void JavaSecurityMessageDigest::update(const jnipp::Ref<jnipp::Array<jbyte>>& a0) const {
     static jnipp::Method<void,jnipp::Array<jbyte>> method(clazz(), "update", "([B)V");
     method.call(*this, a0);
 }
 
-// public void java.security.MessageDigest.update(byte)
-void JavaSecurityMessageDigest::update_(jbyte a0) const {
-    static jnipp::Method<void,jbyte> method(clazz(), "update", "(B)V");
-    method.call(*this, a0);
-}
-
-// public void java.security.MessageDigest.update(byte[],int,int)
-void JavaSecurityMessageDigest::update__(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
-    static jnipp::Method<void,jnipp::Array<jbyte>,jint,jint> method(clazz(), "update", "([BII)V");
-    method.call(*this, a0, a1, a2);
-}
-
 // public final void java.security.MessageDigest.update(java.nio.ByteBuffer)
-void JavaSecurityMessageDigest::update___(const jnipp::Ref<JavaNioByteBuffer>& a0) const {
+void JavaSecurityMessageDigest::update(const jnipp::Ref<JavaNioByteBuffer>& a0) const {
     static jnipp::Method<void,JavaNioByteBuffer> method(clazz(), "update", "(Ljava/nio/ByteBuffer;)V");
     method.call(*this, a0);
 }
 
-// public static boolean java.security.MessageDigest.isEqual(byte[],byte[])
-jboolean JavaSecurityMessageDigest::isEqual(const jnipp::Ref<jnipp::Array<jbyte>>& a0, const jnipp::Ref<jnipp::Array<jbyte>>& a1) {
-    static jnipp::StaticMethod<jboolean,jnipp::Array<jbyte>,jnipp::Array<jbyte>> method(clazz(), "isEqual", "([B[B)Z");
-    return method.call(a0, a1);
-}
-
-// public final int java.security.MessageDigest.getDigestLength()
-jint JavaSecurityMessageDigest::getDigestLength() const {
-    static jnipp::Method<jint> method(clazz(), "getDigestLength", "()I");
-    return method.call(*this);
+// public void java.security.MessageDigest.update(byte)
+void JavaSecurityMessageDigest::update(jbyte a0) const {
+    static jnipp::Method<void,jbyte> method(clazz(), "update", "(B)V");
+    method.call(*this, a0);
 }
 
 // public byte[] java.security.MessageDigest.digest(byte[])
@@ -28702,13 +28650,13 @@ jnipp::LocalRef<jnipp::Array<jbyte>> JavaSecurityMessageDigest::digest(const jni
 }
 
 // public byte[] java.security.MessageDigest.digest()
-jnipp::LocalRef<jnipp::Array<jbyte>> JavaSecurityMessageDigest::digest_() const {
+jnipp::LocalRef<jnipp::Array<jbyte>> JavaSecurityMessageDigest::digest() const {
     static jnipp::Method<jnipp::Array<jbyte>> method(clazz(), "digest", "()[B");
     return method.call(*this);
 }
 
 // public int java.security.MessageDigest.digest(byte[],int,int) throws java.security.DigestException
-jint JavaSecurityMessageDigest::digest__(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
+jint JavaSecurityMessageDigest::digest(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
     static jnipp::Method<jint,jnipp::Array<jbyte>,jint,jint> method(clazz(), "digest", "([BII)I");
     return method.call(*this, a0, a1, a2);
 }
@@ -28724,10 +28672,62 @@ jnipp::LocalRef<JavaLangString> JavaSecurityMessageDigest::getAlgorithm() const 
     static jnipp::Method<JavaLangString> method(clazz(), "getAlgorithm", "()Ljava/lang/String;");
     return method.call(*this);
 }
+
+// public static boolean java.security.MessageDigest.isEqual(byte[],byte[])
+jboolean JavaSecurityMessageDigest::isEqual(const jnipp::Ref<jnipp::Array<jbyte>>& a0, const jnipp::Ref<jnipp::Array<jbyte>>& a1) {
+    static jnipp::StaticMethod<jboolean,jnipp::Array<jbyte>,jnipp::Array<jbyte>> method(clazz(), "isEqual", "([B[B)Z");
+    return method.call(a0, a1);
+}
+
+// public final int java.security.MessageDigest.getDigestLength()
+jint JavaSecurityMessageDigest::getDigestLength() const {
+    static jnipp::Method<jint> method(clazz(), "getDigestLength", "()I");
+    return method.call(*this);
+}
 #undef INITIAL
 const jnipp::StaticField<jint> JavaSecurityMessageDigest::INITIAL ("java/security/MessageDigest", "INITIAL", "I");
 #undef IN_PROGRESS
 const jnipp::StaticField<jint> JavaSecurityMessageDigest::IN_PROGRESS ("java/security/MessageDigest", "IN_PROGRESS", "I");
+inline jnipp::GlobalRef<jnipp::Class>& SunSecurityUtilManifestDigester_Entry::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("sun/security/util/ManifestDigester$Entry"));
+    return cls;
+}
+
+// public sun.security.util.ManifestDigester$Entry(int,int,int,byte[])
+jnipp::LocalRef<SunSecurityUtilManifestDigester_Entry> SunSecurityUtilManifestDigester_Entry::construct(jint a0, jint a1, jint a2, const jnipp::Ref<jnipp::Array<jbyte>>& a3) {
+    static jnipp::Constructor<SunSecurityUtilManifestDigester_Entry,jint,jint,jint,jnipp::Array<jbyte>> constructor(clazz(), "(III[B)V");
+    return constructor.construct(a0, a1, a2, a3);
+}
+
+// public byte[] sun.security.util.ManifestDigester$Entry.digest(java.security.MessageDigest)
+jnipp::LocalRef<jnipp::Array<jbyte>> SunSecurityUtilManifestDigester_Entry::digest(const jnipp::Ref<JavaSecurityMessageDigest>& a0) const {
+    static jnipp::Method<jnipp::Array<jbyte>,JavaSecurityMessageDigest> method(clazz(), "digest", "(Ljava/security/MessageDigest;)[B");
+    return method.call(*this, a0);
+}
+
+// private void sun.security.util.ManifestDigester$Entry.doOldStyle(java.security.MessageDigest,byte[],int,int)
+void SunSecurityUtilManifestDigester_Entry::doOldStyle(const jnipp::Ref<JavaSecurityMessageDigest>& a0, const jnipp::Ref<jnipp::Array<jbyte>>& a1, jint a2, jint a3) const {
+    static jnipp::Method<void,JavaSecurityMessageDigest,jnipp::Array<jbyte>,jint,jint> method(clazz(), "doOldStyle", "(Ljava/security/MessageDigest;[BII)V");
+    method.call(*this, a0, a1, a2, a3);
+}
+
+// public byte[] sun.security.util.ManifestDigester$Entry.digestWorkaround(java.security.MessageDigest)
+jnipp::LocalRef<jnipp::Array<jbyte>> SunSecurityUtilManifestDigester_Entry::digestWorkaround(const jnipp::Ref<JavaSecurityMessageDigest>& a0) const {
+    static jnipp::Method<jnipp::Array<jbyte>,JavaSecurityMessageDigest> method(clazz(), "digestWorkaround", "(Ljava/security/MessageDigest;)[B");
+    return method.call(*this, a0);
+}
+inline jnipp::GlobalRef<jnipp::Class>& SunSecurityUtilManifestDigester_Position::clazz() {
+    static jnipp::GlobalRef<jnipp::Class> cls;
+    if (!cls) cls.set(jnipp::Class::forName("sun/security/util/ManifestDigester$Position"));
+    return cls;
+}
+
+// sun.security.util.ManifestDigester$Position()
+jnipp::LocalRef<SunSecurityUtilManifestDigester_Position> SunSecurityUtilManifestDigester_Position::construct() {
+    static jnipp::Constructor<SunSecurityUtilManifestDigester_Position> constructor(clazz(), "()V");
+    return constructor.construct();
+}
 inline jnipp::GlobalRef<jnipp::Class>& JavaUtilTimeZone::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/util/TimeZone"));
@@ -28771,19 +28771,19 @@ jnipp::LocalRef<JavaLangString> JavaUtilTimeZone::getDisplayName(jboolean a0, ji
 }
 
 // public java.lang.String java.util.TimeZone.getDisplayName(boolean,int,java.util.Locale)
-jnipp::LocalRef<JavaLangString> JavaUtilTimeZone::getDisplayName_(jboolean a0, jint a1, const jnipp::Ref<JavaUtilLocale>& a2) const {
+jnipp::LocalRef<JavaLangString> JavaUtilTimeZone::getDisplayName(jboolean a0, jint a1, const jnipp::Ref<JavaUtilLocale>& a2) const {
     static jnipp::Method<JavaLangString,jboolean,jint,JavaUtilLocale> method(clazz(), "getDisplayName", "(ZILjava/util/Locale;)Ljava/lang/String;");
     return method.call(*this, a0, a1, a2);
 }
 
 // public final java.lang.String java.util.TimeZone.getDisplayName()
-jnipp::LocalRef<JavaLangString> JavaUtilTimeZone::getDisplayName__() const {
+jnipp::LocalRef<JavaLangString> JavaUtilTimeZone::getDisplayName() const {
     static jnipp::Method<JavaLangString> method(clazz(), "getDisplayName", "()Ljava/lang/String;");
     return method.call(*this);
 }
 
 // public final java.lang.String java.util.TimeZone.getDisplayName(java.util.Locale)
-jnipp::LocalRef<JavaLangString> JavaUtilTimeZone::getDisplayName___(const jnipp::Ref<JavaUtilLocale>& a0) const {
+jnipp::LocalRef<JavaLangString> JavaUtilTimeZone::getDisplayName(const jnipp::Ref<JavaUtilLocale>& a0) const {
     static jnipp::Method<JavaLangString,JavaUtilLocale> method(clazz(), "getDisplayName", "(Ljava/util/Locale;)Ljava/lang/String;");
     return method.call(*this, a0);
 }
@@ -28801,7 +28801,7 @@ jnipp::LocalRef<JavaUtilTimeZone> JavaUtilTimeZone::getTimeZone(const jnipp::Ref
 }
 
 // private static java.util.TimeZone java.util.TimeZone.getTimeZone(java.lang.String,boolean)
-jnipp::LocalRef<JavaUtilTimeZone> JavaUtilTimeZone::getTimeZone_(const jnipp::Ref<JavaLangString>& a0, jboolean a1) {
+jnipp::LocalRef<JavaUtilTimeZone> JavaUtilTimeZone::getTimeZone(const jnipp::Ref<JavaLangString>& a0, jboolean a1) {
     static jnipp::StaticMethod<JavaUtilTimeZone,JavaLangString,jboolean> method(clazz(), "getTimeZone", "(Ljava/lang/String;Z)Ljava/util/TimeZone;");
     return method.call(a0, a1);
 }
@@ -28849,7 +28849,7 @@ jnipp::LocalRef<jnipp::Array<JavaLangString>> JavaUtilTimeZone::getAvailableIDs(
 }
 
 // public static synchronized java.lang.String[] java.util.TimeZone.getAvailableIDs()
-jnipp::LocalRef<jnipp::Array<JavaLangString>> JavaUtilTimeZone::getAvailableIDs_() {
+jnipp::LocalRef<jnipp::Array<JavaLangString>> JavaUtilTimeZone::getAvailableIDs() {
     static jnipp::StaticMethod<jnipp::Array<JavaLangString>> method(clazz(), "getAvailableIDs", "()[Ljava/lang/String;");
     return method.call();
 }
@@ -29017,19 +29017,19 @@ jnipp::LocalRef<SunUtilCalendarGregorian_Date> SunUtilCalendarGregorian::getCale
 }
 
 // public sun.util.calendar.Gregorian$Date sun.util.calendar.Gregorian.getCalendarDate(long)
-jnipp::LocalRef<SunUtilCalendarGregorian_Date> SunUtilCalendarGregorian::getCalendarDate_(jlong a0) const {
+jnipp::LocalRef<SunUtilCalendarGregorian_Date> SunUtilCalendarGregorian::getCalendarDate(jlong a0) const {
     static jnipp::Method<SunUtilCalendarGregorian_Date,jlong> method(clazz(), "getCalendarDate", "(J)Lsun/util/calendar/Gregorian$Date;");
     return method.call(*this, a0);
 }
 
 // public sun.util.calendar.Gregorian$Date sun.util.calendar.Gregorian.getCalendarDate(long,sun.util.calendar.CalendarDate)
-jnipp::LocalRef<SunUtilCalendarGregorian_Date> SunUtilCalendarGregorian::getCalendarDate__(jlong a0, const jnipp::Ref<SunUtilCalendarCalendarDate>& a1) const {
+jnipp::LocalRef<SunUtilCalendarGregorian_Date> SunUtilCalendarGregorian::getCalendarDate(jlong a0, const jnipp::Ref<SunUtilCalendarCalendarDate>& a1) const {
     static jnipp::Method<SunUtilCalendarGregorian_Date,jlong,SunUtilCalendarCalendarDate> method(clazz(), "getCalendarDate", "(JLsun/util/calendar/CalendarDate;)Lsun/util/calendar/Gregorian$Date;");
     return method.call(*this, a0, a1);
 }
 
 // public sun.util.calendar.Gregorian$Date sun.util.calendar.Gregorian.getCalendarDate(long,java.util.TimeZone)
-jnipp::LocalRef<SunUtilCalendarGregorian_Date> SunUtilCalendarGregorian::getCalendarDate___(jlong a0, const jnipp::Ref<JavaUtilTimeZone>& a1) const {
+jnipp::LocalRef<SunUtilCalendarGregorian_Date> SunUtilCalendarGregorian::getCalendarDate(jlong a0, const jnipp::Ref<JavaUtilTimeZone>& a1) const {
     static jnipp::Method<SunUtilCalendarGregorian_Date,jlong,JavaUtilTimeZone> method(clazz(), "getCalendarDate", "(JLjava/util/TimeZone;)Lsun/util/calendar/Gregorian$Date;");
     return method.call(*this, a0, a1);
 }
@@ -29041,7 +29041,7 @@ jnipp::LocalRef<SunUtilCalendarGregorian_Date> SunUtilCalendarGregorian::newCale
 }
 
 // public sun.util.calendar.Gregorian$Date sun.util.calendar.Gregorian.newCalendarDate()
-jnipp::LocalRef<SunUtilCalendarGregorian_Date> SunUtilCalendarGregorian::newCalendarDate_() const {
+jnipp::LocalRef<SunUtilCalendarGregorian_Date> SunUtilCalendarGregorian::newCalendarDate() const {
     static jnipp::Method<SunUtilCalendarGregorian_Date> method(clazz(), "newCalendarDate", "()Lsun/util/calendar/Gregorian$Date;");
     return method.call(*this);
 }
@@ -29088,7 +29088,7 @@ jint JavaIoPushbackInputStream::read(const jnipp::Ref<jnipp::Array<jbyte>>& a0, 
 }
 
 // public int java.io.PushbackInputStream.read() throws java.io.IOException
-jint JavaIoPushbackInputStream::read_() const {
+jint JavaIoPushbackInputStream::read() const {
     static jnipp::Method<jint> method(clazz(), "read", "()I");
     return method.call(*this);
 }
@@ -29124,13 +29124,13 @@ void JavaIoPushbackInputStream::unread(const jnipp::Ref<jnipp::Array<jbyte>>& a0
 }
 
 // public void java.io.PushbackInputStream.unread(int) throws java.io.IOException
-void JavaIoPushbackInputStream::unread_(jint a0) const {
+void JavaIoPushbackInputStream::unread(jint a0) const {
     static jnipp::Method<void,jint> method(clazz(), "unread", "(I)V");
     method.call(*this, a0);
 }
 
 // public void java.io.PushbackInputStream.unread(byte[],int,int) throws java.io.IOException
-void JavaIoPushbackInputStream::unread__(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
+void JavaIoPushbackInputStream::unread(const jnipp::Ref<jnipp::Array<jbyte>>& a0, jint a1, jint a2) const {
     static jnipp::Method<void,jnipp::Array<jbyte>,jint,jint> method(clazz(), "unread", "([BII)V");
     method.call(*this, a0, a1, a2);
 }

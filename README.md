@@ -45,6 +45,8 @@ use `./generate/generate java.lang.String` to generate the java class header fil
     LocalRef<JavaLangString> str = String::create("Some String!");
     LocalRef<JavaLangString> str_upper = str->toUpperCase();
 
+Please note that due to the fact that some names are reserved in C++ and C++ also does not allow fields and methods with the same name, some method or member names are made unique by appending underscores (i.e. someField_ instead of someField)
+
 
 Runtime size and speed
 ======================
@@ -64,6 +66,7 @@ When using java class headers you need to use dead code stripping, for clang:
 TODO
 ====
 - clean up generate tool (own dir, .jar, output file name option etc.)
+- option to limit scope of generate tool.
 
 
 Reference
