@@ -1121,9 +1121,11 @@ class Field : public FieldBase
 public:
     using FieldBase::FieldBase;
     LocalRef<R> get(jobject target) const {
+        JNIPP_ASSERT(target, "Field::get: target is null");
         return LocalRef<R>( Env::get()->GetObjectField(target, getFieldID()) );
     }
     void set(jobject target, Ref<R> value) {
+        JNIPP_ASSERT(target, "Field::set: target is null");
         Env::get()->SetObjectField(target, getFieldID(), value);
     }
 };
@@ -1135,9 +1137,11 @@ class Field<type> : public FieldBase \
 public: \
     using FieldBase::FieldBase; \
     type get(jobject target) const { \
+        JNIPP_ASSERT(target, "Field.get: target is null"); \
         return Env::get()->Get ## tag ## Field(target, getFieldID()); \
     } \
     void set(jobject target, type value) { \
+        JNIPP_ASSERT(target, "Field.set: target is null"); \
         Env::get()->Set ## tag ## Field(target, getFieldID(), value); \
     } \
 };
@@ -1163,9 +1167,9 @@ public:
             if (_cls == nullptr && _clsName != nullptr) {
                 const_cast<BoundFieldBase*>(this)->_cls = env->FindClass(_clsName);
             }
-            JNIPP_ASSERT(_cls, "Field: clsName not found");
+            JNIPP_ASSERT(_cls, "BoundField: clsName not found");
             jfieldID res = env->GetFieldID(_cls, _name, _signature);
-            JNIPP_ASSERT(res, "Field: field not found");
+            JNIPP_ASSERT(res, "BoundField: field not found");
             const_cast<BoundFieldBase*>(this)->_fieldID = res;
         }
         return _fieldID;
@@ -1181,6 +1185,7 @@ class BoundField : public BoundFieldBase
 public:
     using BoundFieldBase::BoundFieldBase;
     LocalRef<R> get() const {
+        JNIPP_ASSERT((jobject)*_thiz, "BoundField.get: this is null");
         return LocalRef<R>( Env::get()->GetObjectField(*_thiz, getFieldID()) );
     }
     operator LocalRef<R>() const {
@@ -1193,6 +1198,7 @@ public:
         return get();
     }
     void set(Ref<R> value) {
+        JNIPP_ASSERT((jobject)*_thiz, "BoundField.set: this is null");
         Env::get()->SetObjectField(*_thiz, getFieldID(), value);
     }
 };
@@ -1204,12 +1210,14 @@ class BoundField<type> : public BoundFieldBase \
 public: \
     using BoundFieldBase::BoundFieldBase; \
     type get() const { \
+        JNIPP_ASSERT((jobject)*_thiz, "BoundField.get: this is null"); \
         return Env::get()->Get ## tag ## Field(*_thiz, getFieldID()); \
     } \
     operator type() const { \
         return get(); \
     } \
     void set(type value) { \
+        JNIPP_ASSERT((jobject)*_thiz, "BoundField.set: this is null"); \
         Env::get()->Set ## tag ## Field(*_thiz, getFieldID(), value); \
     } \
     void operator=(type value) { \
