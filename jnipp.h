@@ -21,8 +21,8 @@
 #include <jni.h>
 
 #include <string>
-
 #include <stdexcept>
+// #include <initializer_list>
 
 #include <assert.h>
 
@@ -316,14 +316,20 @@ public:
         env()->SetObjectArrayElement((jobjectArray)*this, index, value);
     }
 
-    LocalRef<T> operator[](jsize index) const {
+    const LocalRef<T> operator[](jsize index) const {
         return get(index);
     }
 
-    static LocalRef<Array<T>> construct(jsize length, jclass elementClass) {
-        // @TODO: get elementClass from T ?
+    static LocalRef<Array<T>> construct(jsize length) {
+        fprintf(stderr, "BBB %d\n", length);
+        jclass elementClass = (jclass)T::clazz();
         return LocalRef<Array<T>>( Env::get()->NewObjectArray(length, elementClass, nullptr) );
     }
+
+    // static LocalRef<Array<T>> construct(std::initializer_list<T> list) {
+    //     LocalRef<Array<T>> res = construct(list.length());
+    //     return res;
+    // }
 
     class Iterator
     {
