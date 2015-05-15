@@ -673,6 +673,9 @@ public:
             this->__clear();
         }
     }
+    static LocalRef<T> create(jobject value) {
+        return LocalRef(Env::get()->NewLocalRef(value));
+    }
     jobject steal() {
         jobject val = (jobject)*this;
         __clear();
