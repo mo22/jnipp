@@ -91,7 +91,7 @@ void test_string() {
 
     {
         // create byte array
-        LocalRef<Array<jbyte>> byteArray = Array<jbyte>::construct(1024);
+        LocalRef<Array<jbyte>> byteArray = Array<jbyte>::create(1024);
         LOG("byteArray.length()=%d", byteArray->length());
         for (int i=0; i<1024; i++) {
             byteArray->set(i, i & 0xFF);
@@ -106,7 +106,7 @@ void test_string() {
     {
         // create char array
         LOG("charArray");
-        auto charArray = Array<jchar>::construct(10);
+        auto charArray = Array<jchar>::create(10);
         for (int i=0; i<charArray->length(); i++) (*charArray)[i] = '0' + i;
         auto charString = JavaLangString::construct(charArray);
         LOG("charString=%s", charString->std_str().c_str());

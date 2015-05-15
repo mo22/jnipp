@@ -320,14 +320,13 @@ public:
         return get(index);
     }
 
-    static LocalRef<Array<T>> construct(jsize length) {
-        fprintf(stderr, "BBB %d\n", length);
+    static LocalRef<Array<T>> create(jsize length) {
         jclass elementClass = (jclass)T::clazz();
         return LocalRef<Array<T>>( Env::get()->NewObjectArray(length, elementClass, nullptr) );
     }
 
-    // static LocalRef<Array<T>> construct(std::initializer_list<T> list) {
-    //     LocalRef<Array<T>> res = construct(list.length());
+    // static LocalRef<Array<T>> create(std::initializer_list<T> list) {
+    //     LocalRef<Array<T>> res = create(list.length());
     //     return res;
     // }
 
@@ -368,7 +367,7 @@ struct _Array {
 #define M(type,tag) \
 template <> struct _Array<type> { \
     using arrayType = type ## Array; \
-    static jarray construct(jsize length) { return Env::get()->New ## tag ## Array(length); } \
+    static jarray create(jsize length) { return Env::get()->New ## tag ## Array(length); } \
     static void getRegion(arrayType array, jsize index, jsize length, type* buffer) { return Env::get()->Get ## tag ## ArrayRegion(array, index, length, buffer); } \
     static type* getElements(arrayType array, jboolean* isCopy) { return Env::get()->Get ## tag ## ArrayElements(array, isCopy); } \
     static void releaseElements(arrayType array, type* data, jint mode) { Env::get()->Release ## tag ## ArrayElements(array, data, mode); } \
@@ -411,8 +410,8 @@ public:
         return env()->GetArrayLength((jarray)*this);
     }
 
-    static LocalRef<Array<T>> construct(jsize length) {
-        return LocalRef<Array<T>>( _Array<T>::construct(length) );
+    static LocalRef<Array<T>> create(jsize length) {
+        return LocalRef<Array<T>>( _Array<T>::create(length) );
     }
 
     void lock() const {
