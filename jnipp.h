@@ -161,6 +161,21 @@ public:
 
 ////////////////////////////////////////////////////////////////////////////////
 
+class LocalFrame
+{
+public:
+    LocalFrame(jint capacity=32)
+    {
+        Env::pushLocalFrame(capacity);
+    }
+    ~LocalFrame()
+    {
+        Env::popLocalFrame();
+    }
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
 /**
  * monitor / lock object
  * can be passed/returned by rvalue
@@ -201,6 +216,7 @@ protected:
     }
     template<typename A> friend class LocalRef;
     template<typename A> friend class GlobalRef;
+    template<typename A> friend class WeakRef;
     template<typename A, typename A1, typename A2> friend class Ref;
 public:
     Object(jobject value) : _value(value) {
@@ -662,12 +678,18 @@ public:
     LocalRef(const Ref<S>& value) : Ref<T>(Env::get()->NewLocalRef((jobject)value)) {
         JNIPP_RLOG("LocalRef::LocalRef(Ref&) this=%p value=<%p> jobject=%p (copy)", this, &value, (jobject)*this);
     }
+    LocalRef(const WeakRef<T>& value) : Ref<T>(Env::get()->NewLocalRef((jweak)value)) {
+        JNIPP_RLOG("LocalRef::LocalRef(WeakRef&) this=%p value=<%p> jobject=%p", this, &value, (jobject)*this);
+    }
     ~LocalRef() {
         if ((jobject)*this) {
             JNIPP_RLOG("LocalRef::~LocalRef() this=%p jobject=%p (DeleteLocalRef)", this, (jobject)*this);
             if (Env::peek()) Env::get()->DeleteLocalRef((jobject)*this);
             this->__clear();
         }
+    }
+    static LocalRef<T> create(jobject value) {
+        return LocalRef(Env::get()->NewLocalRef(value));
     }
     jobject steal() {
         jobject val = (jobject)*this;
@@ -705,6 +727,9 @@ public:
     GlobalRef(const Ref<S>& value) : Ref<T>(Env::get()->NewGlobalRef((jobject)value)) {
         JNIPP_RLOG("GlobalRef::GlobalRef(Ref&) this=%p value=<%p> jobject=%p (copy)", this, &value, (jobject)*this);
     }
+    GlobalRef(const WeakRef<T>& value) : Ref<T>(Env::get()->NewLocalRef((jweak)value)) {
+        JNIPP_RLOG("GlobalRef::GlobalRef(WeakRef&) this=%p value=<%p> jobject=%p", this, &value, (jobject)*this);
+    }
     ~GlobalRef() {
         if ((jobject)*this) {
             JNIPP_RLOG("GlobalRef::~GlobalRef() this=%p jobject=%p (DeleteGlobalRef)", this, (jobject)*this);
@@ -733,47 +758,65 @@ public:
  */
 template <typename T>
 class WeakRef {
+protected:
+    T _impl;
+    void __clear() {
+        this->_impl.__clear();
+    }
+    template<typename S> friend class WeakRef;
 public:
-    WeakRef() : Ref<T>((jobject)nullptr) {
+    WeakRef() : _impl(nullptr) {
         JNIPP_RLOG("WeakRef::WeakRef() this=%p", this);
     }
-    explicit WeakRef(jobject value) : Ref<T>(Env::get()->NewWeakGlobalRef(value)) {
-        JNIPP_RLOG("WeakRef::WeakRef(jobject) this=%p jobject=%p", this, (jobject)*this);
+    // explicit WeakRef(jobject value) : _impl(Env::get()->NewWeakGlobalRef(value)) {
+    //     JNIPP_RLOG("WeakRef::WeakRef(jobject) this=%p jobject=%p", this, (jweak)*this);
+    // }
+    explicit WeakRef(jweak value) : _impl((jobject)value) {
+        assert( Env::get()->GetObjectRefType(value) == JNIWeakGlobalRefType );
+        JNIPP_RLOG("WeakRef::WeakRef(jweak) this=%p jobject=%p", this, (jweak)*this);
     }
     template <typename S>
-    WeakRef(WeakRef<S>&& value) : Ref<T>((jobject)value) {
-        JNIPP_RLOG("WeakRef::WeakRef(WeakRef&&) this=%p value=<%p> jobject=%p", this, &value, (jobject)*this);
-        value.clear();
+    WeakRef(WeakRef<S>&& value) : _impl((jobject)(jweak)value) {
+        JNIPP_RLOG("WeakRef::WeakRef(WeakRef&&) this=%p value=<%p> jobject=%p", this, &value, (jweak)*this);
+        value.__clear();
     }
     template <typename S>
-    WeakRef(const Ref<S>& value) : Ref<T>(Env::get()->NewWeakGlobalRef((jobject)value)) {
-        JNIPP_RLOG("WeakRef::WeakRef(Ref&) this=%p value=<%p> jobject=%p", this, &value, (jobject)*this);
+    WeakRef(const Ref<S>& value) : _impl(Env::get()->NewWeakGlobalRef((jobject)value)) {
+        JNIPP_RLOG("WeakRef::WeakRef(Ref&) this=%p value=<%p> jobject=%p", this, &value, (jweak)*this);
     }
     ~WeakRef() {
-        if (*this) {
-            JNIPP_RLOG("WeakRef::~WeakRef() this=%p jobject=%p", this, (jobject)*this);
-            if (Env::peek()) Env::get()->DeleteWeakGlobalRef((jobject)*this);
-            this->clear();
+        if ((jweak)*this) {
+            JNIPP_RLOG("WeakRef::~WeakRef() this=%p jobject=%p", this, (jweak)*this);
+            if (Env::peek()) Env::get()->DeleteWeakGlobalRef((jweak)*this);
+            this->__clear();
         }
+    }
+    operator jweak() const {
+        return (jweak)(jobject)_impl;
     }
     template <typename S>
     bool operator == (const Ref<S>& other) {
-        return Env::get()->IsSameObject((jobject)*this, (jobject)*other);
+        return Env::get()->IsSameObject((jweak)*this, (jobject)*other);
     }
     template <typename S>
     bool operator != (const Ref<S>& other) {
-        return !Env::get()->IsSameObject((jobject)*this, (jobject)*other);
+        return !Env::get()->IsSameObject((jweak)*this, (jobject)*other);
+    }
+    template <typename S>
+    bool operator == (const WeakRef<S>& other) {
+        return Env::get()->IsSameObject((jweak)*this, (jweak)*other);
+    }
+    template <typename S>
+    bool operator != (const WeakRef<S>& other) {
+        return !Env::get()->IsSameObject((jweak)*this, (jweak)*other);
     }
     operator bool() const {
-        return (jobject)*this != nullptr && !Env::get()->IsSameObject((jobject)*this, NULL);
-    }
-    void clear() {
-        this->_impl.clear();
+        return (jweak)*this != nullptr && !Env::get()->IsSameObject((jweak)*this, NULL);
     }
     template <typename S>
     void set(const Ref<S>& value) {
-        if (*this) Env::get()->DeleteWeakGlobalRef((jobject)*this);
-        this->_impl = T(Env::get()->NewGlobalRef((jobject)value));
+        if ((jweak)*this) Env::get()->DeleteWeakGlobalRef((jweak)*this);
+        this->_impl = T(Env::get()->NewWeakGlobalRef((jobject)value));
     }
     static bool is(jobject value) {
         return Env::get()->GetObjectRefType(value) == JNIWeakGlobalRefType;
