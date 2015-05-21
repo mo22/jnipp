@@ -60,8 +60,8 @@
 
 namespace jnipp {
 
-// #include <android/log.h>
-// #define LOG(...) __android_log_print(ANDROID_LOG_VERBOSE, "LOG", __VA_ARGS__);
+//#include <android/log.h>
+//#define LOG(...) __android_log_print(ANDROID_LOG_VERBOSE, "LOG", __VA_ARGS__);
 
 //#define JNIPP_RLOG(...) LOG(__VA_ARGS__)
 #ifndef JNIPP_RLOG
@@ -667,7 +667,11 @@ protected:
     template<typename S> friend class LocalRef;
 public:
     explicit LocalRef(jobject value) : Ref<T>(value) {
-        if (value && !Env::get()->ExceptionCheck()) {
+        if (Env::get()->ExceptionCheck()) {
+            __clear();
+            value = nullptr; // on android we sometimes get a stale reference on exceptions.
+        }
+        if (value) {
             assert( Env::get()->GetObjectRefType(value) == JNILocalRefType );
         }
         JNIPP_RLOG("LocalRef::LocalRef(jobject) this=%p jobject=%p (explicit)", this, (jobject)*this);
