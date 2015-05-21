@@ -60,6 +60,9 @@
 
 namespace jnipp {
 
+// #include <android/log.h>
+// #define LOG(...) __android_log_print(ANDROID_LOG_VERBOSE, "LOG", __VA_ARGS__);
+
 //#define JNIPP_RLOG(...) LOG(__VA_ARGS__)
 #ifndef JNIPP_RLOG
 #define JNIPP_RLOG(...)
@@ -664,7 +667,7 @@ protected:
     template<typename S> friend class LocalRef;
 public:
     explicit LocalRef(jobject value) : Ref<T>(value) {
-        if (value) {
+        if (value && !Env::get()->ExceptionCheck()) {
             assert( Env::get()->GetObjectRefType(value) == JNILocalRefType );
         }
         JNIPP_RLOG("LocalRef::LocalRef(jobject) this=%p jobject=%p (explicit)", this, (jobject)*this);
