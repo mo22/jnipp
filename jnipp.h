@@ -1381,9 +1381,9 @@ inline Constructor<R, A...>::Constructor(Ref<Class> cls, const char* signature) 
 ////////////////////////////////////////////////////////////////////////////////
 
 inline LocalRef<Object> Env::getException() {
-    LocalRef<Object> res ( get()->ExceptionOccurred() );
+    jobject e = get()->ExceptionOccurred();
     get()->ExceptionClear();
-    return res;
+    return LocalRef<Object>(e);
 }
 
 inline void Env::throwException(Ref<Object> exception)
