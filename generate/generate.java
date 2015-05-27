@@ -148,7 +148,7 @@ public class generate
         declaration.append("\n");
         declaration.append("    static jnipp::GlobalRef<jnipp::Class>& clazz();\n");
 
-        implementation.append("inline jnipp::GlobalRef<jnipp::Class>& "+defClsName+"::clazz() {\n");
+        implementation.append("jnipp::GlobalRef<jnipp::Class>& "+defClsName+"::clazz() {\n");
         implementation.append("    static jnipp::GlobalRef<jnipp::Class> cls;\n");
         implementation.append("    if (!cls) cls.set(jnipp::Class::forName(\"" + cls.getName().replace(".", "/") + "\"));\n");
         implementation.append("    return cls;\n");
@@ -340,7 +340,6 @@ public class generate
                 if (member.getName().equals("getClass")) continue;
 
                 if (!item.includePrivate && (member.getModifiers() & Modifier.PUBLIC) == 0) continue;
-                if ((member.getModifiers() & Modifier.ABSTRACT) != 0) continue;
 
                 if (member.isSynthetic()) continue;
 
