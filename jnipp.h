@@ -624,7 +624,7 @@ template <typename T>
 class Ref<Array<T>> : public RefBase<Array<T>> {
 public:
     using RefBase<Array<T>>::RefBase;
-    LocalRef<T> operator[] (jsize index) {
+    const LocalRef<T> operator[] (jsize index) const {
         return (*this)->get(index);
     }
     typename Array<T>::Iterator begin() const {
