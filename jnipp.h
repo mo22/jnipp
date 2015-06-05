@@ -722,7 +722,10 @@ public:
     GlobalRef() : Ref<T>((jobject)nullptr) {
         JNIPP_RLOG("GlobalRef::GlobalRef() this=%p (empty)", this);
     }
-    explicit GlobalRef(jobject value) : Ref<T>(Env::get()->NewGlobalRef(value)) {
+    explicit GlobalRef(jobject value) : Ref<T>(value) {
+        if (value) {
+            assert( Env::get()->GetObjectRefType(value) == JNIGlobalRefType );
+        }
         JNIPP_RLOG("GlobalRef::GlobalRef(jobject) this=%p jobject=%p (explicit)", this, (jobject)*this);
     }
     template <typename S>
