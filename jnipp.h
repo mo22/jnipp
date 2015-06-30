@@ -664,7 +664,6 @@ protected:
         this->_impl.__clear();
     }
     template<typename S> friend class LocalRef;
-public:
     explicit LocalRef(jobject value) : Ref<T>(value) {
         if (Env::get()->ExceptionCheck()) {
             __clear();
@@ -675,6 +674,7 @@ public:
         }
         JNIPP_RLOG("LocalRef::LocalRef(jobject) this=%p jobject=%p (explicit)", this, (jobject)*this);
     }
+public:
     template <typename S>
     LocalRef(LocalRef<S>&& value) : Ref<T>((jobject)value) {
         value.__clear();
@@ -697,6 +697,10 @@ public:
     static LocalRef<T> create(jobject value) {
         return LocalRef(Env::get()->NewLocalRef(value));
     }
+    static LocalRef<T> use(jobject value)
+    {
+        return LocalRef<T>(value);
+    }
     jobject steal() {
         jobject val = (jobject)*this;
         __clear();
@@ -717,15 +721,15 @@ protected:
     void __clear() {
         this->_impl.__clear();
     }
-public:
-    GlobalRef() : Ref<T>((jobject)nullptr) {
-        JNIPP_RLOG("GlobalRef::GlobalRef() this=%p (empty)", this);
-    }
     explicit GlobalRef(jobject value) : Ref<T>(value) {
         if (value) {
             assert( Env::get()->GetObjectRefType(value) == JNIGlobalRefType );
         }
         JNIPP_RLOG("GlobalRef::GlobalRef(jobject) this=%p jobject=%p (explicit)", this, (jobject)*this);
+    }
+public:
+    GlobalRef() : Ref<T>((jobject)nullptr) {
+        JNIPP_RLOG("GlobalRef::GlobalRef() this=%p (empty)", this);
     }
     template <typename S>
     GlobalRef(GlobalRef<S>&& value) : Ref<T>((jobject)value) {
@@ -745,6 +749,10 @@ public:
             if (Env::peek()) Env::get()->DeleteGlobalRef((jobject)*this);
             this->__clear();
         }
+    }
+    static GlobalRef<T> use(jobject value)
+    {
+        return GlobalRef<T>(value);
     }
     template <typename S>
     void set(const Ref<S>& value) {
