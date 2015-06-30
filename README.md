@@ -90,6 +90,7 @@ Refs
 * all `Ref`s support `operator ==` (`IsSameObject`) and `operator bool` checking (for not null)
 * a `LocalRef` keeps a jni local reference and call `DeleteLocalRef` on destruction. Use these for returning objects. The copy constructor will call `NewLocalRef`.
 * use `LocalRef.steal()` to get the jobject from a LocalRef and zeroing the LocalRef (i.e. preventing the call to DeleteLocalRef on destruction).
+* use `LocalRef::use(jobject)` to use an existing local reference jobject.
 * a `GlobalRef` is a java global reference (`NewGlobalRef`). on destruction, calls `DeleteGlobalRef`.
 * a `WeakRef` is a java weak global reference (`NewWeakGlobalRef`). on destruction, calls `DeleteWeakGlobalRef`. These are not a subclass of `Ref` and can only be used to initialize a `LocalRef` (to make sure that the weak reference is not garbage collected during usage).
 

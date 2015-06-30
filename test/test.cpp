@@ -68,7 +68,7 @@ void test_string() {
 
     // throw an exception
     {
-        auto ecls = Class::forName("java/lang/Exception");
+        auto ecls = GlobalRef<Class>(Class::forName("java/lang/Exception"));
         Constructor<Object,String> method(ecls, "(Ljava/lang/String;)V");
         auto ex = method.construct(String::create("hello world!"));
         Env::throwException(ex);

@@ -1,6 +1,6 @@
 #include "_java.h"
 
-inline jnipp::GlobalRef<jnipp::Class>& JavaLangObject::clazz() {
+jnipp::GlobalRef<jnipp::Class>& JavaLangObject::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/lang/Object"));
     return cls;
@@ -53,7 +53,7 @@ void JavaLangObject::notifyAll() const {
     static jnipp::Method<void> method(clazz(), "notifyAll", "()V");
     method.call(*this);
 }
-inline jnipp::GlobalRef<jnipp::Class>& JavaLangString::clazz() {
+jnipp::GlobalRef<jnipp::Class>& JavaLangString::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/lang/String"));
     return cls;
@@ -546,7 +546,7 @@ jnipp::LocalRef<JavaLangString> JavaLangString::intern() const {
 }
 #undef CASE_INSENSITIVE_ORDER
 const jnipp::StaticField<JavaUtilComparator> JavaLangString::CASE_INSENSITIVE_ORDER ("java/lang/String", "CASE_INSENSITIVE_ORDER", "Ljava/util/Comparator;");
-inline jnipp::GlobalRef<jnipp::Class>& JavaTest::clazz() {
+jnipp::GlobalRef<jnipp::Class>& JavaTest::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("JavaTest"));
     return cls;
@@ -561,37 +561,37 @@ jnipp::LocalRef<JavaTest> JavaTest::construct() {
 jnipp::StaticField<JavaLangObject> JavaTest::staticObject ("JavaTest", "staticObject", "Ljava/lang/Object;");
 #undef staticInt
 jnipp::StaticField<jint> JavaTest::staticInt ("JavaTest", "staticInt", "I");
-inline jnipp::GlobalRef<jnipp::Class>& JavaNioCharsetCharset::clazz() {
+jnipp::GlobalRef<jnipp::Class>& JavaNioCharsetCharset::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/nio/charset/Charset"));
     return cls;
 }
-inline jnipp::GlobalRef<jnipp::Class>& JavaUtilComparator::clazz() {
+jnipp::GlobalRef<jnipp::Class>& JavaUtilComparator::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/util/Comparator"));
     return cls;
 }
-inline jnipp::GlobalRef<jnipp::Class>& JavaLangAbstractStringBuilder::clazz() {
+jnipp::GlobalRef<jnipp::Class>& JavaLangAbstractStringBuilder::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/lang/AbstractStringBuilder"));
     return cls;
 }
-inline jnipp::GlobalRef<jnipp::Class>& JavaLangStringBuffer::clazz() {
+jnipp::GlobalRef<jnipp::Class>& JavaLangStringBuffer::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/lang/StringBuffer"));
     return cls;
 }
-inline jnipp::GlobalRef<jnipp::Class>& JavaUtilLocale::clazz() {
+jnipp::GlobalRef<jnipp::Class>& JavaUtilLocale::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/util/Locale"));
     return cls;
 }
-inline jnipp::GlobalRef<jnipp::Class>& JavaLangStringBuilder::clazz() {
+jnipp::GlobalRef<jnipp::Class>& JavaLangStringBuilder::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/lang/StringBuilder"));
     return cls;
 }
-inline jnipp::GlobalRef<jnipp::Class>& JavaLangCharSequence::clazz() {
+jnipp::GlobalRef<jnipp::Class>& JavaLangCharSequence::clazz() {
     static jnipp::GlobalRef<jnipp::Class> cls;
     if (!cls) cls.set(jnipp::Class::forName("java/lang/CharSequence"));
     return cls;

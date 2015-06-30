@@ -327,7 +327,7 @@ public:
     }
 
     LocalRef<T> get(jsize index) const {
-        return LocalRef<T>( env()->GetObjectArrayElement((jobjectArray)*this, index) );
+        return LocalRef<T>::use( env()->GetObjectArrayElement((jobjectArray)*this, index) );
     }
 
     void set(jsize index, Ref<T> value) {
@@ -340,7 +340,7 @@ public:
 
     static LocalRef<Array<T>> create(jsize length) {
         jclass elementClass = (jclass)T::clazz();
-        return LocalRef<Array<T>>( Env::get()->NewObjectArray(length, elementClass, nullptr) );
+        return LocalRef<Array<T>>::use( Env::get()->NewObjectArray(length, elementClass, nullptr) );
     }
 
     // static LocalRef<Array<T>> create(std::initializer_list<T> list) {
@@ -429,7 +429,7 @@ public:
     }
 
     static LocalRef<Array<T>> create(jsize length) {
-        return LocalRef<Array<T>>( _Array<T>::create(length) );
+        return LocalRef<Array<T>>::use( _Array<T>::create(length) );
     }
 
     void lock() const {
@@ -750,10 +750,10 @@ public:
             this->__clear();
         }
     }
-    static GlobalRef<T> use(jobject value)
-    {
-        return GlobalRef<T>(value);
-    }
+//    static GlobalRef<T> use(jobject value)
+//    {
+//        return GlobalRef<T>(value);
+//    }
     template <typename S>
     void set(const Ref<S>& value) {
         if (*this) Env::get()->DeleteGlobalRef((jobject)*this);
@@ -914,7 +914,7 @@ class Method : public MethodBase
 public:
     using MethodBase::MethodBase;
     LocalRef<R> call(jobject target, typename _AsRef<A>::R... args) const {
-        return LocalRef<R>( Env::get()->CallObjectMethod(target, getMethodID(), _ConvertArg(args)...) );
+        return LocalRef<R>::use( Env::get()->CallObjectMethod(target, getMethodID(), _ConvertArg(args)...) );
     }
     LocalRef<R> operator()(jobject target, typename _AsRef<A>::R... args) const {
         return call(target, args...);
@@ -986,7 +986,7 @@ class NonvirtualMethod : public NonvirtualMethodBase
 public:
     using NonvirtualMethodBase::NonvirtualMethodBase;
     LocalRef<R> call(jobject target, typename _AsRef<A>::R... args) const {
-        return LocalRef<R>( Env::get()->CallNonvirtualObjectMethod(target, getMethodID(), _ConvertArg(args)...) );
+        return LocalRef<R>::use( Env::get()->CallNonvirtualObjectMethod(target, getMethodID(), _ConvertArg(args)...) );
     }
     LocalRef<R> operator()(jobject target, typename _AsRef<A>::R... args) const {
         return call(target, args...);
@@ -1066,7 +1066,7 @@ class StaticMethod : public StaticMethodBase
 public:
     using StaticMethodBase::StaticMethodBase;
     LocalRef<R> call(typename _AsRef<A>::R... args) const {
-        return LocalRef<R>( Env::get()->CallStaticObjectMethod(getClass(), getMethodID(), _ConvertArg(args)...) );
+        return LocalRef<R>::use( Env::get()->CallStaticObjectMethod(getClass(), getMethodID(), _ConvertArg(args)...) );
     }
     LocalRef<R> operator()(typename _AsRef<A>::R... args) const {
         return call(args...);
@@ -1140,7 +1140,7 @@ public:
         return getClass();
     }
     LocalRef<R> construct(typename _AsRef<A>::R... args) const {
-        return LocalRef<R>( Env::get()->NewObject(getClass(), getMethodID(), _ConvertArg(args)...) );
+        return LocalRef<R>::use( Env::get()->NewObject(getClass(), getMethodID(), _ConvertArg(args)...) );
     }
     LocalRef<R> operator()(typename _AsRef<A>::R... args) const {
         return construct(args...);
@@ -1184,7 +1184,7 @@ public:
     using FieldBase::FieldBase;
     LocalRef<R> get(jobject target) const {
         JNIPP_ASSERT(target, "Field::get: target is null");
-        return LocalRef<R>( Env::get()->GetObjectField(target, getFieldID()) );
+        return LocalRef<R>::use( Env::get()->GetObjectField(target, getFieldID()) );
     }
     void set(jobject target, Ref<R> value) {
         JNIPP_ASSERT(target, "Field::set: target is null");
@@ -1248,7 +1248,7 @@ public:
     using BoundFieldBase::BoundFieldBase;
     LocalRef<R> get() const {
         JNIPP_ASSERT((jobject)*_thiz, "BoundField.get: this is null");
-        return LocalRef<R>( Env::get()->GetObjectField(*_thiz, getFieldID()) );
+        return LocalRef<R>::use( Env::get()->GetObjectField(*_thiz, getFieldID()) );
     }
     operator LocalRef<R>() const {
         return get();
@@ -1335,7 +1335,7 @@ class StaticField : public StaticFieldBase
 public:
     using StaticFieldBase::StaticFieldBase;
     LocalRef<R> get() const {
-        return LocalRef<R>( Env::get()->GetStaticObjectField(getClass(), getFieldID()) );
+        return LocalRef<R>::use( Env::get()->GetStaticObjectField(getClass(), getFieldID()) );
     }
     operator LocalRef<R>() const {
         return get();
@@ -1381,7 +1381,7 @@ JNIPP_M_FOR_ALL_TYPES
 inline LocalRef<Object> Env::getException() {
     jobject e = get()->ExceptionOccurred();
     get()->ExceptionClear();
-    return LocalRef<Object>(e);
+    return LocalRef<Object>::use(e);
 }
 
 inline void Env::throwException(Ref<Object> exception)
@@ -1410,7 +1410,7 @@ inline LocalRef<String> Object::toString() const {
 }
 
 inline LocalRef<Class> Object::getClass() const {
-    return LocalRef<Class>( env()->GetObjectClass((jobject)*this) );
+    return LocalRef<Class>::use( env()->GetObjectClass((jobject)*this) );
 }
 
 inline jboolean Object::isInstanceOf(Ref<Class> cls) const {
@@ -1428,11 +1428,11 @@ inline Ref<Class> Object::clazz() {
 }
 
 inline LocalRef<String> String::create(const char* value) {
-    return LocalRef<String>( Env::get()->NewStringUTF(value) );
+    return LocalRef<String>::use( Env::get()->NewStringUTF(value) );
 }
 
 inline LocalRef<String> String::create(std::string value) {
-    return LocalRef<String>( Env::get()->NewStringUTF(value.c_str()) );
+    return LocalRef<String>::use( Env::get()->NewStringUTF(value.c_str()) );
 }
 
 inline Ref<Class> String::clazz() {
@@ -1442,7 +1442,7 @@ inline Ref<Class> String::clazz() {
 }
 
 inline LocalRef<Class> Class::forName(const char* name) {
-    return LocalRef<Class>( (jobject)Env::get()->FindClass(name) );
+    return LocalRef<Class>::use( (jobject)Env::get()->FindClass(name) );
 }
 
 inline LocalRef<String> Class::getName() const {
@@ -1455,7 +1455,7 @@ inline jboolean Class::isAssignableFrom(Ref<Class> other) const {
 }
 
 inline LocalRef<Class> Class::getSuperclass() const {
-    return LocalRef<Class>( env()->GetSuperclass((jclass)*this) );
+    return LocalRef<Class>::use( env()->GetSuperclass((jclass)*this) );
 }
 
 inline Ref<Class> Class::clazz() {
