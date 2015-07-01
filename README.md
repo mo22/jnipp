@@ -67,6 +67,7 @@ TODO
 ====
 - clean up generate tool (own dir, .jar, output file name option etc.)
 - option to limit scope of generate tool.
+- figure out correct constness.
 
 
 Reference

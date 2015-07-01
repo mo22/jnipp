@@ -218,8 +218,8 @@ public:
         Env::get()->MonitorEnter(_object);
     }
     Monitor(const Monitor& other) = delete;
-    Monitor(const Monitor&& other) : _object(other._object) {
-        const_cast<Monitor*>(&other)->_object = nullptr;
+    Monitor(Monitor&& other) : _object(other._object) {
+        other._object = nullptr;
     }
     ~Monitor() {
         if (_object) {
@@ -423,8 +423,8 @@ JNIPP_M_FOR_ALL_TYPES
 template<typename T>
 class _ElementArray : public Object {
 private:
-    T* _data;
-    bool _dirty;
+    mutable T* _data;
+    mutable bool _dirty;
 public:
     using arrayType = typename _Array<T>::arrayType;
     using Object::Object;
@@ -461,15 +461,15 @@ public:
 
     void lock() const {
         if (!_data) {
-            const_cast<_ElementArray<T>*>(this)->_data = _Array<T>::getElements((arrayType)*this, nullptr);
+            _data = _Array<T>::getElements((arrayType)*this, nullptr);
             //LOG("Array::lock this=%p _data=%p", this, _data);
-            const_cast<_ElementArray<T>*>(this)->_dirty = false;
+            _dirty = false;
         }
     }
     void unlock() const {
         if (_data) {
             T* data = _data;
-            const_cast<_ElementArray<T>*>(this)->_data = nullptr;
+            _data = nullptr;
             //LOG("Array::unlock this=%p _data=%p _dirty=%d", this, data, _dirty);
             _Array<T>::releaseElements((arrayType)*this, data, _dirty ? 0 : JNI_ABORT);
         }
@@ -489,14 +489,13 @@ public:
         _dirty = true;
         _data[index] = value;
     }
-
     T operator[](jsize index) const {
         return get(index);
     }
     T& operator[](jsize index) {
         return getRef(index);
     }
-    operator const T*() const {
+    operator const T*() {
         lock();
         return _data;
     }
@@ -669,15 +668,15 @@ template <> \
 class Ref<Array<type>> : public RefBase<Array<type>> { \
 public: \
     using RefBase<Array<type>>::RefBase; \
-    type operator[] (jsize index) const { \
-        return (*this)->get(index); \
-    } \
     type& operator[] (jsize index) { \
         return (*this)->getRef(index); \
     } \
 };
 JNIPP_M_FOR_ALL_TYPES
 #undef M
+//    type operator[] (jsize index) const { \
+//        return (*this)->get(index); \
+//    } \
 
 
 /**
@@ -1333,7 +1332,7 @@ public:
     }
     StaticFieldBase(GlobalRef<Class>& cls, const char* name, const char* signature) : _cls((jclass)(jobject)cls), _clsName(nullptr), _name(name), _signature(signature), _fieldID(0) {
     }
-    jfieldID getFieldID() const {
+    jfieldID getFieldID() {
         if (_fieldID == nullptr) {
 LOG("X1");
             JNIEnv* env = Env::get();
@@ -1347,32 +1346,28 @@ LOG("X2d %d", env->GetObjectRefType(a1));
 jclass a2 = (jclass)env->NewGlobalRef(a1);
 LOG("X2e %p", a2);
 LOG("X2f %p %p", _cls, this);
-                const_cast<StaticFieldBase*>(this)->_cls = (jclass)0xcafebabe;
-//                _cls = a2;
+                _cls = a2;
 LOG("X2g %p %p", _fieldID, this);
-                const_cast<StaticFieldBase*>(this)->_jfieldID = (jfieldID)0xcafebabe;
-LOG("X2h");
-                const_cast<StaticFieldBase*>(this)->_cls = (jclass)env->NewGlobalRef(env->FindClass(_clsName));
             }
 LOG("X3");
             JNIPP_ASSERT(_cls, "StaticField: clsName not found");
             jfieldID res = env->GetStaticFieldID(_cls, _name, _signature);
 LOG("X4");
             JNIPP_ASSERT(res, "StaticField: field not found");
-//            _fieldID = res;
-            const_cast<StaticFieldBase*>(this)->_fieldID = res;
+            _fieldID = res;
+//            const_cast<StaticFieldBase*>(this)->_fieldID = res;
         }
 LOG("X5");
         return _fieldID;
     }
-    jclass getClass() const {
+    jclass getClass() {
         getFieldID();
         return _cls;
     }
-    operator jfieldID() const {
+    operator jfieldID() {
         return getFieldID();
     }
-    operator jclass() const {
+    operator jclass() {
         return getClass();
     }
 };
@@ -1382,16 +1377,16 @@ class StaticField : public StaticFieldBase
 {
 public:
     using StaticFieldBase::StaticFieldBase;
-    LocalRef<R> get() const {
+    LocalRef<R> get() {
         return LocalRef<R>::use( Env::get()->GetStaticObjectField(getClass(), getFieldID()) );
     }
-    operator LocalRef<R>() const {
+    operator LocalRef<R>() {
         return get();
     }
-    operator GlobalRef<R>() const {
+    operator GlobalRef<R>() {
         return get();
     }
-    LocalRef<R> operator->() const {
+    LocalRef<R> operator->() {
         return get();
     }
     void set(Ref<R> value) {
@@ -1408,10 +1403,10 @@ class StaticField<type> : public StaticFieldBase \
 { \
 public: \
     using StaticFieldBase::StaticFieldBase; \
-    type get() const { \
+    type get() { \
         return Env::get()->GetStatic ## tag ## Field(getClass(), getFieldID()); \
     } \
-    operator type() const { \
+    operator type() { \
         return get(); \
     } \
     void set(type value) { \
@@ -1419,6 +1414,43 @@ public: \
     } \
     void operator=(type value) { \
         set(value); \
+    } \
+};
+JNIPP_M_FOR_ALL_TYPES
+#undef M
+
+////////////////////////////////////////////////////////////////////////////////
+
+template <typename R>
+class ConstField : public StaticFieldBase
+{
+public:
+    using StaticFieldBase::StaticFieldBase;
+    LocalRef<R> get() {
+        return LocalRef<R>::use( Env::get()->GetStaticObjectField(getClass(), getFieldID()) );
+    }
+    operator LocalRef<R>() {
+        return get();
+    }
+    operator GlobalRef<R>() {
+        return get();
+    }
+    LocalRef<R> operator->() {
+        return get();
+    }
+};
+
+#define M(type,tag) \
+template <> \
+class ConstField<type> : public StaticFieldBase \
+{ \
+public: \
+    using StaticFieldBase::StaticFieldBase; \
+    type get() { \
+        return Env::get()->GetStatic ## tag ## Field(getClass(), getFieldID()); \
+    } \
+    operator type() { \
+        return get(); \
     } \
 };
 JNIPP_M_FOR_ALL_TYPES
