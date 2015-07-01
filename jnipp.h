@@ -59,8 +59,8 @@
 
 namespace jnipp {
 
-//#include <android/log.h>
-//#define LOG(...) __android_log_print(ANDROID_LOG_VERBOSE, "LOG", __VA_ARGS__);
+#include <android/log.h>
+#define LOG(...) __android_log_print(ANDROID_LOG_VERBOSE, "LOG", __VA_ARGS__);
 //#define JNIPP_RLOG(...) LOG(__VA_ARGS__)
 
 #ifndef JNIPP_RLOG
@@ -1335,16 +1335,30 @@ public:
     }
     jfieldID getFieldID() const {
         if (_fieldID == nullptr) {
+LOG("X1");
             JNIEnv* env = Env::get();
+LOG("X2");
             if (_cls == nullptr && _clsName != nullptr) {
-fprintf(stderr, "XX7\n");
+LOG("X2a");
+LOG("X2b %s", _clsName);
+jclass a1 = env->FindClass(_clsName);
+LOG("X2c %p", a1);
+LOG("X2d %d", env->GetObjectRefType(a1));
+jclass a2 = (jclass)env->NewGlobalRef(a1);
+LOG("X2e %p", a2);
+LOG("X2f");
+                const_cast<StaticFieldBase*>(this)->_cls = a2;
+LOG("X2g");
                 const_cast<StaticFieldBase*>(this)->_cls = (jclass)env->NewGlobalRef(env->FindClass(_clsName));
             }
+LOG("X3");
             JNIPP_ASSERT(_cls, "StaticField: clsName not found");
             jfieldID res = env->GetStaticFieldID(_cls, _name, _signature);
+LOG("X4");
             JNIPP_ASSERT(res, "StaticField: field not found");
             const_cast<StaticFieldBase*>(this)->_fieldID = res;
         }
+LOG("X5");
         return _fieldID;
     }
     jclass getClass() const {
