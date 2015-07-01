@@ -61,8 +61,9 @@ namespace jnipp {
 
 #include <android/log.h>
 #define LOG(...) __android_log_print(ANDROID_LOG_VERBOSE, "LOG", __VA_ARGS__);
-
 #define JNIPP_RLOG(...) LOG(__VA_ARGS__)
+#undef JNIPP_THREAD_LOCAL
+#define JNIPP_THREAD_LOCAL_PTHREAD
 
 #ifndef JNIPP_RLOG
 #define JNIPP_RLOG(...)
@@ -101,18 +102,42 @@ template <typename T> class Array;
 class Env
 {
 protected:
+#ifdef JNIPP_THREAD_LOCAL_PTHREAD
+    static pthread_key_t _curkey() {
+        static pthread_key_t key;
+        static bool inited = false;
+        if (!inited) {
+            inited = true;
+            pthread_key_create(&key, NULL);
+        }
+        return key;
+    }
+    static JNIEnv* _getcur() {
+        return (JNIEnv*)pthread_getspecific(_curkey());
+    }
+    static void _setcur(JNIEnv* val) {
+        pthread_setspecific(_curkey(), (void*)val);
+    }
+#else
     static JNIEnv** _cur() {
         static JNIPP_THREAD_LOCAL JNIEnv* value = nullptr;
         return &value;
     }
+    static JNIEnv* _getcur() {
+        return *(_cur());
+    }
+    static void _setcur(JNIEnv* val) {
+        *(_cur()) = env;
+    }
+#endif
 public:
     class Scope {
         private:
             JNIEnv* _prev;
         public:
         Scope(JNIEnv* env) {
-            _prev = *(_cur());
-            *(_cur()) = env;
+            _prev = _getcur();
+            _setcur(env);
         }
         Scope(JavaVM* vm) {
             JNIEnv* env = nullptr;
@@ -120,27 +145,30 @@ public:
             // jint res = vm->AttachCurrentThread((void**)&env, NULL);
             jint res = reinterpret_cast<jint(*)(JavaVM*, void**, void*)>(vm->functions->AttachCurrentThread)(vm, (void**)&env, NULL);
             assert(res == JNI_OK);
-            _prev = *(_cur());
-            *(_cur()) = env;
+            _prev = _getcur();
+            _setcur(env);
         }
         ~Scope() {
-            *(_cur()) = _prev;
+            _setcur(_prev);
         }
     };
 public:
     static JNIEnv* peek() {
-        return *(_cur());
+        return _getcur();
     }
     static JNIEnv* get() {
         JNIEnv* res = peek();
         JNIPP_ASSERT(res, "EnvScope: no environment set");
+        // LOG("Env::get thread %d", gettid());
         return res;
     }
     static void pushLocalFrame(jint capacity=32) {
+        JNIPP_RLOG("Env::pushLocalFrame");
         jint res = get()->PushLocalFrame(capacity);
         assert(res == 0);
     }
     static void popLocalFrame() {
+        JNIPP_RLOG("Env::popLocalFrame");
         get()->PopLocalFrame(nullptr);
     }
     static void ensureLocalCapacity(jint capacity) {
@@ -670,16 +698,20 @@ protected:
             __clear();
             value = nullptr; // on android we sometimes get a stale reference on exceptions.
         }
+        JNIPP_RLOG("LocalRef::LocalRef(jobject) this=%p jobject=%p (explicit)", this, (jobject)*this);
         if (value) {
             assert( Env::get()->GetObjectRefType(value) == JNILocalRefType );
         }
-        JNIPP_RLOG("LocalRef::LocalRef(jobject) this=%p jobject=%p (explicit)", this, (jobject)*this);
     }
 public:
     template <typename S>
     LocalRef(LocalRef<S>&& value) : Ref<T>((jobject)value) {
+        JNIPP_RLOG("LocalRef::LocalRef(LocalRef&&) this=%p value=<%p> jobject=%p (move) [%p/%p/%d]", this, &value, (jobject)*this,
+            (jobject)value, (jobject)*this, Env::get()->GetObjectRefType((jobject)*this) );
         value.__clear();
-        JNIPP_RLOG("LocalRef::LocalRef(LocalRef&&) this=%p value=<%p> jobject=%p (move)", this, &value, (jobject)*this);
+        if (*this && !Env::get()->ExceptionCheck()) {
+            assert( Env::get()->GetObjectRefType((jobject)*this) == JNILocalRefType );
+        }
     }
     template <typename S>
     LocalRef(const Ref<S>& value) : Ref<T>(Env::get()->NewLocalRef((jobject)value)) {
