@@ -1346,9 +1346,12 @@ LOG("X2c %p", a1);
 LOG("X2d %d", env->GetObjectRefType(a1));
 jclass a2 = (jclass)env->NewGlobalRef(a1);
 LOG("X2e %p", a2);
-LOG("X2f");
-                const_cast<StaticFieldBase*>(this)->_cls = a2;
-LOG("X2g");
+LOG("X2f %p %p", _cls, this);
+                const_cast<StaticFieldBase*>(this)->_cls = (jclass)0xcafebabe;
+//                _cls = a2;
+LOG("X2g %p %p", _fieldID, this);
+                const_cast<StaticFieldBase*>(this)->_jfieldID = (jfieldID)0xcafebabe;
+LOG("X2h");
                 const_cast<StaticFieldBase*>(this)->_cls = (jclass)env->NewGlobalRef(env->FindClass(_clsName));
             }
 LOG("X3");
@@ -1356,6 +1359,7 @@ LOG("X3");
             jfieldID res = env->GetStaticFieldID(_cls, _name, _signature);
 LOG("X4");
             JNIPP_ASSERT(res, "StaticField: field not found");
+//            _fieldID = res;
             const_cast<StaticFieldBase*>(this)->_fieldID = res;
         }
 LOG("X5");
