@@ -59,11 +59,9 @@
 
 namespace jnipp {
 
-#include <android/log.h>
-#define LOG(...) __android_log_print(ANDROID_LOG_VERBOSE, "LOG", __VA_ARGS__);
-#define JNIPP_RLOG(...) LOG(__VA_ARGS__)
-#undef JNIPP_THREAD_LOCAL
-#define JNIPP_THREAD_LOCAL_PTHREAD
+//#include <android/log.h>
+//#define LOG(...) __android_log_print(ANDROID_LOG_VERBOSE, "LOG", __VA_ARGS__);
+//#define JNIPP_RLOG(...) LOG(__VA_ARGS__)
 
 #ifndef JNIPP_RLOG
 #define JNIPP_RLOG(...)
@@ -706,8 +704,7 @@ protected:
 public:
     template <typename S>
     LocalRef(LocalRef<S>&& value) : Ref<T>((jobject)value) {
-        JNIPP_RLOG("LocalRef::LocalRef(LocalRef&&) this=%p value=<%p> jobject=%p (move) [%p/%p/%d]", this, &value, (jobject)*this,
-            (jobject)value, (jobject)*this, Env::get()->GetObjectRefType((jobject)*this) );
+        JNIPP_RLOG("LocalRef::LocalRef(LocalRef&&) this=%p value=<%p> jobject=%p (move)", this, &value, (jobject)*this);
         value.__clear();
         if (*this && !Env::get()->ExceptionCheck()) {
             assert( Env::get()->GetObjectRefType((jobject)*this) == JNILocalRefType );
