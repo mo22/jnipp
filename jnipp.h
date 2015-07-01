@@ -668,16 +668,15 @@ template <> \
 class Ref<Array<type>> : public RefBase<Array<type>> { \
 public: \
     using RefBase<Array<type>>::RefBase; \
+    type operator[] (jsize index) const { \
+        return (*this)->get(index); \
+    } \
     type& operator[] (jsize index) { \
         return (*this)->getRef(index); \
     } \
 };
 JNIPP_M_FOR_ALL_TYPES
 #undef M
-//    type operator[] (jsize index) const { \
-//        return (*this)->get(index); \
-//    } \
-
 
 /**
  * java local ref
@@ -915,7 +914,7 @@ protected:
     const char* _clsName;
     const char* _name;
     const char* _signature;
-    jmethodID _methodID;
+    mutable jmethodID _methodID;
 public:
     MethodBase(const char* clsName, const char* name, const char* signature) : _cls(nullptr), _clsName(clsName), _name(name), _signature(signature), _methodID(0) {
     }
@@ -928,7 +927,7 @@ public:
             JNIPP_ASSERT(cls, "Method: clsName not found");
             jmethodID res = env->GetMethodID(cls, _name, _signature);
             JNIPP_ASSERT(res, "Method: method not found");
-            const_cast<MethodBase*>(this)->_methodID = res;
+            _methodID = res;
         }
         return _methodID;
     }
@@ -987,7 +986,7 @@ protected:
     const char* _clsName;
     const char* _name;
     const char* _signature;
-    jmethodID _methodID;
+    mutable jmethodID _methodID;
 public:
     NonvirtualMethodBase(const char* clsName, const char* name, const char* signature) : _cls(nullptr), _clsName(clsName), _name(name), _signature(signature), _methodID(0) {
     }
@@ -1000,7 +999,7 @@ public:
             JNIPP_ASSERT(cls, "NonvirtualMethod: clsName not found");
             jmethodID res = env->GetMethodID(cls, _name, _signature);
             JNIPP_ASSERT(res, "NonvirtualMethod: method not found");
-            const_cast<NonvirtualMethodBase*>(this)->_methodID = res;
+            _methodID = res;
         }
         return _methodID;
     }
@@ -1059,7 +1058,7 @@ protected:
     const char* _clsName;
     const char* _name;
     const char* _signature;
-    jmethodID _methodID;
+    mutable jmethodID _methodID;
 public:
     StaticMethodBase(const char* clsName, const char* name, const char* signature) : _cls(nullptr), _clsName(clsName), _name(name), _signature(signature), _methodID(0) {
     }
@@ -1071,7 +1070,7 @@ public:
             jclass cls = getClass();
             jmethodID res = env->GetStaticMethodID(_cls, _name, _signature);
             JNIPP_ASSERT(res, "StaticMethod: method not found");
-            const_cast<StaticMethodBase*>(this)->_methodID = res;
+            _methodID = res;
         }
         return _methodID;
     }
@@ -1140,7 +1139,7 @@ protected:
     jclass _cls;
     const char* _clsName;
     const char* _signature;
-    jmethodID _methodID;
+    mutable jmethodID _methodID;
 public:
     Constructor(const char* clsName, const char* signature) : _cls(nullptr), _clsName(clsName), _signature(signature), _methodID(0) {
     }
@@ -1152,7 +1151,7 @@ public:
             jclass cls = getClass();
             jmethodID res = env->GetMethodID(cls, "<init>", _signature);
             JNIPP_ASSERT(res, "Constructor: method not found");
-            const_cast<Constructor*>(this)->_methodID = res;
+            _methodID = res;
         }
         return _methodID;
     }
@@ -1184,7 +1183,7 @@ protected:
     const char* _clsName;
     const char* _name;
     const char* _signature;
-    jfieldID _fieldID;
+    mutable jfieldID _fieldID;
 public:
     FieldBase(const char* clsName, const char* name, const char* signature) : _cls(nullptr), _clsName(clsName), _name(name), _signature(signature), _fieldID(0) {
     }
@@ -1197,7 +1196,7 @@ public:
             JNIPP_ASSERT(cls, "Field: clsName not found");
             jfieldID res = env->GetFieldID(cls, _name, _signature);
             JNIPP_ASSERT(res, "Field: field not found");
-            const_cast<FieldBase*>(this)->_fieldID = res;
+            _fieldID = res;
         }
         return _fieldID;
     }
@@ -1247,7 +1246,7 @@ protected:
     const char* _clsName;
     const char* _name;
     const char* _signature;
-    jfieldID _fieldID;
+    mutable jfieldID _fieldID;
     Object* _thiz;
 public:
     BoundFieldBase(const char* clsName, const char* name, const char* signature, Object* thiz) : _cls(nullptr), _clsName(clsName), _name(name), _signature(signature), _fieldID(0), _thiz(thiz) {
@@ -1261,7 +1260,7 @@ public:
             JNIPP_ASSERT(cls, "BoundField: clsName not found");
             jfieldID res = env->GetFieldID(cls, _name, _signature);
             JNIPP_ASSERT(res, "BoundField: field not found");
-            const_cast<BoundFieldBase*>(this)->_fieldID = res;
+            _fieldID = res;
         }
         return _fieldID;
     }
@@ -1322,52 +1321,37 @@ JNIPP_M_FOR_ALL_TYPES
 
 class StaticFieldBase {
 protected:
-    jclass _cls;
+    mutable jclass _cls;
     const char* _clsName;
     const char* _name;
     const char* _signature;
-    jfieldID _fieldID;
+    mutable jfieldID _fieldID;
 public:
     StaticFieldBase(const char* clsName, const char* name, const char* signature) : _cls(nullptr), _clsName(clsName), _name(name), _signature(signature), _fieldID(0) {
     }
     StaticFieldBase(GlobalRef<Class>& cls, const char* name, const char* signature) : _cls((jclass)(jobject)cls), _clsName(nullptr), _name(name), _signature(signature), _fieldID(0) {
     }
-    jfieldID getFieldID() {
+    jfieldID getFieldID() const {
         if (_fieldID == nullptr) {
-LOG("X1");
             JNIEnv* env = Env::get();
-LOG("X2");
             if (_cls == nullptr && _clsName != nullptr) {
-LOG("X2a");
-LOG("X2b %s", _clsName);
-jclass a1 = env->FindClass(_clsName);
-LOG("X2c %p", a1);
-LOG("X2d %d", env->GetObjectRefType(a1));
-jclass a2 = (jclass)env->NewGlobalRef(a1);
-LOG("X2e %p", a2);
-LOG("X2f %p %p", _cls, this);
-                _cls = a2;
-LOG("X2g %p %p", _fieldID, this);
+                _cls = (jclass)env->NewGlobalRef(env->FindClass(_clsName));
             }
-LOG("X3");
             JNIPP_ASSERT(_cls, "StaticField: clsName not found");
             jfieldID res = env->GetStaticFieldID(_cls, _name, _signature);
-LOG("X4");
             JNIPP_ASSERT(res, "StaticField: field not found");
             _fieldID = res;
-//            const_cast<StaticFieldBase*>(this)->_fieldID = res;
         }
-LOG("X5");
         return _fieldID;
     }
-    jclass getClass() {
+    jclass getClass() const {
         getFieldID();
         return _cls;
     }
-    operator jfieldID() {
+    operator jfieldID() const {
         return getFieldID();
     }
-    operator jclass() {
+    operator jclass() const {
         return getClass();
     }
 };
@@ -1377,16 +1361,16 @@ class StaticField : public StaticFieldBase
 {
 public:
     using StaticFieldBase::StaticFieldBase;
-    LocalRef<R> get() {
+    LocalRef<R> get() const {
         return LocalRef<R>::use( Env::get()->GetStaticObjectField(getClass(), getFieldID()) );
     }
-    operator LocalRef<R>() {
+    operator LocalRef<R>() const {
         return get();
     }
-    operator GlobalRef<R>() {
+    operator GlobalRef<R>() const {
         return get();
     }
-    LocalRef<R> operator->() {
+    LocalRef<R> operator->() const {
         return get();
     }
     void set(Ref<R> value) {
@@ -1403,10 +1387,10 @@ class StaticField<type> : public StaticFieldBase \
 { \
 public: \
     using StaticFieldBase::StaticFieldBase; \
-    type get() { \
+    type get() const { \
         return Env::get()->GetStatic ## tag ## Field(getClass(), getFieldID()); \
     } \
-    operator type() { \
+    operator type() const { \
         return get(); \
     } \
     void set(type value) { \
@@ -1414,43 +1398,6 @@ public: \
     } \
     void operator=(type value) { \
         set(value); \
-    } \
-};
-JNIPP_M_FOR_ALL_TYPES
-#undef M
-
-////////////////////////////////////////////////////////////////////////////////
-
-template <typename R>
-class ConstField : public StaticFieldBase
-{
-public:
-    using StaticFieldBase::StaticFieldBase;
-    LocalRef<R> get() {
-        return LocalRef<R>::use( Env::get()->GetStaticObjectField(getClass(), getFieldID()) );
-    }
-    operator LocalRef<R>() {
-        return get();
-    }
-    operator GlobalRef<R>() {
-        return get();
-    }
-    LocalRef<R> operator->() {
-        return get();
-    }
-};
-
-#define M(type,tag) \
-template <> \
-class ConstField<type> : public StaticFieldBase \
-{ \
-public: \
-    using StaticFieldBase::StaticFieldBase; \
-    type get() { \
-        return Env::get()->GetStatic ## tag ## Field(getClass(), getFieldID()); \
-    } \
-    operator type() { \
-        return get(); \
     } \
 };
 JNIPP_M_FOR_ALL_TYPES

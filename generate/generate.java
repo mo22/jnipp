@@ -279,13 +279,13 @@ public class generate
         declaration.append("#undef " + member.getName() + "\n");
         declaration.append("    // " + member + "\n");
         declaration.append("    static ");
-        String fieldClass = "StaticField";
-        if ((member.getModifiers() & Modifier.FINAL) != 0) fieldClass = "ConstField";
-        declaration.append("jnipp::" + fieldClass + "<" + getNativeClassName(type) + "> " + defName + ";\n");
+        if ((member.getModifiers() & Modifier.FINAL) != 0) declaration.append("const ");
+        declaration.append("jnipp::StaticField<" + getNativeClassName(type) + "> " + defName + ";\n");
         declaration.append("#pragma pop_macro(\"" + member.getName() + "\")\n");
 
         implementation.append("#undef " + member.getName() + "\n");
-        implementation.append("jnipp::" + fieldClass + "<" + getNativeClassName(type) + "> ");
+        if ((member.getModifiers() & Modifier.FINAL) != 0) implementation.append("const ");
+        implementation.append("jnipp::StaticField<" + getNativeClassName(type) + "> ");
         implementation.append(convertClassName(cls) + "::" + defName);
         implementation.append(" (\"" + cls.getName().replace(".", "/") + "\", \"" + member.getName() + "\", \"" + getSignature(type) + "\");\n");
     }
@@ -297,6 +297,7 @@ public class generate
         declaration.append("\n");
         declaration.append("    // " + member + "\n");
         declaration.append("    ");
+        if ((member.getModifiers() & Modifier.FINAL) != 0) declaration.append("const ");
         declaration.append("jnipp::BoundField<" + getNativeClassName(type) + "> " + defName + " = ");
         declaration.append("jnipp::BoundField<" + getNativeClassName(type) + ">(\"" + cls.getName().replace(".", "/") + "\", \"" + member.getName() + "\", \"" + getSignature(type) + "\", this);\n");
         // @TODO...
