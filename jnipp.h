@@ -269,9 +269,13 @@ class String : public Object
 {
 public:
     using Object::Object;
+    typedef std::basic_string<jchar> _jstring;
 
     static LocalRef<String> create(const char* value);
-    static LocalRef<String> create(std::string value);
+    static LocalRef<String> create(const std::string value);
+    static LocalRef<String> create(const jchar* value);
+    static LocalRef<String> create(const jchar* value, size_t length);
+    static LocalRef<String> create(const _jstring value);
 
     operator jstring() const {
         return (jstring)(jobject)*this;
@@ -293,6 +297,13 @@ public:
         env()->ReleaseStringUTFChars((jstring)*this, data);
         return res;
     }
+
+    _jstring std_jstr() const {
+        const jchar* data = env()->GetStringChars((jstring)*this, nullptr);
+        _jstring res = data;
+        env()->ReleaseStringChars((jstring)*this, data);
+        return res;
+    }
 /*
     operator const char*() const {
         return c_str();
@@ -302,11 +313,21 @@ public:
         return std_str();
     }
 
+    operator const _jstring() const {
+        return std_jstr();
+    }
+
     bool operator == (const char* str) const {
         return std_str() == str;
     }
     bool operator != (const char* str) const {
         return std_str() != str;
+    }
+    bool operator == (const jchar* str) const {
+        return std_jstr() == str;
+    }
+    bool operator != (const jchar* str) const {
+        return std_jstr() != str;
     }
 
     static Ref<Class> clazz();
@@ -1458,8 +1479,21 @@ inline LocalRef<String> String::create(const char* value) {
     return LocalRef<String>::use( Env::get()->NewStringUTF(value) );
 }
 
-inline LocalRef<String> String::create(std::string value) {
+inline LocalRef<String> String::create(const std::string value) {
     return LocalRef<String>::use( Env::get()->NewStringUTF(value.c_str()) );
+}
+
+inline LocalRef<String> String::create(const jchar* value) {
+    String::_jstring tmp = value;
+    return create(value, tmp.length());
+}
+
+inline LocalRef<String> String::create(const jchar* value, size_t length) {
+    return LocalRef<String>::use( Env::get()->NewString(value, length) );
+}
+
+inline LocalRef<String> String::create(const String::_jstring value) {
+    return create(value.c_str(), value.length());
 }
 
 inline Ref<Class> String::clazz() {
