@@ -293,7 +293,7 @@ public:
 */
     std::string std_str() const {
         if (Env::get()->IsSameObject((jobject)*this, NULL)) {
-            LOG("WARNING: String::std_str() is null!");
+            // LOG("WARNING: String::std_str() is null!");
             return "";
         }
         const char* data = env()->GetStringUTFChars((jstring)*this, nullptr);
