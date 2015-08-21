@@ -59,9 +59,9 @@
 
 namespace jnipp {
 
-#include <android/log.h>
-#define LOG(...) __android_log_print(ANDROID_LOG_VERBOSE, "LOG", __VA_ARGS__);
-//#define JNIPP_RLOG(...) LOG(__VA_ARGS__)
+// #include <android/log.h>
+// #define LOG(...) __android_log_print(ANDROID_LOG_VERBOSE, "LOG", __VA_ARGS__);
+// #define JNIPP_RLOG(...) LOG(__VA_ARGS__)
 
 #ifndef JNIPP_RLOG
 #define JNIPP_RLOG(...)
@@ -125,7 +125,7 @@ protected:
         return *(_cur());
     }
     static void _setcur(JNIEnv* val) {
-        *(_cur()) = env;
+        *(_cur()) = val;
     }
 #endif
 public:
