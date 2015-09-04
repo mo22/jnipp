@@ -157,7 +157,6 @@ public:
     static JNIEnv* get() {
         JNIEnv* res = peek();
         JNIPP_ASSERT(res, "EnvScope: no environment set");
-        // LOG("Env::get thread %d", gettid());
         return res;
     }
     static void pushLocalFrame(jint capacity=32) {
