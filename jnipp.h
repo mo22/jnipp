@@ -161,51 +161,6 @@ public:
     }
     static void pushLocalFrame(jint capacity=16) {
         JNIPP_RLOG("Env::pushLocalFrame");
-        JNIPP_LOG("Env::pushLocalFrame");
-
-        // get()->EnsureLocalCapacity(capacity);
-        jobject t01 = get()->NewStringUTF("test");
-        jobject t02 = get()->NewStringUTF("test");
-        jobject t03 = get()->NewStringUTF("test");
-        jobject t04 = get()->NewStringUTF("test");
-        jobject t05 = get()->NewStringUTF("test");
-        jobject t06 = get()->NewStringUTF("test");
-        jobject t07 = get()->NewStringUTF("test");
-        jobject t08 = get()->NewStringUTF("test");
-        jobject t09 = get()->NewStringUTF("test");
-        jobject t10 = get()->NewStringUTF("test");
-        jobject t11 = get()->NewStringUTF("test");
-        jobject t12 = get()->NewStringUTF("test");
-        jobject t13 = get()->NewStringUTF("test");
-        jobject t14 = get()->NewStringUTF("test");
-        jobject t15 = get()->NewStringUTF("test");
-        jobject t16 = get()->NewStringUTF("test");
-        jobject t17 = get()->NewStringUTF("test");
-        jobject t18 = get()->NewStringUTF("test");
-        jobject t19 = get()->NewStringUTF("test");
-        jobject t20 = get()->NewStringUTF("test");
-        JNIPP_LOG("Env::pushLocalFrame t01=%p t20=%p", t01, t20);
-        get()->DeleteLocalRef(t01);
-        get()->DeleteLocalRef(t02);
-        get()->DeleteLocalRef(t03);
-        get()->DeleteLocalRef(t04);
-        get()->DeleteLocalRef(t05);
-        get()->DeleteLocalRef(t06);
-        get()->DeleteLocalRef(t07);
-        get()->DeleteLocalRef(t08);
-        get()->DeleteLocalRef(t09);
-        get()->DeleteLocalRef(t10);
-        get()->DeleteLocalRef(t11);
-        get()->DeleteLocalRef(t12);
-        get()->DeleteLocalRef(t13);
-        get()->DeleteLocalRef(t14);
-        get()->DeleteLocalRef(t15);
-        get()->DeleteLocalRef(t16);
-        get()->DeleteLocalRef(t17);
-        get()->DeleteLocalRef(t18);
-        get()->DeleteLocalRef(t19);
-        get()->DeleteLocalRef(t20);
-
         jint res = get()->PushLocalFrame(capacity);
         assert(res == 0);
     }
