@@ -59,9 +59,9 @@
 
 namespace jnipp {
 
-// #include <android/log.h>
-// #define LOG(...) __android_log_print(ANDROID_LOG_VERBOSE, "LOG", __VA_ARGS__);
-// #define JNIPP_RLOG(...) LOG(__VA_ARGS__)
+#include <android/log.h>
+#define JNIPP_LOG(...) __android_log_print(ANDROID_LOG_VERBOSE, "LOG", __VA_ARGS__);
+// #define JNIPP_RLOG(...) JNIPP_LOG(__VA_ARGS__)
 
 #ifndef JNIPP_RLOG
 #define JNIPP_RLOG(...)
@@ -159,14 +159,63 @@ public:
         JNIPP_ASSERT(res, "EnvScope: no environment set");
         return res;
     }
-    static void pushLocalFrame(jint capacity=32) {
+    static void pushLocalFrame(jint capacity=16) {
         JNIPP_RLOG("Env::pushLocalFrame");
+        JNIPP_LOG("Env::pushLocalFrame");
+
+        // get()->EnsureLocalCapacity(capacity);
+        jobject t01 = get()->NewStringUTF("test");
+        jobject t02 = get()->NewStringUTF("test");
+        jobject t03 = get()->NewStringUTF("test");
+        jobject t04 = get()->NewStringUTF("test");
+        jobject t05 = get()->NewStringUTF("test");
+        jobject t06 = get()->NewStringUTF("test");
+        jobject t07 = get()->NewStringUTF("test");
+        jobject t08 = get()->NewStringUTF("test");
+        jobject t09 = get()->NewStringUTF("test");
+        jobject t10 = get()->NewStringUTF("test");
+        jobject t11 = get()->NewStringUTF("test");
+        jobject t12 = get()->NewStringUTF("test");
+        jobject t13 = get()->NewStringUTF("test");
+        jobject t14 = get()->NewStringUTF("test");
+        jobject t15 = get()->NewStringUTF("test");
+        jobject t16 = get()->NewStringUTF("test");
+        jobject t17 = get()->NewStringUTF("test");
+        jobject t18 = get()->NewStringUTF("test");
+        jobject t19 = get()->NewStringUTF("test");
+        jobject t20 = get()->NewStringUTF("test");
+        JNIPP_LOG("Env::pushLocalFrame t01=%p t20=%p", t01, t20);
+        get()->DeleteLocalRef(t01);
+        get()->DeleteLocalRef(t02);
+        get()->DeleteLocalRef(t03);
+        get()->DeleteLocalRef(t04);
+        get()->DeleteLocalRef(t05);
+        get()->DeleteLocalRef(t06);
+        get()->DeleteLocalRef(t07);
+        get()->DeleteLocalRef(t08);
+        get()->DeleteLocalRef(t09);
+        get()->DeleteLocalRef(t10);
+        get()->DeleteLocalRef(t11);
+        get()->DeleteLocalRef(t12);
+        get()->DeleteLocalRef(t13);
+        get()->DeleteLocalRef(t14);
+        get()->DeleteLocalRef(t15);
+        get()->DeleteLocalRef(t16);
+        get()->DeleteLocalRef(t17);
+        get()->DeleteLocalRef(t18);
+        get()->DeleteLocalRef(t19);
+        get()->DeleteLocalRef(t20);
+
         jint res = get()->PushLocalFrame(capacity);
         assert(res == 0);
     }
     static void popLocalFrame() {
         JNIPP_RLOG("Env::popLocalFrame");
         get()->PopLocalFrame(nullptr);
+    }
+    static jobject popLocalFrame(jobject result) {
+        JNIPP_RLOG("Env::popLocalFrame");
+        return get()->PopLocalFrame(result);
     }
     static void ensureLocalCapacity(jint capacity) {
         jint res = get()->EnsureLocalCapacity(capacity);
@@ -191,14 +240,22 @@ public:
 
 class LocalFrame
 {
+private:
+    bool done = false;
 public:
-    LocalFrame(jint capacity=32)
-    {
+    LocalFrame(jint capacity=16) {
         Env::pushLocalFrame(capacity);
     }
-    ~LocalFrame()
-    {
-        Env::popLocalFrame();
+    ~LocalFrame() {
+        if (!done) {
+            Env::popLocalFrame();
+            done = true;
+        }
+    }
+    jobject escape(jobject result) {
+        assert(!done);
+        done = true;
+        return Env::popLocalFrame(result);
     }
 };
 
