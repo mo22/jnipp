@@ -30,7 +30,7 @@
     #include <boost/type_traits.hpp>
     #define JNIPP_ENABLE_IF_C boost::enable_if_c
     #define JNIPP_IS_BASE_OF boost::is_base_of
-#else
+#elif JNIPP_USE_TYPE_TRAITS
     #include <type_traits>
     #define JNIPP_ENABLE_IF_C std::enable_if
     #define JNIPP_IS_BASE_OF std::is_base_of
@@ -624,11 +624,17 @@ template <typename T, typename A1, typename A2>
 class Ref : public RefBase<T> {
 public:
     using RefBase<T>::RefBase;
+
+    operator jclass() const {
+        return (jclass)(**this);
+    }
+
 };
 
 /**
  * ref specialization for strings
 */
+#ifdef JNIPP_ENABLE_IF_C
 template <typename T>
 class Ref<T, typename JNIPP_ENABLE_IF_C<JNIPP_IS_BASE_OF<String, T>::value>::type> : public RefBase<T> {
 protected:
@@ -665,10 +671,12 @@ public:
         return this->std_str() != str;
     }
 };
+#endif
 
 /**
  * ref specialization for classes
 */
+#ifdef JNIPP_ENABLE_IF_C
 template <typename T>
 class Ref<T, void, typename JNIPP_ENABLE_IF_C<JNIPP_IS_BASE_OF<Class, T>::value>::type> : public RefBase<T> {
 public:
@@ -677,6 +685,7 @@ public:
         return (jclass)(**this);
     }
 };
+#endif
 
 /**
  * ref specialization for object arrays
@@ -1285,6 +1294,9 @@ protected:
     mutable jfieldID _fieldID;
     Object* _thiz;
 public:
+    BoundFieldBase() : _cls(nullptr), _clsName(nullptr), _name(nullptr), _signature(nullptr), _fieldID(0), _thiz(nullptr) {
+        // @TODO should not be here.
+    }
     BoundFieldBase(const char* clsName, const char* name, const char* signature, Object* thiz) : _cls(nullptr), _clsName(clsName), _name(name), _signature(signature), _fieldID(0), _thiz(thiz) {
     }
     BoundFieldBase(GlobalRef<Class>& cls, const char* name, const char* signature, Object* thiz) : _cls((jclass)(jobject)cls), _clsName(nullptr), _name(name), _signature(signature), _fieldID(0), _thiz(thiz) {
