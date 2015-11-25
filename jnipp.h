@@ -1539,7 +1539,7 @@ inline LocalRef<String> Class::getName() const {
 }
 
 inline jboolean Class::isAssignableFrom(Ref<Class> other) const {
-    return env()->IsAssignableFrom((jclass)*this, (jclass)*other);
+    return env()->IsAssignableFrom(*other, *this);
 }
 
 inline LocalRef<Class> Class::getSuperclass() const {
