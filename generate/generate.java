@@ -179,19 +179,26 @@ public class generate
             implementation.append(getNativeClassNameRef(paramTypes[i])+" a"+i);
         }
         implementation.append(") const {\n");
-        implementation.append("    static jnipp::Method<"+getNativeClassName(retType));
-        for (int i=0; i<paramTypes.length; i++) {
-            implementation.append(",");
-            implementation.append(getNativeClassName(paramTypes[i]));
+
+        if (cls == Class.class && member.getName() == "isAssignableFrom") {
+            implementation.append("    return jnipp::Env::get()->IsAssignableFrom(a0, *this);\n");
+        } else if (cls == Class.class && member.getName() == "isInstance") {
+            implementation.append("    return jnipp::Env::get()->IsInstanceOf(a0, *this);\n");
+        } else {
+            implementation.append("    static jnipp::Method<" + getNativeClassName(retType));
+            for (int i = 0; i < paramTypes.length; i++) {
+                implementation.append(",");
+                implementation.append(getNativeClassName(paramTypes[i]));
+            }
+            implementation.append("> method(clazz(), \"" + member.getName() + "\", \"" + getSignature(member) + "\");\n");
+            implementation.append("    ");
+            if (retType != void.class) implementation.append("return ");
+            implementation.append("method.call(*this");
+            for (int i = 0; i < paramTypes.length; i++) {
+                implementation.append(", a" + i);
+            }
+            implementation.append(");\n");
         }
-        implementation.append("> method(clazz(), \""+member.getName()+"\", \""+getSignature(member)+"\");\n");
-        implementation.append("    ");
-        if (retType != void.class) implementation.append("return ");
-        implementation.append("method.call(*this");
-        for (int i=0; i<paramTypes.length; i++) {
-            implementation.append(", a"+i);
-        }
-        implementation.append(");\n");
         implementation.append("}\n");
     }
 
