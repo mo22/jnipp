@@ -1,7 +1,7 @@
 DEFAULT: all
 .PHONY: all
 
-_java.h: JavaTest.class
+_java.h _java.cpp: JavaTest.class
 	../generate/generate -cp . java.lang.String JavaTest
 
 CPPFLAGS = \
@@ -36,10 +36,9 @@ libTest.dylib: test.o _java.o
 	strip -S -x $@
 
 all: Test.class JavaTest.class libTest.dylib
-	@rm *.log 2>/dev/null || true
+	rm -f *.log
 	java Test
 
 clean:
-	rm *.class *.dylib *.o
-
+	rm -f *.class *.dylib *.o _java.*
 
