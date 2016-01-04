@@ -1,0 +1,45 @@
+DEFAULT: all
+.PHONY: all
+
+_java.h _java.cpp: JavaTest.class
+	../generate/generate -cp . java.lang.String JavaTest
+
+CPPFLAGS = \
+	-std=c++11 \
+	-DJNIPP_USE_TYPE_TRAITS \
+	-O3 \
+	-ffunction-sections -fdata-sections \
+	-fno-rtti \
+	-fvisibility=hidden -fvisibility-inlines-hidden \
+	-I.. \
+	-I/usr/lib/jvm/default-java/include/ \
+	-fPIC
+CPP = g++
+
+LDFLAGS = \
+	-O3 \
+	-Wl,--gc-sections \
+	-shared
+LD = c++
+
+LIBNAME = libTest.so
+
+JAVACFLAGS = -g
+
+%.class: %.java
+	javac $(JAVACFLAGS) $<
+
+%.o: %.cpp _java.h ../jnipp.h
+	$(CPP) -c $(CPPFLAGS) $< -o $@
+
+$(LIBNAME): test.o _java.o
+	$(LD) -o $@ $(LDFLAGS) $^
+	strip -S -x $@
+
+all: Test.class JavaTest.class $(LIBNAME)
+	rm -f *.log
+	java -Djava.library.path=. Test
+
+clean:
+	rm -f *.class *.dylib *.so *.o _java.*
+

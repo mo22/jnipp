@@ -1,6 +1,7 @@
 *.class
 *.o
 *.dylib
+*.so
 _java.h
 _java.cpp
 

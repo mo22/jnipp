@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <assert.h>
+#include <stdarg.h>
 
 void LOG(const char* fmt, ...)
 {
@@ -16,7 +17,8 @@ void LOG(const char* fmt, ...)
 #include <jnipp.h>
 using namespace jnipp;
 
-#define EXPORT __attribute__((visibility("default"))) extern "C"
+//#define EXPORT __attribute__((visibility("default"))) extern "C"
+#define EXPORT extern "C"
 
 ////////////////////////////////////////////////////////////////////////////////
 
