@@ -8,8 +8,19 @@ Requirements
 ============
 
 - you need c++11 support: `-std=c++11`
-- some versions of libstdc++ do not support `type_traits`: compile with `-DJNIPP_USE_BOOST` and put boost in your include path.
+- compile with `-DJNIPP_USE_TYPE_TRAITS` to use type traits if available; some versions of libstdc++ do not support `type_traits`: compile with `-DJNIPP_USE_BOOST` and put boost in your include path.
 - some platforms (Android for example) do not completely support thread local storage. use `-DJNIPP_THREAD_LOCAL_PTHREAD` to fallback to pthread.
+
+
+Quick Test:
+===========
+    cd test
+    make
+
+It does not work?
+- recompile the generate script: cd generate; javac generate.java
+- install clang
+- fix include path in Makefile
 
 
 Usage without generated classes
