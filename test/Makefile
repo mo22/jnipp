@@ -7,6 +7,7 @@ _java.h: JavaTest.class
 CPPFLAGS = \
 	-std=c++11 \
 	-stdlib=libc++ \
+	-DJNIPP_USE_TYPE_TRAITS \
 	-O3 \
 	-ffunction-sections -fdata-sections \
 	-gfull -fno-rtti \

@@ -26,17 +26,17 @@
 
 #include <assert.h>
 
-#ifdef JNIPP_USE_BOOST
+#if defined(JNIPP_USE_BOOST)
     #include <boost/type_traits.hpp>
     #define JNIPP_ENABLE_IF_C boost::enable_if_c
     #define JNIPP_IS_BASE_OF boost::is_base_of
-#elif JNIPP_USE_TYPE_TRAITS
+#elif defined(JNIPP_USE_TYPE_TRAITS)
     #include <type_traits>
     #define JNIPP_ENABLE_IF_C std::enable_if
     #define JNIPP_IS_BASE_OF std::is_base_of
 #endif
 
-#ifndef JNIPP_THREAD_LOCAL
+#if !defined(JNIPP_THREAD_LOCAL)
     #if defined(__GNUC__)
         #define JNIPP_THREAD_LOCAL __thread
     #elif defined(_MSC_VER)
@@ -46,7 +46,7 @@
     #endif
 #endif
 
-#ifndef JNIPP_ASSERT
+#if !defined(JNIPP_ASSERT)
     #if defined(__EXCEPTIONS) && false
         #define JNIPP_ASSERT(condition, message) if (!(condition)) throw std::logic_error(message "(" #condition ")")
     #elif defined(ANDROID)
@@ -59,9 +59,11 @@
 
 namespace jnipp {
 
+#if defined(ANDROID)
 #include <android/log.h>
 #define JNIPP_LOG(...) __android_log_print(ANDROID_LOG_VERBOSE, "LOG", __VA_ARGS__);
 // #define JNIPP_RLOG(...) JNIPP_LOG(__VA_ARGS__)
+#endif
 
 #ifndef JNIPP_RLOG
 #define JNIPP_RLOG(...)
@@ -100,7 +102,7 @@ template <typename T> class Array;
 class Env
 {
 protected:
-#ifdef JNIPP_THREAD_LOCAL_PTHREAD
+#if defined(JNIPP_THREAD_LOCAL_PTHREAD)
     static pthread_key_t _curkey() {
         static pthread_key_t key;
         static bool inited = false;
@@ -295,13 +297,6 @@ public:
     jsize length() const {
         return env()->GetStringLength((jstring)*this);
     }
-/*
-    // @TODO: this is buggy.
-    const char* c_str() const {
-        std::string tmp = std_str();
-        return tmp.c_str();
-    }
-*/
     std::string std_str() const {
         if (Env::get()->IsSameObject((jobject)*this, NULL)) {
             // LOG("WARNING: String::std_str() is null!");
@@ -319,11 +314,6 @@ public:
         env()->ReleaseStringChars((jstring)*this, data);
         return res;
     }
-/*
-    operator const char*() const {
-        return c_str();
-    }
-*/
     operator const std::string() const {
         return std_str();
     }
@@ -634,7 +624,7 @@ public:
 /**
  * ref specialization for strings
 */
-#ifdef JNIPP_ENABLE_IF_C
+#if defined(JNIPP_ENABLE_IF_C)
 template <typename T>
 class Ref<T, typename JNIPP_ENABLE_IF_C<JNIPP_IS_BASE_OF<String, T>::value>::type> : public RefBase<T> {
 protected:
@@ -650,14 +640,6 @@ public:
             Env::get()->DeleteLocalRef( (jobject)*this );
         }
     }
-/*
-    operator const char*() const {
-        return (*this)->std_str().c_str();
-    }
-    const char* c_str() const {
-        return (*this)->std_str().c_str();
-    }
-*/
     operator std::string() const {
         return std_str();
     }
@@ -676,7 +658,7 @@ public:
 /**
  * ref specialization for classes
 */
-#ifdef JNIPP_ENABLE_IF_C
+#if defined(JNIPP_ENABLE_IF_C)
 template <typename T>
 class Ref<T, void, typename JNIPP_ENABLE_IF_C<JNIPP_IS_BASE_OF<Class, T>::value>::type> : public RefBase<T> {
 public:
