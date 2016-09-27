@@ -15,7 +15,8 @@ Requirements
 Quick Test:
 ===========
     cd test
-    make
+    make -f Makefile.osx
+    make -f Makefile.linux
 
 It does not work?
 - recompile the generate script: cd generate; javac generate.java
