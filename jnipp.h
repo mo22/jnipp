@@ -62,7 +62,7 @@ namespace jnipp {
 #if defined(ANDROID)
 #include <android/log.h>
 #define JNIPP_LOG(...) __android_log_print(ANDROID_LOG_VERBOSE, "LOG", __VA_ARGS__);
-// #define JNIPP_RLOG(...) JNIPP_LOG(__VA_ARGS__)
+//#define JNIPP_RLOG(...) JNIPP_LOG(__VA_ARGS__)
 #endif
 
 #ifndef JNIPP_RLOG
@@ -144,7 +144,7 @@ public:
             // @TODO: there are different definitions here :/
             // jint res = vm->AttachCurrentThread((void**)&env, NULL);
             jint res = reinterpret_cast<jint(*)(JavaVM*, void**, void*)>(vm->functions->AttachCurrentThread)(vm, (void**)&env, NULL);
-            assert(res == JNI_OK);
+            JNIPP_ASSERT(res == JNI_OK, "EnvScope: AttachCurrentThread failed");
             _prev = _getcur();
             _setcur(env);
         }
@@ -164,7 +164,7 @@ public:
     static void pushLocalFrame(jint capacity=16) {
         JNIPP_RLOG("Env::pushLocalFrame");
         jint res = get()->PushLocalFrame(capacity);
-        assert(res == 0);
+        JNIPP_ASSERT(res == 0, "PushLocalFrame");
     }
     static void popLocalFrame() {
         JNIPP_RLOG("Env::popLocalFrame");
@@ -176,7 +176,7 @@ public:
     }
     static void ensureLocalCapacity(jint capacity) {
         jint res = get()->EnsureLocalCapacity(capacity);
-        assert(res == 0);
+        JNIPP_ASSERT(res == 0, "EnsureLocalCapacity");
     }
     static void throwException(Ref<Object> exception);
     static void throwException(Ref<Class> cls, Ref<String> message);
@@ -188,7 +188,7 @@ public:
     static JavaVM* getVM() {
         JavaVM* result = nullptr;
         jint res = get()->GetJavaVM(&result);
-        assert(res == 0);
+        JNIPP_ASSERT(res == 0, "GetJavaVM");
         return result;
     }
 };
@@ -210,7 +210,7 @@ public:
         }
     }
     jobject escape(jobject result) {
-        assert(!done);
+        JNIPP_ASSERT(!done, "LocalFrame::escape");
         done = true;
         return Env::popLocalFrame(result);
     }
@@ -723,7 +723,7 @@ protected:
         }
         JNIPP_RLOG("LocalRef::LocalRef(jobject) this=%p jobject=%p (explicit)", this, (jobject)*this);
         if (value) {
-            assert( Env::get()->GetObjectRefType(value) == JNILocalRefType );
+            JNIPP_ASSERT( Env::get()->GetObjectRefType(value) == JNILocalRefType, "GetObjectRefType != JNILocalRefType" );
         }
     }
 public:
@@ -731,9 +731,7 @@ public:
     LocalRef(LocalRef<S>&& value) : Ref<T>((jobject)value) {
         JNIPP_RLOG("LocalRef::LocalRef(LocalRef&&) this=%p value=<%p> jobject=%p (move)", this, &value, (jobject)*this);
         value.__clear();
-        if (*this && !Env::get()->ExceptionCheck()) {
-            assert( Env::get()->GetObjectRefType((jobject)*this) == JNILocalRefType );
-        }
+        JNIPP_ASSERT( !*this || Env::get()->ExceptionCheck() || Env::get()->GetObjectRefType((jobject)*this) == JNILocalRefType, "GetObjectRefType != JNILocalRefType" );
     }
     template <typename S>
     LocalRef(const Ref<S>& value) : Ref<T>(Env::get()->NewLocalRef((jobject)value)) {
@@ -743,9 +741,11 @@ public:
         JNIPP_RLOG("LocalRef::LocalRef(WeakRef&) this=%p value=<%p> jobject=%p", this, &value, (jobject)*this);
     }
     ~LocalRef() {
+        JNIPP_RLOG("LocalRef::~LocalRef() this=%p jobject=%p (DeleteLocalRef)", this, (jobject)*this);
         if ((jobject)*this) {
-            JNIPP_RLOG("LocalRef::~LocalRef() this=%p jobject=%p (DeleteLocalRef)", this, (jobject)*this);
-            if (Env::peek()) Env::get()->DeleteLocalRef((jobject)*this);
+            if (Env::peek()) {
+                Env::get()->DeleteLocalRef((jobject)*this);
+            }
             this->__clear();
         }
     }
@@ -777,9 +777,7 @@ protected:
         this->_impl.__clear();
     }
     explicit GlobalRef(jobject value) : Ref<T>(value) {
-        if (value) {
-            assert( Env::get()->GetObjectRefType(value) == JNIGlobalRefType );
-        }
+        JNIPP_ASSERT( !value || Env::get()->GetObjectRefType(value) == JNIGlobalRefType, "GetObjectRefType != JNIGlobalRefType" );
         JNIPP_RLOG("GlobalRef::GlobalRef(jobject) this=%p jobject=%p (explicit)", this, (jobject)*this);
     }
 public:
@@ -844,7 +842,7 @@ public:
     //     JNIPP_RLOG("WeakRef::WeakRef(jobject) this=%p jobject=%p", this, (jweak)*this);
     // }
     explicit WeakRef(jweak value) : _impl((jobject)value) {
-        assert( Env::get()->GetObjectRefType(value) == JNIWeakGlobalRefType );
+        JNIPP_ASSERT( Env::get()->GetObjectRefType(value) == JNIWeakGlobalRefType, "GetObjectRefType != JNIWeakGlobalRefType" );
         JNIPP_RLOG("WeakRef::WeakRef(jweak) this=%p jobject=%p", this, (jweak)*this);
     }
     template <typename S>
