@@ -819,7 +819,11 @@ public:
     static bool is(jobject value) {
         return Env::get()->GetObjectRefType(value) == JNIGlobalRefType;
     }
+    #if defined(JNIPP_ENABLE_IF_C)
+    template <typename S, typename = typename JNIPP_ENABLE_IF_C<JNIPP_IS_BASE_OF<T, S>::value>::type>
+    #else
     template <typename S>
+    #endif
     void operator= (const Ref<S>& value) {
         set(value);
     }
