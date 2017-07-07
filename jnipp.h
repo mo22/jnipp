@@ -33,7 +33,6 @@
 #elif defined(JNIPP_USE_TYPE_TRAITS)
     #include <type_traits>
     #define JNIPP_ENABLE_IF_C std::enable_if
-    #define JNIPP_ENABLE_IF_T std::enable_if_t
     #define JNIPP_IS_BASE_OF std::is_base_of
 #endif
 
@@ -559,8 +558,8 @@ public:
     RefBase(const RefBase<T>& value) : _impl((jobject)value) {
     }
     // @TODO: how do we access value._impl ?
-    #if defined(JNIPP_ENABLE_IF_T)
-    template <typename S, typename = JNIPP_ENABLE_IF_T<JNIPP_IS_BASE_OF<T, S>::value>>
+    #if defined(JNIPP_ENABLE_IF_C)
+    template <typename S, typename = typename JNIPP_ENABLE_IF_C<JNIPP_IS_BASE_OF<T, S>::value>::type>
     #else
     template <typename S>
     #endif
