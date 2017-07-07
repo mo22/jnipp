@@ -753,6 +753,17 @@ public:
             this->__clear();
         }
     }
+    void operator= (LocalRef<T>&& value) {
+        JNIPP_RLOG("LocalRef::=(LocalRef&) this=%p jboject=%p value=<%p> jobject=%p (move)", this, (jobject)*this, &value, (jobject)value);
+        if ((jobject)*this) {
+            if (Env::peek()) {
+                Env::get()->DeleteLocalRef((jobject)*this);
+            }
+            this->__clear();
+        }
+        this->_impl = T((jobject)value);
+        value.__clear();
+    }
     static LocalRef<T> create(jobject value) {
         return LocalRef(Env::get()->NewLocalRef(value));
     }
