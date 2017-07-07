@@ -559,7 +559,7 @@ public:
     }
     // @TODO: how do we access value._impl ?
     template <typename S>
-    RefBase(const RefBase<S>& value) : _impl( static_cast<S>(value.__impl()) ) {
+    RefBase(const RefBase<S>& value) : _impl( static_cast<T>(value.__impl()) ) {
     }
     //template <typename S>
     //Ref(const Ref<S>& value) : _impl((jobject)value) {
