@@ -33,7 +33,6 @@
 #elif defined(JNIPP_USE_TYPE_TRAITS)
     #include <type_traits>
     #define JNIPP_ENABLE_IF_C std::enable_if
-    #define JNIPP_ENABLE_IF_T std::enable_if_t
     #define JNIPP_IS_BASE_OF std::is_base_of
 #endif
 
@@ -559,8 +558,8 @@ public:
     RefBase(const RefBase<T>& value) : _impl((jobject)value) {
     }
     // @TODO: how do we access value._impl ?
-    #if defined(JNIPP_ENABLE_IF_T)
-    template <typename S, typename = JNIPP_ENABLE_IF_T<JNIPP_IS_BASE_OF<T, S>::value>>
+    #if defined(JNIPP_ENABLE_IF_C)
+    template <typename S, typename = typename JNIPP_ENABLE_IF_C<JNIPP_IS_BASE_OF<T, S>::value>::type>
     #else
     template <typename S>
     #endif
@@ -754,6 +753,17 @@ public:
             this->__clear();
         }
     }
+    void operator= (LocalRef<T>&& value) {
+        JNIPP_RLOG("LocalRef::=(LocalRef&) this=%p jboject=%p value=<%p> jobject=%p (move)", this, (jobject)*this, &value, (jobject)value);
+        if ((jobject)*this) {
+            if (Env::peek()) {
+                Env::get()->DeleteLocalRef((jobject)*this);
+            }
+            this->__clear();
+        }
+        this->_impl = T((jobject)value);
+        value.__clear();
+    }
     static LocalRef<T> create(jobject value) {
         return LocalRef(Env::get()->NewLocalRef(value));
     }
@@ -820,7 +830,11 @@ public:
     static bool is(jobject value) {
         return Env::get()->GetObjectRefType(value) == JNIGlobalRefType;
     }
+    #if defined(JNIPP_ENABLE_IF_C)
+    template <typename S, typename = typename JNIPP_ENABLE_IF_C<JNIPP_IS_BASE_OF<T, S>::value>::type>
+    #else
     template <typename S>
+    #endif
     void operator= (const Ref<S>& value) {
         set(value);
     }
